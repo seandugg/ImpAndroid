@@ -56,4 +56,12 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<modules>
+		<module>
+			../../SupportingLifeAndroidProject-IT/SupportingLifeAndroidProject-IT
+		</module>
+		<module>
+			../../SupportingLifeAndroid/SupportingLifeAndroid
+		</module>
+	</modules>
 </project>
