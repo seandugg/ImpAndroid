@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!-- ============================================================ -->
+<!-- These Symptom Ids are used to match up the UI element on the -->
+<!-- front-end with the <Symptom> element specified in the        -->
+<!-- 'classification_rules.xml' file. 							  -->
+<!--  															  -->
+<!-- The user UI selections are recorded via the ReviewItem       -->
+<!-- object instances associated with each assessment page.       -->
+<!-- These are then cross-referenced by the RuleEngine after it	  -->
+<!-- completes parsing classification_rules.xml 			  	  -->
+<!-- ============================================================ -->
+
+    <!-- ============================================================ -->
+    <!-- ============================================================ -->
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT											  -->
+    <!-- ============================================================ -->
+	<!-- ============================================================ -->
+    <!-- ============================================================ -->
+
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 1: GENERAL PATIENT DETAILS -->
+    <!-- ============================================================ -->
+	
+	<!-- Symptom Ids (NOT TO BE TRANSLATED!)-->
+	<string name="imci_general_patient_details_date_of_birth_symptom_id">date_of_birth</string>
+	<string name="imci_general_patient_details_patient_two_years_or_older_symptom_id">patient_two_years_or_older</string>
+	<string name="imci_general_patient_details_weight_symptom_id">weight</string>
+	<string name="imci_general_patient_details_temperature_symptom_id">temperature</string>
+	<string name="imci_general_patient_details_gender_symptom_id">gender</string>
+
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 2: GENERAL DANGER SIGNS -->
+    <!-- ============================================================ -->
+
+	<!-- Symptom Ids (NOT TO BE TRANSLATED!)-->
+	<string name="imci_general_danger_signs_drink_breastfeed_symptom_id">not_able_to_drink_or_breastfeed</string>
+	<string name="imci_general_danger_signs_vomits_everything_symptom_id">vomits_everything</string>
+	<string name="imci_general_danger_signs_convulsions_symptom_id">history_of_convulsions</string>
+	<string name="imci_general_danger_signs_lethargic_or_unconscious_symptom_id">lethargic_or_unconscious</string>
+	<string name="imci_general_danger_signs_convulsing_now_symptom_id">convulsing_now</string>
+	
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 3: Cough / Breathing Assessment -->
+    <!-- ============================================================ -->
+	
+	<!-- Symptom Ids (NOT TO BE TRANSLATED!)-->
+	<string name="imci_breathing_assessment_cough_difficult_breathing_symptom_id">cough_difficult_breathing</string>
+	<string name="imci_breathing_assessment_cough_duration_symptom_id">cough_duration</string>
+	<string name="imci_breathing_assessment_fast_breathing_symptom_id">fast_breathing</string>
+	<string name="imci_breathing_assessment_chest_indrawing_symptom_id">chest_indrawing</string>
+	<string name="imci_breathing_assessment_stridor_symptom_id">stridor</string>
+
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 4: Diarrhoea Assessment -->
+    <!-- ============================================================ -->
+	
+	<!-- Symptom Ids (NOT TO BE TRANSLATED!)-->
+	<string name="imci_diarrhoea_assessment_diarrhoea_symptom_id">diarrhoea</string>
+	<string name="imci_diarrhoea_assessment_diarrhoea_duration_symptom_id">diarrhoea_duration</string>
+	<string name="imci_diarrhoea_assessment_diarrhoea_duration_fourteen_days_symptom_id">diarrhoea_duration_fourteen_days</string>
+	<string name="imci_diarrhoea_assessment_blood_stools_symptom_id">blood_in_the_stools</string>
+	<string name="imci_diarrhoea_assessment_sunken_eyes_symptom_id">sunken_eyes</string>
+	<string name="imci_diarrhoea_assessment_restless_irritable_symptom_id">restless_irritable</string>
+	<string name="imci_diarrhoea_assessment_cholera_in_area_symptom_id">cholera_in_area</string>
+	<string name="imci_diarrhoea_assessment_child_fluid_symptom_id">child_fluid</string>
+	<string name="imci_diarrhoea_assessment_skin_pinch_symptom_id">skin_pinch</string>
+	
+	
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 5: Fever Assessment -->
+    <!-- ============================================================ -->
+
+	<!-- Symptom Ids (NOT TO BE TRANSLATED!)-->
+	<string name="imci_fever_assessment_fever_symptom_id">fever</string>
+	<string name="imci_fever_assessment_malaria_risk_symptom_id">malaria_risk</string>
+	<string name="imci_fever_assessment_duration_symptom_id">fever_duration</string>
+	<string name="imci_fever_assessment_present_every_day_symptom_id">fever_present_every_day</string>
+	<string name="imci_fever_assessment_measles_symptom_id">measles</string>
+	<string name="imci_fever_assessment_stiff_neck_symptom_id">stiff_neck</string>
+	<string name="imci_fever_assessment_runny_nose_symptom_id">runny_nose</string>
+	<string name="imci_fever_assessment_generalised_rash_symptom_id">generalised_rash</string>
+	<string name="imci_fever_assessment_cough_symptom_id">cough</string>
+	<string name="imci_fever_assessment_red_eyes_symptom_id">red_eyes</string>
+	<string name="imci_fever_assessment_mouth_ulcers_symptom_id">mouth_ulcers</string>
+	<string name="imci_fever_assessment_deep_mouth_ulcers_symptom_id">deep_mouth_ulcers</string>
+	<string name="imci_fever_assessment_extensive_mouth_ulcers_symptom_id">extensive_mouth_ulcers</string>
+	<string name="imci_fever_assessment_pus_draining_symptom_id">pus_draining</string>
+	<string name="imci_fever_assessment_cornea_clouding_symptom_id">cornea_clouding</string>
+	<string name="imci_fever_assessment_bulging_fontanel_symptom_id">bulging_fontanel</string>
+
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 6: Ear Assessment -->
+    <!-- ============================================================ -->
+
+	<!-- Symptom Ids (NOT TO BE TRANSLATED!)-->
+	<string name="imci_ear_assessment_ear_problem_symptom_id">ear_problem</string>
+	<string name="imci_ear_assessment_ear_pain_symptom_id">ear_pain</string>
+	<string name="imci_ear_assessment_ear_discharge_symptom_id">ear_discharge</string>
+	<string name="imci_ear_assessment_ear_discharge_duration_symptom_id">ear_discharge_duration</string>
+	<string name="imci_ear_assessment_tender_swelling_symptom_id">tender_swelling_behind_ear</string>
+	
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 7: Malnutrition and Anaemia Assessment -->
+    <!-- ============================================================ -->
+	
+	<!-- Symptom Ids (NOT TO BE TRANSLATED!)-->
+	<string name="imci_malnutrition_assessment_oedema_symptom_id">oedema_of_both_feet</string>
+	<string name="imci_malnutrition_assessment_weight_for_age_symptom_id">weight_for_age</string>
+	<string name="imci_malnutrition_assessment_visible_severe_wasting_symptom_id">visible_severe_wasting</string>
+	<string name="imci_malnutrition_assessment_palmar_pallor_symptom_id">palmar_pallor</string>
+	<string name="imci_malnutrition_assessment_mebendazole_dose_symptom_id">mebendazole_dose</string>
+
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 8: Immunization Status Assessment -->
+    <!-- ============================================================ -->
+
+    <!-- ============================================================ -->
+    <!-- ============================================================ -->
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT												  -->
+    <!-- ============================================================ -->
+	<!-- ============================================================ -->
+    <!-- ============================================================ -->    
+    
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT BREAD-CRUMB UI 								  -->
+    <!-- STAGE 1: GENERAL PATIENT DETAILS 							  -->
+    <!-- ============================================================ -->
+	
+	<!-- Symptom Ids (NOT TO BE TRANSLATED!)-->
+	<string name="ccm_general_patient_details_date_of_birth_symptom_id">date_of_birth</string>
+	<string name="ccm_general_patient_details_gender_symptom_id">gender</string>
+	
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT BREAD-CRUMB UI 								  -->
+    <!-- STAGE 2: INITIAL ASK ASSESSMENT 							  -->
+    <!-- ============================================================ -->
+    
+	<!-- Symptom Ids (NOT TO BE TRANSLATED!)-->
+	<string name="ccm_ask_initial_assessment_problems_symptom_id">problems</string>
+	<string name="ccm_ask_initial_assessment_cough_symptom_id">cough</string>
+	<string name="ccm_ask_initial_assessment_cough_duration_twenty_one_days_symptom_id">cough_duration_twenty_one_days</string>
+	<string name="ccm_ask_initial_assessment_diarrhoea_symptom_id">diarrhoea</string>
+	<string name="ccm_ask_initial_assessment_diarrhoea_duration_fourteen_days_symptom_id">diarrhoea_duration_fourteen_days</string>
+	<string name="ccm_ask_initial_assessment_diarrhoea_zinc_dosage_symptom_id">diarrhoea_zinc_dosage</string>
+	<string name="ccm_ask_initial_assessment_blood_in_stool_symptom_id">blood_in_stool</string>
+	<string name="ccm_ask_initial_assessment_fever_symptom_id">fever</string>
+	<string name="ccm_ask_initial_assessment_fever_duration_seven_days_symptom_id">fever_duration_seven_days</string>
+	<string name="ccm_ask_initial_assessment_fever_la_dosage_age_symptom_id">fever_la_dosage_age</string>
+	<string name="ccm_ask_initial_assessment_fever_paracetamol_dosage_age_symptom_id">fever_paracetamol_dosage_age</string>
+	<string name="ccm_ask_initial_assessment_convulsions_symptom_id">convulsions</string>
+	<string name="ccm_ask_initial_assessment_drink_or_feed_difficulty_symptom_id">drink_or_feed_difficulty</string>
+	<string name="ccm_ask_initial_assessment_unable_to_drink_or_feed_symptom_id">not_able_to_drink_or_feed</string>
+
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT BREAD-CRUMB UI 								  -->
+    <!-- STAGE 3: SECONDARY ASK ASSESSMENT 							  -->
+    <!-- ============================================================ -->
+    
+	<!-- Symptom Ids (NOT TO BE TRANSLATED!)-->
+	<string name="ccm_ask_secondary_assessment_vomiting_symptom_id">vomiting</string>
+	<string name="ccm_ask_secondary_assessment_vomits_everything_symptom_id">vomits_everything</string>
+	<string name="ccm_ask_secondary_assessment_red_eyes_symptom_id">red_eyes</string>
+	<string name="ccm_ask_initial_assessment_red_eyes_duration_four_days_symptom_id">red_eyes_duration_four_days</string>
+	<string name="ccm_ask_secondary_assessment_seeing_difficulty_symptom_id">seeing_difficulty</string>
+	<string name="ccm_ask_secondary_assessment_seeing_difficulty_duration_symptom_id">seeing_difficulty_duration</string>
+	<string name="ccm_ask_secondary_assessment_cannot_treat_problems_symptom_id">cannot_treat_problems</string>
+	<string name="ccm_ask_secondary_assessment_cannot_treat_problems_details_symptom_id">cannot_treat_problems_details</string>
+
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT BREAD-CRUMB UI 								  -->
+    <!-- STAGE 4: LOOK ASSESSMENT		 							  -->
+    <!-- ============================================================ -->
+    
+	<!-- Symptom Ids (NOT TO BE TRANSLATED!)-->
+	<string name="ccm_look_assessment_chest_indrawing_symptom_id">chest_indrawing</string>
+	<string name="ccm_look_assessment_chest_indrawing_dosage_age_symptom_id">chest_indrawing_dosage_age</string>
+	<string name="ccm_look_assessment_fast_breathing_symptom_id">fast_breathing</string>
+	<string name="ccm_look_assessment_fast_breathing_dosage_symptom_id">fast_breathing_dosage</string>
+	<string name="ccm_look_assessment_very_sleepy_or_unconscious_symptom_id">very_sleepy_or_unconscious</string>
+	<string name="ccm_look_assessment_palmar_pallor_symptom_id">palmar_pallor</string>
+	<string name="ccm_look_assessment_red_muac_tape_colour_symptom_id">red_muac_tape_colour</string>
+	<string name="ccm_look_assessment_swelling_of_both_feet_symptom_id">swelling_of_both_feet</string>
+
+
+</resources>

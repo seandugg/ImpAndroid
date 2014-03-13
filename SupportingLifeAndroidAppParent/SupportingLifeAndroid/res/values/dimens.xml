@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- ============================================================ -->
+	<!-- DEFAULT SCREEN MARGINS -->
+	<!-- (As per the Android Design guidelines -->
+	<!-- ============================================================ -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+ 
+	<!-- ============================================================ -->
+	<!-- ACTION BAR -->
+	<!-- ============================================================ -->       
+    <dimen name="action_bar_height">45dp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_medium">20sp</dimen>
+    <dimen name="text_size_large">22sp</dimen>
+    
+	<!-- ============================================================ -->
+	<!-- ACTION BAR ICON -->
+	<!-- ============================================================ -->       
+    <dimen name="action_bar_icon_height">25dp</dimen>
+    <dimen name="action_bar_icon_width">30dp</dimen>
+
+	<!-- ============================================================ -->
+	<!-- BREADCRUMB WIZARD UI -->
+	<!-- ============================================================ -->    
+    <dimen name="step_pager_tab_width">32dp</dimen>
+    <dimen name="step_pager_tab_height">6dp</dimen>
+    <dimen name="step_pager_tab_spacing">4dp</dimen>
+</resources>

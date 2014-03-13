@@ -1,0 +1,167 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SupportingLifePage"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent" >
+
+<!-- ============================================================ -->
+<!-- ASSESSMENT BREAD-CRUMB WIZARD UI -->
+<!-- ASSESSMENT PAGE: GENERAL DANGER SIGNS -->
+<!-- ============================================================ -->
+    <TextView style="@style/WizardPageTitle" />
+
+    <ScrollView android:layout_height="match_parent"
+    	android:layout_width="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="218dp"
+            android:orientation="vertical" >
+
+			<!-- ============================================================ -->
+			<!-- DRINK OR BREASTFEED RADIO BUTTON GROUP -->
+			<!-- ============================================================ -->               
+			
+			<TextView
+			    style="@style/AssessmentFormLabel"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="bottom"
+			    android:text="@string/imci_general_danger_signs_radio_drink_breastfeed" />
+			
+			<RadioGroup
+			    android:id="@+id/imci_general_danger_signs_radio_drink_breastfeed"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal" >
+
+			    <RadioButton
+			        android:id="@+id/imci_general_danger_signs_radio_drink_breastfeed_yes"
+			        android:layout_weight="0.67"
+			        android:text="@string/assessment_wizard_radio_yes" />
+
+			    <RadioButton
+			        android:id="@+id/imci_general_danger_signs_radio_drink_breastfeed_no"
+			        android:layout_weight="0.33"
+			        android:text="@string/assessment_wizard_radio_no" />
+
+			</RadioGroup>
+
+			<!-- ============================================================ -->
+			<!-- VOMITS EVERYTHINGS RADIO BUTTON GROUP -->
+			<!-- ============================================================ -->               
+			
+			<TextView
+			    style="@style/AssessmentFormLabel"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="bottom"
+			    android:text="@string/imci_general_danger_signs_radio_vomits" />
+			
+			<RadioGroup
+			    android:id="@+id/imci_general_danger_signs_radio_vomits"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal" >
+
+			    <RadioButton
+			        android:id="@+id/imci_general_danger_signs_radio_vomits_yes"
+			        android:layout_weight="0.67"
+			        android:text="@string/assessment_wizard_radio_yes" />
+
+			    <RadioButton
+			        android:id="@+id/imci_general_danger_signs_radio_vomits_no"
+			        android:layout_weight="0.33"
+			        android:text="@string/assessment_wizard_radio_no" />
+
+			</RadioGroup>
+
+			<!-- ============================================================ -->
+			<!-- HISTORY OF CONVULSIONS RADIO BUTTON GROUP -->
+			<!-- ============================================================ -->               
+			
+			<TextView
+			    style="@style/AssessmentFormLabel"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="bottom"
+			    android:text="@string/imci_general_danger_signs_radio_convulsions" />
+			
+			<RadioGroup
+			    android:id="@+id/imci_general_danger_signs_radio_convulsions"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal" >
+
+			    <RadioButton
+			        android:id="@+id/imci_general_danger_signs_radio_convulsions_yes"
+			        android:layout_weight="0.67"
+			        android:text="@string/assessment_wizard_radio_yes" />
+
+			    <RadioButton
+			        android:id="@+id/imci_general_danger_signs_radio_convulsions_no"
+			        android:layout_weight="0.33"
+			        android:text="@string/assessment_wizard_radio_no" />
+
+			</RadioGroup>	
+
+			<!-- ============================================================ -->
+			<!-- LETHARGIC OR UNCONSCIOUS RADIO BUTTON GROUP -->
+			<!-- ============================================================ -->               
+			
+			<TextView
+			    style="@style/AssessmentFormLabel"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="bottom"
+			    android:text="@string/imci_general_danger_signs_radio_lethargic_or_unconscious" />
+			
+			<RadioGroup
+			    android:id="@+id/imci_general_danger_signs_radio_lethargic_or_unconscious"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal" >
+
+			    <RadioButton
+			        android:id="@+id/imci_general_danger_signs_radio_lethargic_or_unconscious_yes"
+			        android:layout_weight="0.67"
+			        android:text="@string/assessment_wizard_radio_yes" />
+
+			    <RadioButton
+			        android:id="@+id/imci_general_danger_signs_radio_lethargic_or_unconscious_no"
+			        android:layout_weight="0.33"
+			        android:text="@string/assessment_wizard_radio_no" />
+
+			</RadioGroup>
+
+			<!-- ============================================================ -->
+			<!-- CONVULSING NOW RADIO BUTTON GROUP -->
+			<!-- ============================================================ -->               
+			
+			<TextView
+			    style="@style/AssessmentFormLabel"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="bottom"
+			    android:text="@string/imci_general_danger_signs_radio_convulsing_now" />
+			
+			<RadioGroup
+			    android:id="@+id/imci_general_danger_signs_radio_convulsing_now"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal" >
+
+			    <RadioButton
+			        android:id="@+id/imci_general_danger_signs_radio_convulsing_now_yes"
+			        android:layout_weight="0.67"
+			        android:text="@string/assessment_wizard_radio_yes" />
+
+			    <RadioButton
+			        android:id="@+id/imci_general_danger_signs_radio_convulsing_now_no"
+			        android:layout_weight="0.33"
+			        android:text="@string/assessment_wizard_radio_no" />
+
+			</RadioGroup>
+								   
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

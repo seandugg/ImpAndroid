@@ -1,0 +1,297 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- ============================================================ -->
+    <!-- APPLICATION STYLE THEME -->
+    <!-- ============================================================ -->
+	<style name="Theme.Transparent" parent="android:Theme.Holo.Light">
+		<item name="android:windowNoTitle">false</item>
+		<item name="android:windowActionBar">true</item>
+		<item name="android:backgroundDimEnabled">false</item>
+		<item name="android:actionBarStyle">@style/ActionBar</item>
+		<item name="android:radioButtonStyle">@style/RadioButton</item>
+		<item name="android:actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
+	</style>
+    
+    <!-- ============================================================ -->
+    <!-- SPLASH SCREEN STYLE THEME -->
+    <!-- ============================================================ -->
+	<style name="Theme.Splash" parent="android:Theme.Light.NoTitleBar">
+		<item name="android:windowAnimationStyle">@null</item>
+	</style>
+
+    <!-- ============================================================ -->
+    <!-- ACTION BAR GENERAL STYLE -->
+    <!-- ============================================================ -->
+	<style name="ActionBar" parent="@android:style/Widget.Holo.ActionBar">
+		<item name="android:background">@color/DarkGreen</item>
+		<item name="android:titleTextStyle">@style/ActionBar.TextStyle</item>
+        <!-- below line removes default application icon from action bar -->
+		<item name="android:icon">@android:color/transparent</item>
+		<item name="android:showDividers">beginning</item>
+		<item name="android:divider">@color/White</item>
+	</style>
+	    
+    <!-- ============================================================ -->
+    <!-- ACTION BAR SEPARATOR STYLE -->
+    <!-- ============================================================ -->
+	<style name="ActionBar.ActionBarSeparator">
+		<item name="android:layout_width">1dp</item>
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:background">@color/White</item>
+	</style>    
+    
+    <!-- ============================================================ -->
+    <!-- ACTION BUTTON OVERFLOW STYLE -->
+    <!-- ============================================================ -->	
+	<style name="ActionButtonOverflow" parent="android:style/Widget.Holo.ActionButton.Overflow">
+    	<item name="android:color">@color/White</item>
+	</style>
+	
+    <!-- ============================================================ -->
+    <!-- ACTION BAR TEXT STYLE -->
+    <!-- ============================================================ -->
+	<style name="ActionBar.TextStyle">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_height">fill_parent</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:gravity">center_vertical</item>
+		<item name="android:textSize">@dimen/text_size_medium</item>
+		<item name="android:paddingLeft">12dip</item>
+		<item name="android:paddingRight">12dip</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">@color/White</item>
+		<item name="android:singleLine">true</item>
+		<item name="android:ellipsize">end</item>
+	</style>
+     
+    <!-- ============================================================ -->
+    <!-- PAGE STYLE -->
+    <!-- ============================================================ -->
+	<style name="SupportingLifePage">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:orientation">vertical</item>
+		<item name="android:paddingLeft">16dp</item>
+		<item name="android:paddingRight">16dp</item>
+	</style>
+
+    <!-- ============================================================ -->
+    <!-- BREADCRUMB WIZARD PAGE TITLE STYLE -->
+    <!-- ============================================================ -->
+	<style name="WizardPageTitle">
+		<item name="android:id">@android:id/title</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginBottom">8dp</item>
+		<item name="android:textSize">24sp</item>
+		<item name="android:textColor">#ff0099cc</item>
+	</style>
+
+    <!-- ============================================================ -->
+    <!-- BREADCRUMB WIZARD TEXT STYLE -->
+    <!-- ============================================================ -->
+	<style name="BreadcrumbTextAppearanceFinish" parent="android:TextAppearance.Medium">
+		<item name="android:textColor">@color/White</item>
+	</style>
+
+    <!-- ============================================================ -->
+    <!-- BREADCRUMB ASSESSMENT FORM LABEL STYLE -->
+    <!-- ============================================================ -->
+	<style name="AssessmentFormLabel">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginBottom">3dp</item>
+		<item name="android:textColor">@color/LightCoral</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:paddingLeft">4dp</item>
+		<item name="android:paddingRight">12dp</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:textSize">16sp</item>
+	</style>
+    
+    <!-- ============================================================ -->
+    <!-- BREADCRUMB ASSESSMENT FORM NOTE STYLE -->
+    <!-- ============================================================ -->
+	<style name="AssessmentFormNote">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginBottom">2dp</item>
+		<item name="android:textColor">@color/DarkGreen</item>
+		<item name="android:textStyle">normal</item>
+		<item name="android:textSize">10sp</item>
+		<item name="android:paddingLeft">4dp</item>
+		<item name="android:paddingRight">12dp</item>
+		<item name="android:paddingTop">5dp</item>
+	</style>
+  
+    <!-- ============================================================ -->
+    <!-- BREADCRUMB ASSESSMENT DISABLED TEXTVIEW STYLE -->
+    <!-- ============================================================ -->
+	<style name="AssessmentDisabledTextView">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textColor">@color/DarkGray</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:paddingLeft">4dp</item>
+		<item name="android:paddingRight">12dp</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:textSize">16sp</item>
+	</style>
+
+    <!-- ============================================================================== -->
+    <!-- BREADCRUMB WIZARD RADIO BUTTON STYLE 						  					-->
+    <!-- NOTE: FOR SAMSUNG (JOD) HTC (JF) DEVICE - PROBLEM WITH DEVICES MEANS   		-->
+    <!-- 	   THAT IN ORDER TO GET THE RADIO BUTTON TEXT SHOWING	  					-->
+    <!-- 	   ON THE RIGHT-HAND SIDE OF THE RADIO BUTTON CLEANLY, THE	  				-->
+    <!-- 	   FOLLOWING NEEDS TO BE DONE:								  				-->
+    <!--															  					-->
+    <!-- 	   1.  <item name="android:button">@null</item>			  					-->
+    <!-- 	   2.  <item name="android:background">@android:color/transparent</item> 	-->
+    <!-- 	   3.  <item name="android:drawableLeft">@drawable/radio_button</item>		-->
+    <!-- 	   4.  <item name="android:drawablePadding">5dp</item>						-->
+    <!-- ============================================================================== -->
+	<style name="RadioButton" parent="@android:style/Widget.CompoundButton.RadioButton">
+		<item name="android:button">@null</item>
+		<item name="android:background">@android:color/transparent</item>
+		<item name="android:paddingTop">10dp</item>
+		<item name="android:paddingBottom">10dp</item>
+		<item name="android:paddingRight">5dp</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_gravity">top|center|right</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:checked">false</item>
+		<item name="android:drawableLeft">@drawable/radio_button</item>
+		<item name="android:drawablePadding">5dp</item>
+	</style>
+
+    <!-- ============================================================ -->
+    <!-- BREADCRUMB REVIEW LIST HEADER ITEM -->
+    <!-- ============================================================ -->
+	<style name="ReviewListHeader">
+		<item name="android:id">@android:id/title</item>
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginBottom">8dp</item>
+		<item name="android:textSize">18sp</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textColor">#ff0099cc</item>
+	</style>
+    
+    <!-- ============================================================ -->
+    <!-- TRAINING SCREEN LINE SEPARATOR STYLE -->
+    <!-- ============================================================ -->
+	<style name="TrainingScreenLineSeparator">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">3dp</item>
+		<item name="android:background">@color/SupportingLifeGreen</item>
+		<item name="android:layout_marginTop">5dp</item>
+		<item name="android:layout_marginBottom">5dp</item>
+	</style>
+    
+    <!-- ============================================================ -->
+    <!-- TRAINING SCREEN LABEL STYLE -->
+    <!-- ============================================================ -->
+	<style name="TrainingLabel">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginBottom">3dp</item>
+		<item name="android:textColor">@color/LightCoral</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:paddingLeft">4dp</item>
+		<item name="android:paddingRight">6dp</item>
+		<item name="android:paddingTop">10dp</item>
+		<item name="android:textSize">18sp</item>
+		<item name="android:enabled">false</item>
+	</style>
+    
+    <!-- ============================================================ -->
+    <!-- TRAINING SCREEN TEXT STYLE -->
+    <!-- ============================================================ -->
+	<style name="TrainingText">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginBottom">2dp</item>
+		<item name="android:textColor">@color/Gray</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:paddingLeft">2dp</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:textSize">18sp</item>
+		<item name="android:enabled">false</item>
+	</style>
+	
+    <!-- ============================================================ -->
+    <!-- ABOUT SCREEN LABEL STYLE -->
+    <!-- ============================================================ -->
+	<style name="AboutLabel">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_gravity">center_horizontal</item>
+		<item name="android:layout_marginBottom">4dp</item>
+		<item name="android:textColor">@color/DarkGreen</item>
+		<item name="android:paddingLeft">4dp</item>
+		<item name="android:paddingRight">6dp</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:textSize">12sp</item>
+		<item name="android:enabled">false</item>
+	</style>
+    
+    <!-- ============================================================ -->
+    <!-- ABOUT SCREEN TEXT STYLE -->
+    <!-- ============================================================ -->
+	<style name="AboutText">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_gravity">center_horizontal</item>
+		<item name="android:layout_marginBottom">2dp</item>
+		<item name="android:textColor">@color/Black</item>
+		<item name="android:paddingLeft">2dp</item>
+		<item name="android:paddingTop">2dp</item>
+		<item name="android:textSize">12sp</item>
+		<item name="android:enabled">false</item>
+	</style>
+	
+    <!-- ============================================================ -->
+    <!-- ABOUT SCREEN WEB LINK STYLE -->
+    <!-- ============================================================ -->
+	<style name="AboutWebLink">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_gravity">center_horizontal</item>
+		<item name="android:layout_marginBottom">4dp</item>
+		<item name="android:autoLink">web</item>
+		<item name="android:textSize">12sp</item>
+		<item name="android:linksClickable">true</item>
+	</style>
+	
+    <!-- ============================================================ -->
+    <!-- SYNC SCREEN BUTTON TEXT STYLE -->
+    <!-- ============================================================ -->
+	<style name="SyncScreenTextAppearanceFinish" parent="android:TextAppearance.Medium">
+		<item name="android:textColor">@color/White</item>
+	</style>
+	
+    <!-- ============================================================ -->
+    <!-- SYNC SCREEN BUTTON TEXT STYLE -->
+    <!-- ============================================================ -->
+	<style name="SyncScreenHorizontalProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+		<item name="android:progressDrawable">@drawable/horizontal_progress_bar</item>
+	</style>
+	
+    <!-- ============================================================ -->
+    <!-- SYNC SCREEN TEXT STYLE -->
+    <!-- ============================================================ -->
+	<style name="SynchronisationScreenText">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginBottom">3dp</item>
+		<item name="android:textColor">@color/Gray</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:paddingLeft">4dp</item>
+		<item name="android:paddingRight">6dp</item>
+		<item name="android:paddingTop">10dp</item>
+		<item name="android:textSize">18sp</item>
+		<item name="android:enabled">false</item>
+	</style>	
+	
+</resources>

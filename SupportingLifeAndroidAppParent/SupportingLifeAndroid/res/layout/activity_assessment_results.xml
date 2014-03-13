@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================================ -->
+<!-- ASSESSMENT RESULTS SCREEN -->
+<!-- ============================================================ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- ============================================================ -->
+    <!-- TABBED FRAGMENTS DISPLAYING THE FOLLOWING: 				  -->
+    <!--  															  -->
+    <!-- 1. Assessment Review Items Tab (IMCI & CCM)				  -->
+    <!-- 2. Classifications Tab	(IMCI & CCM)						  -->
+	<!-- 3. Recommended Treatments Tab (IMCI & CCM)					  -->
+	<!-- 4. Vaccine Tab (CCM)										  -->
+	<!-- 5. Follow-up Tab (CCM)										  -->
+    <!-- ============================================================ --> 
+
+	<!-- ============================================================ -->
+	<!-- PAGE SWIPING UI -->
+	<!-- ============================================================ -->
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/assessment_results_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+    </android.support.v4.view.ViewPager>
+
+	<View
+		android:id="@+id/divider"
+		android:layout_width="match_parent"
+		android:layout_height="1dp" />
+</LinearLayout>

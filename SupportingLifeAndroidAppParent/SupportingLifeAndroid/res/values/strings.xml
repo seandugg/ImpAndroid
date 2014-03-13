@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ============================================================ -->
+    <!-- GENERAL APPLICATION DETAILS -->
+    <!-- ============================================================ -->
+	<string name="app_name">Supporting LIFE</string>
+
+    <!-- ============================================================ -->
+    <!-- ACTIVITY TITLES -->
+    <!-- ============================================================ -->
+	<string name="activity_title_home">Home</string>
+	<string name="activity_title_search">Search</string>
+	<string name="activity_title_about">About</string>
+	<string name="activity_title_training">Training</string>
+	<string name="activity_title_settings">Settings</string>
+	<string name="activity_title_help">Help</string>
+	<string name="activity_title_video_viewer">Video Viewer</string>
+	<string name="activity_title_record_patient_details">Assessment</string>
+	<string name="activity_title_submit_patient_record">Submission</string>
+	<string name="activity_title_record_imci_assessment">IMCI Assessment</string>
+	<string name="activity_title_record_ccm_assessment">CCM Assessment</string>
+	<string name="activity_title_imci_assessment_results">IMCI Results</string>
+	<string name="activity_title_ccm_assessment_results">CCM Results</string>
+
+    <!-- ============================================================ -->
+    <!-- ACTION BAR -->
+    <!-- ============================================================ -->
+	<string name="actionbar_home_description">Home</string>
+	<string name="actionbar_separator_description">Title Bar</string>
+ 
+    <!-- ============================================================ -->
+    <!-- DASHBOARD -->
+    <!-- ============================================================ -->
+	<string name="dashboard_user_profile_button">Profile</string>
+	<string name="dashboard_about_button">About</string>
+	<string name="dashboard_imci_assessment_button">IMCI</string>
+	<string name="dashboard_ccm_assessment_button">CCM</string>
+	<string name="dashboard_training_button">Training</string>
+	<string name="dashboard_search_button">Search</string>
+	<string name="dashboard_action_settings">Settings</string>
+	<string name="dashboard_action_sync">Sync</string>
+	<string name="dashboard_action_help">Help</string>
+	<string name="submissionInfoStatus">Submitting Patient Record..</string>
+	<string name="retrievalInfoStatus">Retrieving Patient Record..</string>
+ 
+    <!-- ============================================================ -->
+    <!-- ============================================================ -->
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT											  -->
+    <!-- ============================================================ -->
+	<!-- ============================================================ -->
+    <!-- ============================================================ -->
+
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 1: GENERAL PATIENT DETAILS -->
+    <!-- ============================================================ -->
+	<string name="imci_general_patient_details_title">Patient Details</string>
+	<string name="imci_general_patient_details_first_name">First Name:</string>
+	<string name="imci_general_patient_details_surname">Surname:</string>
+	<string name="imci_general_patient_details_date_of_birth">Date of Birth:</string>
+	<string name="imci_general_patient_details_weight">Weight (kg):</string>
+	<string name="imci_general_patient_details_temperature">Temperature</string>
+    <!-- Gender -->
+	<string name="imci_general_patient_details_radio_gender">Gender:</string>
+	<string name="imci_general_patient_details_radio_gender_male">Male</string>
+	<string name="imci_general_patient_details_radio_gender_female">Female</string>
+    <!-- Problems -->
+	<string name="imci_general_patient_details_problems">What are the child\'s problems?:</string>
+
+    <!-- Patient Details Review -->
+	<string name="imci_general_patient_details_review_first_name">First Name</string>
+	<string name="imci_general_patient_details_review_surname">Surname</string>
+	<string name="imci_general_patient_details_review_date_of_birth">Date of Birth</string>
+	<string name="imci_general_patient_details_review_weight">Weight (kg)</string>
+	<string name="imci_general_patient_details_review_temperature">Temperature</string>
+	<string name="imci_general_patient_details_review_gender">Gender</string>
+	<string name="imci_general_patient_details_review_problems">Problems</string>
+
+    <!-- HINTS -->
+	<string name="imci_general_patient_details_first_name_hint">Please enter child\'s first name</string>
+	<string name="imci_general_patient_details_surname_hint">Please enter child\'s surname</string>
+	<string name="imci_general_patient_details_weight_hint">Enter value between 0 and 100</string>
+	<string name="imci_general_patient_details_temperature_hint">Enter value between 0 and 50</string>	
+	
+	
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 2: GENERAL DANGER SIGNS -->
+    <!-- ============================================================ -->
+	<string name="imci_general_danger_signs_title">Danger Signs</string>
+	<string name="imci_general_danger_signs_radio_drink_breastfeed">Not able to Drink or Breastfeed:</string>
+	<string name="imci_general_danger_signs_radio_vomits">Vomits Everything:</string>
+	<string name="imci_general_danger_signs_radio_convulsions">History of Convulsions:</string>
+	<string name="imci_general_danger_signs_radio_lethargic_or_unconscious">Lethargic or Unconscious:</string>
+	<string name="imci_general_danger_signs_radio_convulsing_now">Convulsing Now:</string>
+	
+    <!-- Danger Signs Review -->
+	<string name="imci_general_danger_signs_review_drink_breastfeed">Not able to Drink or Breastfeed</string>
+	<string name="imci_general_danger_signs_review_vomits">Vomits Everything</string>
+	<string name="imci_general_danger_signs_review_convulsions">History of Convulsions</string>
+	<string name="imci_general_danger_signs_review_lethargic_or_unconscious">Lethargic or Unconscious</string>
+	<string name="imci_general_danger_signs_review_convulsing_now">Convulsing Now</string>
+	
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 3: Cough / Breathing Assessment -->
+    <!-- ============================================================ -->
+	<string name="imci_breathing_assessment_title">Breathing Assessment</string>
+	<string name="imci_breathing_assessment_radio_cough_difficult_breathing">Does the child have cough or difficult breathing?
+	</string>
+	<string name="imci_breathing_assessment_cough_duration">For how long? (days)</string>
+	<string name="imci_breathing_assessment_breaths_per_minute">Breaths per minute:</string>
+	<string name="imci_breathing_assessment_radio_chest_indrawing">Chest indrawing:</string>
+	<string name="imci_breathing_assessment_radio_stridor">Stridor:</string>
+	
+    <!-- Cough / Breathing Review -->
+	<string name="imci_breathing_assessment_review_cough_difficult_breathing">Cough or Difficult Breathing</string>
+	<string name="imci_breathing_assessment_review_cough_duration">For How Long? (days)</string>
+	<string name="imci_breathing_assessment_review_breaths_per_minute">Breaths per Minute</string>
+	<string name="imci_breathing_assessment_review_chest_indrawing">Chest Indrawing</string>
+	<string name="imci_breathing_assessment_review_stridor">Stridor</string>
+	
+    <!-- HINTS -->
+	<string name="imci_breathing_assessment_breaths_per_minute_hint">Enter value between 1 and 100</string>
+	<string name="imci_breathing_assessment_cough_duration_hint">Enter value between 1 and 365</string>
+	
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 4: Diarrhoea Assessment -->
+    <!-- ============================================================ -->
+	<string name="imci_diarrhoea_assessment_title">Diarrhoea Assessment</string>
+	<string name="imci_diarrhoea_assessment_radio_diarrhoea">Does the child have diarrhoea?</string>
+	<string name="imci_diarrhoea_assessment_diarrhoea_duration">For how long? (days)</string>
+	<string name="imci_diarrhoea_assessment_radio_blood_stools">Is there blood in the stools?</string>
+	<string name="imci_diarrhoea_assessment_radio_sunken_eyes">Sunken eyes:</string>
+	<string name="imci_diarrhoea_assessment_radio_lethargic_or_unconscious">Lethargic or unconscious:</string>
+	<string name="imci_diarrhoea_assessment_radio_restless_irritable">Restless / irritable:</string>
+	<string name="imci_diarrhoea_assessment_radio_cholera_in_area">Cholera in Area:</string>
+	
+	<!-- Offer the Child Fluid -->
+	<string name="imci_diarrhoea_assessment_radio_child_fluid">Offer the child fluid</string>
+	<string name="imci_diarrhoea_assessment_radio_child_fluid_not_able">Not able to \ndrink</string>
+	<string name="imci_diarrhoea_assessment_radio_child_fluid_drinking_poorly">Drinking poorly</string>
+	<string name="imci_diarrhoea_assessment_radio_child_fluid_drinking_eagerly">Drinking eagerly, thirsty</string>
+
+	<!-- Skin Pinch -->
+	<string name="imci_diarrhoea_assessment_radio_skin_pinch">Skin pinch</string>
+	<string name="imci_diarrhoea_assessment_radio_skin_pinch_very_slowly">Very slowly \n(longer than \n2 seconds)</string>
+	<string name="imci_diarrhoea_assessment_radio_skin_pinch_slowly">Slowly</string>
+	<string name="imci_diarrhoea_assessment_radio_skin_pinch_immediate">Immediate</string>
+	
+	<!-- Lethargic or Unconscious Radio Group Disabled Note -->
+	<string name="imci_diarrhoea_assessment_radio_lethargic_disabled_note">*chosen on \'Danger Signs\' assessment page</string>
+		 
+    <!-- Diarrhoea Review -->
+	<string name="imci_diarrhoea_assessment_review_diarrhoea">Diarrhoea</string>
+	<string name="imci_diarrhoea_assessment_review_diarrhoea_duration">For How Long? (days)</string>
+	<string name="imci_diarrhoea_assessment_review_blood_stools">Blood in the Stools</string>
+	<string name="imci_diarrhoea_assessment_review_sunken_eyes">Sunken Eyes</string>
+	<string name="imci_diarrhoea_assessment_review_lethargic_or_unconscious">Lethargic or Unconscious:</string>
+	<string name="imci_diarrhoea_assessment_review_restless_irritable">Restless / Irritable</string>
+	<string name="imci_diarrhoea_assessment_review_cholera_in_area">Cholera in Area</string>
+	<string name="imci_diarrhoea_assessment_review_child_fluid">Offer the Child Fluid</string>
+	<string name="imci_diarrhoea_assessment_review_skin_pinch">Skin Pinch</string>
+	
+    <!-- HINTS -->
+	<string name="imci_diarrhoea_assessment_diarrhoea_duration_hint">Enter value between 1 and 365</string>
+
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 5: Fever Assessment -->
+    <!-- ============================================================ -->
+	<string name="imci_fever_assessment_title">Fever Assessment</string>
+
+    <!-- Fever -->
+	<string name="imci_fever_assessment_radio_fever">Does the child have fever?</string>
+	<string name="imci_fever_assessment_radio_fever_no">No</string>
+	<string name="imci_fever_assessment_radio_fever_history">History</string>
+	<string name="imci_fever_assessment_radio_fever_feels_hot">Feels Hot</string>
+	<string name="imci_fever_assessment_radio_fever_temperature">Temperature > 37.5</string>
+
+    <!-- Malaria Risk -->
+	<string name="imci_fever_assessment_radio_malaria_risk">Malaria Risk</string>
+	<string name="imci_fever_assessment_radio_malaria_risk_high">High</string>
+	<string name="imci_fever_assessment_radio_malaria_risk_low">Low</string>
+	<string name="imci_fever_assessment_radio_malaria_risk_no">No</string>
+	
+	<!-- Duration -->
+	<string name="imci_fever_assessment_duration">For how long? (days)</string>
+	
+	<!-- Fever Present Every Day -->
+	<string name="imci_fever_assessment_radio_present_every_day">Has fever been present every day?</string>
+	
+	<!-- Measles -->
+	<string name="imci_fever_assessment_radio_measles">Has the child measles now or within the last three months?</string>
+
+	<!-- Stiff Neck -->
+	<string name="imci_fever_assessment_radio_stiff_neck">Stiff neck</string>
+	
+	<!-- Runny Nose -->
+	<string name="imci_fever_assessment_radio_runny_nose">Runny nose</string>
+
+	<!-- Generalised Rash -->
+	<string name="imci_fever_assessment_radio_generalised_rash">Generalised Rash</string>
+
+	<!-- Cough -->
+	<string name="imci_fever_assessment_radio_cough">Cough</string>
+
+	<!-- Red Eyes -->
+	<string name="imci_fever_assessment_radio_red_eyes">Red eyes</string>
+	
+	<!-- Mouth Ulcers -->
+	<string name="imci_fever_assessment_radio_mouth_ulcers">Mouth ulcers</string>
+
+	<!-- Deep Mouth Ulcers -->
+	<string name="imci_fever_assessment_radio_deep_mouth_ulcers">Deep mouth ulcers</string>
+
+	<!-- Extensive Mouth Ulcers -->
+	<string name="imci_fever_assessment_radio_extensive_mouth_ulcers">Extensive mouth ulcers</string>
+	
+	<!-- Pus Draining from the Eye -->
+	<string name="imci_fever_assessment_radio_pus_draining">Pus draining from the eye</string>
+	
+	<!-- Clouding of the Cornea -->
+	<string name="imci_fever_assessment_radio_cornea_clouding">Clouding of the cornea</string>
+	
+	<!-- Bulging Fontanel -->
+	<string name="imci_fever_assessment_radio_bulging_fontanel">Bulging fontanel</string>
+	
+    <!-- Fever Review -->
+	<string name="imci_fever_assessment_review_fever">Fever</string>
+	<string name="imci_fever_assessment_review_malaria_risk">Malaria Risk</string>
+	<string name="imci_fever_assessment_review_duration">For How Long? (days)</string>
+	<string name="imci_fever_assessment_review_present_every_day">Fever Present Every Day</string>
+	<string name="imci_fever_assessment_review_measles">Has the Child Measles Now or within the Last Three Months?</string>
+	<string name="imci_fever_assessment_review_stiff_neck">Stiff Neck</string>
+	<string name="imci_fever_assessment_review_runny_nose">Runny Nose</string>
+	<string name="imci_fever_assessment_review_generalised_rash">Generalised Rash</string>
+	<string name="imci_fever_assessment_review_cough">Cough</string>
+	<string name="imci_fever_assessment_review_red_eyes">Red Eyes</string>
+	<string name="imci_fever_assessment_review_mouth_ulcers">Mouth Ulcers</string>
+	<string name="imci_fever_assessment_review_deep_mouth_ulcers">Deep Mouth Ulcers</string>
+	<string name="imci_fever_assessment_review_extensive_mouth_ulcers">Extensive Mouth Ulcers</string>
+	<string name="imci_fever_assessment_review_pus_draining">Pus Draining from the Eye</string>
+	<string name="imci_fever_assessment_review_cornea_clouding">Clouding of the Cornea</string>
+	<string name="imci_fever_assessment_review_bulging_fontanel">Bulging Fontanel</string>
+	
+    <!-- HINTS -->
+	<string name="imci_fever_assessment_fever_duration_hint">Enter value between 1 and 365</string>
+
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 6: Ear Assessment -->
+    <!-- ============================================================ -->
+	<string name="imci_ear_assessment_title">Ear Assessment</string>
+	<string name="imci_ear_assessment_radio_ear_problem">Does the child have an ear problem?</string>
+	<string name="imci_ear_assessment_radio_ear_pain">Is there ear pain?</string>
+	<string name="imci_ear_assessment_radio_ear_discharge">Is there ear discharge?</string>
+	<string name="imci_ear_assessment_ear_discharge_duration">For how long? (days)</string>
+	<string name="imci_ear_assessment_radio_tender_swelling">Tender swelling behind the ear</string>
+
+    <!-- Ear Review -->
+	<string name="imci_ear_assessment_review_ear_problem">Ear Problem</string>
+	<string name="imci_ear_assessment_review_ear_pain">Ear Pain</string>
+	<string name="imci_ear_assessment_review_ear_discharge">Ear Discharge</string>
+	<string name="imci_ear_assessment_review_ear_discharge_duration">For How Long? (days)</string>
+	<string name="imci_ear_assessment_review_tender_swelling">Tender Swelling behind the Ear</string>
+	
+    <!-- HINTS -->
+	<string name="imci_ear_assessment_ear_discharge_duration_hint">Enter value between 1 and 365</string>
+
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 7: Malnutrition and Anaemia Assessment -->
+    <!-- ============================================================ -->
+	<string name="imci_malnutrition_assessment_title">Malnutrition Assessment</string>
+	<string name="imci_malnutrition_assessment_radio_oedema">Oedema of both feet</string>
+
+    <!-- Weight for Age -->
+	<string name="imci_malnutrition_assessment_radio_weight_for_age">Weight for age</string>
+	<string name="imci_malnutrition_assessment_radio_weight_for_age_very_low">Very Low</string>
+	<string name="imci_malnutrition_assessment_radio_weight_for_age_not_very_low">Not Very Low</string>
+	
+	<!-- Visible Severe Wasting -->
+	<string name="imci_malnutrition_assessment_radio_visible_severe_wasting">Visible severe wasting</string>
+	
+	<!-- Palmar Pallor -->
+	<string name="imci_malnutrition_assessment_radio_palmar_pallor">Palmar Pallor</string>
+	<string name="imci_malnutrition_assessment_radio_palmar_pallor_some">Some</string>
+	<string name="imci_malnutrition_assessment_radio_palmar_pallor_severe">Severe</string>
+	
+	<!-- Mebendazole Dose -->
+	<string name="imci_malnutrition_assessment_radio_mebendazole_dose">Mebendazole dose in the last six months</string>
+
+    <!-- Malnutrition and Anaemia Review -->
+	<string name="imci_malnutrition_assessment_review_oedema">Oedema of both feet</string>
+	<string name="imci_malnutrition_assessment_review_weight_for_age">Weight for Age</string>
+	<string name="imci_malnutrition_assessment_review_visible_severe_wasting">Visible Severe Wasting</string>
+	<string name="imci_malnutrition_assessment_review_palmar_pallor">Palmar Pallor</string>
+	<string name="imci_malnutrition_assessment_review_mebendazole_dose">Mebendazole Dose in the last Six Months</string>
+	
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- STAGE 8: Immunization Status Assessment -->
+    <!-- ============================================================ -->
+	<string name="imci_immunization_assessment_title">Immunization Status</string>
+	<string name="imci_immunization_assessment_radio_vaccine_bcg">BCG</string>
+	<string name="imci_immunization_assessment_radio_vaccine_measles">Measles</string>
+
+    <!-- Vaccine Categories -->
+	<string name="imci_immunization_assessment_radio_vaccine_already_received">Already Received</string>
+	<string name="imci_immunization_assessment_radio_vaccine_receive_today">Receive Today</string>
+
+    <!-- Immunization Status Review -->
+	<string name="imci_immunization_assessment_review_vaccine_bcg">BCG</string>
+	<string name="imci_immunization_assessment_review_vaccine_measles">Measles</string>
+	
+    <!-- ============================================================ -->
+    <!-- IMCI ASSESSMENT RESULTS TABS 								  -->
+    <!-- 															  -->
+    <!-- 1. Assessment Details Tab									  -->
+    <!-- 2. Classifications Tab										  -->
+	<!-- 3. Recommended Treatments Tab 								  -->
+    <!-- ============================================================ -->
+	<string name="imci_assessment_results_review_tab_title">Assessment</string>
+	<string name="imci_assessment_results_classifications_tab_title">Classifications</string>
+	<string name="imci_assessment_results_treatments_tab_title">Treatments</string>
+
+    <!-- ============================================================ -->
+    <!-- ============================================================ -->
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT												  -->
+    <!-- ============================================================ -->
+	<!-- ============================================================ -->
+    <!-- ============================================================ -->
+	
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT WIZARD BREAD-CRUMB UI 						  -->
+    <!-- STAGE 1: GENERAL PATIENT DETAILS 							  -->
+    <!-- ============================================================ -->
+	<string name="ccm_general_patient_details_title">Patient Details</string>
+	<string name="ccm_general_patient_details_today_date_label">Today\'s Date:</string>
+	<string name="ccm_general_patient_details_hsa_identifier_label">Health Surveillance Assistant (HSA):</string>
+	<string name="ccm_general_patient_details_national_id_label">National ID:</string>
+	<string name="ccm_general_patient_details_national_health_id_label">National Health ID:</string>
+	<string name="ccm_general_patient_details_first_name_label">Child\'s First Name:</string>
+	<string name="ccm_general_patient_details_surname_label">Child\'s Surname:</string>
+	<string name="ccm_general_patient_details_date_of_birth_label">Date of Birth:</string>
+
+    <!-- Gender -->
+	<string name="ccm_general_patient_details_radio_gender_label">Gender:</string>
+	<string name="ccm_general_patient_details_radio_gender_boy">Boy</string>
+	<string name="ccm_general_patient_details_radio_gender_girl">Girl</string>
+
+	<string name="ccm_general_patient_details_caregiver_label">Caregiver:</string>
+	
+	<!-- Relationship -->
+	<string name="ccm_general_patient_details_radio_relationship_label">Relationship:</string>
+	<string name="ccm_general_patient_details_radio_relationship_mother">Mother</string>
+	<string name="ccm_general_patient_details_radio_relationship_father">Father</string>
+	<string name="ccm_general_patient_details_radio_relationship_other">Other</string>
+	
+	<!-- Specify Relationship -->
+	<string name="ccm_general_patient_details_relationship_specified_label">Specify Relationship:</string>
+	
+	<!-- Physical Address & Village -->
+	<string name="ccm_general_patient_details_physical_address_label">Physical Address:</string>
+	<string name="ccm_general_patient_details_village_label">Village/TA:</string>
+	
+    <!-- Patient Details Review -->
+	<string name="ccm_general_patient_details_review_today_date">Today\'s Date</string>
+	<string name="ccm_general_patient_details_review_hsa_identifier">HSA</string>
+	<string name="ccm_general_patient_details_review_national_id">National ID</string>
+	<string name="ccm_general_patient_details_review_national_health_id">National Health ID</string>
+	<string name="ccm_general_patient_details_review_first_name">Child\'s First Name</string>
+	<string name="ccm_general_patient_details_review_surname">Child\'s Surname</string>
+	<string name="ccm_general_patient_details_review_date_of_birth">Date of Birth</string>
+	<string name="ccm_general_patient_details_review_gender">Gender</string>
+	<string name="ccm_general_patient_details_review_relationship">Relationship</string>
+
+
+	<string name="ccm_general_patient_details_review_caregiver">Caregiver</string>
+	<string name="ccm_general_patient_details_review_physical_address">Physical Address</string>
+	<string name="ccm_general_patient_details_review_village">Village/TA</string>
+
+    <!-- HINTS -->
+	<string name="ccm_general_patient_details_hsa_identifier_hint">Please enter HSA identifier</string>
+	<string name="ccm_general_patient_details_national_id_hint">Please enter National ID</string>
+	<string name="ccm_general_patient_details_national_health_id_hint">Please enter National Health ID</string>
+	<string name="ccm_general_patient_details_first_name_hint">Please enter child\'s first name</string>
+	<string name="ccm_general_patient_details_surname_hint">Please enter child\'s surname</string>
+	<string name="ccm_general_patient_details_caregiver_hint">Please enter caregiver\'s name</string>
+	<string name="ccm_general_patient_details_relationship_specified_hint">Please enter relationship type</string>
+	<string name="ccm_general_patient_details_physical_address_hint">Please enter child\'s physical address</string>
+	<string name="ccm_general_patient_details_village_hint">Please enter child\'s village</string>
+		
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT WIZARD BREAD-CRUMB UI 						  -->
+    <!-- STAGE 2: ASK and LOOK ASSESSMENT (1)						  -->
+    <!-- ============================================================ -->
+	<string name="ccm_ask_initial_assessment_title">Ask and Look Assessment (1)</string>
+	<string name="ccm_ask_initial_assessment_problems_label">What are the child\'s problems:</string>
+	<string name="ccm_ask_initial_assessment_radio_cough_label">Cough:</string>
+	<string name="ccm_ask_initial_assessment_cough_duration_label">For how long? (days)</string>
+	<string name="ccm_ask_initial_assessment_radio_diarrhoea_label">Diarrhoea (loose stools)?</string>
+	<string name="ccm_ask_initial_assessment_diarrhoea_duration_label">For how long? (days)</string>
+	<string name="ccm_ask_initial_assessment_radio_blood_in_stool_label">Blood in stool?</string>
+	<string name="ccm_ask_initial_assessment_radio_fever_label">Fever (reported or now)?</string>
+	<string name="ccm_ask_initial_assessment_fever_duration_label">Started when? (days)</string>
+	<string name="ccm_ask_initial_assessment_radio_convulsions_label">Convulsions</string>
+	<string name="ccm_ask_initial_assessment_radio_drink_or_feed_difficulty_label">Difficulty drinking or feeding?</string>
+	<string name="ccm_ask_initial_assessment_radio_unable_to_drink_or_feed_label">Not able to drink or feed anything?</string>	
+		
+    <!-- Initial Ask Assessment Review -->
+	<string name="ccm_ask_initial_assessment_review_problems">Problems</string>
+	<string name="ccm_ask_initial_assessment_review_cough">Cough</string>
+	<string name="ccm_ask_initial_assessment_review_cough_duration">For How Long? (days)</string>
+	<string name="ccm_ask_initial_assessment_review_diarrhoea">Diarrhoea</string>
+	<string name="ccm_ask_initial_assessment_review_diarrhoea_duration">For How Long? (days)</string>
+	<string name="ccm_ask_initial_assessment_review_blood_in_stool">Blood in Stool?</string>
+	<string name="ccm_ask_initial_assessment_review_fever">Fever (Reported or Now)?</string>
+	<string name="ccm_ask_initial_assessment_review_fever_duration">Started When? (days)</string>
+	<string name="ccm_ask_initial_assessment_review_convulsions">Convulsions</string>
+	<string name="ccm_ask_initial_assessment_review_drink_or_feed_difficulty">Difficulty Drinking or Feeding?</string>
+	<string name="ccm_ask_initial_assessment_review_unable_to_drink_or_feed">Not Able to Drink or Feed Anything?</string>
+	
+	<!-- HINTS -->
+	<string name="ccm_ask_initial_assessment_problems_hint">Please enter child\'s problems</string>
+	<string name="ccm_ask_initial_assessment_cough_duration_hint">Enter value between 1 and 365</string>
+	<string name="ccm_ask_initial_assessment_diarrhoea_duration_hint">Enter value between 1 and 365</string>
+	<string name="ccm_ask_initial_assessment_fever_duration_hint">Enter value between 1 and 365</string>
+
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT WIZARD BREAD-CRUMB UI 						  -->
+    <!-- STAGE 3: ASK and LOOK ASSESSMENT (2)						  -->
+    <!-- ============================================================ -->
+	<string name="ccm_ask_secondary_assessment_title">Ask and Look Assessment (2)</string>
+	<string name="ccm_ask_secondary_assessment_radio_vomiting_label">Vomiting?</string>
+	<string name="ccm_ask_secondary_assessment_radio_vomits_everything_label">Vomits everything?</string>
+	<string name="ccm_ask_secondary_assessment_radio_red_eyes_label">Red eyes?</string>
+	<string name="ccm_ask_secondary_assessment_red_eyes_duration_label">For how long? (days)</string>
+	<string name="ccm_ask_secondary_assessment_radio_seeing_difficulty_label">Difficulty in seeing?</string>
+	<string name="ccm_ask_secondary_assessment_seeing_difficulty_duration_label">For how long? (days)</string>
+	<string name="ccm_ask_secondary_assessment_radio_cannot_treat_problems_label">Any other problems I cannot treat?</string>
+	<string name="ccm_ask_secondary_assessment_cannot_treat_problems_details_label">Specify other problems:</string>
+
+	<!-- Secondary Ask Assessment Review -->
+	<string name="ccm_ask_secondary_assessment_review_vomiting">Vomiting?</string>
+	<string name="ccm_ask_secondary_assessment_review_vomits_everything">Vomits Everything?</string>
+	<string name="ccm_ask_secondary_assessment_review_red_eyes">Red Eyes?</string>
+	<string name="ccm_ask_secondary_assessment_review_red_eyes_duration">For How Long? (days)</string>
+	<string name="ccm_ask_secondary_assessment_review_seeing_difficulty">Difficulty in Seeing?</string>
+	<string name="ccm_ask_secondary_assessment_review_seeing_difficulty_duration">For How Long? (days)</string>
+	<string name="ccm_ask_secondary_assessment_review_cannot_treat_problems">Any Other Problems I cannot Treat?</string>
+	<string name="ccm_ask_secondary_assessment_review_cannot_treat_problems_details">Specify Other Problems</string>		
+
+	<!-- HINTS -->
+	<string name="ccm_ask_secondary_assessment_red_eyes_duration_hint">Enter value between 1 and 365</string>
+	<string name="ccm_ask_secondary_assessment_seeing_difficulty_duration_hint">Enter value between 1 and 365</string>
+	<string name="ccm_ask_secondary_assessment_cannot_treat_problems_details_hint">Please enter problems</string>	
+
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT WIZARD BREAD-CRUMB UI 						  -->
+    <!-- STAGE 4: LOOK ASSESSMENT									  -->
+    <!-- ============================================================ -->
+	<string name="ccm_look_assessment_title">Look Assessment</string>
+	<string name="ccm_look_assessment_radio_chest_indrawing_label">Chest indrawing?</string>
+	<string name="ccm_look_assessment_radio_breaths_per_minute_label">Breaths per minute</string>
+	<string name="ccm_look_assessment_radio_very_sleepy_or_unconscious_label">Very sleepy or unconscious?</string>
+	<string name="ccm_look_assessment_radio_palmar_pallor_label">Palmar Pallor?</string>
+
+	<string name="ccm_look_assessment_radio_muac_tape_colour_label">Muac tape colour?</string>
+	<string name="ccm_look_assessment_radio_no_muac_tape">No Muac Tape</string>
+	<string name="ccm_look_assessment_radio_muac_tape_colour_green">Green</string>
+	<string name="ccm_look_assessment_radio_muac_tape_colour_yellow">Yellow</string>
+	<string name="ccm_look_assessment_radio_muac_tape_colour_red">Red</string>
+
+	<string name="ccm_look_assessment_radio_swelling_of_both_feet_label">Swelling of both feet?</string>
+
+	<!-- Look Assessment Review -->
+	<string name="ccm_look_assessment_review_chest_indrawing">Chest Indrawing?</string>
+	<string name="ccm_look_assessment_review_breaths_per_minute">Breaths per Minute</string>
+	<string name="ccm_look_assessment_review_very_sleepy_or_unconscious">Very Sleepy or Unconscious?</string>
+	<string name="ccm_look_assessment_review_palmar_pallor">Palmar Pallor?</string>
+	<string name="ccm_look_assessment_review_muac_tape_colour">Muac Tape Colour?</string>
+	<string name="ccm_look_assessment_review_swelling_of_both_feet">Swelling of Both Feet?</string>
+	
+	<!-- HINTS -->
+	<string name="ccm_look_assessment_breaths_per_minute_hint">Enter value between 1 and 100</string>
+	
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT RESULTS TABS 								  -->
+    <!-- 															  -->
+    <!-- 1. Assessment Details Tab									  -->
+    <!-- 2. Classifications Tab										  -->
+	<!-- 3. Recommended Treatments Tab 								  -->
+	<!-- 4. Vaccine Tab 											  -->
+	<!-- 5. Follow-up Tab											  -->
+    <!-- ============================================================ -->
+	<string name="ccm_assessment_results_review_tab_title">Assessment</string>
+	<string name="ccm_assessment_results_classifications_tab_title">Classifications</string>
+	<string name="ccm_assessment_results_treatments_tab_title">Treatments</string>
+	<string name="ccm_assessment_results_vaccine_tab_title">Vaccinations</string>
+	<string name="ccm_assessment_results_follow_up_tab_title">Follow-up</string>
+	<string name="ccm_classification_severity_image_content_assist">CCM Classification Severity Image</string>
+	<string name="ccm_assessment_results_treatments_heading">CCM Recommended Treatments</string>
+	
+	<!-- ============================================================ -->
+    <!-- ASSESSMENT WIZARD BREAD-CRUMB UI -->
+    <!-- UNIVERSAL COMPONENTS -->
+    <!-- ============================================================ -->
+	<string name="classification_severity_image_content_assist">Classification Severity Image</string>
+	<string name="assessment_wizard_review_title">Review</string>
+	<string name="assessment_wizard_radio_yes">Yes</string>
+	<string name="assessment_wizard_radio_no">No</string>
+	<string name="assessment_wizard_previous_button">Previous</string>
+	<string name="assessment_wizard_next_button">Next</string>
+	<string name="assessment_wizard_finish_button">Finish</string>
+	<string name="assessment_wizard_review_button">Review</string>
+	<string name="submit_confirm_message">Perform Medical Assessment</string>
+	<string name="submit_confirm_button">Submit Patient Record</string>
+	<string name="exit_assessment_confirm_message">Exit Patient Assessment</string>
+	<string name="exit_assessment_confirm_button">Exit</string>
+  
+     
+    <!-- ============================================================ -->
+    <!-- TRAINING SCREEN -->
+    <!-- ============================================================ -->
+	<string name="video_training_image">Video Training Image</string>
+	<string name="training_line_separator_description">Training Screen Line Separator</string>
+	<string name="training_tutorial_title">Title:</string>
+	<string name="training_tutorial_type">Tutorial Type:</string>
+	<string name="training_tutorial_availability">Availability:</string>
+	<string name="training_tutorial_description">Description:</string>
+	<string name="training_tutorial_created_date">Created Date:</string>
+	<string name="training_tutorial_created_by">Created By:</string>
+ 
+    <!-- ============================================================ -->
+    <!-- ABOUT SCREEN -->
+    <!-- ============================================================ -->
+	<string name="about_version_label">Version</string>
+	<string name="about_version_value">2.0.0 (beta release)</string>
+	<string name="about_release_date_label">Release Date</string>
+	<string name="about_release_date_value">March 2014</string>
+	<string name="about_developer_label">Lead Developer</string>
+	<string name="about_first_developer_value">Dr Timothy O\'Sullivan</string>
+	<string name="about_business_analyst_label">Business Analyst / Development</string>
+	<string name="about_business_analyst_value">James Flynn</string>
+	<string name="about_ui_analyst_label">UI Analyst</string>
+	<string name="about_ui_analyst_value">Dr Yvonne O\'Connor</string>
+	<string name="about_project_label">Project Details</string>
+	<string name="about_project_value">http://www.supportinglife.eu</string>
+	<string name="about_technical_project_label">Technical Project Details</string>
+	<string name="about_technical_project_value">http://supportinglife.elasticbeanstalk.com/</string>
+	<string name="supporting_life_tree_image">Supporting Life Tree Image</string>
+ 
+    <!-- ============================================================ -->
+    <!-- SETTINGS SCREEN -->
+    <!-- ============================================================ -->
+	<string name="language_preference_category">Language</string>
+	<string name="language_list_preference_title">Language Selection</string>
+	<string name="language_list_preference_summary">Choose default language for app</string>
+	
+    <!-- ============================================================ -->
+    <!-- SYNC SCREEN -->
+    <!-- ============================================================ -->
+	<string name="sync_screen_sync_button">Sync Now</string>
+	<string name="sync_screen_synchronisation_category">Synchronisation</string>
+	<string name="sync_screen_synchronisation_info">Patient Visits to be Synced: </string>
+	<string name="sync_screen_sync_now_instruction">Sync Now</string>
+	<string name="sync_screen_circular_progress_bar_text">obtaining connection&#8230;</string>
+	
+    <!-- ============================================================ -->
+    <!-- SPLASH SCREEN -->
+    <!-- ============================================================ -->
+	<string name="splash_screen_image">Supporting LIFE Splash Screen</string>
+    
+    <!-- START: Register Patient Details Screen -->
+	<string name="first_name_label">First Name:</string>
+	<string name="surname_label">Surname:</string>
+	<string name="button_send">Submit</string>
+    <!-- END: Register Patient Details Screen -->
+</resources>

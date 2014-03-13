@@ -1,0 +1,327 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/SupportingLifePage"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent" >
+
+<!-- ============================================================ -->
+<!-- ASSESSMENT BREAD-CRUMB WIZARD UI -->
+<!-- ASSESSMENT PAGE: DIARRHOEA ASSESSMENT -->
+<!-- ============================================================ -->
+    <TextView style="@style/WizardPageTitle" />
+
+    <ScrollView android:layout_height="match_parent"
+    	android:layout_width="match_parent" >
+    	
+		<LinearLayout
+		    android:id="@+id/imci_diarrhoea_assessment_diarrhoea_animated_view"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:animateLayoutChanges="true"
+			android:orientation="vertical">
+
+			<!-- ============================================================ -->
+			<!-- DIARRHOEA RADIO BUTTON GROUP -->
+			<!-- ============================================================ -->               
+			<LinearLayout
+				android:id="@+id/imci_diarrhoea_assessment_view_diarrhoea"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+				<TextView
+				    style="@style/AssessmentFormLabel"
+				    android:layout_width="match_parent"
+				    android:layout_height="match_parent"
+				    android:layout_gravity="bottom"
+				    android:text="@string/imci_diarrhoea_assessment_radio_diarrhoea" />
+				
+				<RadioGroup
+				    android:id="@+id/imci_diarrhoea_assessment_radio_diarrhoea"
+				    android:layout_width="match_parent"
+				    android:layout_height="wrap_content"
+				    android:orientation="horizontal" >
+	
+				    <RadioButton
+				        android:id="@+id/imci_diarrhoea_assessment_radio_diarrhoea_yes"
+				        android:layout_weight="0.67"
+				        android:text="@string/assessment_wizard_radio_yes" />
+	
+				    <RadioButton
+				        android:id="@+id/imci_diarrhoea_assessment_radio_diarrhoea_no"
+				        android:layout_weight="0.33"
+				        android:text="@string/assessment_wizard_radio_no" />
+				</RadioGroup>
+			</LinearLayout>
+	        <!-- ============================================================ -->
+	        <!-- FOR HOW LONG? (DIARRHOEA DURATION) -->
+	        <!-- ============================================================ -->
+	        <LinearLayout
+				android:id="@+id/imci_diarrhoea_assessment_view_diarrhoea_duration"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="30dp"
+				android:orientation="vertical">
+	            <TextView
+	                android:id="@+id/imci_diarrhoea_assessment_diarrhoea_duration_label"
+	                style="@style/AssessmentFormLabel"
+	                android:text="@string/imci_diarrhoea_assessment_diarrhoea_duration" />
+	
+	            <EditText
+	                android:id="@+id/imci_diarrhoea_assessment_diarrhoea_duration"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="10dp"
+	                android:inputType="number"
+	                android:hint="@string/imci_diarrhoea_assessment_diarrhoea_duration_hint"/>
+	         </LinearLayout>
+	         		
+			<!-- ============================================================ -->
+			<!-- BLOOD IN THE STOOLS RADIO BUTTON GROUP -->
+			<!-- ============================================================ -->               
+				
+			<TextView
+			    style="@style/AssessmentFormLabel"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="bottom"
+			    android:text="@string/imci_diarrhoea_assessment_radio_blood_stools" />
+				
+			<RadioGroup
+			    android:id="@+id/imci_diarrhoea_assessment_radio_blood_stools"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal" >
+			    <RadioButton
+			        android:id="@+id/imci_diarrhoea_assessment_radio_blood_stools_yes"
+			        android:layout_weight="0.67"
+			        android:text="@string/assessment_wizard_radio_yes" />
+	
+			    <RadioButton
+			        android:id="@+id/imci_diarrhoea_assessment_radio_blood_stools_no"
+			        android:layout_weight="0.33"
+			        android:text="@string/assessment_wizard_radio_no" />
+			</RadioGroup>
+	
+			<!-- ============================================================ -->
+			<!-- SUNKEN EYES RADIO BUTTON GROUP -->
+			<!-- ============================================================ -->               
+				
+			<TextView
+			    style="@style/AssessmentFormLabel"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="bottom"
+			    android:text="@string/imci_diarrhoea_assessment_radio_sunken_eyes" />
+				
+			<RadioGroup
+			    android:id="@+id/imci_diarrhoea_assessment_radio_sunken_eyes"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal" >
+	
+		    <RadioButton
+		        android:id="@+id/imci_diarrhoea_assessment_radio_sunken_eyes_yes"
+		        android:layout_weight="0.67"
+		        android:text="@string/assessment_wizard_radio_yes" />
+	
+		    <RadioButton
+		        android:id="@+id/imci_diarrhoea_assessment_radio_sunken_eyes_no"
+		        android:layout_weight="0.33"
+		        android:text="@string/assessment_wizard_radio_no" />
+		</RadioGroup>
+				
+		<!-- ============================================================ -->
+		<!-- LETHARGIC OR UNCONSCIOUS RADIO BUTTON GROUP -->
+		<!-- This radio button should correlate directly with the value   -->
+		<!-- set on the 'General Danger Signs' page and vica-versa		  -->
+		<!-- ============================================================ -->               
+	
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:layout_marginBottom="10dp"
+		    android:layout_marginTop="10dp"
+		    android:background="@drawable/non_selectable_border_indicator"
+		    android:orientation="vertical" >
+				
+			<TextView
+			    style="@style/AssessmentFormLabel"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_gravity="bottom"
+			    android:paddingLeft="10dp"
+			    android:text="@string/imci_diarrhoea_assessment_radio_lethargic_or_unconscious" />
+					
+			<RadioGroup
+			    android:id="@+id/imci_diarrhoea_assessment_radio_lethargic_or_unconscious"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:paddingLeft="10dp"
+			    android:orientation="horizontal" >
+		
+				<RadioButton
+		    	    android:id="@+id/imci_diarrhoea_assessment_radio_lethargic_or_unconscious_yes"
+		    	    android:layout_weight="0.67"
+				    android:text="@string/assessment_wizard_radio_yes" />
+		
+			    <RadioButton
+			        android:id="@+id/imci_diarrhoea_assessment_radio_lethargic_or_unconscious_no"
+			        android:layout_weight="0.33"
+			        android:text="@string/assessment_wizard_radio_no" />
+			</RadioGroup>
+					    				
+			<TextView
+			   	style="@style/AssessmentFormNote"
+			   	android:layout_width="match_parent"
+			   	android:layout_height="match_parent"
+			   	android:layout_gravity="bottom"
+			   	android:layout_marginLeft="5dp"
+			   	android:layout_marginBottom="5dp"
+			   	android:text="@string/imci_diarrhoea_assessment_radio_lethargic_disabled_note" />
+					
+		</LinearLayout>
+	
+		<!-- ============================================================ -->
+		<!-- RESTLESS / IRRITABLE RADIO BUTTON GROUP -->
+		<!-- ============================================================ -->               
+				
+		<LinearLayout
+		    android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingLeft="10dp"
+			android:orientation="vertical" >
+							
+			<TextView
+				style="@style/AssessmentFormLabel"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_gravity="bottom"
+				android:text="@string/imci_diarrhoea_assessment_radio_restless_irritable" />
+				
+			<RadioGroup
+				android:id="@+id/imci_diarrhoea_assessment_radio_restless_irritable"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal" >
+	
+				<RadioButton
+					android:id="@+id/imci_diarrhoea_assessment_radio_restless_irritable_yes"
+					android:layout_weight="0.67"
+					android:text="@string/assessment_wizard_radio_yes" />
+	
+			    <RadioButton
+			        android:id="@+id/imci_diarrhoea_assessment_radio_restless_irritable_no"
+			        android:layout_weight="0.33"
+			        android:text="@string/assessment_wizard_radio_no" />
+			</RadioGroup>
+				
+			<!-- ============================================================ -->
+			<!-- CHOLERA IN AREA RADIO BUTTON GROUP -->
+			<!-- ============================================================ -->               
+			
+			<TextView
+			    style="@style/AssessmentFormLabel"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="bottom"
+			    android:text="@string/imci_diarrhoea_assessment_radio_cholera_in_area" />
+			
+			<RadioGroup
+			    android:id="@+id/imci_diarrhoea_assessment_radio_cholera_in_area"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal" >
+
+			    <RadioButton
+			        android:id="@+id/imci_diarrhoea_assessment_radio_cholera_in_area_yes"
+			        android:layout_weight="0.67"
+			        android:text="@string/assessment_wizard_radio_yes" />
+
+			    <RadioButton
+			        android:id="@+id/imci_diarrhoea_assessment_radio_cholera_in_area_no"
+			        android:layout_weight="0.33"
+			        android:text="@string/assessment_wizard_radio_no" />
+			</RadioGroup>
+	
+			<!-- ============================================================ -->
+			<!-- OFFER THE CHILD FLUID RADIO BUTTON GROUP -->
+			<!-- ============================================================ -->               
+			
+			<TextView
+			    style="@style/AssessmentFormLabel"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="bottom"
+			    android:text="@string/imci_diarrhoea_assessment_radio_child_fluid" />
+			
+			<ie.ucc.bis.supportinglife.ui.custom.ToggleButtonGroupTableLayout
+                android:id="@+id/imci_diarrhoea_assessment_radio_child_fluid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <RadioButton
+                        android:id="@+id/imci_diarrhoea_assessment_radio_child_fluid_not_able"
+                        android:layout_weight="0.5"
+                        android:text="@string/imci_diarrhoea_assessment_radio_child_fluid_not_able" />
+
+                    <RadioButton
+                        android:id="@+id/imci_diarrhoea_assessment_radio_child_fluid_drinking_poorly"
+                        android:layout_weight="0.5"
+                        android:text="@string/imci_diarrhoea_assessment_radio_child_fluid_drinking_poorly" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <RadioButton
+                        android:id="@+id/imci_diarrhoea_assessment_radio_child_fluid_drinking_eagerly"
+                        android:text="@string/imci_diarrhoea_assessment_radio_child_fluid_drinking_eagerly" />
+                </TableRow>
+            </ie.ucc.bis.supportinglife.ui.custom.ToggleButtonGroupTableLayout>
+				    
+			<!-- ============================================================ -->
+			<!-- SKIN PINCH RADIO BUTTON GROUP -->
+			<!-- ============================================================ -->               
+			
+			<TextView
+			    style="@style/AssessmentFormLabel"
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_gravity="bottom"
+			    android:text="@string/imci_diarrhoea_assessment_radio_skin_pinch" />
+						
+			<ie.ucc.bis.supportinglife.ui.custom.ToggleButtonGroupTableLayout
+                android:id="@+id/imci_diarrhoea_assessment_radio_skin_pinch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <RadioButton
+                        android:id="@+id/imci_diarrhoea_assessment_radio_skin_pinch_very_slowly"
+                        android:layout_weight="0.5"
+                        android:text="@string/imci_diarrhoea_assessment_radio_skin_pinch_very_slowly" />
+
+                    <RadioButton
+                        android:id="@+id/imci_diarrhoea_assessment_radio_skin_pinch_slowly"
+                        android:layout_weight="0.5"
+                        android:text="@string/imci_diarrhoea_assessment_radio_skin_pinch_slowly" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <RadioButton
+                        android:id="@+id/imci_diarrhoea_assessment_radio_skin_pinch_immediate"
+                        android:text="@string/imci_diarrhoea_assessment_radio_skin_pinch_immediate" />
+                </TableRow>
+            </ie.ucc.bis.supportinglife.ui.custom.ToggleButtonGroupTableLayout>
+        </LinearLayout>
+	</LinearLayout> <!-- end of diarrhoea assessment view -->
+    </ScrollView>
+</LinearLayout> 

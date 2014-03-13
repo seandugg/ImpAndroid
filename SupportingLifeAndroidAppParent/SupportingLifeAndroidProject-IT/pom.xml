@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>ie.ucc.bis.supportinglife</groupId>
+		<artifactId>SupportingLifeAndroidAppParent</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<relativePath></relativePath>
+	</parent>
+	
+	<artifactId>SupportingLifeAndroidProject-IT</artifactId>
+	<packaging>apk</packaging>
+	<name>SupportingLifeAndroidProject-IT</name>
+	
+	<properties>
+		<platform.version>4.1.1.4</platform.version>
+		<android.plugin.version>3.6.0</android.plugin.version>
+		<android.api.level>17</android.api.level>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.google.android</groupId>
+			<artifactId>android-test</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>ie.ucc.bis.supportinglife</groupId>
+			<artifactId>SupportingLifeAndroid</artifactId>
+			<type>apk</type>
+			<version>1.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>ie.ucc.bis.supportinglife</groupId>
+			<artifactId>SupportingLifeAndroid</artifactId>
+			<type>jar</type>
+			<version>1.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
+
+	</dependencies>
+ 
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+					<artifactId>android-maven-plugin</artifactId>
+					<version>${android.plugin.version}</version>
+					<configuration>
+						<test>
+						<!--<skip>true|false|auto</skip> -->
+						<!--<instrumentationPackage>packageName</instrumentationPackage> -->
+							`
+						<!--<instrumentationRunner>className</instrumentationRunner> -->
+						<!--<debug>true|false</debug> -->
+						<!--<coverage>true|false</coverage> -->
+						<!--<logonly>true|false</logonly> avd -->
+						<!--<testsize>small|medium|large</testsize> -->
+							<createReport>true</createReport>
+						<!--<classes> -->
+						<!--<class>your.package.name.YourTestClass</class> -->
+						<!--</classes> -->
+						<!--<packages> -->
+						<!--<package>your.package.name</package> -->
+						<!--</packages> -->
+						</test>
+					</configuration>
+					<extensions>true</extensions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>com.jayway.maven.plugins.android.generation2</groupId>
+				<artifactId>android-maven-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<sdk>
+						<platform>${android.api.level}</platform>
+					</sdk>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

@@ -1,0 +1,18 @@
+# Generated files #
+###################
+*.class
+
+# Eclipse generated files #
+###########################
+.settings/org.eclipse.jdt.core.prefs
+
+# Jar/War File            #
+###########################
+*.jar
+*.war
+
+# Ignore folders          #
+###########################
+bin/
+target/
+/.classpath

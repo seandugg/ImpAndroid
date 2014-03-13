@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================================ -->
+<!-- ACTION BAR -->
+<!-- ============================================================ -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/action_bar_height"
+    android:orientation="horizontal"
+    style="@style/ActionBar" >
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+		<!-- ============================================================ -->
+		<!-- HOME BUTTON -->
+		<!-- ============================================================ -->    
+		<Button android:id="@+id/action_bar_home_button"
+	        android:layout_width="@dimen/action_bar_icon_width"
+	        android:layout_height="@dimen/action_bar_icon_height"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerVertical="true"
+	        android:layout_marginLeft="5dp"
+			android:layout_marginRight="5dp"
+	        android:layout_marginTop="2dp"
+			android:layout_marginBottom="2dp"
+	        android:contentDescription="@string/actionbar_home_description"
+			android:background="@drawable/ic_actionbar_home_button"
+			android:onClick="onClickHome" />
+	
+	    <ImageView
+	        android:id="@+id/first_action_bar_separator"
+	        style="@style/ActionBar.ActionBarSeparator"
+	        android:layout_toRightOf="@+id/action_bar_home_button"
+	        android:contentDescription="@string/actionbar_separator_description" />
+
+		<!-- ============================================================ -->
+		<!-- TEXTUAL APP NAME ON TOOLBAR -->
+		<!-- ============================================================ -->    
+	    <TextView
+	        android:id="@+id/action_bar_title_text"
+	        style="@style/ActionBar.TextStyle"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:layout_centerVertical="true"
+	        android:layout_toRightOf="@+id/first_action_bar_separator"
+	        android:text="@string/app_name" />
+	</RelativeLayout>
+
+</RelativeLayout>

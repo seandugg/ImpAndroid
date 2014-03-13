@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================================ -->
+<!-- CCM CLASSIFICATION RULES 									  -->
+<!-- ============================================================ -->
+
+<!-- Note: The <Symptom> element string must match a string 	  -->
+<!-- 	   element in the 'symptom_ids.xml' file (otherwise an 	  -->
+<!--       will be thrown at runtime when parsing the  			  -->
+<!--       'ccm_classification_rules.xml' document)				  -->
+
+<ClassificationRules>
+	<!-- ============================================================ -->
+	<!-- Classification: Cough for 21 Days or more 	  				  -->
+	<!-- Type: DANGER_SIGN 											  -->
+	<!-- Symptoms: Cough						 					  -->
+	<!-- 				AND 										  -->
+	<!--  		   Cough Started 21 Days ago or more				  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>cough_for_21_days_or_more</Category>
+		<Name>Cough for 21 Days or more</Name>
+		<Identifier>CCM_COUGH_FOR_21_DAYS_OR_MORE_CLASSIFICATION</Identifier>
+		<CcmTreatmentDisplayName>Cough</CcmTreatmentDisplayName>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_cough_symptom_id</Symptom>								<!-- Cough : YES -->
+		</SymptomRule>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_cough_duration_twenty_one_days_symptom_id</Symptom> 	<!-- Cough for 21 Days or more : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Diarrhoea for 14 Days or more  			  -->
+	<!-- Type: DANGER_SIGN 											  -->
+	<!-- Symptoms: Diarrhoea					 					  -->
+	<!-- 				AND 										  -->
+	<!--  		   Diarrhoea Started 14 Days ago or more			  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>diarrhoea_for_14_days_or_more</Category>
+		<Name>Diarrhoea for 14 Days or more</Name>
+		<Identifier>CCM_DIARRHOEA_FOR_14_DAYS_OR_MORE_CLASSIFICATION</Identifier>
+		<CcmTreatmentDisplayName>Diarrhoea</CcmTreatmentDisplayName>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_diarrhoea_symptom_id</Symptom>							<!-- Diarrhoea : YES -->
+		</SymptomRule>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_diarrhoea_duration_fourteen_days_symptom_id</Symptom> 	<!-- Diarrhoea for 14 Days or more : YES -->
+		</SymptomRule>
+	</Classification>
+	
+	<!-- ============================================================ -->
+	<!-- Classification: Blood in Stool					  			  -->
+	<!-- Type: DANGER_SIGN 											  -->
+	<!-- Symptoms: Blood in Stool				 					  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>blood_in_stool</Category>
+		<Name>Blood in Stool</Name>
+		<Identifier>CCM_BLOOD_IN_STOOL_CLASSIFICATION</Identifier>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_blood_in_stool_symptom_id</Symptom>						<!-- Blood in Stool : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ========================================================================== -->
+	<!-- Classification: Diarrhoea (less than 14 days AND no blood in stool)  	  	-->
+	<!-- Type: SICK		 											  				-->
+	<!-- Symptoms: Diarrhoea					 					  				-->
+	<!-- 				AND 										  				-->
+	<!--  		   Diarrhoea Duration less than 14 Days				  				-->
+	<!-- 				AND 										  				-->
+	<!--  		   No Blood in Stool								  				-->
+	<!-- ========================================================================== -->
+	<Classification>
+	    <Category>diarrhoea_less_than_14_days_and_no_blood_in_stool</Category>
+		<Name>Diarrhoea (less than 14 days AND no blood in stool)</Name>
+		<Identifier>CCM_DIARRHOEA_LESS_THAN_14_DAYS_AND_NO_BLOOD_IN_STOOL_CLASSIFICATION</Identifier>
+		<CcmTreatmentDisplayName>Diarrhoea</CcmTreatmentDisplayName>
+		<Type>SICK</Type>
+		<Priority>3</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_diarrhoea_symptom_id</Symptom>							<!-- Diarrhoea : YES -->
+		</SymptomRule>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="no">ccm_ask_initial_assessment_diarrhoea_duration_fourteen_days_symptom_id</Symptom> 	<!-- Diarrhoea less than 14 Days : YES -->
+		</SymptomRule>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="no">ccm_ask_initial_assessment_blood_in_stool_symptom_id</Symptom> 						<!-- Blood in Stool : NO -->
+		</SymptomRule>
+	</Classification>
+	
+	<!-- ============================================================ -->
+	<!-- Classification: Fever for last 7 Days			  			  -->
+	<!-- Type: DANGER_SIGN 											  -->
+	<!-- Symptoms: Fever						 					  -->
+	<!-- 		   AND			 									  -->
+	<!--  		   Fever Started 7 Days ago or more					  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>fever_for_last_7_days</Category>
+		<Name>Fever for last 7 Days</Name>
+		<Identifier>CCM_FEVER_FOR_LAST_7_DAYS_CLASSIFICATION</Identifier>
+		<CcmTreatmentDisplayName>Fever</CcmTreatmentDisplayName>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_fever_symptom_id</Symptom>								<!-- Fever : YES -->
+		</SymptomRule>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_fever_duration_seven_days_symptom_id</Symptom>			<!-- Fever 7 Days ago or more : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Fever (less than 7 days)		  			  -->
+	<!-- Type: SICK		 											  -->
+	<!-- Symptoms: Fever						 					  -->
+	<!-- 		   AND			 									  -->
+	<!--  		   Fever Started 6 Days ago or less					  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>fever_less_than_7_days</Category>
+		<Name>Fever (less than 7 days)</Name>
+		<Identifier>CCM_FEVER_FOR_LESS_THAN_7_DAYS_CLASSIFICATION</Identifier>
+		<CcmTreatmentDisplayName>Fever</CcmTreatmentDisplayName>
+		<Type>SICK</Type>
+		<Priority>3</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_fever_symptom_id</Symptom>								<!-- Fever : YES -->
+		</SymptomRule>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="no">ccm_ask_initial_assessment_fever_duration_seven_days_symptom_id</Symptom>			<!-- Fever less than 7 Days : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Convulsions					  			  -->
+	<!-- Type: DANGER_SIGN 											  -->
+	<!-- Symptoms: Convulsions					 					  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>convulsions</Category>
+		<Name>Convulsions</Name>
+		<Identifier>CCM_CONVULSIONS_CLASSIFICATION</Identifier>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_convulsions_symptom_id</Symptom>						<!-- Convulsions : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Not Able to Drink or Feed Anything			  -->
+	<!-- Type: DANGER_SIGN 											  -->
+	<!-- Symptoms: Difficulty Drinking or Feeding 					  -->
+	<!-- 		   AND			 									  -->
+	<!--  		   Not Able to Drink or Feed Anything				  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>not_able_to_drink_or_feed_anything</Category>
+		<Name>Not Able to Drink or Feed Anything</Name>
+		<Identifier>CCM_NOT_ABLE_TO_DRINK_OR_FEED_ANYTHING_CLASSIFICATION</Identifier>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_drink_or_feed_difficulty_symptom_id</Symptom>			<!-- Difficulty Drinking or Feeding : YES -->
+		</SymptomRule>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_unable_to_drink_or_feed_symptom_id</Symptom>			<!-- Not Able to Drink or Feed Anything : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Vomits Everything							  -->
+	<!-- Type: DANGER_SIGN 											  -->
+	<!-- Symptoms: Vomiting						 					  -->
+	<!-- 		   AND			 									  -->
+	<!--  		   Vomits Everything								  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>vomits_everything</Category>
+		<Name>Vomits Everything</Name>
+		<Identifier>CCM_VOMITS_EVERYTHING_CLASSIFICATION</Identifier>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_secondary_assessment_vomiting_symptom_id</Symptom>							<!-- Vomiting : YES -->
+		</SymptomRule>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_secondary_assessment_vomits_everything_symptom_id</Symptom>				<!-- Vomits Everything : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Red Eye for 4 Days or more					  -->
+	<!-- Type: DANGER_SIGN 											  -->
+	<!-- Symptoms: Red Eyes						 					  -->
+	<!-- 		   AND			 									  -->
+	<!--  		   Red Eyes Started 4 Days ago or more				  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>red_eye_for_4_days_or_more</Category>
+		<Name>Red Eye for 4 Days or more</Name>
+		<Identifier>CCM_RED_EYE_FOR_4_DAYS_OR_MORE_CLASSIFICATION</Identifier>
+		<CcmTreatmentDisplayName>Red Eye</CcmTreatmentDisplayName>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_secondary_assessment_red_eyes_symptom_id</Symptom>							<!-- Red Eyes : YES -->
+		</SymptomRule>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_initial_assessment_red_eyes_duration_four_days_symptom_id</Symptom>		<!-- Red Eyes for 4 Days or more : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Red Eye with Visual Problems				  -->
+	<!-- Type: DANGER_SIGN 											  -->
+	<!-- Symptoms: Red Eyes						 					  -->
+	<!-- 		   AND			 									  -->
+	<!--  		   Difficulty in Seeing								  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>red_eye_with_visual_problems</Category>
+		<Name>Red Eye with Visual Problems</Name>
+		<Identifier>CCM_RED_EYE_WITH_VISUAL_PROBLEMS_CLASSIFICATION</Identifier>
+		<CcmTreatmentDisplayName>Red Eye</CcmTreatmentDisplayName>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_secondary_assessment_red_eyes_symptom_id</Symptom>							<!-- Red Eyes : YES -->
+		</SymptomRule>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_secondary_assessment_seeing_difficulty_symptom_id</Symptom>				<!-- Difficulty in Seeing : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Red Eye (less than 4 days)					  -->
+	<!-- Type: SICK		 											  -->
+	<!-- Symptoms: Red Eyes						 					  -->
+	<!-- 		   AND			 									  -->
+	<!--  		   Red Eyes Started 3 Days ago or less				  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>red_eye_less_than_4_days</Category>
+		<Name>Red Eye (less than 4 days)</Name>
+		<Identifier>CCM_RED_EYE_LESS_THAN_4_DAYS_CLASSIFICATION</Identifier>
+		<CcmTreatmentDisplayName>Red Eye</CcmTreatmentDisplayName>
+		<Type>SICK</Type>
+		<Priority>3</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_secondary_assessment_red_eyes_symptom_id</Symptom>							<!-- Red Eyes : YES -->
+		</SymptomRule>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="no">ccm_ask_initial_assessment_red_eyes_duration_four_days_symptom_id</Symptom>			<!-- Red Eyes for 3 Days or less : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Other Problem					  			  -->
+	<!-- Type: REFER	 											  -->
+	<!-- Symptoms: Any other problem HSA cannot treat				  -->
+	<!-- 		   (e.g. problem in breast feeding, injury)			  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>other_problem</Category>
+		<Name>Other Problem</Name>
+		<Identifier>CCM_OTHER_PROBLEM_CLASSIFICATION</Identifier>
+		<Type>REFER</Type>
+		<Priority>2</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_ask_secondary_assessment_cannot_treat_problems_symptom_id</Symptom>		<!-- Any other problem HSA cannot treat : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Chest Indrawing				  			  -->
+	<!-- Type: DANGER_SIGN 											  -->
+	<!-- Symptoms: Chest Indrawing				 					  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>chest_indrawing</Category>
+		<Name>Chest Indrawing</Name>
+		<Identifier>CCM_CHEST_INDRAWING_CLASSIFICATION</Identifier>
+		<CcmTreatmentDisplayName>Chest Indrawing</CcmTreatmentDisplayName>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_look_assessment_chest_indrawing_symptom_id</Symptom>						<!-- Chest Indrawing : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Fast Breathing					  			  -->
+	<!-- Type: SICK													  -->
+	<!-- Symptoms: Fast Breathing				 					  -->
+	<!-- 		   (categorised as follows:							  -->
+	<!-- 			1. Age 2 months up to 12 months: 50bpm or more	  -->
+	<!-- 			2. Age 12 months up to 5 years: 40bpm or more)	  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>fast_breathing</Category>
+		<Name>Fast Breathing</Name>
+		<Identifier>CCM_FAST_BREATHING_CLASSIFICATION</Identifier>
+		<Type>SICK</Type>
+		<Priority>3</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_look_assessment_fast_breathing_symptom_id</Symptom>						<!-- Fast Breathing : YES -->
+		</SymptomRule>
+	</Classification>
+	
+	<!-- ============================================================ -->
+	<!-- Classification: Fast Breathing	and Danger Sign				  -->
+	<!-- Type: DANGER_SIGN											  -->
+	<!-- Classification: Any Danger Sign Classification				  -->
+	<!-- 				 (categorised as follows:					  -->
+	<!-- 				  'Cough for 21 Days or more' OR			  -->
+	<!-- 				  'Diarrhoea for 14 Days or more' OR		  -->
+	<!-- 				  'Blood in Stool' OR		  				  -->
+	<!-- 				  'Fever for last 7 Days' OR		  		  -->
+	<!-- 				  'Convulsions' OR		  		  			  -->
+	<!-- 				  'Not Able to Drink or Feed Anything' OR	  -->
+	<!-- 				  'Vomits Everything' OR		  			  -->
+	<!-- 				  'Red Eye for 4 Days or more' OR		 	  -->
+	<!-- 				  'Red Eye with Visual Problems' OR		 	  -->
+	<!-- 				  'Chest Indrawing' OR		  	  			  -->
+	<!-- 				  'Very Sleepy or Unconscious' OR			  -->
+	<!-- 				  'Palmar Pallor' OR			  			  -->
+	<!-- 				  'Red on MUAC Tape' OR		  		  		  -->
+	<!-- 				  'Swelling of Both Feet') 		  			  -->
+	<!-- 				 AND										  -->
+	<!-- Symptoms: Fast Breathing				 					  -->
+	<!-- 		   (categorised as follows:							  -->
+	<!-- 			1. Age 2 months up to 12 months: 50bpm or more	  -->
+	<!-- 			2. Age 12 months up to 5 years: 40bpm or more)	  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>fast_breathing</Category>
+		<Name>Fast Breathing and Danger Sign</Name>
+		<Identifier>CCM_FAST_BREATHING_AND_DANGER_SIGN_CLASSIFICATION</Identifier>
+		<CcmTreatmentDisplayName>Fast Breathing and Danger Sign</CcmTreatmentDisplayName>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<ClassificationRule rule="ANY_CLASSIFICATION">
+			<ClassificationDiagnosed value="true">Cough for 21 Days or more</ClassificationDiagnosed>			<!-- Cough for 21 Days or more (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Diarrhoea for 14 Days or more</ClassificationDiagnosed>		<!-- Diarrhoea for 14 Days or more (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Blood in Stool</ClassificationDiagnosed>						<!-- Blood in Stool (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Fever for last 7 Days</ClassificationDiagnosed>				<!-- Fever for last 7 Days (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Convulsions</ClassificationDiagnosed>							<!-- Convulsions (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Not Able to Drink or Feed Anything</ClassificationDiagnosed>	<!-- Not Able to Drink or Feed Anything (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Vomits Everything</ClassificationDiagnosed>					<!-- Vomits Everything (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Red Eye for 4 Days or more</ClassificationDiagnosed>			<!-- Red Eye for 4 Days or more (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Red Eye with Visual Problems</ClassificationDiagnosed>		<!-- Red Eye with Visual Problems (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Chest Indrawing</ClassificationDiagnosed>						<!-- Chest Indrawing (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Very Sleepy or Unconscious</ClassificationDiagnosed>			<!-- Very Sleepy or Unconscious (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Palmar Pallor</ClassificationDiagnosed>						<!-- Palmar Pallor (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Red on MUAC Tape</ClassificationDiagnosed>					<!-- Red on MUAC Tape (Classification) : TRUE -->
+			<ClassificationDiagnosed value="true">Swelling of Both Feet</ClassificationDiagnosed>				<!-- Swelling of Both Feet (Classification) : TRUE -->
+		</ClassificationRule>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_look_assessment_fast_breathing_symptom_id</Symptom>						<!-- Fast Breathing : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Very Sleepy or Unconscious		  			  -->
+	<!-- Type: DANGER_SIGN											  -->
+	<!-- Symptoms: Very Sleepy or Unconscious	 					  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>very_sleepy_or_unconscious</Category>
+		<Name>Very Sleepy or Unconscious</Name>
+		<Identifier>CCM_VERY_SLEEPY_OR_UNCONSCIOUS_CLASSIFICATION</Identifier>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_look_assessment_very_sleepy_or_unconscious_symptom_id</Symptom>			<!-- Very Sleepy or Unconscious : YES -->
+		</SymptomRule>
+	</Classification>
+	
+	<!-- ============================================================ -->
+	<!-- Classification: Palmar Pallor					  			  -->
+	<!-- Type: DANGER_SIGN											  -->
+	<!-- Symptoms: Palmar Pallor				 					  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>palmar_pallor</Category>
+		<Name>Palmar Pallor</Name>
+		<Identifier>CCM_PALMAR_PALLOR_CLASSIFICATION</Identifier>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_look_assessment_palmar_pallor_symptom_id</Symptom>							<!-- Palmar Pallor : YES -->
+		</SymptomRule>
+	</Classification>
+
+	<!-- ============================================================ -->
+	<!-- Classification: Red on MUAC Tape				  			  -->
+	<!-- Type: DANGER_SIGN											  -->
+	<!-- Symptoms: 	Red Colour on MUAC Tape							  -->
+	<!--  		   	(note: Child must also be aged between			  -->
+	<!-- 		    	   6 months and 5 years.	  				  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>red_on_muac_tape</Category>
+		<Name>Red on MUAC Tape</Name>
+		<Identifier>CCM_RED_ON_MUAC_TAPE_CLASSIFICATION</Identifier>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_look_assessment_red_muac_tape_colour_symptom_id</Symptom>					<!-- Colour on MUAC Tape : RED -->
+		</SymptomRule>
+	</Classification>
+	
+	<!-- ============================================================ -->
+	<!-- Classification: Swelling of Both Feet			  			  -->
+	<!-- Type: DANGER_SIGN											  -->
+	<!-- Symptoms: Swelling of Both Feet		 					  -->
+	<!-- ============================================================ -->
+	<Classification>
+	    <Category>swelling_of_both_feet</Category>
+		<Name>Swelling of Both Feet</Name>
+		<Identifier>CCM_SWELLING_OF_BOTH_FEET_CLASSIFICATION</Identifier>
+		<Type>DANGER_SIGN</Type>
+		<Priority>1</Priority>
+		<SymptomRule rule="ANY_SYMPTOM">
+			<Symptom value="yes">ccm_look_assessment_swelling_of_both_feet_symptom_id</Symptom>					<!-- Swelling of Both Feet : YES -->
+		</SymptomRule>
+	</Classification>
+
+</ClassificationRules>

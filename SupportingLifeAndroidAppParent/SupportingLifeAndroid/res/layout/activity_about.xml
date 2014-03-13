@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================================ -->
+<!-- ABOUT SCREEN -->
+<!-- ============================================================ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- ============================================================ -->
+    <!-- ABOUT LOGO -->
+    <!-- ============================================================ -->
+ 
+    <ImageView
+        android:id="@+id/supporting_life_tree_image"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/supporting_life_tree_image"
+        android:src="@drawable/im_about" />
+
+    <!-- ============================================================ -->
+    <!-- VERSION -->
+    <!-- ============================================================ -->
+    <LinearLayout android:id="@+id/about_version" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_gravity="center_horizontal" 
+        android:orientation="vertical">
+        
+        <TextView android:id="@+id/about_version_label"
+            style="@style/AboutLabel"
+            android:text="@string/about_version_label"/>
+        
+        <TextView android:id="@+id/about_version_value" 
+            style="@style/AboutText" 
+            android:text="@string/about_version_value"/>
+    </LinearLayout>
+    
+    <!-- ============================================================ -->
+    <!-- RELEASE DATE -->
+    <!-- ============================================================ -->
+    <LinearLayout android:id="@+id/about_release_date" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_gravity="center_horizontal" 
+        android:orientation="vertical">
+        
+        <TextView android:id="@+id/about_release_date_label"
+            style="@style/AboutLabel"
+            android:text="@string/about_release_date_label"/>
+        
+        <TextView android:id="@+id/about_release_date_value" 
+            style="@style/AboutText" 
+            android:text="@string/about_release_date_value"/>
+    </LinearLayout>
+ 
+    <!-- ============================================================ -->
+    <!-- ABOUT DEVELOPER -->
+    <!-- ============================================================ -->
+
+    <LinearLayout
+        android:id="@+id/about_developer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" 
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/about_first_developer_label"
+            style="@style/AboutLabel"
+            android:layout_gravity="center_horizontal" 
+            android:text="@string/about_developer_label" />
+
+        <TextView
+            android:id="@+id/about_first_developer_value"
+            style="@style/AboutText"
+            android:layout_gravity="center_horizontal" 
+            android:text="@string/about_first_developer_value"/>
+
+    </LinearLayout>
+
+    <!-- ============================================================ -->
+    <!-- ABOUT BUSINESS ANALYST -->
+    <!-- ============================================================ -->
+
+    <LinearLayout
+        android:id="@+id/about_business_analyst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" 
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/about_business_analyst_label"
+            style="@style/AboutLabel"
+            android:layout_gravity="center_horizontal" 
+            android:text="@string/about_business_analyst_label" />
+
+        <TextView
+            android:id="@+id/about_business_analyst_value"
+            style="@style/AboutText"
+            android:layout_gravity="center_horizontal" 
+            android:text="@string/about_business_analyst_value"/>
+    </LinearLayout>
+    
+    <!-- ============================================================ -->
+    <!-- ABOUT UI ANALYST -->
+    <!-- ============================================================ -->
+
+    <LinearLayout
+        android:id="@+id/about_ui_analyst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" 
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/about_ui_analyst_label"
+            style="@style/AboutLabel"
+            android:layout_gravity="center_horizontal" 
+            android:text="@string/about_ui_analyst_label" />
+
+        <TextView
+            android:id="@+id/about_ui_analyst_value"
+            style="@style/AboutText"
+            android:layout_gravity="center_horizontal" 
+            android:text="@string/about_ui_analyst_value"/>
+    </LinearLayout>
+    
+    <!-- ============================================================ -->
+    <!-- ABOUT PROJECT -->
+    <!-- ============================================================ -->
+
+	<LinearLayout
+        android:id="@+id/about_project"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" 
+        android:orientation="vertical">
+ 
+        <TextView
+            android:id="@+id/about_project_label"
+            style="@style/AboutLabel"
+            android:text="@string/about_project_label"/>
+          
+        <TextView
+            android:id="@+id/about_project_value"
+			style="@style/AboutWebLink"
+            android:text="@string/about_project_value"/>
+	</LinearLayout>
+ 
+	<!-- ============================================================ -->
+    <!-- ABOUT TECHNICAL PROJECT -->
+    <!-- ============================================================ -->
+
+	<LinearLayout
+        android:id="@+id/about_technical_project"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" 
+        android:orientation="vertical">
+ 
+        <TextView
+            android:id="@+id/about_technical_project_label"
+            style="@style/AboutLabel"
+            android:text="@string/about_technical_project_label"/>
+          
+        <TextView
+            android:id="@+id/about_technical_project_value"
+			style="@style/AboutWebLink"
+            android:text="@string/about_technical_project_value"/>
+	</LinearLayout>
+
+	
+    <!-- ============================================================ -->
+    <!-- SPINNING WHEEL IMAGE HANDLER -->
+    <!-- ============================================================ -->
+    <!--
+    <ImageView
+		android:id="@+id/spinning_wheel_image"
+		android:layout_width="match_parent"
+		android:layout_height="200dp"
+		android:layout_gravity="fill_vertical"
+		android:layout_marginBottom="15dp"
+		android:layout_marginTop="10dp"
+		android:contentDescription="@string/spinning_wheel_image"
+		android:visibility="invisible" />
+    -->
+
+</LinearLayout>
