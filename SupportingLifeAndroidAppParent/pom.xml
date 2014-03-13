@@ -58,10 +58,10 @@
 	</build>
 	<modules>
 		<module>
-			../../SupportingLifeAndroidProject-IT/SupportingLifeAndroidProject-IT
+			../SupportingLifeAndroidProject-IT/SupportingLifeAndroidProject-IT
 		</module>
 		<module>
-			../../SupportingLifeAndroid/SupportingLifeAndroid
+			../SupportingLifeAndroid/SupportingLifeAndroid
 		</module>
 	</modules>
 </project>
