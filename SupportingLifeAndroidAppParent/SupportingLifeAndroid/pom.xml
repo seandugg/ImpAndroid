@@ -28,7 +28,7 @@
 			<artifactId>android</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<!-- Use private Cloudbees Repository for Support Library -->
+		<!-- Use private Cloudbees Repository for Android Support Library -->
 		<dependency>
 			<groupId>com.android.support</groupId>
 			<artifactId>support-v4</artifactId>
