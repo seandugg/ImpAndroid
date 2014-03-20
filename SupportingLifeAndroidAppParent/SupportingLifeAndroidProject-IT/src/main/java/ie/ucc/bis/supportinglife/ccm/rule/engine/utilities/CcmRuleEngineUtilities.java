@@ -30,6 +30,7 @@ public class CcmRuleEngineUtilities {
         for (Diagnostic diagnostic : patientDiagnostics) {
         	if (diagnostic.getClassification().getName().equalsIgnoreCase(classificationToCheck)) {
         		classificationPresent = true;
+        		break;
         	}
 		}
 		return classificationPresent;
@@ -54,6 +55,7 @@ public class CcmRuleEngineUtilities {
 
             	if (treatmentDescription.equals(treatmentToCheck)) {
             		treatmentPresent = true;
+            		break;
             	}
         	}	
 		}

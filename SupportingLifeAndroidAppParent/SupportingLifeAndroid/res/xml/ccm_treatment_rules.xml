@@ -224,6 +224,10 @@
 			<CriteriaList rule="all">															<!-- Age 2 months up to 12 months == Yes -->
 				<SymptomCriteria value="BETWEEN_2_MONTHS_AND_12_MONTHS">ccm_look_assessment_fast_breathing_dosage_symptom_id</SymptomCriteria>
 			</CriteriaList>
+			<!-- 'Chest Indrawing' danger sign not present (without this check, the cotrimoxazole dosage will be advised twice!) -->
+			<CriteriaList rule="all">															
+				<TreatmentCriteria value="no">ccm_treatment_criteria_chest_indrawing_classification_present</TreatmentCriteria>
+	  		</CriteriaList>
 			<Recommendation>Give first dose of oral antibiotic (cotrimoxazole adult tablet - 80/400).
 				\n Age 2 months up to 12 months: 1/2 tablet</Recommendation>
 		</Treatment>
@@ -238,6 +242,10 @@
 			<CriteriaList rule="all">															<!-- Age 12 months up to 5 years == Yes -->
 				<SymptomCriteria value="BETWEEN_12_MONTHS_AND_5_YEARS">ccm_look_assessment_fast_breathing_dosage_symptom_id</SymptomCriteria>
 			</CriteriaList>
+			<!-- 'Chest Indrawing' danger sign not present (without this check, the cotrimoxazole dosage will be advised twice!) -->
+			<CriteriaList rule="all">															
+				<TreatmentCriteria value="no">ccm_treatment_criteria_chest_indrawing_classification_present</TreatmentCriteria>
+	  		</CriteriaList>
 			<Recommendation>Give first dose of oral antibiotic (cotrimoxazole adult tablet - 80/400).
 				\n Age 12 months up to 5 years: 1 tablet</Recommendation>
 		</Treatment>

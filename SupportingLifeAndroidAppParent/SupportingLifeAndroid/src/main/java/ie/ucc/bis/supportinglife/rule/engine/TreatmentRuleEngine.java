@@ -45,6 +45,7 @@ public class TreatmentRuleEngine {
 	private static final String VALUE_ATTRIB = "value";
 
 	private static final String SEVERE_DEHYDRATION_CLASSIFICATION = "Severe Dehydration";
+	private static final String CCM_CHEST_INDRAWING_CLASSIFICATION_IDENTIFIER = "CCM_CHEST_INDRAWING_CLASSIFICATION";
 
 //	private static final String LOG_TAG = "ie.ucc.bis.rule.engine.TreatmentRuleEngine";
 
@@ -146,6 +147,9 @@ public class TreatmentRuleEngine {
 		
 		// assess whether patient has at least one 'refer sign' classification
 		referSignCcmClassificationTreatmentCriteriaCheck(supportingLifeBaseActivity, reviewItems, patientDiagnostics);
+		
+		// assess whether the patient has the 'chest indrawing' danger sign classification
+		chestIndrawingCcmClassificationTreatmentCriteriaCheck(supportingLifeBaseActivity, reviewItems, patientDiagnostics);
 	}
 
 	/**
@@ -304,6 +308,47 @@ public class TreatmentRuleEngine {
 		// add review item to list
 		reviewItems.add(referSignClassificationPresentReviewItem);		
 	}
+	
+	/**
+	 * Responsible for determining whether patient has the 'Chest Indrawing' danger sign classification
+	 * with respect to the patient assessment (CCM-only) i.e.
+	 * 
+	 * 	<CriteriaList rule="all">															<!-- 'Chest Indrawing' danger sign not present -->
+	 * 		<TreatmentCriteria value="no">ccm_treatment_criteria_chest_indrawing_classification_present</TreatmentCriteria>
+	 * 	</CriteriaList>
+	 * 
+	 * @param supportingLifeBaseActivity
+	 * @param reviewItems
+	 * @param patientDiagnostics
+	 * 
+	 */
+	private void chestIndrawingCcmClassificationTreatmentCriteriaCheck(SupportingLifeBaseActivity supportingLifeBaseActivity,
+			List<ReviewItem> reviewItems, List<Diagnostic> patientDiagnostics) {
+
+		boolean hasChestIndrawingDangerSignClassification = false;
+	
+		for (Diagnostic diagnostic : patientDiagnostics) {
+			if (diagnostic.getClassification().getType().equalsIgnoreCase(CcmClassificationType.DANGER_SIGN.name())
+					&& diagnostic.getClassification().getIdentifier().equalsIgnoreCase(CCM_CHEST_INDRAWING_CLASSIFICATION_IDENTIFIER)) {
+				hasChestIndrawingDangerSignClassification = true;
+				break;
+			}
+		}
+
+		String symptomId = supportingLifeBaseActivity.getResources().getString(R.string.ccm_treatment_criteria_chest_indrawing_classification_present);
+		ReviewItem chestIndrawingClassificationPresentReviewItem = new ReviewItem(null, null, symptomId, null, -1, null);
+		if (hasChestIndrawingDangerSignClassification) {
+			chestIndrawingClassificationPresentReviewItem.setSymptomValue(Response.YES.name());
+		}
+		else {
+			chestIndrawingClassificationPresentReviewItem.setSymptomValue(Response.NO.name());
+		}
+		chestIndrawingClassificationPresentReviewItem.setVisible(false);
+
+		// add review item to list
+		reviewItems.add(chestIndrawingClassificationPresentReviewItem);		
+	}
+	
 	
 	/**
 	 * 
