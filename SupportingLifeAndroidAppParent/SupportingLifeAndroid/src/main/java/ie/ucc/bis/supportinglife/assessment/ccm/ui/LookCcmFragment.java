@@ -6,6 +6,8 @@ import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.LookCcmPage;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.PageFragmentCallbacks;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextWatcher;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.ui.custom.ToggleButtonGroupTableLayout;
@@ -26,7 +28,7 @@ import android.widget.TextView;
  * @author timothyosullivan
  * 
  */
-public class LookCcmFragment extends Fragment {
+public class LookCcmFragment extends Fragment implements FragmentLifecycle {
 
 	private static final String ARG_PAGE_KEY = "PAGE_KEY";
 
@@ -116,20 +118,6 @@ public class LookCcmFragment extends Fragment {
 
 		setPageFragmentCallbacks((PageFragmentCallbacks) activity);
 	}
-	
-	@Override
-	public void onStop() {
-		super.onStop();
-		// stop analytics timer for page
-		AnalyticUtilities.configurePageTimer(getLookCcmPage(), LookCcmPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY, AnalyticUtilities.STOP_PAGE_TIMER_ACTION);
-		// duration analytics timer for page
-		AnalyticUtilities.determineTimerDuration(getLookCcmPage(),
-												LookCcmPage.ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY,
-												AnalyticUtilities.DURATION_PAGE_TIMER_ACTION,
-												(DataAnalytic) getLookCcmPage().getPageData().getSerializable(LookCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY),
-												(DataAnalytic) getLookCcmPage().getPageData().getSerializable(LookCcmPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY));
-		
-	}
 
 	@Override
 	public void onDetach() {
@@ -171,6 +159,28 @@ public class LookCcmFragment extends Fragment {
 						LookCcmPage.SWELLING_OF_BOTH_FEET_DATA_KEY));		
 	}
 
+    @Override
+    public void onPauseFragment(AbstractModel assessmentModel) {
+    	
+    	// need to use bunble to access page data
+		Bundle args = getArguments();
+		LookCcmPage ccmPage = (LookCcmPage) assessmentModel.findPageByKey(args.getString(ARG_PAGE_KEY));
+		
+    	if (ccmPage != null) {
+			// stop analytics timer for page
+			AnalyticUtilities.configurePageTimer(ccmPage, LookCcmPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY, AnalyticUtilities.STOP_PAGE_TIMER_ACTION);
+			// duration analytics timer for page
+			AnalyticUtilities.determineTimerDuration(ccmPage,
+													LookCcmPage.ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY,
+													AnalyticUtilities.DURATION_PAGE_TIMER_ACTION,
+													(DataAnalytic) ccmPage.getPageData().getSerializable(LookCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY),
+													(DataAnalytic) ccmPage.getPageData().getSerializable(LookCcmPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY));
+    	}
+    }
+
+    @Override
+    public void onResumeFragment(AbstractModel assessmentModel) {}
+	
 	/**
 	 * Getter Method: getLookCcmPage()
 	 */

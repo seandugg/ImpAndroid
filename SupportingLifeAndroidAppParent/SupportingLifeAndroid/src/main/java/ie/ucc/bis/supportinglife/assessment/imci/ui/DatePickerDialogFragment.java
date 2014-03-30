@@ -1,6 +1,8 @@
 package ie.ucc.bis.supportinglife.assessment.imci.ui;
 
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DateDialogSetListener;
 import ie.ucc.bis.supportinglife.ui.utilities.DateUtilities;
 
@@ -20,7 +22,7 @@ import android.widget.EditText;
  * @author timothyosullivan
  */
 
-public class DatePickerDialogFragment extends DialogFragment {
+public class DatePickerDialogFragment extends DialogFragment implements FragmentLifecycle {
 	
 	private static final int MAX_AGE_OF_PATIENT = 5;
 
@@ -74,6 +76,12 @@ public class DatePickerDialogFragment extends DialogFragment {
 		
 		return datePickerDialog;
 	}
+	
+    @Override
+    public void onPauseFragment(AbstractModel assessmentModel) {}
+
+    @Override
+    public void onResumeFragment(AbstractModel assessmentModel) {}
 
 	/**
 	 * Getter Method: getDateEditText()

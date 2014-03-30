@@ -4,6 +4,8 @@ import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.imci.model.FeverAssessmentPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextWatcher;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupCoordinatorListener;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
@@ -33,7 +35,7 @@ import android.widget.TextView;
  * @author timothyosullivan
  * 
  */
-public class FeverAssessmentFragment extends Fragment {
+public class FeverAssessmentFragment extends Fragment implements FragmentLifecycle {
 	
     private static final String ARG_PAGE_KEY = "PAGE_KEY";
     
@@ -404,7 +406,12 @@ public class FeverAssessmentFragment extends Fragment {
         				getMouthUlcersView()));
 	}
     
+    @Override
+    public void onPauseFragment(AbstractModel assessmentModel) {}
 
+    @Override
+    public void onResumeFragment(AbstractModel assessmentModel) {}
+	
 	/**
 	 * Getter Method: getPageFragmentCallbacks()
 	 */

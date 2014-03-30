@@ -8,6 +8,7 @@ import ie.ucc.bis.supportinglife.assessment.imci.model.GeneralDangerSignsPage;
 import ie.ucc.bis.supportinglife.assessment.imci.model.ImciAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DynamicViewListenerUtilities;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.ui.custom.InputFilterMinMax;
@@ -35,7 +36,7 @@ import android.widget.TextView;
  * @author timothyosullivan
  * 
  */
-public class DiarrhoeaAssessmentFragment extends Fragment {
+public class DiarrhoeaAssessmentFragment extends Fragment implements FragmentLifecycle {
 	
     private static final String ARG_PAGE_KEY = "PAGE_KEY";
     
@@ -299,7 +300,13 @@ public class DiarrhoeaAssessmentFragment extends Fragment {
 				DiarrhoeaAssessmentPage.DIARRHOEA_DATA_KEY,
 				DiarrhoeaAssessmentPage.DIARRHOEA_DURATION_DATA_KEY,
 				getResources(), getDiarrhoeaAssessmentPage());
-	}   
+	}
+	
+    @Override
+    public void onPauseFragment(AbstractModel assessmentModel) {}
+
+    @Override
+    public void onResumeFragment(AbstractModel assessmentModel) {}
     
 	/**
 	 * Getter Method: getPageFragmentCallbacks()

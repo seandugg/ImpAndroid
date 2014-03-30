@@ -4,6 +4,8 @@ import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.activity.AssessmentResultsActivity;
 import ie.ucc.bis.supportinglife.activity.CcmAssessmentResultsActivity;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.CcmClassificationAdapter;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.domain.PatientAssessment;
 import ie.ucc.bis.supportinglife.rule.engine.Diagnostic;
 
@@ -27,7 +29,7 @@ import android.widget.TextView;
  * @author TOSullivan
  *
  */
-public class CcmAssessmentClassificationsFragment extends ListFragment {
+public class CcmAssessmentClassificationsFragment extends ListFragment implements FragmentLifecycle {
     
     private CcmClassificationAdapter ccmClassificationAdapter;
     private PatientAssessment patient;
@@ -66,6 +68,12 @@ public class CcmAssessmentClassificationsFragment extends ListFragment {
 			((CcmAssessmentResultsActivity) getActivity()).displayTreatmentTab(classificationTitle);
         }
     }
+    
+    @Override
+    public void onPauseFragment(AbstractModel assessmentModel) {}
+
+    @Override
+    public void onResumeFragment(AbstractModel assessmentModel) {}
     
 	/**
 	 * Getter Method: getCcmClassificationAdapter()

@@ -3,6 +3,7 @@ package ie.ucc.bis.supportinglife.assessment.imci.ui;
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewAssessmentAdapter;
 import android.app.Activity;
@@ -15,7 +16,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ReviewFragment extends ReviewListFragment implements ModelCallbacks {
+public class ReviewFragment extends ReviewListFragment implements ModelCallbacks, FragmentLifecycle {
     private ReviewFragmentCallbacks reviewFragmentCallbacks;
     private AbstractModel wizardModel;
     private ReviewAssessmentAdapter reviewAssessmentAdapter;
@@ -108,8 +109,13 @@ public class ReviewFragment extends ReviewListFragment implements ModelCallbacks
     		
         	getReviewAssessmentAdapter().notifyDataSetChanged();
         }
-    }  
+    }
     
+    @Override
+    public void onPauseFragment(AbstractModel assessmentModel) {}
+
+    @Override
+    public void onResumeFragment(AbstractModel assessmentModel) {}    
 
 	/**
 	 * Getter Method: getReviewFragmentCallbacks()

@@ -4,6 +4,8 @@ import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.imci.model.EarAssessmentPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DynamicViewListenerUtilities;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.ui.custom.InputFilterMinMax;
@@ -29,7 +31,7 @@ import android.widget.TextView;
  * @author timothyosullivan
  * 
  */
-public class EarAssessmentFragment extends Fragment {
+public class EarAssessmentFragment extends Fragment implements FragmentLifecycle {
 	
     private static final String ARG_PAGE_KEY = "PAGE_KEY";
     
@@ -157,7 +159,6 @@ public class EarAssessmentFragment extends Fragment {
         setAnimatedView(((ViewGroup) rootView.findViewById(R.id.imci_ear_assessment_discharge_animated_view)));
 	}
 
-
 	@Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -215,6 +216,11 @@ public class EarAssessmentFragment extends Fragment {
 				getResources(), getEarAssessmentPage());
 	}    
     
+    @Override
+    public void onPauseFragment(AbstractModel assessmentModel) {}
+
+    @Override
+    public void onResumeFragment(AbstractModel assessmentModel) {}
 
 	/**
 	 * Getter Method: getPageFragmentCallbacks()

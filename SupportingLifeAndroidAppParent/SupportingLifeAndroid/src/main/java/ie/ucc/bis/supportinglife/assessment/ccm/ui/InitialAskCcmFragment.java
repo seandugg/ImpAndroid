@@ -5,6 +5,8 @@ import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.InitialAskCcmPage;
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.PageFragmentCallbacks;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextWatcher;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DynamicViewListenerUtilities;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupCoordinatorListener;
@@ -30,7 +32,7 @@ import android.widget.TextView;
  * @author timothyosullivan
  * 
  */
-public class InitialAskCcmFragment extends Fragment {
+public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle {
 
 	private static final String ARG_PAGE_KEY = "PAGE_KEY";
 
@@ -380,6 +382,12 @@ public class InitialAskCcmFragment extends Fragment {
 				new RadioGroupListener(getInitialAskCcmPage(),
 						InitialAskCcmPage.UNABLE_TO_DRINK_OR_FEED_DATA_KEY));
 	}
+	
+    @Override
+    public void onPauseFragment(AbstractModel assessmentModel) {}
+
+    @Override
+    public void onResumeFragment(AbstractModel assessmentModel) {}
 
 	/**
 	 * Getter Method: getInitialAskCcmPage()

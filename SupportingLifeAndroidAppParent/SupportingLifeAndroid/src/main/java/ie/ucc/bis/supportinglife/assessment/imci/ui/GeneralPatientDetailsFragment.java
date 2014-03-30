@@ -3,6 +3,8 @@ package ie.ucc.bis.supportinglife.assessment.imci.ui;
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.assessment.imci.model.GeneralPatientDetailsPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextWatcher;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DatePickerListener;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
@@ -28,7 +30,7 @@ import android.widget.TextView;
  * @author timothyosullivan
  * 
  */
-public class GeneralPatientDetailsFragment extends Fragment {
+public class GeneralPatientDetailsFragment extends Fragment implements FragmentLifecycle {
 	
     private static final String ARG_PAGE_KEY = "PAGE_KEY";
     
@@ -176,6 +178,12 @@ public class GeneralPatientDetailsFragment extends Fragment {
         				GeneralPatientDetailsPage.PROBLEMS_DATA_KEY));
     }
 
+    @Override
+    public void onPauseFragment(AbstractModel assessmentModel) {}
+
+    @Override
+    public void onResumeFragment(AbstractModel assessmentModel) {}
+    
 	/**
 	 * Getter Method: getGeneralPatientDetailsPage()
 	 */

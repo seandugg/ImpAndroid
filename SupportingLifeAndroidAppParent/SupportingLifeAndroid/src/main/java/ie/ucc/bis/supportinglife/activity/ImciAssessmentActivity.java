@@ -5,11 +5,13 @@ import ie.ucc.bis.supportinglife.assessment.imci.model.ImciAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.PageSelectedListener;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.StepPagerStrip;
 import ie.ucc.bis.supportinglife.assessment.model.AssessmentPagerAdapter;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.widget.Button;
 
@@ -66,20 +68,7 @@ public class ImciAssessmentActivity extends AssessmentActivity {
         setNextButton((Button) findViewById(R.id.next_button));
         setPrevButton((Button) findViewById(R.id.prev_button));
 
-        getViewPager().setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-            	getStepPagerStrip().setCurrentPage(position);
-
-                if (isConsumePageSelectedEvent()) {
-                    setConsumePageSelectedEvent(false);
-                    return;
-                }
-
-                setEditingAfterReview(false);
-                updateBottomBar();
-            }
-        });
+        getViewPager().setOnPageChangeListener(pageChangeListener);
 
         // configure click listener on Next Button       
         getNextButton().setOnClickListener(new ImciAssessmentActivity.NextButtonListener());
@@ -98,6 +87,52 @@ public class ImciAssessmentActivity extends AssessmentActivity {
 		 addSoftKeyboardHandling(findViewById(R.id.assessment_wizard));
     }
 
+    /**
+     * Anonymous Inner Class: OnPageChangeListener
+     * 
+     * Provides functionality to listen to ViewPager change events
+     * to alert fragments regarding pausing and resuming activity.
+     * Essentially provides hooks for analytic timing tracking.
+     * 
+     * Additionally facilitates notification to update the StepPageStrip
+     * and the bottom bar
+     * 
+     * @author TOSullivan
+     *
+     */    
+    private OnPageChangeListener pageChangeListener = new OnPageChangeListener() {
+    	int currentPosition = 0;
+
+    	@Override
+    	public void onPageSelected(int newPosition) {
+    		// inform respective fragment via the FragmentLifecycle interface of pause or resumption
+    		// event
+    		FragmentLifecycle fragmentToShow = (FragmentLifecycle) getAssessmentPagerAdapter().getItem(newPosition);
+    		fragmentToShow.onResumeFragment(getAssessmentModel());
+
+    		FragmentLifecycle fragmentToHide = (FragmentLifecycle) getAssessmentPagerAdapter().getItem(currentPosition);
+    		fragmentToHide.onPauseFragment(getAssessmentModel());
+
+    		currentPosition = newPosition;
+    		
+    		// additionally need to update the StepPageStrip
+        	getStepPagerStrip().setCurrentPage(newPosition);          	
+        	
+	        if (isConsumePageSelectedEvent()) {
+	            setConsumePageSelectedEvent(false);
+	            return;
+	        }
+	
+	        setEditingAfterReview(false);
+	        updateBottomBar();
+    	}
+
+    	@Override
+    	public void onPageScrolled(int arg0, float arg1, int arg2) { }
+
+    	public void onPageScrollStateChanged(int arg0) { }
+    };
+    
     /**
      * Inner Class: NextButtonListener
      * 

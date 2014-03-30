@@ -3,6 +3,8 @@ package ie.ucc.bis.supportinglife.assessment.imci.ui;
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.assessment.imci.model.MalnutritionAssessmentPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import android.app.Activity;
 import android.os.Bundle;
@@ -20,7 +22,7 @@ import android.widget.TextView;
  * @author timothyosullivan
  * 
  */
-public class MalnutritionAssessmentFragment extends Fragment {
+public class MalnutritionAssessmentFragment extends Fragment implements FragmentLifecycle {
 	
     private static final String ARG_PAGE_KEY = "PAGE_KEY";
 
@@ -144,7 +146,12 @@ public class MalnutritionAssessmentFragment extends Fragment {
         				MalnutritionAssessmentPage.MEBENDAZOLE_DOSE_DATA_KEY));
     }
     
+    @Override
+    public void onPauseFragment(AbstractModel assessmentModel) {}
 
+    @Override
+    public void onResumeFragment(AbstractModel assessmentModel) {}
+    
 	/**
 	 * Getter Method: getPageFragmentCallbacks()
 	 */
