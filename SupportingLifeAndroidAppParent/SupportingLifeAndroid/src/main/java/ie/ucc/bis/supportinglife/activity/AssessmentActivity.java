@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.PageFragmentCallbacks;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.ReviewFragmentCallbacks;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.StepPagerStrip;
@@ -9,6 +10,7 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
 import ie.ucc.bis.supportinglife.assessment.model.AssessmentPagerAdapter;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.DialogInterface;
@@ -218,6 +220,9 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 			Intent intent = new Intent(getApplicationContext(), resultsActivity.getClass());
 			intent.putExtra(ASSESSMENT_REVIEW_ITEMS, getAssessmentModel().gatherAssessmentReviewItems());
 			startActivity(intent);
+						
+			// need to capture all relevant analytics associated with the patient assessment
+			ArrayList<DataAnalytic> dataAnalyticItems = getAssessmentModel().gatherPageDataAnalytics();	
 			
 			// configure the activity animation transition effect
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

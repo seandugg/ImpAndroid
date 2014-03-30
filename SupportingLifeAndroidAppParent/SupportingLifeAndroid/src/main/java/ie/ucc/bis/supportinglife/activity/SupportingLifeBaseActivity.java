@@ -29,6 +29,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 /**
  * This is the base class for activities in the Supporting LIFE
  * application.
@@ -74,7 +76,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	/**
 	 * onDestroy method is the final method called before the activity is destroyed.
 	 * 
-	 * This can happen either because the activity is finishing (someone called
+	 * This can happen either because the activity is finishing (someone called 
 	 * finish() on it, or because the system is temporarily destroying this
 	 * instance of the activity to save space). These two scenarios can be
 	 * distinguished with the isFinishing() method.
@@ -127,6 +129,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
 	}
 	
 	/**
@@ -155,6 +158,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	@Override
 	protected void onStop () {
 		super.onStop ();
+		EasyTracker.getInstance().activityStop(this);
 	}
 	
 	/**

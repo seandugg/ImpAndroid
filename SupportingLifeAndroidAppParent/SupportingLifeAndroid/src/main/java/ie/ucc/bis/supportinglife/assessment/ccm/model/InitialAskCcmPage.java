@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.ccm.model;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.CoughDurationCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.DiarrhoeaDurationCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.DiarrhoeaZincDosageCcmReviewItem;
@@ -170,6 +171,16 @@ public class InitialAskCcmPage extends AbstractPage {
     	reviewItemSymptomId = resources.getString(R.string.ccm_ask_initial_assessment_unable_to_drink_or_feed_symptom_id);
     	reviewItems.add(new ReviewItem(reviewItemLabel, reviewItemValue, reviewItemSymptomId, getKey(), -1, reviewItemIdentifier));
     }
+    
+    /**
+     * Method: getDataAnalytics
+     * 
+     * Define the data analytics associated with the 'ask assessment' page.
+     * 
+     * @param dataAnalytics : ArrayList<DataAnalytic>
+     */      
+    @Override
+    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {}
 
     @Override
     public boolean isCompleted() {

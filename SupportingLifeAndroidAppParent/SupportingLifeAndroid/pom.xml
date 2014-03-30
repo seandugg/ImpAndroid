@@ -18,6 +18,7 @@
 		<platform.version>4.1.1.4</platform.version>
 		<android.plugin.version>3.6.0</android.plugin.version>
 		<google.android.version>18.0.0</google.android.version>
+		<google.analystics.version>3.0.0</google.analystics.version>
 		<spring.version>1.0.1.RELEASE</spring.version>
 		<json.version>1.9.12</json.version>
 		<android.api.level>17</android.api.level>
@@ -33,7 +34,13 @@
 			<groupId>com.android.support</groupId>
 			<artifactId>support-v4</artifactId>
 			<version>${google.android.version}</version>
-		</dependency>
+		</dependency>	
+		<!-- Use private Cloudbees Repository for Google Analytics Library -->
+	    <dependency>
+	      <groupId>com.google.android.analytics</groupId>
+	      <artifactId>analytics</artifactId>
+	      <version>${google.analystics.version}</version>
+	    </dependency>	
 		<!-- Spring Rest Android -->
 		<dependency>
 			<groupId>org.springframework.android</groupId>

@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.imci.model;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.ImmunizationAssessmentFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
@@ -72,6 +73,16 @@ public class ImmunizationAssessmentPage extends AbstractPage {
     	reviewItemValue = getPageData().getString(MEASLES_VACCINE_DATA_KEY + RadioGroupListener.RADIO_BUTTON_TEXT_DATA_KEY);
     	reviewItems.add(new ReviewItem(reviewItemLabel, reviewItemValue, null, getKey(), -1, reviewItemIdentifier));	
     }
+    
+    /**
+     * Method: getDataAnalytics
+     * 
+     * Define the data analytics associated with the 'immunization assessment' page.
+     * 
+     * @param dataAnalytics : ArrayList<DataAnalytic>
+     */      
+    @Override
+    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {}
 
 	/**
 	 * Getter Method: getImmunizationAssessmentFragment()

@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.imci.model;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.EarDischargeDurationReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.EarAssessmentFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
@@ -99,6 +100,16 @@ public class EarAssessmentPage extends AbstractPage {
     	reviewItems.add(new ReviewItem(reviewItemLabel, reviewItemValue, reviewItemSymptomId, getKey(), -1, reviewItemIdentifier));
     }
 
+    /**
+     * Method: getDataAnalytics
+     * 
+     * Define the data analytics associated with the 'ear assessment' page.
+     * 
+     * @param dataAnalytics : ArrayList<DataAnalytic>
+     */      
+    @Override
+    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {}
+    
 	/**
 	 * Getter Method: getEarAssessmentFragment()
 	 * 

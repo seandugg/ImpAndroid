@@ -1,5 +1,6 @@
 package ie.ucc.bis.supportinglife.assessment.model;
 
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 
 import java.util.ArrayList;
@@ -37,6 +38,16 @@ public abstract class AbstractPage implements PageTreeNode {
 	 * @param reviewItems : ArrayList<ReviewItem>
 	 */
     public abstract void getReviewItems(ArrayList<ReviewItem> reviewItems);
+    
+	/**
+	 * Abstract Method: getDataAnalytics
+	 * 
+	 * Override this method to define the data analytics
+	 * associated with the page.
+	 * 
+	 * @param dataAnalytics : ArrayList<DataAnalytic>
+	 */
+    public abstract void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics);
 
 	/**
 	 * Constructor

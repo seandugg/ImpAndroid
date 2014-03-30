@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.imci.model;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.CoughDurationReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.BreathingAssessmentFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
@@ -50,7 +51,7 @@ public class BreathingAssessmentPage extends AbstractPage {
 	/**
 	 * Method: getReviewItems
 	 * 
-	 * Define the review items associated with the 'general danger signs' page.
+	 * Define the review items associated with the 'breathing assessment' page.
 	 * 
 	 * @param reviewItems : ArrayList<ReviewItem>
 	 */      
@@ -106,7 +107,16 @@ public class BreathingAssessmentPage extends AbstractPage {
     	reviewItems.add(new ReviewItem(reviewItemLabel, reviewItemValue, reviewItemSymptomId, getKey(), -1, reviewItemIdentifier));   
     }
 
-
+    /**
+     * Method: getDataAnalytics
+     * 
+     * Define the data analytics associated with the 'breathing assessment' page.
+     * 
+     * @param dataAnalytics : ArrayList<DataAnalytic>
+     */      
+    @Override
+    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {}
+    
 	/**
 	 * Getter Method: getGeneralDangerSignsFragment()
 	 * 

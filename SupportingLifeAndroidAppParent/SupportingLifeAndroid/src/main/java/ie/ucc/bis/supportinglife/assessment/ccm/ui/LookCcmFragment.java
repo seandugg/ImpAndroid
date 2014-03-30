@@ -2,6 +2,8 @@ package ie.ucc.bis.supportinglife.assessment.ccm.ui;
 
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
+import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.LookCcmPage;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.PageFragmentCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextWatcher;
@@ -67,6 +69,9 @@ public class LookCcmFragment extends Fragment {
 			Bundle savedInstanceState) {
 		setLookCcmPage((LookCcmPage) getPageFragmentCallbacks().getPage(getPageKey()));
 		
+		// start analytics timer for page
+		AnalyticUtilities.configurePageTimer(getLookCcmPage(), LookCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);
+		
 		View rootView = inflater.inflate(R.layout.fragment_ccm_page_look_assessment, container, false);
 		((TextView) rootView.findViewById(android.R.id.title)).setText(getLookCcmPage().getTitle());
 
@@ -110,6 +115,20 @@ public class LookCcmFragment extends Fragment {
 		}
 
 		setPageFragmentCallbacks((PageFragmentCallbacks) activity);
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		// stop analytics timer for page
+		AnalyticUtilities.configurePageTimer(getLookCcmPage(), LookCcmPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY, AnalyticUtilities.STOP_PAGE_TIMER_ACTION);
+		// duration analytics timer for page
+		AnalyticUtilities.determineTimerDuration(getLookCcmPage(),
+												LookCcmPage.ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY,
+												AnalyticUtilities.DURATION_PAGE_TIMER_ACTION,
+												(DataAnalytic) getLookCcmPage().getPageData().getSerializable(LookCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY),
+												(DataAnalytic) getLookCcmPage().getPageData().getSerializable(LookCcmPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY));
+		
 	}
 
 	@Override

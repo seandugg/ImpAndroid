@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.imci.model;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.AgeIndicatorReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.GeneralPatientDetailsFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
@@ -111,6 +112,16 @@ public class GeneralPatientDetailsPage extends AbstractPage {
     	reviewItems.add(new ReviewItem(reviewItemLabel, getPageData().getString(PROBLEMS_DATA_KEY), getKey(), -1, reviewItemIdentifier));	    
     	
     }
+    
+    /**
+     * Method: getDataAnalytics
+     * 
+     * Define the data analytics associated with the 'general patient details' page.
+     * 
+     * @param dataAnalytics : ArrayList<DataAnalytic>
+     */      
+    @Override
+    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {}
 
     @Override
     public boolean isCompleted() {

@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.ccm.model;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.ChestIndrawingDosageCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.FastBreathingDosageCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.RedMuacTapeCcmReviewItem;
@@ -34,7 +35,12 @@ public class LookCcmPage extends AbstractPage {
     public static final String VERY_SLEEPY_OR_UNCONSCIOUS_DATA_KEY = "VERY_SLEEPY_OR_UNCONSCIOUS";
     public static final String PALMAR_PALLOR_DATA_KEY = "PALMAR_PALLOR";
     public static final String MUAC_TAPE_COLOUR_DATA_KEY = "MUAC_TAPE_COLOUR";
-    public static final String SWELLING_OF_BOTH_FEET_DATA_KEY = "SWELLING_OF_BOTH_FEET"; 
+    public static final String SWELLING_OF_BOTH_FEET_DATA_KEY = "SWELLING_OF_BOTH_FEET";
+    
+    // ANALYTICS DATA KEYS
+    public static final String ANALTYICS_START_PAGE_TIMER_DATA_KEY = "ANALYTICS_START_PAGE_TIMER";
+    public static final String ANALTYICS_STOP_PAGE_TIMER_DATA_KEY = "ANALYTICS_STOP_PAGE_TIMER";
+    public static final String ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY = "ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY";
     
     private LookCcmFragment lookCcmFragment;
 
@@ -133,6 +139,25 @@ public class LookCcmPage extends AbstractPage {
     	reviewItems.add(new ReviewItem(reviewItemLabel, reviewItemValue, reviewItemSymptomId, getKey(), -1, reviewItemIdentifier));
     }
 
+    /**
+     * Method: getDataAnalytics
+     * 
+     * Define the data analytics associated with the 'look assessment' page.
+     * 
+     * @param dataAnalytics : ArrayList<DataAnalytic>
+     */      
+    @Override
+    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {
+    	// add the start page timer
+    	dataAnalytics.add((DataAnalytic) getPageData().getSerializable(ANALTYICS_START_PAGE_TIMER_DATA_KEY));
+    	
+    	// add the stop page timer
+    	dataAnalytics.add((DataAnalytic) getPageData().getSerializable(ANALTYICS_STOP_PAGE_TIMER_DATA_KEY));
+    	
+    	// add the duration page timer
+    	dataAnalytics.add((DataAnalytic) getPageData().getSerializable(ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY));
+    }
+    
     @Override
     public boolean isCompleted() {
      //   return !TextUtils.isEmpty(getPageData().getString(FIRST_NAME_DATA_KEY));

@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.imci.model;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.FeverDurationReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.FeverReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.MalariaReviewItem;
@@ -190,6 +191,16 @@ public class FeverAssessmentPage extends AbstractPage {
     	reviewItems.add(new ReviewItem(reviewItemLabel, reviewItemValue, reviewItemSymptomId, getKey(), -1, reviewIdentifier));
     }
 
+    /**
+     * Method: getDataAnalytics
+     * 
+     * Define the data analytics associated with the 'fever assessment' page.
+     * 
+     * @param dataAnalytics : ArrayList<DataAnalytic>
+     */      
+    @Override
+    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {}
+    
 	/**
 	 * Getter Method: getFeverAssessmentFragment()
 	 */	

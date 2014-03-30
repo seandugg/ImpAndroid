@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.imci.model;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.PalmarPallorReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.WeightForAgeReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.MalnutritionAssessmentFragment;
@@ -101,6 +102,16 @@ public class MalnutritionAssessmentPage extends AbstractPage {
     	reviewItemSymptomId = resources.getString(R.string.imci_malnutrition_assessment_mebendazole_dose_symptom_id);
     	reviewItems.add(new ReviewItem(reviewItemLabel, reviewItemValue, reviewItemSymptomId, getKey(), -1, reviewItemIdentifier));      	
     }
+    
+    /**
+     * Method: getDataAnalytics
+     * 
+     * Define the data analytics associated with the 'malnutrition assessment' page.
+     * 
+     * @param dataAnalytics : ArrayList<DataAnalytic>
+     */      
+    @Override
+    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {}
 
 	/**
 	 * Getter Method: getMalnutritionAssessmentFragment()

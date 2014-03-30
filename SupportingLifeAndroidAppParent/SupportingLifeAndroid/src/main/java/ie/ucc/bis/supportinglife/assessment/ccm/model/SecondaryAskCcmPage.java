@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.ccm.model;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.RedEyesDurationCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.SecondaryAskCcmFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
@@ -119,6 +120,16 @@ public class SecondaryAskCcmPage extends AbstractPage {
     	reviewItems.add(new ReviewItem(reviewItemLabel, getPageData().getString(CANNOT_TREAT_PROBLEMS_DETAILS_DATA_KEY), reviewItemSymptomId, getKey(), -1, reviewItemIdentifier));
     }
 
+    /**
+     * Method: getDataAnalytics
+     * 
+     * Define the data analytics associated with the 'Secondary Ask Assessment' page.
+     * 
+     * @param dataAnalytics : ArrayList<DataAnalytic>
+     */      
+    @Override
+    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {}
+    
     @Override
     public boolean isCompleted() {
      //   return !TextUtils.isEmpty(getPageData().getString(FIRST_NAME_DATA_KEY));
