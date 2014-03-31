@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
- 
+
 <resources>
     <!--Specify HISRC (Supporting LIFE) Analytics Tracking ID-->
-    <string name="ga_trackingId">UA-49362633-1</string>
+	<string name="ga_trackingId">UA-49573429-1</string>
  
     <!--Enable automatic activity tracking-->
-    <bool name="ga_autoActivityTracking">true</bool>
+	<bool name="ga_autoActivityTracking">true</bool>
  
     <!--Enable automatic exception tracking-->
-    <bool name="ga_reportUncaughtExceptions">true</bool>
+	<bool name="ga_reportUncaughtExceptions">true</bool>
     
     <!--Set a negative value on ga_dispatchPeriod -->
     <!--to disable periodic dispatch period -->
-    <integer name="ga_dispatchPeriod">-1</integer>
+	<integer name="ga_dispatchPeriod">-1</integer>
 </resources>
