@@ -14,6 +14,8 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.analytics.tracking.android.GAServiceManager;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -179,7 +181,11 @@ public class SyncActivity extends SupportingLifeBaseActivity {
 			getHorizontalProgressBarTextView().setVisibility(View.GONE);
 			
 	        // update the display of the number of records requiring sync
-			updateSyncRecordCountDisplay();	
+			updateSyncRecordCountDisplay();
+			
+			// Now that the patient assessment records have been synced successfully, 
+			// upload any analytic data via a manual dispatch of the data
+			GAServiceManager.getInstance().dispatch();
 			
 			// re-enable sync button
 			getSyncButton().setEnabled(true);

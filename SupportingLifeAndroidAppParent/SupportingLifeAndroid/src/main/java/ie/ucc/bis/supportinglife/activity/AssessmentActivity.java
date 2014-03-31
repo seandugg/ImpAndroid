@@ -10,7 +10,6 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
 import ie.ucc.bis.supportinglife.assessment.model.AssessmentPagerAdapter;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.DialogInterface;
@@ -19,6 +18,9 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
+
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
 
 /**
  * 
@@ -220,9 +222,23 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 			Intent intent = new Intent(getApplicationContext(), resultsActivity.getClass());
 			intent.putExtra(ASSESSMENT_REVIEW_ITEMS, getAssessmentModel().gatherAssessmentReviewItems());
 			startActivity(intent);
-						
-			// need to capture all relevant analytics associated with the patient assessment
-			ArrayList<DataAnalytic> dataAnalyticItems = getAssessmentModel().gatherPageDataAnalytics();	
+
+	        // need to take note of the data analytics associated with the patient assessment pages
+			Tracker tracker = GoogleAnalytics.getInstance(getApplicationContext()).getDefaultTracker();
+			
+			// configure demographic information of user
+			String ageRange = "25-39";
+			String gender = "male";
+			
+			tracker.setCustomDimension(1, ageRange);
+			tracker.setCustomDimension(2, gender);
+			// Dimension value is associated and sent with this hit.
+			tracker.sendView();
+			
+			for (DataAnalytic dataAnalyticItem : getAssessmentModel().gatherPageDataAnalytics()) {
+				tracker.sendEvent(dataAnalyticItem.getCategory(), dataAnalyticItem.getAction(), 
+						dataAnalyticItem.getLabel(), dataAnalyticItem.getValue());
+			}
 			
 			// configure the activity animation transition effect
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

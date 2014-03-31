@@ -38,9 +38,9 @@ public class LookCcmPage extends AbstractPage {
     public static final String SWELLING_OF_BOTH_FEET_DATA_KEY = "SWELLING_OF_BOTH_FEET";
     
     // ANALYTICS DATA KEYS
-    public static final String ANALTYICS_START_PAGE_TIMER_DATA_KEY = "ANALYTICS_START_PAGE_TIMER";
-    public static final String ANALTYICS_STOP_PAGE_TIMER_DATA_KEY = "ANALYTICS_STOP_PAGE_TIMER";
-    public static final String ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY = "ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY";
+    public static final String ANALTYICS_START_PAGE_TIMER_DATA_KEY = "ANALYTICS_LOOK_CCM_PAGE_START_PAGE_TIMER";
+    public static final String ANALTYICS_STOP_PAGE_TIMER_DATA_KEY = "ANALYTICS_LOOK_CCM_PAGE_STOP_PAGE_TIMER";
+    public static final String ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY = "ANALTYICS_LOOK_CCM_PAGE_DURATION";
     
     private LookCcmFragment lookCcmFragment;
 
@@ -148,12 +148,6 @@ public class LookCcmPage extends AbstractPage {
      */      
     @Override
     public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {
-    	// add the start page timer
-    	dataAnalytics.add((DataAnalytic) getPageData().getSerializable(ANALTYICS_START_PAGE_TIMER_DATA_KEY));
-    	
-    	// add the stop page timer
-    	dataAnalytics.add((DataAnalytic) getPageData().getSerializable(ANALTYICS_STOP_PAGE_TIMER_DATA_KEY));
-    	
     	// add the duration page timer
     	dataAnalytics.add((DataAnalytic) getPageData().getSerializable(ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY));
     }

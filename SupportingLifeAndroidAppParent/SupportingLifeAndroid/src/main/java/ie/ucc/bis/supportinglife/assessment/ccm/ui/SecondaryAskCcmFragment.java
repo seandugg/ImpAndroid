@@ -2,6 +2,8 @@ package ie.ucc.bis.supportinglife.assessment.ccm.ui;
 
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
+import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.SecondaryAskCcmPage;
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.PageFragmentCallbacks;
@@ -360,10 +362,36 @@ public class SecondaryAskCcmFragment extends Fragment implements FragmentLifecyc
 	}
 
     @Override
-    public void onPauseFragment(AbstractModel assessmentModel) {}
+    public void onPauseFragment(AbstractModel assessmentModel) {
+    	
+    	// need to use bundle to access page data
+		Bundle args = getArguments();
+		SecondaryAskCcmPage ccmPage = (SecondaryAskCcmPage) assessmentModel.findPageByKey(args.getString(ARG_PAGE_KEY));
+		
+    	if (ccmPage != null) {
+			// stop analytics timer for page
+			AnalyticUtilities.configurePageTimer(ccmPage, SecondaryAskCcmPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY, AnalyticUtilities.STOP_PAGE_TIMER_ACTION);
+			// duration analytics timer for page
+			AnalyticUtilities.determineTimerDuration(ccmPage,
+													SecondaryAskCcmPage.ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY,
+													AnalyticUtilities.DURATION_PAGE_TIMER_ACTION,
+													(DataAnalytic) ccmPage.getPageData().getSerializable(SecondaryAskCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY),
+													(DataAnalytic) ccmPage.getPageData().getSerializable(SecondaryAskCcmPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY));
+    	}
+    }
 
     @Override
-    public void onResumeFragment(AbstractModel assessmentModel) {}
+    public void onResumeFragment(AbstractModel assessmentModel) {
+    	
+    	// need to use bunble to access page data
+		Bundle args = getArguments();
+		SecondaryAskCcmPage ccmPage = (SecondaryAskCcmPage) assessmentModel.findPageByKey(args.getString(ARG_PAGE_KEY));
+    
+		if (ccmPage != null) {
+			// start analytics timer for page
+    		AnalyticUtilities.configurePageTimer(ccmPage, SecondaryAskCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);    		
+    	}
+    }
 	
 	/**
 	 * Getter Method: getSecondaryAskCcmPage()

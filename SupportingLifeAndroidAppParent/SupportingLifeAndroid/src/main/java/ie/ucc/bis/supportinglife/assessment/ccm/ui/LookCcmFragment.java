@@ -71,9 +71,6 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
 			Bundle savedInstanceState) {
 		setLookCcmPage((LookCcmPage) getPageFragmentCallbacks().getPage(getPageKey()));
 		
-		// start analytics timer for page
-		AnalyticUtilities.configurePageTimer(getLookCcmPage(), LookCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);
-		
 		View rootView = inflater.inflate(R.layout.fragment_ccm_page_look_assessment, container, false);
 		((TextView) rootView.findViewById(android.R.id.title)).setText(getLookCcmPage().getTitle());
 
@@ -162,7 +159,7 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
     @Override
     public void onPauseFragment(AbstractModel assessmentModel) {
     	
-    	// need to use bunble to access page data
+    	// need to use bundle to access page data
 		Bundle args = getArguments();
 		LookCcmPage ccmPage = (LookCcmPage) assessmentModel.findPageByKey(args.getString(ARG_PAGE_KEY));
 		
@@ -179,7 +176,17 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
     }
 
     @Override
-    public void onResumeFragment(AbstractModel assessmentModel) {}
+    public void onResumeFragment(AbstractModel assessmentModel) {
+    	
+    	// need to use bunble to access page data
+		Bundle args = getArguments();
+		LookCcmPage ccmPage = (LookCcmPage) assessmentModel.findPageByKey(args.getString(ARG_PAGE_KEY));
+    
+		if (ccmPage != null) {
+			// start analytics timer for page
+    		AnalyticUtilities.configurePageTimer(ccmPage, LookCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);    		
+    	}
+    }
 	
 	/**
 	 * Getter Method: getLookCcmPage()

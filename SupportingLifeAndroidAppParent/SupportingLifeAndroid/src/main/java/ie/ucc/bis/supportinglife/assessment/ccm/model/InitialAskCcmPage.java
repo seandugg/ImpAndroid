@@ -42,7 +42,12 @@ public class InitialAskCcmPage extends AbstractPage {
     public static final String FEVER_DURATION_DATA_KEY = "FEVER_DURATION";
     public static final String CONVULSIONS_DATA_KEY = "CONVULSIONS";
     public static final String DRINK_OR_FEED_DIFFICULTY_DATA_KEY = "DRINK_OR_FEED_DIFFICULTY";
-    public static final String UNABLE_TO_DRINK_OR_FEED_DATA_KEY = "UNABLE_TO_DRINK_OR_FEED";   
+    public static final String UNABLE_TO_DRINK_OR_FEED_DATA_KEY = "UNABLE_TO_DRINK_OR_FEED";
+    
+    // ANALYTICS DATA KEYS
+    public static final String ANALTYICS_START_PAGE_TIMER_DATA_KEY = "ANALYTICS_FIRST_ASK_CCM_PAGE_START_PAGE_TIMER";
+    public static final String ANALTYICS_STOP_PAGE_TIMER_DATA_KEY = "ANALYTICS_FIRST_ASK_CCM_PAGE_STOP_PAGE_TIMER";
+    public static final String ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY = "ANALTYICS_FIRST_ASK_CCM_PAGE_DURATION";
     
     private InitialAskCcmFragment initialAskCcmFragment;
 
@@ -180,7 +185,10 @@ public class InitialAskCcmPage extends AbstractPage {
      * @param dataAnalytics : ArrayList<DataAnalytic>
      */      
     @Override
-    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {}
+    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {
+    	// add the duration page timer
+    	dataAnalytics.add((DataAnalytic) getPageData().getSerializable(ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY));
+    }
 
     @Override
     public boolean isCompleted() {

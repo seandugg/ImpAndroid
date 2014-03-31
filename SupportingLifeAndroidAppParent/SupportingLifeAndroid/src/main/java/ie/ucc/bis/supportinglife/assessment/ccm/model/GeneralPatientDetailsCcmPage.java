@@ -38,6 +38,10 @@ public class GeneralPatientDetailsCcmPage extends AbstractPage {
 	public static final String RELATIONSHIP_DATA_KEY = "RELATIONSHIP_DATA_KEY";
 	public static final String RELATIONSHIP_SPECIFIED_DATA_KEY = "RELATIONSHIP_SPECIFIED_DATA_KEY";
 
+    // ANALYTICS DATA KEYS
+    public static final String ANALTYICS_START_PAGE_TIMER_DATA_KEY = "ANALYTICS_GENERAL_PATIENT_DETAILS_CCM_PAGE_START_PAGE_TIMER";
+    public static final String ANALTYICS_STOP_PAGE_TIMER_DATA_KEY = "ANALYTICS_GENERAL_PATIENT_DETAILS_CCM_PAGE_STOP_PAGE_TIMER";
+    public static final String ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY = "ANALTYICS_GENERAL_PATIENT_DETAILS_CCM_PAGE_DURATION";
     
     private GeneralPatientDetailsCcmFragment generalPatientDetailsCcmFragment;
 
@@ -149,8 +153,11 @@ public class GeneralPatientDetailsCcmPage extends AbstractPage {
      * @param dataAnalytics : ArrayList<DataAnalytic>
      */      
     @Override
-    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {}
-    
+    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {
+    	// add the duration page timer
+    	dataAnalytics.add((DataAnalytic) getPageData().getSerializable(ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY));
+    }
+        
     @Override
     public boolean isCompleted() {
      //   return !TextUtils.isEmpty(getPageData().getString(FIRST_NAME_DATA_KEY));

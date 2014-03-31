@@ -33,7 +33,12 @@ public class SecondaryAskCcmPage extends AbstractPage {
     public static final String SEEING_DIFFICULTY_DATA_KEY = "SEEING_DIFFICULTY";
     public static final String SEEING_DIFFICULTY_DURATION_DATA_KEY = "SEEING_DIFFICULTY_DURATION";
     public static final String CANNOT_TREAT_PROBLEMS_DATA_KEY = "CANNOT_TREAT_PROBLEMS";
-    public static final String CANNOT_TREAT_PROBLEMS_DETAILS_DATA_KEY = "CANNOT_TREAT_PROBLEMS_DETAILS";    
+    public static final String CANNOT_TREAT_PROBLEMS_DETAILS_DATA_KEY = "CANNOT_TREAT_PROBLEMS_DETAILS";
+    
+    // ANALYTICS DATA KEYS
+    public static final String ANALTYICS_START_PAGE_TIMER_DATA_KEY = "ANALYTICS_SECOND_ASK_CCM_PAGE_START_PAGE_TIMER";
+    public static final String ANALTYICS_STOP_PAGE_TIMER_DATA_KEY = "ANALYTICS_SECOND_ASK_CCM_PAGE_STOP_PAGE_TIMER";
+    public static final String ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY = "ANALTYICS_SECOND_ASK_CCM_PAGE_DURATION";
     
     private SecondaryAskCcmFragment secondaryAskCcmFragment;
 
@@ -128,7 +133,10 @@ public class SecondaryAskCcmPage extends AbstractPage {
      * @param dataAnalytics : ArrayList<DataAnalytic>
      */      
     @Override
-    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {}
+    public void getDataAnalytics(ArrayList<DataAnalytic> dataAnalytics) {
+    	// add the duration page timer
+    	dataAnalytics.add((DataAnalytic) getPageData().getSerializable(ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY));
+    }
     
     @Override
     public boolean isCompleted() {

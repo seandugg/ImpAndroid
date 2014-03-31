@@ -9,7 +9,7 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
 public class AnalyticUtilities {
 
 	public static final String START_PAGE_TIMER_ACTION = "START_PAGE_TIMER";
-	public static final String STOP_PAGE_TIMER_ACTION = "START_PAGE_TIMER";
+	public static final String STOP_PAGE_TIMER_ACTION = "STOP_PAGE_TIMER";
 	public static final String DURATION_PAGE_TIMER_ACTION = "DURATION_PAGE_TIMER";	
 
 	private static final String TIMER_CATEGORY = "TIMER";	
@@ -24,13 +24,12 @@ public class AnalyticUtilities {
 	 */
 	public static void configurePageTimer(AbstractPage page, String analtyicsDataKey, String timerAction) {
 		
-		// firstly check that the timestamp for this timer has not been already set for this assessment
-		if (page.getPageData().get(analtyicsDataKey) == null) {	
-			// get the current timestamp
-			int timeStamp = Long.valueOf(System.currentTimeMillis() / MILLISECONDS_IN_A_SECOND).intValue();	
-			DataAnalytic dataAnalytic = new DataAnalytic(TIMER_CATEGORY, timerAction, analtyicsDataKey, timeStamp);
-			page.getPageData().putSerializable(analtyicsDataKey, dataAnalytic);
-		}
+		boolean authoriseUpload = false;
+		
+		// get the current timestamp
+		Long timeStamp = Long.valueOf(System.currentTimeMillis() / MILLISECONDS_IN_A_SECOND);	
+		DataAnalytic dataAnalytic = new DataAnalytic(TIMER_CATEGORY, timerAction, analtyicsDataKey, timeStamp, authoriseUpload);
+		page.getPageData().putSerializable(analtyicsDataKey, dataAnalytic);
 	}
 
 	/**
@@ -42,9 +41,19 @@ public class AnalyticUtilities {
 	 */
 	public static void determineTimerDuration(AbstractPage page, String analtyicsDataKey, String timerAction,
 											DataAnalytic startTimerAnalytic, DataAnalytic stopTimerAnalytic) {
-		int duration = stopTimerAnalytic.getValue() - startTimerAnalytic.getValue();
+		DataAnalytic dataAnalytic;
+		boolean authoriseUpload = true;
 		
-		DataAnalytic dataAnalytic = new DataAnalytic(TIMER_CATEGORY, timerAction, analtyicsDataKey, duration);
+		Long duration = stopTimerAnalytic.getValue() - startTimerAnalytic.getValue();
+		
+		if (page.getPageData().get(analtyicsDataKey) == null) {
+			dataAnalytic = new DataAnalytic(TIMER_CATEGORY, timerAction, analtyicsDataKey, duration, authoriseUpload);
+		}
+		else {
+			dataAnalytic = (DataAnalytic) page.getPageData().get(analtyicsDataKey);
+			dataAnalytic.setValue(dataAnalytic.getValue() + duration);
+		}
+		
 		page.getPageData().putSerializable(analtyicsDataKey, dataAnalytic);
 	}
 }

@@ -22,8 +22,8 @@ public class DataAnalytic implements Serializable {
 	// Defines a label associated with the event e.g. 'previous button'
 	private String label;
 	// Defines a numeric value associated with the event 
-	private Integer value;
-
+	private Long value;
+	
     /**
      * Constructor
      * 
@@ -33,7 +33,7 @@ public class DataAnalytic implements Serializable {
      * @param value
      * 
      */
-    public DataAnalytic(String category, String action, String label, Integer value) {
+    public DataAnalytic(String category, String action, String label, Long value, boolean authoriseUpload) {
         setCategory(category);
         setAction(action);
         setLabel(label);
@@ -64,11 +64,11 @@ public class DataAnalytic implements Serializable {
 		this.label = label;
 	}
 
-	public Integer getValue() {
+	public Long getValue() {
 		return value;
 	}
 
-	public void setValue(Integer value) {
+	public void setValue(Long value) {
 		this.value = value;
 	}
 }

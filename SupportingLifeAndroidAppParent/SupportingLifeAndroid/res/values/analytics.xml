@@ -9,4 +9,8 @@
  
     <!--Enable automatic exception tracking-->
     <bool name="ga_reportUncaughtExceptions">true</bool>
+    
+    <!--Set a negative value on ga_dispatchPeriod -->
+    <!--to disable periodic dispatch period -->
+    <integer name="ga_dispatchPeriod">-1</integer>
 </resources>
