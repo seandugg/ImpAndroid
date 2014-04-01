@@ -14,10 +14,6 @@ import android.support.v4.app.Fragment;
  * @author timothyosullivan
  */
 public abstract class AbstractPage implements PageTreeNode {
-    /**
-     * The key into {@link #getData()} used for wizards with simple (single) values.
-     */
-    public static final String SIMPLE_DATA_KEY = "_";
 
     protected ModelCallbacks modelCallbacks;
 
