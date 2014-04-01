@@ -9,6 +9,7 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
 import ie.ucc.bis.supportinglife.assessment.model.AssessmentPagerAdapter;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
+import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
 
 import java.util.List;
 
@@ -176,7 +177,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     	// if user is performing an IMCI or CCM assessment then 
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
-    	exitAssessmentDialogHandler();
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN);
     }
     
 	/**
@@ -194,8 +195,50 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     	// is performing an IMCI or CCM assessment then a confirmation dialog 
     	// will be displayed to confirm that the user wishes to exit the 
     	// patient assessment
-    	exitAssessmentDialogHandler();
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN);
     }
+    
+	/**
+	 * Click Handler: Handle the click on the 'Settings' Action Bar item
+	 * 
+	 * @param view View
+	 * @return void
+	 */
+	@Override
+	public void onClickSettings() {
+    	// if user is performing an IMCI or CCM assessment then 
+    	// display a confirmation dialog to confirm that the user wishes 
+    	// to exit the patient assessment
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.SETTINGS_SCREEN);
+	}
+	
+	/**
+	 * Click Handler: Handle the click on the 'Sync' Action Bar item
+	 * 
+	 * @param view View
+	 * @return void
+	 */
+	@Override
+	public void onClickSync() {
+    	// if user is performing an IMCI or CCM assessment then 
+    	// display a confirmation dialog to confirm that the user wishes 
+    	// to exit the patient assessment
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.SYNC_SCREEN);
+	}
+	
+	/**
+	 * Click Handler: Handle the click on the 'Help' Action Bar item
+	 * 
+	 * @param view View
+	 * @return void
+	 */
+	@Override
+	public void onClickHelp() {
+    	// if user is performing an IMCI or CCM assessment then 
+    	// display a confirmation dialog to confirm that the user wishes 
+    	// to exit the patient assessment
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.HELP_SCREEN);
+	}
     
     /**
      * Inner Class: AssessmentDialogListener

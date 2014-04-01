@@ -187,12 +187,11 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	}
 		
 	/**
-	 * Click Handler: Handle the click on the 'Settings' Action Bar item
+	 * Method to go to the Settings activity
 	 * 
-	 * @param view View
 	 * @return void
 	 */
-	public void onClickSettings(View view) {
+	public void goToSettingsScreen() {
 		startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
 		
 		// configure the activity animation transition effect
@@ -200,12 +199,11 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	}
 	
 	/**
-	 * Click Handler: Handle the click on the 'Sync' Action Bar item
+	 * Method to go to the Sync activity
 	 * 
-	 * @param view View
 	 * @return void
 	 */
-	public void onClickSync(View view) {
+	public void goToSyncScreen() {
 		startActivity(new Intent(getApplicationContext(), SyncActivity.class));
 		
 		// configure the activity animation transition effect
@@ -213,16 +211,42 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	}
 	
 	/**
-	 * Click Handler: Handle the click on the 'Help' Action Bar item
+	 * Method to go to the Help activity
 	 * 
-	 * @param view View
 	 * @return void
 	 */
-	public void onClickHelp(View view) {
-		startActivity(new Intent(getApplicationContext(), HelpActivity.class));
+	public void goToHelpScreen() {
+//		startActivity(new Intent(getApplicationContext(), HelpActivity.class));
 		
 		// configure the activity animation transition effect
-		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+	}
+	
+	/**
+	 * Click Handler: Handle the click on the 'Settings' Action Bar item
+	 * 
+	 * @return void
+	 */
+	public void onClickSettings() {
+		goToSettingsScreen();
+	}
+	
+	/**
+	 * Click Handler: Handle the click on the 'Sync' Action Bar item
+	 * 
+	 * @return void
+	 */
+	public void onClickSync() {
+		goToSyncScreen();
+	}
+	
+	/**
+	 * Click Handler: Handle the click on the 'Help' Action Bar item
+	 * 
+	 * @return void
+	 */
+	public void onClickHelp() {
+		goToHelpScreen();
 	}
 	
 	/**
@@ -367,14 +391,14 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
 	        case R.id.dashboard_action_settings:
-	        	onClickSettings(item.getActionView());
+	        	onClickSettings();
 	            return true;
 	        case R.id.dashboard_action_sync:
-	        	onClickSync(item.getActionView());
+	        	onClickSync();
 	            return true;
 	        case R.id.dashboard_action_help:
 	        	toast(FEATURE_UNIMPLEMENTED);
-	        	// onClickHelp(item.getActionView());
+	        	onClickHelp();
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -389,16 +413,17 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	 * Results activity) then a confirmation dialog  will be displayed to 
 	 * confirm that the user wishes to exit the patient assessment
 	 * 
-	 * @param view View
+	 * @param navigationRequest 
+
 	 * @return void
 	 */
-	protected void exitAssessmentDialogHandler() {
+	protected void exitAssessmentDialogHandler(final int navigationRequest) {
 		DialogFragment dg = new DialogFragment() {
     		@Override
     		public Dialog onCreateDialog(Bundle savedInstanceState) {    			
     			return new AlertDialog.Builder(getActivity())
     			.setMessage(R.string.exit_assessment_confirm_message)
-    			.setPositiveButton(R.string.exit_assessment_confirm_button, new AssessmentExitDialogListener(SupportingLifeBaseActivity.this))
+    			.setPositiveButton(R.string.exit_assessment_confirm_button, new AssessmentExitDialogListener(SupportingLifeBaseActivity.this, navigationRequest))
     			.setNegativeButton(android.R.string.cancel, null)
     			.create();
     		}
