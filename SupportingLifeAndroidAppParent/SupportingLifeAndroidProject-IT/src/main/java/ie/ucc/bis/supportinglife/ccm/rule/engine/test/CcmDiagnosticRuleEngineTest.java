@@ -9,6 +9,8 @@ import ie.ucc.bis.supportinglife.rule.engine.TreatmentRuleEngine;
 
 import java.util.ArrayList;
 
+import com.google.analytics.tracking.android.GoogleAnalytics;
+
 import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -36,6 +38,18 @@ public abstract class CcmDiagnosticRuleEngineTest extends ActivityInstrumentatio
 		setSupportingLifeActivity(getActivity());
 		setReviewItems(new ArrayList<ReviewItem>());
 		setResources(getSupportingLifeActivity().getApplicationContext().getResources());
+		
+        // turn off google analytics for duration of test
+        turnOffGoogleAnalytics();
+	}
+
+	/**
+	 * Switch off google analytics tracking
+	 * 
+	 */
+	private void turnOffGoogleAnalytics() {
+		GoogleAnalytics googleAnalytics = GoogleAnalytics.getInstance(getActivity());
+        googleAnalytics.setAppOptOut(true);
 	}
 
 	/**
