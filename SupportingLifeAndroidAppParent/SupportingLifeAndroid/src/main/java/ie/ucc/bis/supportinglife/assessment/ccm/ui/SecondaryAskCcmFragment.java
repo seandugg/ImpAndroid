@@ -35,8 +35,6 @@ import android.widget.TextView;
  */
 public class SecondaryAskCcmFragment extends Fragment implements FragmentLifecycle {
 
-	private static final String ARG_PAGE_KEY = "PAGE_KEY";
-
 	private SecondaryAskCcmPage secondaryAskCcmPage;    
 	private PageFragmentCallbacks pageFragmentCallbacks;
 	private String pageKey;
@@ -366,7 +364,7 @@ public class SecondaryAskCcmFragment extends Fragment implements FragmentLifecyc
     	
     	// need to use bundle to access page data
 		Bundle args = getArguments();
-		SecondaryAskCcmPage ccmPage = (SecondaryAskCcmPage) assessmentModel.findPageByKey(args.getString(ARG_PAGE_KEY));
+		SecondaryAskCcmPage ccmPage = (SecondaryAskCcmPage) assessmentModel.findAssessmentPageByKey(args.getString(ARG_PAGE_KEY));
 		
     	if (ccmPage != null) {
 			// stop analytics timer for page
@@ -385,7 +383,7 @@ public class SecondaryAskCcmFragment extends Fragment implements FragmentLifecyc
     	
     	// need to use bunble to access page data
 		Bundle args = getArguments();
-		SecondaryAskCcmPage ccmPage = (SecondaryAskCcmPage) assessmentModel.findPageByKey(args.getString(ARG_PAGE_KEY));
+		SecondaryAskCcmPage ccmPage = (SecondaryAskCcmPage) assessmentModel.findAssessmentPageByKey(args.getString(ARG_PAGE_KEY));
     
 		if (ccmPage != null) {
 			// start analytics timer for page

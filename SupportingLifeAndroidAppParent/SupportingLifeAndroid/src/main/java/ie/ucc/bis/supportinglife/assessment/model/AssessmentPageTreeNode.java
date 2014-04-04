@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * 
  * @author timothyosullivan
  */
-public interface PageTreeNode {
-    public AbstractPage findPageByKey(String key);
-    public void flattenCurrentPageSequence(ArrayList<AbstractPage> dest);
+public interface AssessmentPageTreeNode {
+    public void flattenCurrentPageSequence(ArrayList<AbstractAssessmentPage> dest);
+    public AbstractAssessmentPage findAssessmentPageByKey(String key);
 }

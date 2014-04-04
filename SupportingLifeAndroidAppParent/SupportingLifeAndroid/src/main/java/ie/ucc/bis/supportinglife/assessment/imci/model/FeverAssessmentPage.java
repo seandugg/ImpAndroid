@@ -7,7 +7,7 @@ import ie.ucc.bis.supportinglife.assessment.imci.model.review.FeverReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.MalariaReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.FeverAssessmentFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupCoordinatorListener;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
@@ -20,7 +20,7 @@ import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 /**
- * Page Title: Fever Assessment
+ * AnalyticsPage Title: Fever Assessment
  * 
  * Stage in bread-crumb UI Wizard: 5
  * 
@@ -29,7 +29,7 @@ import android.support.v4.app.Fragment;
  * 
  * @author timothyosullivan
  */
-public class FeverAssessmentPage extends AbstractPage {
+public class FeverAssessmentPage extends AbstractAssessmentPage {
     public static final String FEVER_DATA_KEY = "FEVER";
     public static final String MALARIA_RISK_DATA_KEY = "MALARIA_RISK";
     public static final String DURATION_DATA_KEY = "DURATION";

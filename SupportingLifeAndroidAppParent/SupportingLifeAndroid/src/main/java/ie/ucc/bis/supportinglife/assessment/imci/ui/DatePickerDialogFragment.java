@@ -1,7 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.imci.ui;
 
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DateDialogSetListener;
 import ie.ucc.bis.supportinglife.ui.utilities.DateUtilities;
@@ -26,7 +26,7 @@ public class DatePickerDialogFragment extends DialogFragment implements Fragment
 	
 	private static final int MAX_AGE_OF_PATIENT = 5;
 
-	private AbstractPage page;
+	private AbstractAssessmentPage page;
 	private String dataKey;
 	private EditText dateEditText;
 	
@@ -36,7 +36,7 @@ public class DatePickerDialogFragment extends DialogFragment implements Fragment
 	 */        
     public DatePickerDialogFragment() {}
 
-    public static DatePickerDialogFragment create(EditText dateEditText, AbstractPage abstractPage, String dataKey) {
+    public static DatePickerDialogFragment create(EditText dateEditText, AbstractAssessmentPage abstractPage, String dataKey) {
         DatePickerDialogFragment fragment = new DatePickerDialogFragment();
         
         fragment.setDateEditText(dateEditText);
@@ -100,14 +100,14 @@ public class DatePickerDialogFragment extends DialogFragment implements Fragment
 	/**
 	 * Getter Method: getPage()
 	 */
-	public AbstractPage getPage() {
+	public AbstractAssessmentPage getPage() {
 		return page;
 	}
 
 	/**
 	 * Setter Method: setPage()
 	 */
-	public void setPage(AbstractPage page) {
+	public void setPage(AbstractAssessmentPage page) {
 		this.page = page;
 	}
 

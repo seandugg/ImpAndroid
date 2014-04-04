@@ -1,6 +1,6 @@
 package ie.ucc.bis.supportinglife.analytics;
 
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAnalyticsPage;
 /**
  * 
  * @author timothyosullivan
@@ -19,10 +19,11 @@ public class AnalyticUtilities {
 	 * Utility method to configure/initialise a timer associated with an 
 	 * assessment page
 	 * 
-	 * @param page
+	 * @param AbstractAnalyticsPage
 	 * @param analtyicsDataKey
+	 * @param timerAction
 	 */
-	public static void configurePageTimer(AbstractPage page, String analtyicsDataKey, String timerAction) {
+	public static void configurePageTimer(AbstractAnalyticsPage page, String analtyicsDataKey, String timerAction) {
 		
 		boolean authoriseUpload = false;
 		
@@ -36,10 +37,14 @@ public class AnalyticUtilities {
 	 * Utility method to determine the duration between two analytic timers and to store the result
 	 * in a separate data analytic
 	 * 
-	 * @param page
+	 * @param AbstractAnalyticsPage
 	 * @param analtyicsDataKey
+	 * @param timerAction
+	 * @param startTimerAnalytic
+	 * @param stopTimerAnalytic
+	 * 
 	 */
-	public static void determineTimerDuration(AbstractPage page, String analtyicsDataKey, String timerAction,
+	public static void determineTimerDuration(AbstractAnalyticsPage page, String analtyicsDataKey, String timerAction,
 											DataAnalytic startTimerAnalytic, DataAnalytic stopTimerAnalytic) {
 		DataAnalytic dataAnalytic;
 		boolean authoriseUpload = true;

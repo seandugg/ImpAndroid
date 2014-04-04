@@ -1,7 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.model.listener;
 
 import ie.ucc.bis.supportinglife.assessment.imci.ui.DatePickerDialogFragment;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,10 +19,10 @@ import android.widget.EditText;
 public class DatePickerListener implements OnFocusChangeListener {
 
 	private Fragment invokingFragment;
-	private AbstractPage page;
+	private AbstractAssessmentPage page;
 	private String dataKey;
 
-	public DatePickerListener(Fragment fragment, AbstractPage page, String dataKey) {
+	public DatePickerListener(Fragment fragment, AbstractAssessmentPage page, String dataKey) {
 		setInvokingFragment(fragment);
 		setPage(page);
 		setDataKey(dataKey);
@@ -54,7 +54,7 @@ public class DatePickerListener implements OnFocusChangeListener {
 	 * Getter Method: getPage()
 	 * 
 	 */
-	public AbstractPage getPage() {
+	public AbstractAssessmentPage getPage() {
 		return page;
 	}
 
@@ -62,7 +62,7 @@ public class DatePickerListener implements OnFocusChangeListener {
 	 * Setter Method: setPage()
 	 * 
 	 */
-	public void setPage(AbstractPage page) {
+	public void setPage(AbstractAssessmentPage page) {
 		this.page = page;
 	}
 

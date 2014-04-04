@@ -5,7 +5,7 @@ import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.AgeIndicatorReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.GeneralPatientDetailsFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
@@ -16,7 +16,7 @@ import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 /**
- * Page Title: General Patient Details
+ * AnalyticsPage Title: General Patient Details
  * 
  * Stage in bread-crumb UI Wizard: 1
  * 
@@ -24,7 +24,7 @@ import android.support.v4.app.Fragment;
  * 
  * @author timothyosullivan
  */
-public class GeneralPatientDetailsPage extends AbstractPage {
+public class GeneralPatientDetailsPage extends AbstractAssessmentPage {
     public static final String FIRST_NAME_DATA_KEY = "FIRST_NAME";
     public static final String SURNAME_DATA_KEY = "SURNAME";
     public static final String DATE_OF_BIRTH_DATA_KEY = "DATE_OF_BIRTH";

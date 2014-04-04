@@ -7,7 +7,7 @@ import ie.ucc.bis.supportinglife.assessment.ccm.model.review.FastBreathingDosage
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.RedMuacTapeCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.LookCcmFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.FastBreathingReviewItem;
@@ -21,7 +21,7 @@ import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 /**
- * Page Title: CCM Look Assessment
+ * AnalyticsPage Title: CCM Look Assessment
  * 
  * Stage in CCM bread-crumb UI Wizard: 4
  * 
@@ -29,7 +29,7 @@ import android.support.v4.app.Fragment;
  * 
  * @author timothyosullivan
  */
-public class LookCcmPage extends AbstractPage {
+public class LookCcmPage extends AbstractAssessmentPage {
 	public static final String CHEST_INDRAWING_DATA_KEY = "CHEST_INDRAWING";
     public static final String BREATHS_PER_MINUTE_DATA_KEY = "BREATHS_PER_MINUTE";
     public static final String VERY_SLEEPY_OR_UNCONSCIOUS_DATA_KEY = "VERY_SLEEPY_OR_UNCONSCIOUS";

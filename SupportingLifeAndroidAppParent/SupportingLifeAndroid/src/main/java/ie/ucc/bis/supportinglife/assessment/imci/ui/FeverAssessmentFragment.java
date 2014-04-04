@@ -36,8 +36,6 @@ import android.widget.TextView;
  * 
  */
 public class FeverAssessmentFragment extends Fragment implements FragmentLifecycle {
-	
-    private static final String ARG_PAGE_KEY = "PAGE_KEY";
     
     private static final int MIN_FEVER_DURATION = 1;
     private static final int MAX_FEVER_DURATION = 365;

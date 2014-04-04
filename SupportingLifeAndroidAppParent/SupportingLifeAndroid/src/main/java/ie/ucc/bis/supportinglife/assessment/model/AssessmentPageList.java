@@ -7,16 +7,16 @@ import java.util.ArrayList;
  * 
  * @author timothyosullivan
  */
-public class PageList extends ArrayList<AbstractPage> implements PageTreeNode {
+public class AssessmentPageList extends ArrayList<AbstractAssessmentPage> implements AssessmentPageTreeNode {
 	private static final long serialVersionUID = 1934134441792428239L;
 
 	/**
 	 * Constructor
 	 * 
-	 * @param pages : Page...
+	 * @param pages : AnalyticsPage...
 	 */	
-	public PageList(AbstractPage... pages) {
-        for (AbstractPage page : pages) {
+	public AssessmentPageList(AbstractAssessmentPage... pages) {
+        for (AbstractAssessmentPage page : pages) {
             add(page);
         }
     }
@@ -28,12 +28,12 @@ public class PageList extends ArrayList<AbstractPage> implements PageTreeNode {
 	 * page based on the key
 	 * 
 	 * @param key : String
-	 * @return Page
+	 * @return AnalyticsPage
 	 * 
 	 */	
-    public AbstractPage findPageByKey(String key) {
-        for (AbstractPage childPage : this) {
-            AbstractPage found = childPage.findPageByKey(key);
+    public AbstractAssessmentPage findAssessmentPageByKey(String key) {
+        for (AbstractAssessmentPage childPage : this) {
+        	AbstractAssessmentPage found = childPage.findAssessmentPageByKey(key);
             if (found != null) {
                 return found;
             }
@@ -48,11 +48,11 @@ public class PageList extends ArrayList<AbstractPage> implements PageTreeNode {
 	 * Nested (dependent) pages will be be flattened based on the
 	 * user's choices.
 	 * 
-	 * @param pages : ArrayList<Page>
+	 * @param pages : ArrayList<AnalyticsPage>
 	 * 
 	 */	
-    public void flattenCurrentPageSequence(ArrayList<AbstractPage> pages) {
-        for (AbstractPage childPage : this) {
+    public void flattenCurrentPageSequence(ArrayList<AbstractAssessmentPage> pages) {
+        for (AbstractAssessmentPage childPage : this) {
             childPage.flattenCurrentPageSequence(pages);
         }
     }

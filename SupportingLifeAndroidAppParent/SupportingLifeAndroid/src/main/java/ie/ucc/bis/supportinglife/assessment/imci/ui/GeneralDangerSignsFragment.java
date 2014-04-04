@@ -23,8 +23,6 @@ import android.widget.TextView;
  * 
  */
 public class GeneralDangerSignsFragment extends Fragment implements FragmentLifecycle {
-	
-    private static final String ARG_PAGE_KEY = "PAGE_KEY";
 
     private GeneralDangerSignsPage generalDangerSignsPage;    
     private PageFragmentCallbacks pageFragmentCallbacks;

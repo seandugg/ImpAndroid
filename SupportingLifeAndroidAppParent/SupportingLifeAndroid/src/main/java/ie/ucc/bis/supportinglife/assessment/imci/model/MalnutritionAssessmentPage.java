@@ -6,7 +6,7 @@ import ie.ucc.bis.supportinglife.assessment.imci.model.review.PalmarPallorReview
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.WeightForAgeReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.MalnutritionAssessmentFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
@@ -18,7 +18,7 @@ import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 /**
- * Page Title: Malnutrition and Anaemia Assessment
+ * AnalyticsPage Title: Malnutrition and Anaemia Assessment
  * 
  * Stage in bread-crumb UI Wizard: 7
  * 
@@ -27,7 +27,7 @@ import android.support.v4.app.Fragment;
  * 
  * @author timothyosullivan
  */
-public class MalnutritionAssessmentPage extends AbstractPage {
+public class MalnutritionAssessmentPage extends AbstractAssessmentPage {
     public static final String OEDEMA_DATA_KEY = "OEDEMA";
     public static final String WEIGHT_FOR_AGE_DATA_KEY = "WEIGHT_FOR_AGE";
     public static final String VISIBLE_SEVERE_WASTING_DATA_KEY = "VISIBLE_SEVERE_WASTING";

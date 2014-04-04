@@ -31,8 +31,6 @@ import android.widget.TextView;
  * 
  */
 public class GeneralPatientDetailsFragment extends Fragment implements FragmentLifecycle {
-	
-    private static final String ARG_PAGE_KEY = "PAGE_KEY";
     
     private static final int MIN_WEIGHT = 0;
     private static final int MAX_WEIGHT = 100;

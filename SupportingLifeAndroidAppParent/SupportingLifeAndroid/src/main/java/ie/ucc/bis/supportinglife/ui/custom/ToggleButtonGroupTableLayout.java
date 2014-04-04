@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupCoordinatorListener;
 import android.content.Context;
 import android.util.AttributeSet;
@@ -24,7 +24,7 @@ import android.widget.TableRow;
 public class ToggleButtonGroupTableLayout extends TableLayout implements OnClickListener {
 	
 	private RadioButton activeRadioButton;
-	private AbstractPage page;
+	private AbstractAssessmentPage page;
 	private String dataKey;
 	private List<DynamicView> dynamicViews;
 	private ViewGroup parentView;
@@ -172,14 +172,14 @@ public class ToggleButtonGroupTableLayout extends TableLayout implements OnClick
 	/**
 	 * Getter Method: getPage()
 	 */
-	public AbstractPage getPage() {
+	public AbstractAssessmentPage getPage() {
 		return page;
 	}
 
 	/**
 	 * Setter Method: setPage()
 	 */
-	public void setPage(AbstractPage page) {
+	public void setPage(AbstractAssessmentPage page) {
 		this.page = page;
 	}
 

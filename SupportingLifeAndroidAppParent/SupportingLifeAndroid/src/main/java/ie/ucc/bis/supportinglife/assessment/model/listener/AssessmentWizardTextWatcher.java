@@ -1,6 +1,6 @@
 package ie.ucc.bis.supportinglife.assessment.model.listener;
 
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import android.text.Editable;
 import android.text.TextWatcher;
 
@@ -11,10 +11,10 @@ import android.text.TextWatcher;
 
 public class AssessmentWizardTextWatcher implements TextWatcher {
 
-	private AbstractPage page;
+	private AbstractAssessmentPage page;
 	private String dataKey;
 	
-	public AssessmentWizardTextWatcher(AbstractPage page, String dataKey) {
+	public AssessmentWizardTextWatcher(AbstractAssessmentPage page, String dataKey) {
 		setPage(page); 
 		setDataKey(dataKey);
 	}
@@ -39,7 +39,7 @@ public class AssessmentWizardTextWatcher implements TextWatcher {
 	 * Getter Method: getPage()
 	 * 
 	 */
-	public AbstractPage getPage() {
+	public AbstractAssessmentPage getPage() {
 		return page;
 	}
 
@@ -47,7 +47,7 @@ public class AssessmentWizardTextWatcher implements TextWatcher {
 	 * Setter Method: setPage()
 	 * 
 	 */
-	public void setPage(AbstractPage page) {
+	public void setPage(AbstractAssessmentPage page) {
 		this.page = page;
 	}
 

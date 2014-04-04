@@ -5,7 +5,7 @@ import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.CoughDurationReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.BreathingAssessmentFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.FastBreathingReviewItem;
@@ -19,7 +19,7 @@ import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 /**
- * Page Title: Cough / Breathing Assessment
+ * AnalyticsPage Title: Cough / Breathing Assessment
  * 
  * Stage in bread-crumb UI Wizard: 3
  * 
@@ -29,7 +29,7 @@ import android.support.v4.app.Fragment;
  * @author timothyosullivan
  * 
  */
-public class BreathingAssessmentPage extends AbstractPage {
+public class BreathingAssessmentPage extends AbstractAssessmentPage {
     public static final String COUGH_DIFFICULT_BREATHING_DATA_KEY = "COUGH_DIFFICULT_BREATHING";
     public static final String COUGH_DURATION_DATA_KEY = "COUGH_DURATION";
     public static final String BREATHS_PER_MINUTE_DATA_KEY = "BREATHS_PER_MINUTE";

@@ -7,7 +7,7 @@ import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.imci.model.GeneralDangerSignsPage;
 import ie.ucc.bis.supportinglife.assessment.imci.model.ImciAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DynamicViewListenerUtilities;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
@@ -37,9 +37,7 @@ import android.widget.TextView;
  * 
  */
 public class DiarrhoeaAssessmentFragment extends Fragment implements FragmentLifecycle {
-	
-    private static final String ARG_PAGE_KEY = "PAGE_KEY";
-    
+	    
     private static final int MIN_DIARRHOEA_DURATION = 1;
     private static final int MAX_DIARRHOEA_DURATION = 365;
 
@@ -121,7 +119,7 @@ public class DiarrhoeaAssessmentFragment extends Fragment implements FragmentLif
         getSunkenEyesRadioGroup().check(getDiarrhoeaAssessmentPage()
         		.getPageData().getInt(DiarrhoeaAssessmentPage.SUNKEN_EYES_DATA_KEY));
         
-        // lethargic or unconscious - ** This is fed from the 'General Danger Signs' Page / review item
+        // lethargic or unconscious - ** This is fed from the 'General Danger Signs' AnalyticsPage / review item
         // will be set via onViewStateRestored(..) callback method
         setLethargicUnconsciousRadioGroup((RadioGroup) rootView.findViewById(R.id.imci_diarrhoea_assessment_radio_lethargic_or_unconscious));
         // disable user interaction with this radio group selection
@@ -188,7 +186,7 @@ public class DiarrhoeaAssessmentFragment extends Fragment implements FragmentLif
 	private void configureLethargicUnconsciousRadioGroup() {
 		// 1. retrieve the relevant page and ui element
 		//    where the radio group 'lethargic or unconscious' is being referenced
-        AbstractPage dangerSignsAssessmentPage = getWizardModel().findPageByKey(ImciAssessmentModel.DANGER_SIGNS_PAGE_TITLE);
+        AbstractAssessmentPage dangerSignsAssessmentPage = getWizardModel().findAssessmentPageByKey(ImciAssessmentModel.DANGER_SIGNS_PAGE_TITLE);
         String uiReferenceElement = GeneralDangerSignsPage.LETHARGIC_OR_UNCONSCIOUS_DATA_KEY + RadioGroupListener.RADIO_BUTTON_TEXT_DATA_KEY;
         
         // 2. retrieve the textual value (yes/no) of the radio group checked option

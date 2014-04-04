@@ -4,7 +4,7 @@ import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.GeneralPatientDetailsCcmFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
@@ -15,7 +15,7 @@ import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 /**
- * Page Title: CCM General Patient Details
+ * AnalyticsPage Title: CCM General Patient Details
  * 
  * Stage in CCM bread-crumb UI Wizard: 1
  * 
@@ -23,7 +23,7 @@ import android.support.v4.app.Fragment;
  * 
  * @author timothyosullivan
  */
-public class GeneralPatientDetailsCcmPage extends AbstractPage {
+public class GeneralPatientDetailsCcmPage extends AbstractAssessmentPage {
     public static final String TODAY_DATE_DATA_KEY = "TODAY_DATE";
 	public static final String HEALTH_SURVEILLANCE_ASSISTANT_DATA_KEY = "HEALTH_SURVEILLANCE_ASSISTANT";
 	public static final String NATIONAL_ID_DATA_KEY = "NATIONAL_ID";

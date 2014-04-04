@@ -5,7 +5,7 @@ import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.RedEyesDurationCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.SecondaryAskCcmFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
@@ -16,7 +16,7 @@ import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 /**
- * Page Title: CCM Ask Assessment
+ * AnalyticsPage Title: CCM Ask Assessment
  * 
  * Stage in CCM bread-crumb UI Wizard: 3
  * 
@@ -24,7 +24,7 @@ import android.support.v4.app.Fragment;
  * 
  * @author timothyosullivan
  */
-public class SecondaryAskCcmPage extends AbstractPage {
+public class SecondaryAskCcmPage extends AbstractAssessmentPage {
 
     public static final String VOMITING_DATA_KEY = "VOMITING";
     public static final String VOMITS_EVERYTHING_DATA_KEY = "VOMITS_EVERYTHING";

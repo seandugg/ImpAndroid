@@ -5,14 +5,11 @@ import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.PageFragmentCallbacks;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.ReviewFragmentCallbacks;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.StepPagerStrip;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
 import ie.ucc.bis.supportinglife.assessment.model.AssessmentPagerAdapter;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
-
-import java.util.List;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,7 +32,6 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 	
 	private ViewPager viewPager;
     private AssessmentPagerAdapter assessmentPagerAdapter;
-    private List<AbstractPage> pageSequence;
 	private AbstractModel assessmentModel;
 	private StepPagerStrip stepPagerStrip;
 	
@@ -47,16 +43,15 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 	
 	@Override
     public void onPageTreeChanged() {
-        setPageSequence(getAssessmentModel().getPageSequence());
         recalculateCutOffPage();
-        getStepPagerStrip().setPageCount(getPageSequence().size() + 1); // + 1 = review step
+        getStepPagerStrip().setPageCount(getAssessmentModel().getAssessmentPageSequence().size() + 1); // + 1 = review step
         getAssessmentPagerAdapter().notifyDataSetChanged();
         updateBottomBar();
     }
 
     public void onEditScreenAfterReview(String key) {
-        for (int i = getPageSequence().size() - 1; i >= 0; i--) {
-            if (getPageSequence().get(i).getKey().equals(key)) {
+        for (int i = getAssessmentModel().getAssessmentPageSequence().size() - 1; i >= 0; i--) {
+            if (getAssessmentModel().getAssessmentPageSequence().get(i).getKey().equals(key)) {
                 setConsumePageSelectedEvent(true);
                 setEditingAfterReview(true);
                 getViewPager().setCurrentItem(i);
@@ -67,7 +62,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     }
 
     @Override
-    public void onPageDataChanged(AbstractPage page) {
+    public void onPageDataChanged(AbstractAssessmentPage page) {
         if (page.isRequired()) {
             if (recalculateCutOffPage()) {
             	getAssessmentPagerAdapter().notifyDataSetChanged();
@@ -78,9 +73,9 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
         
     private boolean recalculateCutOffPage() {
         // Cut off the pager adapter at first required page that isn't completed
-        int cutOffPage = getPageSequence().size() + 1;
-        for (int i = 0; i < getPageSequence().size(); i++) {
-            AbstractPage page = getPageSequence().get(i);
+        int cutOffPage = getAssessmentModel().getAssessmentPageSequence().size() + 1;
+        for (int i = 0; i < getAssessmentModel().getAssessmentPageSequence().size(); i++) {
+            AbstractAssessmentPage page = getAssessmentModel().getAssessmentPageSequence().get(i);
             if (page.isRequired() && !page.isCompleted()) {
                 cutOffPage = i;
                 break;
@@ -105,7 +100,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 	 */      
     protected void updateBottomBar() {
         int position = getViewPager().getCurrentItem();
-        if (position == getPageSequence().size()) {
+        if (position == getAssessmentModel().getAssessmentPageSequence().size()) {
             // change text on the next button to indicate
         	// assessment data entry is complete
             getNextButton().setText(R.string.assessment_wizard_finish_button);
@@ -131,8 +126,8 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 	 * 
 	 * @param key : String
 	 */    
-    public AbstractPage getPage(String key) {
-        return getAssessmentModel().findPageByKey(key);
+    public AbstractAssessmentPage getPage(String key) {
+        return getAssessmentModel().findAssessmentPageByKey(key);
     }   
 
     @Override
@@ -144,14 +139,14 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBundle("model", getAssessmentModel().save());
+        outState.putBundle("assessmentModel", getAssessmentModel().save());
     }
     
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
     	super.onRestoreInstanceState(savedInstanceState);
         if (savedInstanceState != null) {
-        	getAssessmentModel().load(savedInstanceState.getBundle("model"));
+        	getAssessmentModel().load(savedInstanceState.getBundle("assessmentModel"));
         }  	
     }
     
@@ -315,20 +310,6 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 	 */  
 	public void setViewPager(ViewPager viewPager) {
 		this.viewPager = viewPager;
-	}
-
-	/**
-	 * Getter Method: getPageSequence()
-	 */	
-	public List<AbstractPage> getPageSequence() {
-		return pageSequence;
-	}
-	
-	/**
-	 * Setter Method: setPageSequence()
-	 */  
-	public void setPageSequence(List<AbstractPage> pageSequence) {
-		this.pageSequence = pageSequence;
 	}
 
 	/**

@@ -5,7 +5,7 @@ import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.EarDischargeDurationReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.EarAssessmentFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
@@ -17,7 +17,7 @@ import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 /**
- * Page Title: Fever Assessment
+ * AnalyticsPage Title: Fever Assessment
  * 
  * Stage in bread-crumb UI Wizard: 6
  * 
@@ -26,7 +26,7 @@ import android.support.v4.app.Fragment;
  * 
  * @author timothyosullivan
  */
-public class EarAssessmentPage extends AbstractPage {
+public class EarAssessmentPage extends AbstractAssessmentPage {
     public static final String EAR_PROBLEM_DATA_KEY = "EAR_PROBLEM";
     public static final String EAR_PAIN_DATA_KEY = "EAR_PAIN";
     public static final String EAR_DISCHARGE_DATA_KEY = "EAR_DISCHARGE";

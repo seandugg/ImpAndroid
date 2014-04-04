@@ -30,8 +30,6 @@ import android.widget.TextView;
  */
 public class LookCcmFragment extends Fragment implements FragmentLifecycle {
 
-	private static final String ARG_PAGE_KEY = "PAGE_KEY";
-
 	private LookCcmPage lookCcmPage;    
 	private PageFragmentCallbacks pageFragmentCallbacks;
 	private String pageKey;
@@ -161,7 +159,7 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
     	
     	// need to use bundle to access page data
 		Bundle args = getArguments();
-		LookCcmPage ccmPage = (LookCcmPage) assessmentModel.findPageByKey(args.getString(ARG_PAGE_KEY));
+		LookCcmPage ccmPage = (LookCcmPage) assessmentModel.findAssessmentPageByKey(args.getString(ARG_PAGE_KEY));
 		
     	if (ccmPage != null) {
 			// stop analytics timer for page
@@ -180,7 +178,7 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
     	
     	// need to use bunble to access page data
 		Bundle args = getArguments();
-		LookCcmPage ccmPage = (LookCcmPage) assessmentModel.findPageByKey(args.getString(ARG_PAGE_KEY));
+		LookCcmPage ccmPage = (LookCcmPage) assessmentModel.findAssessmentPageByKey(args.getString(ARG_PAGE_KEY));
     
 		if (ccmPage != null) {
 			// start analytics timer for page

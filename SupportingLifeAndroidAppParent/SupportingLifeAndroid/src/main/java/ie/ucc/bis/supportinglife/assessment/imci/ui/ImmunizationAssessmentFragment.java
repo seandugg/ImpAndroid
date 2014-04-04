@@ -23,8 +23,6 @@ import android.widget.TextView;
  * 
  */
 public class ImmunizationAssessmentFragment extends Fragment implements FragmentLifecycle {
-	
-    private static final String ARG_PAGE_KEY = "PAGE_KEY";
 
     private ImmunizationAssessmentPage immunizationAssessmentPage;
 	private PageFragmentCallbacks pageFragmentCallbacks;

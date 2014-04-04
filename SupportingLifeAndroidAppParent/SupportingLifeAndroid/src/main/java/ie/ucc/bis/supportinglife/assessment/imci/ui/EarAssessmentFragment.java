@@ -32,9 +32,7 @@ import android.widget.TextView;
  * 
  */
 public class EarAssessmentFragment extends Fragment implements FragmentLifecycle {
-	
-    private static final String ARG_PAGE_KEY = "PAGE_KEY";
-    
+	    
     private static final int MIN_EAR_DISCHARGE_DURATION = 1;
     private static final int MAX_EAR_DISCHARGE_DURATION = 365;
 

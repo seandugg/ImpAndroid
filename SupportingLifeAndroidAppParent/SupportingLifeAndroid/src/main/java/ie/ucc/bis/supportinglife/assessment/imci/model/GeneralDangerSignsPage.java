@@ -4,7 +4,7 @@ import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.GeneralDangerSignsFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
@@ -16,7 +16,7 @@ import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 /**
- * Page Title: General Danger Signs
+ * AnalyticsPage Title: General Danger Signs
  * 
  * Stage in bread-crumb UI Wizard: 2
  * 
@@ -25,7 +25,7 @@ import android.support.v4.app.Fragment;
  * 
  * @author timothyosullivan
  */
-public class GeneralDangerSignsPage extends AbstractPage {
+public class GeneralDangerSignsPage extends AbstractAssessmentPage {
     public static final String DRINK_BREASTFEED_DATA_KEY = "DRINK_BREASTFEED";
     public static final String VOMITS_EVERYTHING_DATA_KEY = "VOMITS_EVERYTHING";
     public static final String HISTORY_OF_CONVULSIONS_DATA_KEY = "HISTORY_OF_CONVULSIONS";

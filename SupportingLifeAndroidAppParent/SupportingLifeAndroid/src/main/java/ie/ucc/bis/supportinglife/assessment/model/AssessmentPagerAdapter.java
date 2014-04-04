@@ -1,7 +1,6 @@
 package ie.ucc.bis.supportinglife.assessment.model;
 
 import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
-import ie.ucc.bis.supportinglife.assessment.imci.ui.ReviewFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -15,7 +14,10 @@ import android.view.ViewGroup;
  *
  */
 public class AssessmentPagerAdapter extends FragmentStatePagerAdapter {
-    private int mCutOffPage;
+	
+    private static final int REVIEW_PAGE_POSITION = 0;
+    
+	private int mCutOffPage;
     private Fragment mPrimaryItem;
     private AssessmentActivity assessmentActivity;
 
@@ -26,11 +28,12 @@ public class AssessmentPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        if (i >= getAssessmentActivity().getPageSequence().size()) {
-            return new ReviewFragment();
+        if (i >= getAssessmentActivity().getAssessmentModel().getAssessmentPageSequence().size()) {            
+            // return review page
+        	return getAssessmentActivity().getAssessmentModel().getAnalyticsPages().get(REVIEW_PAGE_POSITION).createFragment();
         }
 
-        return getAssessmentActivity().getPageSequence().get(i).createFragment();
+        return getAssessmentActivity().getAssessmentModel().getAssessmentPageSequence().get(i).createFragment();
     }
 
     @Override
@@ -53,7 +56,8 @@ public class AssessmentPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return Math.min(mCutOffPage + 1, 
-        		getAssessmentActivity().getPageSequence() != null ? getAssessmentActivity().getPageSequence().size() + 1
+        		getAssessmentActivity().getAssessmentModel().getAssessmentPageSequence() != null ? 
+        				getAssessmentActivity().getAssessmentModel().getAssessmentPageSequence().size() + 1
         				: mCutOffPage + 1);
     }
 

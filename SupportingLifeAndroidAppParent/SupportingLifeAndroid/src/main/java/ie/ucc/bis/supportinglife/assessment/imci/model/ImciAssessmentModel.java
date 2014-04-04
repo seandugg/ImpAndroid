@@ -1,7 +1,9 @@
 package ie.ucc.bis.supportinglife.assessment.imci.model;
 
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.PageList;
+import ie.ucc.bis.supportinglife.assessment.model.AnalyticsPageList;
+import ie.ucc.bis.supportinglife.assessment.model.AssessmentPageList;
+import ie.ucc.bis.supportinglife.assessment.model.ReviewPage;
 import android.content.Context;
 
 /**
@@ -19,6 +21,7 @@ public class ImciAssessmentModel extends AbstractModel {
 	public static final String EAR_ASSESSMENT_PAGE_TITLE = "Ear Assessment";
 	public static final String MALNUTRITION_ASSESSMENT_PAGE_TITLE = "Malnutrition Assessment";
 	public static final String IMMUNIZATION_ASSESSMENT_PAGE_TITLE = "Immunization Status";
+	public static final String IMCI_REVIEW_PAGE_TITLE = "IMCI REVIEW PAGE";
 	
 	
 	/**
@@ -31,21 +34,21 @@ public class ImciAssessmentModel extends AbstractModel {
 	}
 
 	@Override
-	protected PageList configurePageList() {
+	protected AssessmentPageList configureAssessmentPageList() {
 		/*
 		 * Assessment Wizard Pages are as follows:
 		 * 
-		 * 1. General Patient Details Page
-		 * 2. General Danger Signs Page
-		 * 3. Cough / Breathing Assessment Page
-		 * 4. Diarrhoea Assessment Page
-		 * 5. Fever Assessment Page
-		 * 6. Ear Assessment Page
-		 * 7. Malnutrition and Anaemia Page
-		 * 8. Immunization Status Page
+		 * 1. General Patient Details AnalyticsPage
+		 * 2. General Danger Signs AnalyticsPage
+		 * 3. Cough / Breathing Assessment AnalyticsPage
+		 * 4. Diarrhoea Assessment AnalyticsPage
+		 * 5. Fever Assessment AnalyticsPage
+		 * 6. Ear Assessment AnalyticsPage
+		 * 7. Malnutrition and Anaemia AnalyticsPage
+		 * 8. Immunization Status AnalyticsPage
 		 * 
 		 */	
-		return new PageList(new GeneralPatientDetailsPage(this, 
+		return new AssessmentPageList(new GeneralPatientDetailsPage(this, 
 				GENERAL_PATIENT_DETAILS_PAGE_TITLE).setRequired(true),
 		new GeneralDangerSignsPage(this, 
 				DANGER_SIGNS_PAGE_TITLE).setRequired(true),
@@ -62,4 +65,17 @@ public class ImciAssessmentModel extends AbstractModel {
 		new ImmunizationAssessmentPage(this,
 				IMMUNIZATION_ASSESSMENT_PAGE_TITLE).setRequired(true));		
 	}
+	
+	@Override
+	protected AnalyticsPageList configureAnalyticsPageList() {
+		/*
+		 * CCM Data Analytic Pages (beside Assessment Pages whose
+		 * data analytics are captured implicitly) are as follows:
+		 * 
+		 * 1. Review Page
+		 */
+		
+		return new AnalyticsPageList(new ReviewPage(IMCI_REVIEW_PAGE_TITLE));
+	}
+	
 }

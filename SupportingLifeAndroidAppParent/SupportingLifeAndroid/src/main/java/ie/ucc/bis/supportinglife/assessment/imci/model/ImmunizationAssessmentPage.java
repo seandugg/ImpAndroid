@@ -4,7 +4,7 @@ import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.ImmunizationAssessmentFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
@@ -16,7 +16,7 @@ import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 /**
- * Page Title: Immunization Status Assessment
+ * AnalyticsPage Title: Immunization Status Assessment
  * 
  * Stage in bread-crumb UI Wizard: 8
  * 
@@ -25,7 +25,7 @@ import android.support.v4.app.Fragment;
  * 
  * @author timothyosullivan
  */
-public class ImmunizationAssessmentPage extends AbstractPage {
+public class ImmunizationAssessmentPage extends AbstractAssessmentPage {
     public static final String BCG_VACCINE_DATA_KEY = "BCG_VACCINE";
     public static final String MEASLES_VACCINE_DATA_KEY = "MEASLES_VACCINE";
 

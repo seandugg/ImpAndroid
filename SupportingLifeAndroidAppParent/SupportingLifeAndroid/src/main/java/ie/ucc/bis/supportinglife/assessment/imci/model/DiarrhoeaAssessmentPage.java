@@ -7,7 +7,7 @@ import ie.ucc.bis.supportinglife.assessment.imci.model.review.FluidReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.SkinPinchReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.DiarrhoeaAssessmentFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
@@ -19,7 +19,7 @@ import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 /**
- * Page Title: Diarrhoea Assessment
+ * AnalyticsPage Title: Diarrhoea Assessment
  * 
  * Stage in bread-crumb UI Wizard: 4
  * 
@@ -28,7 +28,7 @@ import android.support.v4.app.Fragment;
  * 
  * @author timothyosullivan
  */
-public class DiarrhoeaAssessmentPage extends AbstractPage {
+public class DiarrhoeaAssessmentPage extends AbstractAssessmentPage {
     public static final String DIARRHOEA_DATA_KEY = "DIARRHOEA";
     public static final String DIARRHOEA_DURATION_DATA_KEY = "DIARRHOEA_DURATION";
     public static final String BLOOD_STOOLS_DATA_KEY = "BLOOD_STOOLS";

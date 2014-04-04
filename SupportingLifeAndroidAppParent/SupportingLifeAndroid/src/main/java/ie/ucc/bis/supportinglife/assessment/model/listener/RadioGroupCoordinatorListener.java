@@ -1,7 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.model.listener;
 
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,14 +27,14 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 	public static final String RADIO_BUTTON_TEXT_DATA_KEY = "RadioButtonText";
 	public static final String DEFAULT_RADIO_BUTTON_ANIMATE_UP_TEXT = "No";
 
-	private AbstractPage page;
+	private AbstractAssessmentPage page;
 	private String dataKey;
 	private List<String> radioButtonAnimateUpText;
 	private List<DynamicView> dynamicViews;
 	private ViewGroup parentView;
 	private View animatedView;
 
-	public RadioGroupCoordinatorListener(AbstractPage page, String dataKey, List<DynamicView> dynamicViews, 
+	public RadioGroupCoordinatorListener(AbstractAssessmentPage page, String dataKey, List<DynamicView> dynamicViews, 
 			ViewGroup parentView, View animatedView) {
 		setPage(page);
 		setDataKey(dataKey);
@@ -48,7 +48,7 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 		setAnimatedView(animatedView);
 	}
 
-	public RadioGroupCoordinatorListener(AbstractPage page, String dataKey, List<DynamicView> dynamicViews, 
+	public RadioGroupCoordinatorListener(AbstractAssessmentPage page, String dataKey, List<DynamicView> dynamicViews, 
 			ViewGroup parentView, View animatedView, List<String> animateUpTextTriggers) {
 		setPage(page);
 		setDataKey(dataKey);
@@ -117,14 +117,14 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 	/**
 	 * Getter Method: getPage()
 	 */
-	public AbstractPage getPage() {
+	public AbstractAssessmentPage getPage() {
 		return page;
 	}
 
 	/**
 	 * Setter Method: setPage()
 	 */
-	public void setPage(AbstractPage page) {
+	public void setPage(AbstractAssessmentPage page) {
 		this.page = page;
 	}
 

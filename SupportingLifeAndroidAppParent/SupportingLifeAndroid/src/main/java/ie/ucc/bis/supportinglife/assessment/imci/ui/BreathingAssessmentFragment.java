@@ -33,9 +33,7 @@ import android.widget.TextView;
  * 
  */
 public class BreathingAssessmentFragment extends Fragment implements FragmentLifecycle {
-	
-    private static final String ARG_PAGE_KEY = "PAGE_KEY";
-    
+	    
     private static final int MIN_BREATHS_PER_MINUTE = 1;
     private static final int MAX_BREATHS_PER_MINUTE = 100;
     private static final int MIN_COUGH_DURATION = 1;

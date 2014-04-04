@@ -10,7 +10,7 @@ import ie.ucc.bis.supportinglife.assessment.ccm.model.review.FeverLaDosageCcmRev
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.FeverParacetamolDosageCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.InitialAskCcmFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
@@ -23,7 +23,7 @@ import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 
 /**
- * Page Title: CCM Ask Assessment
+ * AnalyticsPage Title: CCM Ask Assessment
  * 
  * Stage in CCM bread-crumb UI Wizard: 2
  * 
@@ -31,7 +31,7 @@ import android.support.v4.app.Fragment;
  * 
  * @author timothyosullivan
  */
-public class InitialAskCcmPage extends AbstractPage {
+public class InitialAskCcmPage extends AbstractAssessmentPage {
 	public static final String PROBLEMS_DATA_KEY = "PROBLEMS";
     public static final String COUGH_DATA_KEY = "COUGH";
     public static final String COUGH_DURATION_DATA_KEY = "COUGH_DURATION";

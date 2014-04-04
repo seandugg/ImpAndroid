@@ -1,6 +1,6 @@
 package ie.ucc.bis.supportinglife.assessment.model.listener;
 
-import ie.ucc.bis.supportinglife.assessment.model.AbstractPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
@@ -14,10 +14,10 @@ public class RadioGroupListener implements OnCheckedChangeListener {
 	
 	public static final String RADIO_BUTTON_TEXT_DATA_KEY = "RadioButtonText";
 	
-	private AbstractPage page;
+	private AbstractAssessmentPage page;
 	private String dataKey;
 	
-	public RadioGroupListener(AbstractPage page, String dataKey) {
+	public RadioGroupListener(AbstractAssessmentPage page, String dataKey) {
 		setPage(page);
 		setDataKey(dataKey);
 	}
@@ -48,14 +48,14 @@ public class RadioGroupListener implements OnCheckedChangeListener {
 	/**
 	 * Getter Method: getPage()
 	 */
-	public AbstractPage getPage() {
+	public AbstractAssessmentPage getPage() {
 		return page;
 	}
 
 	/**
 	 * Setter Method: setPage()
 	 */
-	public void setPage(AbstractPage page) {
+	public void setPage(AbstractAssessmentPage page) {
 		this.page = page;
 	}
 

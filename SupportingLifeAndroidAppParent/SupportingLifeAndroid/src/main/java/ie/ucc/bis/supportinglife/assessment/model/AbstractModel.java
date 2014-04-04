@@ -12,8 +12,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 /**
- * Represents an assessment model, including the pages/steps in the assessment, their dependencies, and their
- * currently populated choices/values/selections.
+ * Represents an assessment model, including the pages/steps in the assessment, their dependencies, their 
+ * data analytics, and the currently populated choices/values/selections on the assessment page.
  *
  * To create the SupportingLIFE breadcrumb UI assessment, extend this class 
  * and implement {@link #configurePageList()}.
@@ -24,14 +24,22 @@ import android.os.Bundle;
 public abstract class AbstractModel implements ModelCallbacks {
 	private Context applicationContext;
 	private List<ModelCallbacks> modelListeners = new ArrayList<ModelCallbacks>();
-    private PageList assessmentPages;
+    private AssessmentPageList assessmentPages;
+    private AnalyticsPageList analyticsPages;
 
 	/**
-	 * Abstract Method: configurePageList
+	 * Abstract Method: configureAssessmentPageList
 	 * 
-	 * Override this method to define a new wizard model.
+	 * Override this method to define assessment pages
 	 */
-    protected abstract PageList configurePageList();
+    protected abstract AssessmentPageList configureAssessmentPageList();
+    
+	/**
+	 * Abstract Method: configureAnalyticsPageList
+	 * 
+	 * Override this method to define analytic pages
+	 */
+    protected abstract AnalyticsPageList configureAnalyticsPageList();
     
 	/**
 	 * Constructor
@@ -40,7 +48,8 @@ public abstract class AbstractModel implements ModelCallbacks {
 	 */
     public AbstractModel(Context context) {
     	setApplicationContext(context);
-        setAssessmentPages(configurePageList());
+        setAssessmentPages(configureAssessmentPageList());
+        setAnalyticsPages(configureAnalyticsPageList());
     }
 
 	/**
@@ -48,9 +57,9 @@ public abstract class AbstractModel implements ModelCallbacks {
 	 * 
 	 * Notify model listeners of a 'pageDataChanged' event
 	 * 
-	 * @param page : Page
+	 * @param page : AnalyticsPage
 	 */
-    public void onPageDataChanged(AbstractPage page) {
+    public void onPageDataChanged(AbstractAssessmentPage page) {
     	for (ModelCallbacks modelCallback : getModelListeners()) {
     		modelCallback.onPageDataChanged(page);
     	}
@@ -69,55 +78,110 @@ public abstract class AbstractModel implements ModelCallbacks {
     }
 
 	/**
-	 * findPageByKey method
+	 * findAssessmentPageByKey
 	 * 
 	 * Utility method to retrieve a bread-crumb UI Wizard
 	 * page based on the key
 	 * 
 	 * @param key : String
-	 * @return Page
+	 * @return AbstractAssessmentPage
 	 *  
 	 */ 
-    public AbstractPage findPageByKey(String key) {
-        return getAssessmentPages().findPageByKey(key);
+    public AbstractAssessmentPage findAssessmentPageByKey(String key) {
+        return getAssessmentPages().findAssessmentPageByKey(key);
     }
 
 	/**
-	 * load method
+	 * findAnalyticsPageByKey
 	 * 
-	 * TODO: Add description
+	 * Utility method to retrieve an analytics
+	 * page based on the key
+	 * 
+	 * @param key : String
+	 * @return AbstractAnalyticsPage
+	 *  
+	 */    
+	public AbstractAnalyticsPage findAnalyticsPageByKey(String key) {
+        return getAnalyticsPages().findAnalyticsPageByKey(key);
+	}
+	
+	/**
+	 * Save assessment state
+	 * 
+	 * @return Bundle
+	 */   	
+	public Bundle save() {
+        Bundle bundle = new Bundle();
+        saveAssessmentPages(bundle);
+        saveAnalyticPages(bundle);
+        return bundle;
+	}
+	
+	/**
+	 * Load assessment state
+	 * 
+	 * @return Bundle
+	 */   	
+	public void load(Bundle savedValues) {
+		loadAssessmentPages(savedValues);
+		loadAnalyticPages(savedValues);
+	}
+    
+	/**
+	 * Load Assessment Pages
 	 * 
 	 * @param savedValues : Bundle
 	 * @return void
-	 *  
 	 */     
-    public void load(Bundle savedValues) {
+    public void loadAssessmentPages(Bundle savedValues) {
+    	// load assessment pages into memory    	
         for (String key : savedValues.keySet()) {
-        	getAssessmentPages().findPageByKey(key).resetPageData(savedValues.getBundle(key));
+        	getAssessmentPages().findAssessmentPageByKey(key).resetPageData(savedValues.getBundle(key));
+        }
+    }
+    
+	/**
+	 * Load Data Analytic Pages
+	 * 
+	 * @param savedValues : Bundle
+	 * @return void
+	 */     
+    public void loadAnalyticPages(Bundle savedValues) {
+    	// load data analytic pages into memory
+        for (String key : savedValues.keySet()) {
+        	getAnalyticsPages().findAnalyticsPageByKey(key).setPageData(savedValues.getBundle(key));
         }
     }
 
 	/**
-	 * save method
-	 * 
-	 * Invoked by the 'AssessmentWizardActivity' when saving instance
-	 * state. Method will capture the data associated with each page
-	 * in the wizard and store in bundle.
+	 * Method will capture the assessment page data associated with each 
+	 * assessment page and store in bundle.
 	 * 
 	 * @return Bundle
-	 *  
 	 */       
-    public Bundle save() {
-        Bundle bundle = new Bundle();
-        for (AbstractPage page : getPageSequence()) {
-            bundle.putBundle(page.getKey(), page.getPageData());
+    public Bundle saveAssessmentPages(Bundle bundle) {        
+        // save assessment pages 
+        for (AbstractAssessmentPage assessmentpage : getAssessmentPageSequence()) {
+            bundle.putBundle(assessmentpage.getKey(), assessmentpage.getPageData());
         }
         return bundle;
     }
     
 	/**
-	 * registerListener method
+	 * Method will capture the analytic page data associated with each 
+	 * non-assessment page and store in bundle.
 	 * 
+	 * @return Bundle
+	 */       
+    public Bundle saveAnalyticPages(Bundle bundle) {
+        // save data analytic pages
+        for (AbstractAnalyticsPage analyticsPage : getAnalyticsPages()) {
+            bundle.putBundle(analyticsPage.getKey(), analyticsPage.getPageData());
+        }
+        return bundle;
+    }
+    
+	/**
 	 * Facilitates the registration of model listeners
 	 * (e.g. AssessmentWizardActivity)
 	 * 
@@ -131,9 +195,7 @@ public abstract class AbstractModel implements ModelCallbacks {
     }
 
 	/**
-	 * unregisterListener method
-	 * 
-	 * Facilitates the de-registering of model listeners
+	 * Facilitates the unregistering of model listeners
 	 * (e.g. AssessmentWizardActivity)
 	 * 
 	 * This ensures the model listener will no longer be informed of 
@@ -148,8 +210,8 @@ public abstract class AbstractModel implements ModelCallbacks {
     /**
      * Gets the list of wizard steps
      */
-    public List<AbstractPage> getPageSequence() {
-        ArrayList<AbstractPage> flattened = new ArrayList<AbstractPage>();
+    public List<AbstractAssessmentPage> getAssessmentPageSequence() {
+        ArrayList<AbstractAssessmentPage> flattened = new ArrayList<AbstractAssessmentPage>();
         getAssessmentPages().flattenCurrentPageSequence(flattened);
         return flattened;
     }
@@ -162,8 +224,8 @@ public abstract class AbstractModel implements ModelCallbacks {
      */
 	public ArrayList<ReviewItem> gatherAssessmentReviewItems() {
 		ArrayList<ReviewItem> reviewItems = new ArrayList<ReviewItem>();
-        for (AbstractPage page : getPageSequence()) {
-            page.getReviewItems(reviewItems);
+        for (AbstractAssessmentPage assessmentPage : getAssessmentPageSequence()) {
+        	assessmentPage.getReviewItems(reviewItems);
         }
         
         Collections.sort(reviewItems, new Comparator<ReviewItem>() {
@@ -176,62 +238,53 @@ public abstract class AbstractModel implements ModelCallbacks {
 	
     /**
      * Retrieves the data analytics associated with each assessment page
+     * and each non-assessment page
      * 
      * @return ArrayList<DataAnalytic>
      */
 	public ArrayList<DataAnalytic> gatherPageDataAnalytics() {
 		ArrayList<DataAnalytic> dataAnalyticItems = new ArrayList<DataAnalytic>();
-        for (AbstractPage page : getPageSequence()) {
-            page.getDataAnalytics(dataAnalyticItems);
+		
+		// pull back analytics from any question-focused assessment related pages
+        for (AbstractAssessmentPage assessmentPage : getAssessmentPageSequence()) {
+        	assessmentPage.getDataAnalytics(dataAnalyticItems);
         }
+        
+		// pull back analytics from any non-assessment related pages (e.g. review page)
+        for (AbstractAnalyticsPage analyticsPage : getAnalyticsPages()) {
+        	analyticsPage.getDataAnalytics(dataAnalyticItems);
+        }        
 		return dataAnalyticItems;
 	}
 	
-    
-	/**
-	 * Getter Method: getApplicationContext()
-	 * 
-	 */
     public Context getApplicationContext() {
 		return applicationContext;
 	}
-
-	/**
-	 * Setter Method: setApplicationContext()
-	 * 
-	 */    
+ 
 	public void setApplicationContext(Context applicationContext) {
 		this.applicationContext = applicationContext;
 	}
-    
-	/**
-	 * Getter Method: getAssessmentPages()
-	 * 
-	 */	
-	public PageList getAssessmentPages() {
+
+	public AssessmentPageList getAssessmentPages() {
 		return assessmentPages;
 	}
-
-	/**
-	 * Setter Method: setAssessmentPages()
-	 * 
-	 */    	
-	public void setAssessmentPages(PageList assessmentPages) {
+ 	
+	public void setAssessmentPages(AssessmentPageList assessmentPages) {
 		this.assessmentPages = assessmentPages;
 	}
 
-	/**
-	 * Getter Method: getModelListeners()
-	 * 
-	 */		
+	public AnalyticsPageList getAnalyticsPages() {
+		return analyticsPages;
+	}
+
+	public void setAnalyticsPages(AnalyticsPageList analyticsPages) {
+		this.analyticsPages = analyticsPages;
+	}
+
 	public List<ModelCallbacks> getModelListeners() {
 		return modelListeners;
 	}
-
-	/**
-	 * Setter Method: setModelListeners()
-	 * 
-	 */   	
+ 	
 	public void setModelListeners(List<ModelCallbacks> modelListeners) {
 		this.modelListeners = modelListeners;
 	}

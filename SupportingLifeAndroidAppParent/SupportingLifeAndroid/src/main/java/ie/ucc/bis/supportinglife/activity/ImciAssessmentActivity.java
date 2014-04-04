@@ -45,7 +45,7 @@ public class ImciAssessmentActivity extends AssessmentActivity {
         setTitleFromActivityLabel(R.id.action_bar_title_text);
         
         if (savedInstanceState != null) {
-        	getAssessmentModel().load(savedInstanceState.getBundle("model"));
+        	getAssessmentModel().load(savedInstanceState.getBundle("assessmentModel"));
         }
 
         getAssessmentModel().registerListener(this);
@@ -144,7 +144,7 @@ public class ImciAssessmentActivity extends AssessmentActivity {
      */
     private final class NextButtonListener implements View.OnClickListener {
 		public void onClick(View view) {
-		    if (getViewPager().getCurrentItem() == getPageSequence().size()) {
+		    if (getViewPager().getCurrentItem() == getAssessmentModel().getAssessmentPageSequence().size()) {
 		    	// we're currently on the review pane so display confirmation dialog
 		        DialogFragment dg = new DialogFragment() {
 		            @Override
