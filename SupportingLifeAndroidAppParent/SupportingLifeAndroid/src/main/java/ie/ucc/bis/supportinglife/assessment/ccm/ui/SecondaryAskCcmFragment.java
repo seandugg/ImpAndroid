@@ -7,7 +7,8 @@ import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.SecondaryAskCcmPage;
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.PageFragmentCallbacks;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractAnalyticsPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DynamicViewListenerUtilities;
@@ -365,17 +366,17 @@ public class SecondaryAskCcmFragment extends Fragment implements FragmentLifecyc
     	
     	// need to use bundle to access page data
 		Bundle args = getArguments();
-		AbstractAnalyticsPage analyticsPage = (AbstractAnalyticsPage) assessmentModel.findAnalyticsPageByKey(args.getString(ARG_PAGE_KEY));
+		AbstractAssessmentPage assessmentPage = (AbstractAssessmentPage) ((AbstractAssessmentModel) assessmentModel).findAssessmentPageByKey(args.getString(ARG_PAGE_KEY));
 		
-    	if (analyticsPage != null) {
+    	if (assessmentPage != null) {
 			// stop analytics timer for page
-			AnalyticUtilities.configurePageTimer(analyticsPage, SecondaryAskCcmPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY, AnalyticUtilities.STOP_PAGE_TIMER_ACTION);
+			AnalyticUtilities.configurePageTimer(assessmentPage, SecondaryAskCcmPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY, AnalyticUtilities.STOP_PAGE_TIMER_ACTION);
 			// duration analytics timer for page
-			AnalyticUtilities.determineTimerDuration(analyticsPage,
+			AnalyticUtilities.determineTimerDuration(assessmentPage,
 													SecondaryAskCcmPage.ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY,
 													AnalyticUtilities.DURATION_PAGE_TIMER_ACTION,
-													(DataAnalytic) analyticsPage.getPageData().getSerializable(SecondaryAskCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY),
-													(DataAnalytic) analyticsPage.getPageData().getSerializable(SecondaryAskCcmPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY));
+													(DataAnalytic) assessmentPage.getPageData().getSerializable(SecondaryAskCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY),
+													(DataAnalytic) assessmentPage.getPageData().getSerializable(SecondaryAskCcmPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY));
     	}
     }
 
@@ -384,11 +385,11 @@ public class SecondaryAskCcmFragment extends Fragment implements FragmentLifecyc
     	
     	// need to use bundle to access page data
 		Bundle args = getArguments();
-		AbstractAnalyticsPage analyticsPage = (AbstractAnalyticsPage) assessmentModel.findAnalyticsPageByKey(args.getString(ARG_PAGE_KEY));
+		AbstractAssessmentPage assessmentPage = (AbstractAssessmentPage) ((AbstractAssessmentModel) assessmentModel).findAssessmentPageByKey(args.getString(ARG_PAGE_KEY));
     
-		if (analyticsPage != null) {
+		if (assessmentPage != null) {
 			// start analytics timer for page
-    		AnalyticUtilities.configurePageTimer(analyticsPage, SecondaryAskCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);    		
+    		AnalyticUtilities.configurePageTimer(assessmentPage, SecondaryAskCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);    		
     	}
     }
 	
