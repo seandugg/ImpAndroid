@@ -1,5 +1,7 @@
 package ie.ucc.bis.supportinglife.activity;
 
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAnalyticsPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 import ie.ucc.bis.supportinglife.domain.PatientAssessment;
@@ -44,6 +46,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 	private ClassificationRuleEngine classificationRuleEngine;
 	private TreatmentRuleEngine treatmentRuleEngine;
 	private SupportingLifeService supportingLifeService;
+	private AbstractModel assessmentResultsModel;
 
 	/* 
 	 * Method: onCreate() 
@@ -64,8 +67,18 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt("tab", getActionBar().getSelectedNavigationIndex()); 
+		outState.putInt("tab", getActionBar().getSelectedNavigationIndex());
+		outState.putBundle("assessmentResultsModel", getAssessmentResultsModel().save());
 	}
+	    
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    	super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+        	getAssessmentResultsModel().load(savedInstanceState.getBundle("assessmentResultsModel"));
+        	getActionBar().setSelectedNavigationItem(savedInstanceState.getInt("tab"));
+        }  	
+    }
 		
 	/**
 	 * Static Class: TabsAdapter
@@ -85,12 +98,10 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 		private final ArrayList<TabInfo> tabs = new ArrayList<TabInfo>();
 	 
 		static final class TabInfo {
-			private final Class<?> clss;
-			private final Bundle args;
+			private AbstractAnalyticsPage analyticsPage;
 			
-			TabInfo(Class<?> _class, Bundle _args) {
-				clss = _class;
-				args = _args;
+			TabInfo(AbstractAnalyticsPage _analyticsPage) {
+				analyticsPage = _analyticsPage;
 			} // end of constructor
 		} // end of TabInfo static class
 		
@@ -99,6 +110,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 		 * 
 		 * @param activity
 		 * @param pager
+		 * @param abstractAssessmentResultsModel 
 		 * 
 		 */
 		public TabsAdapter(FragmentActivity activity, ViewPager pager) {
@@ -132,10 +144,11 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 		 * 
 		 * @param tab
 		 * @param fragmentClass
+		 * @param abstractAnalyticsPage 
 		 * @param args
 		 */
-		public void addTab(ActionBar.Tab tab, Class<?> fragmentClass, Bundle args) {
-			TabInfo info = new TabInfo(fragmentClass, args);
+		public void addTab(ActionBar.Tab tab, AbstractAnalyticsPage analyticsPage) {
+			TabInfo info = new TabInfo(analyticsPage);
 			tab.setTag(info);
 			tab.setTabListener(this);
 			getTabs().add(info);
@@ -194,7 +207,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 		@Override
 		public Fragment getItem(int position) {
 			TabInfo info = getTabs().get(position);
-			return Fragment.instantiate(getContext(), info.clss.getName(), info.args);
+			return info.analyticsPage.createFragment();
 		}
 		 
 		/*
@@ -410,6 +423,16 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 
 	public void setSupportingLifeService(SupportingLifeService supportingLifeService) {
 		this.supportingLifeService = supportingLifeService;
+	}
+
+
+	public AbstractModel getAssessmentResultsModel() {
+		return assessmentResultsModel;
+	}
+
+
+	public void setAssessmentResultsModel(AbstractModel assessmentResultsModel) {
+		this.assessmentResultsModel = assessmentResultsModel;
 	}
 }
 

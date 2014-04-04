@@ -1,9 +1,8 @@
 package ie.ucc.bis.supportinglife.assessment.ccm.model;
 
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AnalyticsPageList;
 import ie.ucc.bis.supportinglife.assessment.model.AssessmentPageList;
-import ie.ucc.bis.supportinglife.assessment.model.ReviewPage;
 import android.content.Context;
 
 /**
@@ -11,7 +10,7 @@ import android.content.Context;
  * @author timothyosullivan
  */
 
-public class CcmAssessmentModel extends AbstractModel {
+public class CcmAssessmentModel extends AbstractAssessmentModel {
 
 	public static final String CCM_GENERAL_PATIENT_DETAILS_PAGE_TITLE = "Patient Details";
 	public static final String CCM_INITIAL_ASK_ASSESSMENT_PAGE_TITLE = "Ask and Look Assessment (1)";
@@ -60,6 +59,6 @@ public class CcmAssessmentModel extends AbstractModel {
 		 * 1. Review Page
 		 */
 		
-		return new AnalyticsPageList(new ReviewPage(CCM_REVIEW_PAGE_TITLE));
+		return new AnalyticsPageList(new CcmReviewPage(CCM_REVIEW_PAGE_TITLE));
 	}
 }

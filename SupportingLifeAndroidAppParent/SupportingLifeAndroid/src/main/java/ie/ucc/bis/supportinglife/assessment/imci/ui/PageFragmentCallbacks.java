@@ -1,6 +1,6 @@
 package ie.ucc.bis.supportinglife.assessment.imci.ui;
 
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 
 /**
@@ -9,6 +9,6 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
  */
 
 public interface PageFragmentCallbacks {
-	AbstractModel getWizardModel();
+	AbstractAssessmentModel getWizardModel();
     AbstractAssessmentPage getPage(String key);
 }

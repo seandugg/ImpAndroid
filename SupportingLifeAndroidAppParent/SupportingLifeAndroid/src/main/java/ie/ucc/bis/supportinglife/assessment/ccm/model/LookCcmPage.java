@@ -6,7 +6,7 @@ import ie.ucc.bis.supportinglife.assessment.ccm.model.review.ChestIndrawingDosag
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.FastBreathingDosageCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.RedMuacTapeCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.LookCcmFragment;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
@@ -63,7 +63,7 @@ public class LookCcmPage extends AbstractAssessmentPage {
 	 */      
     @Override
     public void getReviewItems(ArrayList<ReviewItem> reviewItems) {
-    	Resources resources = ((AbstractModel) getModelCallbacks()).getApplicationContext().getResources();
+    	Resources resources = ((AbstractAssessmentModel) getModelCallbacks()).getApplicationContext().getResources();
     	String reviewItemIdentifier = null;
     	String reviewItemLabel = null;
     	String reviewItemValue = null;

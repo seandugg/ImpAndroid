@@ -28,12 +28,25 @@ import android.widget.ListView;
  */
 public class CcmAssessmentTreatmentsFragment extends ListFragment implements FragmentLifecycle {
     
+	private String pageKey;
     private CcmTreatmentAdapter ccmTreatmentAdapter;
     private PatientAssessment patient;
 	
+	public static CcmAssessmentTreatmentsFragment create(String pageKey) {
+		Bundle args = new Bundle();
+		args.putString(ARG_PAGE_KEY, pageKey);
+
+		CcmAssessmentTreatmentsFragment fragment = new CcmAssessmentTreatmentsFragment();
+		fragment.setArguments(args);
+		return fragment;
+	}
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+		Bundle args = getArguments();
+		setPageKey(args.getString(ARG_PAGE_KEY));
     }
     
     @Override
@@ -65,6 +78,14 @@ public class CcmAssessmentTreatmentsFragment extends ListFragment implements Fra
     @Override
     public void onResumeFragment(AbstractModel assessmentModel) {}
     
+	public String getPageKey() {
+		return pageKey;
+	}
+
+	public void setPageKey(String pageKey) {
+		this.pageKey = pageKey;
+	}
+
 	/**
 	 * Getter Method: getPatient()
 	 */

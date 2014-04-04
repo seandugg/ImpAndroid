@@ -8,7 +8,8 @@ import java.util.List;
 /**
  * Represents a single line item on the final review page.
  *
- * @see ie.ucc.bis.supportinglife.assessment.imci.ui.ReviewFragment
+ * @see ie.ucc.bis.supportinglife.assessment.imci.ui.ImciReviewFragment
+ * @see ie.ucc.bis.supportinglife.assessment.ccm.ui.CcmReviewFragment
  * 
  * @author timothyosullivan
  */

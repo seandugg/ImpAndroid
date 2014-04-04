@@ -6,8 +6,9 @@ import ie.ucc.bis.supportinglife.assessment.imci.model.DiarrhoeaAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.imci.model.GeneralDangerSignsPage;
 import ie.ucc.bis.supportinglife.assessment.imci.model.ImciAssessmentModel;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DynamicViewListenerUtilities;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
@@ -41,7 +42,7 @@ public class DiarrhoeaAssessmentFragment extends Fragment implements FragmentLif
     private static final int MIN_DIARRHOEA_DURATION = 1;
     private static final int MAX_DIARRHOEA_DURATION = 365;
 
-    private AbstractModel wizardModel;
+    private AbstractAssessmentModel wizardModel;
     
     private DiarrhoeaAssessmentPage diarrhoeaAssessmentPage;    
     private PageFragmentCallbacks pageFragmentCallbacks;
@@ -477,14 +478,14 @@ public class DiarrhoeaAssessmentFragment extends Fragment implements FragmentLif
 	/**
 	 * Getter Method: getWizardModel()
 	 */
-	public AbstractModel getWizardModel() {
+	public AbstractAssessmentModel getWizardModel() {
 		return wizardModel;
 	}
 
 	/**
 	 * Setter Method: setWizardModel()
 	 */	
-	public void setWizardModel(AbstractModel wizardModel) {
+	public void setWizardModel(AbstractAssessmentModel wizardModel) {
 		this.wizardModel = wizardModel;
 	}
 

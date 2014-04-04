@@ -1,10 +1,8 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
-import ie.ucc.bis.supportinglife.assessment.imci.ui.ImciAssessmentClassificationsFragment;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.ImciAssessmentTreatmentsFragment;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
-import ie.ucc.bis.supportinglife.assessment.ui.AssessmentResultsReviewFragment;
 import ie.ucc.bis.supportinglife.domain.PatientAssessment;
 import ie.ucc.bis.supportinglife.rule.engine.ClassificationRuleEngine;
 import ie.ucc.bis.supportinglife.rule.engine.TreatmentRuleEngine;
@@ -74,16 +72,16 @@ public class ImciAssessmentResultsActivity extends AssessmentResultsActivity {
         
         // add assessment review items tab
         getTabsAdapter().addTab(bar.newTab().setText(R.string.imci_assessment_results_review_tab_title),
-        		AssessmentResultsReviewFragment.class, null);
+        		getAssessmentResultsModel().getAnalyticsPages().get(0));
        
         // add classifications tab
         getTabsAdapter().addTab(bar.newTab().setText(R.string.imci_assessment_results_classifications_tab_title),
-        		ImciAssessmentClassificationsFragment.class, null);
+        		getAssessmentResultsModel().getAnalyticsPages().get(1));
         
         // add treatments tab
         getTabsAdapter().addTab(bar.newTab().setText(R.string.imci_assessment_results_treatments_tab_title),
-        		ImciAssessmentTreatmentsFragment.class, null);
- 
+        		getAssessmentResultsModel().getAnalyticsPages().get(2));
+           
         // open on classifications tab by default
         getTabsAdapter().setDefaultTab();
 

@@ -4,7 +4,7 @@ import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.RedEyesDurationCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.SecondaryAskCcmFragment;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
@@ -61,7 +61,7 @@ public class SecondaryAskCcmPage extends AbstractAssessmentPage {
 	 */      
     @Override
     public void getReviewItems(ArrayList<ReviewItem> reviewItems) {
-    	Resources resources = ((AbstractModel) getModelCallbacks()).getApplicationContext().getResources();
+    	Resources resources = ((AbstractAssessmentModel) getModelCallbacks()).getApplicationContext().getResources();
     	String reviewItemIdentifier = null;
     	String reviewItemLabel = null;
     	String reviewItemValue = null;

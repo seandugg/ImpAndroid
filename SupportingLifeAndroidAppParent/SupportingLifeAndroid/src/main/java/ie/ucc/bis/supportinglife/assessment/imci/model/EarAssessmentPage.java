@@ -4,7 +4,7 @@ import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.EarDischargeDurationReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.EarAssessmentFragment;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
@@ -54,7 +54,7 @@ public class EarAssessmentPage extends AbstractAssessmentPage {
 	 */      
     @Override
     public void getReviewItems(ArrayList<ReviewItem> reviewItems) {
-    	Context appContext = ((AbstractModel) getModelCallbacks()).getApplicationContext();
+    	Context appContext = ((AbstractAssessmentModel) getModelCallbacks()).getApplicationContext();
     	Resources resources = appContext.getResources();
     	String reviewItemIdentifier = null;
     	String reviewItemLabel = null;

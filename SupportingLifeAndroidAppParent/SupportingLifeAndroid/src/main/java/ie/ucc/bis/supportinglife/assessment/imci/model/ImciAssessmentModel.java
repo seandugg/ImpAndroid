@@ -1,9 +1,8 @@
 package ie.ucc.bis.supportinglife.assessment.imci.model;
 
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AnalyticsPageList;
 import ie.ucc.bis.supportinglife.assessment.model.AssessmentPageList;
-import ie.ucc.bis.supportinglife.assessment.model.ReviewPage;
 import android.content.Context;
 
 /**
@@ -11,7 +10,7 @@ import android.content.Context;
  * @author timothyosullivan
  */
 
-public class ImciAssessmentModel extends AbstractModel {
+public class ImciAssessmentModel extends AbstractAssessmentModel {
 
 	public static final String GENERAL_PATIENT_DETAILS_PAGE_TITLE = "Patient Details";
 	public static final String DANGER_SIGNS_PAGE_TITLE = "Danger Signs";
@@ -75,7 +74,7 @@ public class ImciAssessmentModel extends AbstractModel {
 		 * 1. Review Page
 		 */
 		
-		return new AnalyticsPageList(new ReviewPage(IMCI_REVIEW_PAGE_TITLE));
+		return new AnalyticsPageList(new ImciReviewPage(IMCI_REVIEW_PAGE_TITLE));
 	}
 	
 }

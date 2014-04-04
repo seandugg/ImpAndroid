@@ -1,13 +1,12 @@
 package ie.ucc.bis.supportinglife.assessment.imci.ui;
 
 import ie.ucc.bis.supportinglife.R;
-import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
-import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
+import ie.ucc.bis.supportinglife.assessment.imci.model.ImciReviewPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
-import ie.ucc.bis.supportinglife.assessment.model.ReviewPage;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewAssessmentAdapter;
 import android.app.Activity;
 import android.os.Bundle;
@@ -19,21 +18,21 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ReviewFragment extends ReviewListFragment implements ModelCallbacks, FragmentLifecycle {
+public class ImciReviewFragment extends ReviewListFragment implements ModelCallbacks, FragmentLifecycle {
 	
     private ReviewFragmentCallbacks reviewFragmentCallbacks;
-    private AbstractModel wizardModel;
+    private AbstractAssessmentModel wizardModel;
     private ReviewAssessmentAdapter reviewAssessmentAdapter;
 	private String pageKey;
-    private ReviewPage reviewPage;
+    private ImciReviewPage imciReviewPage;
 
-    public ReviewFragment() {}
+    public ImciReviewFragment() {}
 
-	public static ReviewFragment create(String pageKey) {
+	public static ImciReviewFragment create(String pageKey) {
 		Bundle args = new Bundle();
 		args.putString(ARG_PAGE_KEY, pageKey);
 
-		ReviewFragment fragment = new ReviewFragment();
+		ImciReviewFragment fragment = new ImciReviewFragment();
 		fragment.setArguments(args);
 		return fragment;
 	}
@@ -129,36 +128,10 @@ public class ReviewFragment extends ReviewListFragment implements ModelCallbacks
     }
     
     @Override
-    public void onPauseFragment(AbstractModel assessmentModel) {
-    	
-    	// need to use bundle to access page data
-		Bundle args = getArguments();
-		ReviewPage reviewPage = (ReviewPage) assessmentModel.findAnalyticsPageByKey(args.getString(ARG_PAGE_KEY));
-		
-    	if (reviewPage != null) {
-			// stop analytics timer for page
-			AnalyticUtilities.configurePageTimer(reviewPage, ReviewPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY, AnalyticUtilities.STOP_PAGE_TIMER_ACTION);
-			// duration analytics timer for page
-			AnalyticUtilities.determineTimerDuration(reviewPage,
-													ReviewPage.ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY,
-													AnalyticUtilities.DURATION_PAGE_TIMER_ACTION,
-													(DataAnalytic) reviewPage.getPageData().getSerializable(ReviewPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY),
-													(DataAnalytic) reviewPage.getPageData().getSerializable(ReviewPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY));
-    	}
-    }
+    public void onPauseFragment(AbstractModel assessmentModel) {}
 
     @Override
-    public void onResumeFragment(AbstractModel assessmentModel) {
-    	
-    	// need to use bundle to access page data
-		Bundle args = getArguments();
-		ReviewPage reviewPage = (ReviewPage) assessmentModel.findAnalyticsPageByKey(args.getString(ARG_PAGE_KEY));
-    
-		if (reviewPage != null) {
-			// start analytics timer for page
-    		AnalyticUtilities.configurePageTimer(reviewPage, ReviewPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);    		
-    	}
-    }
+    public void onResumeFragment(AbstractModel assessmentModel) {}
 	
 
 	/**
@@ -192,14 +165,14 @@ public class ReviewFragment extends ReviewListFragment implements ModelCallbacks
 	/**
 	 * Getter Method: getWizardModel()
 	 */	
-	private AbstractModel getWizardModel() {
+	private AbstractAssessmentModel getWizardModel() {
 		return wizardModel;
 	}
 
 	/**
 	 * Setter Method: setWizardModel()
 	 */
-	private void setWizardModel(AbstractModel wizardModel) {
+	private void setWizardModel(AbstractAssessmentModel wizardModel) {
 		this.wizardModel = wizardModel;
 	}
 
@@ -211,12 +184,11 @@ public class ReviewFragment extends ReviewListFragment implements ModelCallbacks
 		this.pageKey = pageKey;
 	}
 
-	public ReviewPage getReviewPage() {
-		return reviewPage;
+	public ImciReviewPage getImciReviewPage() {
+		return imciReviewPage;
 	}
 
-	public void setReviewPage(ReviewPage reviewPage) {
-		this.reviewPage = reviewPage;
+	public void setImciReviewPage(ImciReviewPage imciReviewPage) {
+		this.imciReviewPage = imciReviewPage;
 	}
-
 }

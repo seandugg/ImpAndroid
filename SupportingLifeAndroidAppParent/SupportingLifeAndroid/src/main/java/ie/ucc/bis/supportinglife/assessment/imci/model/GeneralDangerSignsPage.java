@@ -3,7 +3,7 @@ package ie.ucc.bis.supportinglife.assessment.imci.model;
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.GeneralDangerSignsFragment;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
@@ -53,7 +53,7 @@ public class GeneralDangerSignsPage extends AbstractAssessmentPage {
 	 */      
     @Override
     public void getReviewItems(ArrayList<ReviewItem> reviewItems) {
-    	Context appContext = ((AbstractModel) getModelCallbacks()).getApplicationContext();
+    	Context appContext = ((AbstractAssessmentModel) getModelCallbacks()).getApplicationContext();
     	Resources resources = appContext.getResources();
     	String reviewItemIdentifier = null;
     	String reviewItemLabel = null;

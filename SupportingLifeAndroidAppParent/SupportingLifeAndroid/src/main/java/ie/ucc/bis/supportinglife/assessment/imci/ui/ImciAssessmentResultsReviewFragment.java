@@ -1,8 +1,9 @@
-package ie.ucc.bis.supportinglife.assessment.ui;
+package ie.ucc.bis.supportinglife.assessment.imci.ui;
 
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.activity.AssessmentResultsActivity;
-import ie.ucc.bis.supportinglife.assessment.imci.ui.ReviewListFragment;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewAssessmentAdapter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 /**
- * Class: AssessmentResultsReviewFragment
+ * Class: ImciAssessmentResultsReviewFragment
  * 
  * Responsible for displaying the assessment
  * review items list  
@@ -19,13 +20,26 @@ import android.widget.ListView;
  * @author TOSullivan
  *
  */
-public class AssessmentResultsReviewFragment extends ReviewListFragment {
+public class ImciAssessmentResultsReviewFragment extends ReviewListFragment implements FragmentLifecycle {
     
+	private String pageKey;
     private ReviewAssessmentAdapter reviewAssessmentAdapter;
 	
+	public static ImciAssessmentResultsReviewFragment create(String pageKey) {
+		Bundle args = new Bundle();
+		args.putString(ARG_PAGE_KEY, pageKey);
+
+		ImciAssessmentResultsReviewFragment fragment = new ImciAssessmentResultsReviewFragment();
+		fragment.setArguments(args);
+		return fragment;
+	}
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+		Bundle args = getArguments();
+		setPageKey(args.getString(ARG_PAGE_KEY));
     }
     
     @Override
@@ -50,7 +64,22 @@ public class AssessmentResultsReviewFragment extends ReviewListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {}
+
+    @Override
+    public void onPauseFragment(AbstractModel assessmentModel) {}
+
+    @Override
+    public void onResumeFragment(AbstractModel assessmentModel) {}
+
     
+	public String getPageKey() {
+		return pageKey;
+	}
+
+	public void setPageKey(String pageKey) {
+		this.pageKey = pageKey;
+	}
+
 	/**
 	 * Getter Method: getReviewAssessmentAdapter()
 	 */	

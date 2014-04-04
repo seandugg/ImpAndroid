@@ -6,7 +6,7 @@ import ie.ucc.bis.supportinglife.assessment.imci.ui.PageFragmentCallbacks;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.ReviewFragmentCallbacks;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.StepPagerStrip;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AssessmentPagerAdapter;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
@@ -32,7 +32,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 	
 	private ViewPager viewPager;
     private AssessmentPagerAdapter assessmentPagerAdapter;
-	private AbstractModel assessmentModel;
+	private AbstractAssessmentModel assessmentModel;
 	private StepPagerStrip stepPagerStrip;
 	
     private boolean editingAfterReview;
@@ -157,7 +157,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 	 * 
 	 * @return AbstractWizardModel
 	 */
-    public AbstractModel getWizardModel() {
+    public AbstractAssessmentModel getWizardModel() {
     	return getAssessmentModel();
     }
     
@@ -329,14 +329,14 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 	/**
 	 * Getter Method: getAssessmentModel()
 	 */
-	public AbstractModel getAssessmentModel() {
+	public AbstractAssessmentModel getAssessmentModel() {
 		return assessmentModel;
 	}
 
 	/**
 	 * Setter Method: setAssessmentModel()
 	 */
-	public void setAssessmentModel(AbstractModel assessmentModel) {
+	public void setAssessmentModel(AbstractAssessmentModel assessmentModel) {
 		this.assessmentModel = assessmentModel;
 	}
 

@@ -6,7 +6,7 @@ import ie.ucc.bis.supportinglife.assessment.imci.model.review.DiarrhoeaDurationI
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.FluidReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.SkinPinchReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.DiarrhoeaAssessmentFragment;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
@@ -60,7 +60,7 @@ public class DiarrhoeaAssessmentPage extends AbstractAssessmentPage {
 	 */      
     @Override
     public void getReviewItems(ArrayList<ReviewItem> reviewItems) {
-    	Context appContext = ((AbstractModel) getModelCallbacks()).getApplicationContext();
+    	Context appContext = ((AbstractAssessmentModel) getModelCallbacks()).getApplicationContext();
     	Resources resources = appContext.getResources();
     	String reviewItemIdentifier = null;
     	String reviewItemLabel = null;

@@ -5,7 +5,7 @@ import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.PalmarPallorReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.WeightForAgeReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.MalnutritionAssessmentFragment;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
@@ -56,7 +56,7 @@ public class MalnutritionAssessmentPage extends AbstractAssessmentPage {
 	 */      
     @Override
     public void getReviewItems(ArrayList<ReviewItem> reviewItems) {
-    	Context appContext = ((AbstractModel) getModelCallbacks()).getApplicationContext();
+    	Context appContext = ((AbstractAssessmentModel) getModelCallbacks()).getApplicationContext();
     	Resources resources = appContext.getResources();
     	String reviewItemIdentifier = null;
     	String reviewItemLabel = null;

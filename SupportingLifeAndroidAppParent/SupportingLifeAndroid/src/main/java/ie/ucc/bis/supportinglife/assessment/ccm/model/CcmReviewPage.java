@@ -1,38 +1,39 @@
-package ie.ucc.bis.supportinglife.assessment.model;
+package ie.ucc.bis.supportinglife.assessment.ccm.model;
 
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
-import ie.ucc.bis.supportinglife.assessment.imci.ui.ReviewFragment;
+import ie.ucc.bis.supportinglife.assessment.ccm.ui.CcmReviewFragment;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAnalyticsPage;
 
 import java.util.ArrayList;
 
 import android.support.v4.app.Fragment;
 
 /**
- * AnalyticsPage Title: IMCI & CCM Assessment
+ * AnalyticsPage Title: CCM Assessment
  * 
- * Final Stage in IMCI & CCM Breadcrumb UI
+ * Final Stage in CCM Breadcrumb UI
  * 
- * Responsible for displaying IMCI & CCM review items 
+ * Responsible for displaying CCM review items 
  * 
  * @author timothyosullivan
  */
 
-public class ReviewPage extends AbstractAnalyticsPage {
+public class CcmReviewPage extends AbstractAnalyticsPage {
 	
     // ANALYTICS DATA KEYS
     public static final String ANALTYICS_START_PAGE_TIMER_DATA_KEY = "ANALYTICS_REVIEW_CCM_PAGE_START_PAGE_TIMER";
     public static final String ANALTYICS_STOP_PAGE_TIMER_DATA_KEY = "ANALYTICS_REVIEW_CCM_PAGE_STOP_PAGE_TIMER";
     public static final String ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY = "ANALTYICS_REVIEW_CCM_PAGE_DURATION";
 	
-    private ReviewFragment reviewFragment;
+    private CcmReviewFragment ccmReviewFragment;
 	
     @Override
     public Fragment createFragment() {
-    	setReviewFragment(ReviewFragment.create(getKey()));
-        return getReviewFragment();
+    	setCcmReviewFragment(CcmReviewFragment.create(getKey()));
+        return getCcmReviewFragment();
     }
 
-	public ReviewPage(String title) {
+	public CcmReviewPage(String title) {
 		super(title);
 	}
 
@@ -49,11 +50,11 @@ public class ReviewPage extends AbstractAnalyticsPage {
     	dataAnalytics.add((DataAnalytic) getPageData().getSerializable(ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY));
     }
 
-	public ReviewFragment getReviewFragment() {
-		return reviewFragment;
+	public CcmReviewFragment getCcmReviewFragment() {
+		return ccmReviewFragment;
 	}
 
-	public void setReviewFragment(ReviewFragment reviewFragment) {
-		this.reviewFragment = reviewFragment;
+	public void setCcmReviewFragment(CcmReviewFragment ccmReviewFragment) {
+		this.ccmReviewFragment = ccmReviewFragment;
 	}
 }

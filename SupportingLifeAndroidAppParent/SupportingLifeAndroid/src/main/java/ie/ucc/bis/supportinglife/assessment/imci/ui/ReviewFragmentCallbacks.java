@@ -1,6 +1,6 @@
 package ie.ucc.bis.supportinglife.assessment.imci.ui;
 
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 
 /**
  * 
@@ -8,6 +8,6 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
  */
 
 public interface ReviewFragmentCallbacks {
-    public AbstractModel getWizardModel();
+    public AbstractAssessmentModel getWizardModel();
     public void onEditScreenAfterReview(String pageKey);
 }

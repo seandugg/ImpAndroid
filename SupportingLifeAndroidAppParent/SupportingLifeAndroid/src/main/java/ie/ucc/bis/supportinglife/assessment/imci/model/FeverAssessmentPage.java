@@ -6,7 +6,7 @@ import ie.ucc.bis.supportinglife.assessment.imci.model.review.FeverDurationRevie
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.FeverReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.model.review.MalariaReviewItem;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.FeverAssessmentFragment;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupCoordinatorListener;
@@ -68,7 +68,7 @@ public class FeverAssessmentPage extends AbstractAssessmentPage {
 	 */      
     @Override
     public void getReviewItems(ArrayList<ReviewItem> reviewItems) {
-    	Context appContext = ((AbstractModel) getModelCallbacks()).getApplicationContext();
+    	Context appContext = ((AbstractAssessmentModel) getModelCallbacks()).getApplicationContext();
     	Resources resources = appContext.getResources();
     	String reviewIdentifier = null;
     	String reviewItemLabel = null;

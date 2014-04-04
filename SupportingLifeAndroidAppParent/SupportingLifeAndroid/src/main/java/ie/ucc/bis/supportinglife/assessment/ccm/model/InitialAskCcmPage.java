@@ -9,7 +9,7 @@ import ie.ucc.bis.supportinglife.assessment.ccm.model.review.FeverDurationCcmRev
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.FeverLaDosageCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.review.FeverParacetamolDosageCcmReviewItem;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.InitialAskCcmFragment;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
@@ -70,7 +70,7 @@ public class InitialAskCcmPage extends AbstractAssessmentPage {
 	 */      
     @Override
     public void getReviewItems(ArrayList<ReviewItem> reviewItems) {
-    	Resources resources = ((AbstractModel) getModelCallbacks()).getApplicationContext().getResources();
+    	Resources resources = ((AbstractAssessmentModel) getModelCallbacks()).getApplicationContext().getResources();
     	String reviewItemIdentifier = null;
     	String reviewItemLabel = null;
     	String reviewItemValue = null;

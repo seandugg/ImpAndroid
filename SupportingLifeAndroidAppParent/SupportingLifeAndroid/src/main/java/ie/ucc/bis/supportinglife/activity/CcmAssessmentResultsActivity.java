@@ -1,10 +1,9 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
-import ie.ucc.bis.supportinglife.assessment.ccm.ui.CcmAssessmentClassificationsFragment;
+import ie.ucc.bis.supportinglife.assessment.ccm.model.CcmAssessmentResultsModel;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.CcmAssessmentTreatmentsFragment;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
-import ie.ucc.bis.supportinglife.assessment.ui.AssessmentResultsReviewFragment;
 import ie.ucc.bis.supportinglife.rule.engine.ClassificationRuleEngine;
 import ie.ucc.bis.supportinglife.rule.engine.TreatmentRuleEngine;
 
@@ -45,6 +44,8 @@ public class CcmAssessmentResultsActivity extends AssessmentResultsActivity {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setAssessmentResultsModel(new CcmAssessmentResultsModel(this));
+        
         setContentView(R.layout.activity_assessment_results);
         setTitleFromActivityLabel(R.id.action_bar_title_text);
         setViewPager((ViewPager) findViewById(R.id.assessment_results_pager));
@@ -80,15 +81,15 @@ public class CcmAssessmentResultsActivity extends AssessmentResultsActivity {
         
         // add assessment review items tab
         getTabsAdapter().addTab(bar.newTab().setText(R.string.ccm_assessment_results_review_tab_title),
-        		AssessmentResultsReviewFragment.class, null);
-       
+        		getAssessmentResultsModel().getAnalyticsPages().get(0));
+               
         // add classifications tab
         getTabsAdapter().addTab(bar.newTab().setText(R.string.ccm_assessment_results_classifications_tab_title),
-        		CcmAssessmentClassificationsFragment.class, null);
-        
+        		getAssessmentResultsModel().getAnalyticsPages().get(1));
+
         // add treatments tab
         getTabsAdapter().addTab(bar.newTab().setText(R.string.ccm_assessment_results_treatments_tab_title),
-        		CcmAssessmentTreatmentsFragment.class, null);
+        		getAssessmentResultsModel().getAnalyticsPages().get(2));
  
         // open on classifications tab by default
         getTabsAdapter().setDefaultTab();
