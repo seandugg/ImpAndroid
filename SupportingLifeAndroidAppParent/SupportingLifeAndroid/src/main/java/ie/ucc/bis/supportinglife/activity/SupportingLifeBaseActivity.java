@@ -1,6 +1,8 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
 
 import java.util.Locale;
@@ -15,6 +17,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -414,20 +417,31 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	 * confirm that the user wishes to exit the patient assessment
 	 * 
 	 * @param navigationRequest 
+	 * @param model 
+	 * @param currentFragmentPosition
+	 * @param fragmentStatePagerAdapter 
 
 	 * @return void
 	 */
-	protected void exitAssessmentDialogHandler(final int navigationRequest) {
+	protected void exitAssessmentDialogHandler(final int navigationRequest, 
+											   final AbstractModel model, FragmentStatePagerAdapter fragmentStatePagerAdapter,
+											   int currentFragmentPosition) {
 		DialogFragment dg = new DialogFragment() {
     		@Override
     		public Dialog onCreateDialog(Bundle savedInstanceState) {    			
     			return new AlertDialog.Builder(getActivity())
     			.setMessage(R.string.exit_assessment_confirm_message)
-    			.setPositiveButton(R.string.exit_assessment_confirm_button, new AssessmentExitDialogListener(SupportingLifeBaseActivity.this, navigationRequest))
+    			.setPositiveButton(R.string.exit_assessment_confirm_button, new AssessmentExitDialogListener(SupportingLifeBaseActivity.this, navigationRequest, model))
     			.setNegativeButton(android.R.string.cancel, null)
     			.create();
     		}
     	};
+    	
+		// before gathering analytic data, call the 'on pause' operation on the current fragment to make
+        // sure the stop and duration timers for this page are accounted for
+		FragmentLifecycle fragmentToHide = (FragmentLifecycle) fragmentStatePagerAdapter.getItem(currentFragmentPosition);
+		fragmentToHide.onPauseFragment(model);
+    	
     	dg.show(getSupportFragmentManager(), EXIT_ASSESSMENT_DIALOG_TAG);
 	}
 }

@@ -28,13 +28,26 @@ import android.widget.ListView;
  */
 public class ImciAssessmentTreatmentsFragment extends ListFragment implements FragmentLifecycle {
     
+	private String pageKey;
     private ImciTreatmentAdapter treatmentAdapter;
     private PatientAssessment patient;
     private String classificationTitleSelected;
 	
+	public static ImciAssessmentTreatmentsFragment create(String pageKey) {
+		Bundle args = new Bundle();
+		args.putString(ARG_PAGE_KEY, pageKey);
+
+		ImciAssessmentTreatmentsFragment fragment = new ImciAssessmentTreatmentsFragment();
+		fragment.setArguments(args);
+		return fragment;
+	}
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+		Bundle args = getArguments();
+		setPageKey(args.getString(ARG_PAGE_KEY));
     }
     
     @Override
@@ -79,6 +92,15 @@ public class ImciAssessmentTreatmentsFragment extends ListFragment implements Fr
     @Override
     public void onResumeFragment(AbstractModel assessmentModel) {}
     
+	
+	public String getPageKey() {
+		return pageKey;
+	}
+
+	public void setPageKey(String pageKey) {
+		this.pageKey = pageKey;
+	}
+    
 	/**
 	 * Getter Method: getPatient()
 	 */
@@ -99,7 +121,7 @@ public class ImciAssessmentTreatmentsFragment extends ListFragment implements Fr
 	public ImciTreatmentAdapter getTreatmentAdapter() {
 		return treatmentAdapter;
 	}
-	
+
 	/**
 	 * Setter Method: setTreatmentAdapter()
 	 */

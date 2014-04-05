@@ -1,24 +1,23 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
-import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
+import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.PageFragmentCallbacks;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.ReviewFragmentCallbacks;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.StepPagerStrip;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.AssessmentPagerAdapter;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
-
-import com.google.analytics.tracking.android.GoogleAnalytics;
-import com.google.analytics.tracking.android.Tracker;
 
 /**
  * 
@@ -172,7 +171,10 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     	// if user is performing an IMCI or CCM assessment then 
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
-    	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN);
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN,
+    								(AbstractModel) getAssessmentModel(),
+    								(FragmentStatePagerAdapter) getAssessmentPagerAdapter(),
+    								getViewPager().getCurrentItem());
     }
     
 	/**
@@ -190,7 +192,10 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     	// is performing an IMCI or CCM assessment then a confirmation dialog 
     	// will be displayed to confirm that the user wishes to exit the 
     	// patient assessment
-    	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN);
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN,
+    								(AbstractModel) getAssessmentModel(),
+    								(FragmentStatePagerAdapter) getAssessmentPagerAdapter(),
+    								getViewPager().getCurrentItem());
     }
     
 	/**
@@ -204,7 +209,10 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     	// if user is performing an IMCI or CCM assessment then 
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
-    	exitAssessmentDialogHandler(AssessmentExitDialogListener.SETTINGS_SCREEN);
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.SETTINGS_SCREEN,
+    								(AbstractModel) getAssessmentModel(),
+    								(FragmentStatePagerAdapter) getAssessmentPagerAdapter(),
+    								getViewPager().getCurrentItem());
 	}
 	
 	/**
@@ -218,7 +226,10 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     	// if user is performing an IMCI or CCM assessment then 
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
-    	exitAssessmentDialogHandler(AssessmentExitDialogListener.SYNC_SCREEN);
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.SYNC_SCREEN,
+    								(AbstractModel) getAssessmentModel(),
+    								(FragmentStatePagerAdapter) getAssessmentPagerAdapter(),
+    								getViewPager().getCurrentItem());
 	}
 	
 	/**
@@ -232,7 +243,10 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     	// if user is performing an IMCI or CCM assessment then 
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
-    	exitAssessmentDialogHandler(AssessmentExitDialogListener.HELP_SCREEN);
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.HELP_SCREEN,
+    								(AbstractModel) getAssessmentModel(),
+    								(FragmentStatePagerAdapter) getAssessmentPagerAdapter(),
+    								getViewPager().getCurrentItem());
 	}
     
     /**
@@ -255,143 +269,84 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     		this.resultsActivity = resultsActivity;
     	}
     	
+		/* (non-Javadoc)
+		 * @see android.content.DialogInterface.OnClickListener#onClick(android.content.DialogInterface, int)
+		 */
 		public void onClick(DialogInterface dialog, int which) {
 			
 			Intent intent = new Intent(getApplicationContext(), resultsActivity.getClass());
+			
 			intent.putExtra(ASSESSMENT_REVIEW_ITEMS, getAssessmentModel().gatherAssessmentReviewItems());
 			startActivity(intent);
-
-	        // need to take note of the data analytics associated with the patient assessment pages
-			Tracker tracker = GoogleAnalytics.getInstance(getApplicationContext()).getDefaultTracker();
 			
-			// configure demographic information of user
-			String ageRange = "25-39";
-			String gender = "male";
-			
-			tracker.setCustomDimension(1, ageRange);
-			tracker.setCustomDimension(2, gender);
-			// Dimension value is associated and sent with this hit.
-			tracker.sendView();
-			
-			for (DataAnalytic dataAnalyticItem : getAssessmentModel().gatherPageDataAnalytics()) {
-				tracker.sendEvent(dataAnalyticItem.getCategory(), dataAnalyticItem.getAction(), 
-						dataAnalyticItem.getLabel(), dataAnalyticItem.getValue());
-			}
+			// record any data analytic events logged with any individual page views
+	        AnalyticUtilities.recordDataAnalytics(getApplicationContext(), (AbstractModel) getAssessmentModel());
 			
 			// configure the activity animation transition effect
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		}
     } // end of inner class
-    
-    
-	/**
-	 * Getter Method: getAssessmentPagerAdapter()
-	 */			
+    		
 	public AssessmentPagerAdapter getAssessmentPagerAdapter() {
 		return assessmentPagerAdapter;
 	}
-
-	/**
-	 * Setter Method: setAssessmentPagerAdapter()
-	 */   	
+	
 	public void setAssessmentPagerAdapter(AssessmentPagerAdapter assessmentPagerAdapter) {
 		this.assessmentPagerAdapter = assessmentPagerAdapter;
 	}
 	
-	/**
-	 * Getter Method: getViewPager()
-	 */		
 	public ViewPager getViewPager() {
 		return viewPager;
 	}
 
-	/**
-	 * Setter Method: setViewPager()
-	 */  
 	public void setViewPager(ViewPager viewPager) {
 		this.viewPager = viewPager;
 	}
 
-	/**
-	 * Getter Method: getStepPagerStrip()
-	 */	
 	public StepPagerStrip getStepPagerStrip() {
 		return stepPagerStrip;
 	}
 
-	/**
-	 * Setter Method: setStepPagerStrip()
-	 */  
 	public void setStepPagerStrip(StepPagerStrip stepPagerStrip) {
 		this.stepPagerStrip = stepPagerStrip;
 	}
 
-	/**
-	 * Getter Method: getAssessmentModel()
-	 */
 	public AbstractAssessmentModel getAssessmentModel() {
 		return assessmentModel;
 	}
 
-	/**
-	 * Setter Method: setAssessmentModel()
-	 */
 	public void setAssessmentModel(AbstractAssessmentModel assessmentModel) {
 		this.assessmentModel = assessmentModel;
 	}
 
-	/**
-	 * Getter Method: getNextButton()
-	 */		
     public Button getNextButton() {
 		return nextButton;
 	}
 
-	/**
-	 * Setter Method: setNextButton()
-	 */  
 	public void setNextButton(Button nextButton) {
 		this.nextButton = nextButton;
 	}
 
-	/**
-	 * Getter Method: getPrevButton()
-	 */	
 	public Button getPrevButton() {
 		return prevButton;
 	}
 
-	/**
-	 * Setter Method: setPrevButton()
-	 */  
 	public void setPrevButton(Button prevButton) {
 		this.prevButton = prevButton;
 	}
 
-	/**
-	 * Getter Method: isEditingAfterReview()
-	 */
 	public boolean isEditingAfterReview() {
 		return editingAfterReview;
 	}
 
-	/**
-	 * Setter Method: setEditingAfterReview()
-	 */
 	public void setEditingAfterReview(boolean editingAfterReview) {
 		this.editingAfterReview = editingAfterReview;
 	}
 
-	/**
-	 * Getter Method: isConsumePageSelectedEvent()
-	 */
 	public boolean isConsumePageSelectedEvent() {
 		return consumePageSelectedEvent;
 	}
 
-	/**
-	 * Setter Method: setConsumePageSelectedEvent()
-	 */
 	public void setConsumePageSelectedEvent(boolean consumePageSelectedEvent) {
 		this.consumePageSelectedEvent = consumePageSelectedEvent;
 	}

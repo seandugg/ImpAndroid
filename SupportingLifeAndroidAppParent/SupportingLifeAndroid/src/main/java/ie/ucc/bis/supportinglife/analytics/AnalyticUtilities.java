@@ -1,6 +1,11 @@
 package ie.ucc.bis.supportinglife.analytics;
 
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAnalyticsPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import android.content.Context;
+
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
 /**
  * 
  * @author timothyosullivan
@@ -60,5 +65,33 @@ public class AnalyticUtilities {
 		}
 		
 		page.getPageData().putSerializable(analtyicsDataKey, dataAnalytic);
+	}
+	
+	/**
+	 * Responsible for recording any data analytic events logged with any 
+	 * individual page views
+	 * 
+	 * @param assessmentModel 
+	 * @param context 
+	 */		
+	public static void recordDataAnalytics(Context context, AbstractModel model) {
+		// need to take note of the data analytics associated with the patient assessment pages
+		Tracker tracker = GoogleAnalytics.getInstance(context).getDefaultTracker();
+		
+		// configure demographic information of user
+		String ageRange = "25-39";
+		String gender = "male";
+		
+		tracker.setCustomDimension(1, ageRange);
+		tracker.setCustomDimension(2, gender);
+		// Dimension value is associated and sent with this hit.
+		tracker.sendView();
+		
+		for (DataAnalytic dataAnalyticItem : model.gatherPageDataAnalytics()) {
+			if (dataAnalyticItem != null) {
+				tracker.sendEvent(dataAnalyticItem.getCategory(), dataAnalyticItem.getAction(), 
+						dataAnalyticItem.getLabel(), dataAnalyticItem.getValue());
+			}
+		}
 	}
 }

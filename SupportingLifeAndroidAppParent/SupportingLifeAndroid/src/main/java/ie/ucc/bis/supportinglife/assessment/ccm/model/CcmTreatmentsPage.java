@@ -41,7 +41,7 @@ public class CcmTreatmentsPage extends AbstractAnalyticsPage {
     /**
      * Method: getDataAnalytics
      * 
-     * Define the data analytics associated with the 'review assessment' page.
+     * Define the data analytics associated with the CCM Treatments page.
      * 
      * @param dataAnalytics : ArrayList<DataAnalytic>
      */      

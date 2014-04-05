@@ -41,7 +41,7 @@ public class CcmReviewResultsPage extends AbstractAnalyticsPage {
     /**
      * Method: getDataAnalytics
      * 
-     * Define the data analytics associated with the 'review assessment results' page.
+     * Define the data analytics associated with the 'CCM review assessment results' page.
      * 
      * @param dataAnalytics : ArrayList<DataAnalytic>
      */      

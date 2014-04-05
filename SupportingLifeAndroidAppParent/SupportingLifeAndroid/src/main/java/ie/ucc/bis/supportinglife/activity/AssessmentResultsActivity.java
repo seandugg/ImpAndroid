@@ -2,6 +2,7 @@ package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAnalyticsPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 import ie.ucc.bis.supportinglife.domain.PatientAssessment;
@@ -22,7 +23,7 @@ import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -87,7 +88,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 	 * 
 	 * @author TOSullivan
 	 */
-	public static class TabsAdapter extends FragmentPagerAdapter implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
+	public static class TabsAdapter extends FragmentStatePagerAdapter implements ActionBar.TabListener, ViewPager.OnPageChangeListener {
 		
 		protected static final int CLASSIFICATION_TAB_INDEX = 1;
 		protected static final int TREATMENT_TAB_INDEX = 2;
@@ -174,7 +175,6 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 		 */
 		@Override
 		public void onPageSelected(int position) {
-			// TODO Auto-generated method stub
 			getActionBar().setSelectedNavigationItem(position);
 		}
 		 
@@ -189,13 +189,26 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 			for (int count=0; count<getTabs().size(); count++) {
 				if (getTabs().get(count) == tag) {
 					getViewPager().setCurrentItem(count);
+		
+			   		// inform respective fragment via the FragmentLifecycle interface of resumption
+		    		// event
+		    		FragmentLifecycle fragmentToShow = (FragmentLifecycle) this.getItem(count);
+		    		fragmentToShow.onResumeFragment(((AssessmentResultsActivity) getContext()).getAssessmentResultsModel());
 				}
-			}
+			}		
 		}
 		 
 		@Override
 		public void onTabUnselected(Tab tab, android.app.FragmentTransaction ft) {
-			// TODO Auto-generated method stub
+			Object tag = tab.getTag();
+			for (int count=0; count<getTabs().size(); count++) {
+				if (getTabs().get(count) == tag) {					
+		    		// inform respective fragment via the FragmentLifecycle interface of pause
+		    		// event
+		    		FragmentLifecycle fragmentToHide = (FragmentLifecycle) this.getItem(count);
+		    		fragmentToHide.onPauseFragment(((AssessmentResultsActivity) getContext()).getAssessmentResultsModel());					
+				}
+			}
 		}	
 		
 		/* 
@@ -291,7 +304,10 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
     	// if user is performing an IMCI or CCM assessment then 
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
-    	exitAssessmentDialogHandler(AssessmentExitDialogListener.SETTINGS_SCREEN);
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.SETTINGS_SCREEN,
+    								(AbstractModel) getAssessmentResultsModel(),
+    								(FragmentStatePagerAdapter) getTabsAdapter(),
+    								getViewPager().getCurrentItem());
 	}
 	
 	/**
@@ -305,7 +321,10 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
     	// if user is performing an IMCI or CCM assessment then 
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
-    	exitAssessmentDialogHandler(AssessmentExitDialogListener.SYNC_SCREEN);
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.SYNC_SCREEN,
+    								(AbstractModel) getAssessmentResultsModel(),
+    								(FragmentStatePagerAdapter) getTabsAdapter(),
+    								getViewPager().getCurrentItem());
 	}
 	
 	/**
@@ -319,7 +338,10 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
     	// if user is performing an IMCI or CCM assessment then 
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
-    //	exitAssessmentDialogHandler(AssessmentExitDialogListener.HELP_SCREEN);
+    //	exitAssessmentDialogHandler(AssessmentExitDialogListener.HELP_SCREEN,
+	//								(AbstractModel) getAssessmentResultsModel(),
+	//								(FragmentStatePagerAdapter) getTabsAdapter(),
+	//								getViewPager().getCurrentItem());
 	}
 	
 	
@@ -334,7 +356,10 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
     	// if user is performing an IMCI or CCM assessment then 
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
-    	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN);
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN,
+    								(AbstractModel) getAssessmentResultsModel(),
+    								(FragmentStatePagerAdapter) getTabsAdapter(),
+    								getViewPager().getCurrentItem());
     }
     
 	/**
@@ -352,7 +377,10 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
     	// is performing an IMCI or CCM assessment then a confirmation dialog 
     	// will be displayed to confirm that the user wishes to exit the 
     	// patient assessment
-    	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN);
+    	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN,
+									(AbstractModel) getAssessmentResultsModel(),
+									(FragmentStatePagerAdapter) getTabsAdapter(),
+									getViewPager().getCurrentItem());
     }
 
     

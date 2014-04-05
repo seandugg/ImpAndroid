@@ -1,6 +1,8 @@
 package ie.ucc.bis.supportinglife.assessment.model.listener;
 
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
+import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import android.content.DialogInterface;
 
 /**
@@ -25,17 +27,27 @@ public final class AssessmentExitDialogListener implements DialogInterface.OnCli
 	public static final int HELP_SCREEN = 4;
 
 	private SupportingLifeBaseActivity supportingLifeBaseActivity;
+	private AbstractModel model;
 	private int navigationRequest;
 
 	/**
 	 * Constructor
+	 * 
+	 * @param supportingLifeBaseActivity
+	 * @param navigationRequest
+	 * @param model 
 	 */
-	public AssessmentExitDialogListener(SupportingLifeBaseActivity supportingLifeBaseActivity, int navigationRequest) {
+	public AssessmentExitDialogListener(SupportingLifeBaseActivity supportingLifeBaseActivity, int navigationRequest, AbstractModel model) {
 		this.supportingLifeBaseActivity = supportingLifeBaseActivity;
 		this.navigationRequest = navigationRequest;
+		this.model = model;
 	}
 
 	public void onClick(DialogInterface dialog, int which) {
+		
+		// record any data analytic events logged with any individual page views
+        AnalyticUtilities.recordDataAnalytics(supportingLifeBaseActivity.getApplicationContext(), model);
+		
 		switch (navigationRequest) {
 			case DASHBOARD_SCREEN : 	supportingLifeBaseActivity.goHome(supportingLifeBaseActivity);
 										break;

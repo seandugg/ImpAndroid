@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.assessment.imci.model.ImciAssessmentResultsModel;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.ImciAssessmentTreatmentsFragment;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 import ie.ucc.bis.supportinglife.domain.PatientAssessment;
@@ -41,6 +42,8 @@ public class ImciAssessmentResultsActivity extends AssessmentResultsActivity {
 	@SuppressWarnings("unchecked")
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        setAssessmentResultsModel(new ImciAssessmentResultsModel(this));
 
         setContentView(R.layout.activity_assessment_results);
         setTitleFromActivityLabel(R.id.action_bar_title_text);

@@ -31,12 +31,25 @@ import android.widget.TextView;
  */
 public class ImciAssessmentClassificationsFragment extends ListFragment implements FragmentLifecycle {
     
+	private String pageKey;
     private ImciClassificationAdapter classificationAdapter;
     private PatientAssessment patient;
 	
+	public static ImciAssessmentClassificationsFragment create(String pageKey) {
+		Bundle args = new Bundle();
+		args.putString(ARG_PAGE_KEY, pageKey);
+
+		ImciAssessmentClassificationsFragment fragment = new ImciAssessmentClassificationsFragment();
+		fragment.setArguments(args);
+		return fragment;
+	}
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+		Bundle args = getArguments();
+		setPageKey(args.getString(ARG_PAGE_KEY));
     }
     
     @Override
@@ -75,6 +88,14 @@ public class ImciAssessmentClassificationsFragment extends ListFragment implemen
     @Override
     public void onResumeFragment(AbstractModel assessmentModel) {}
     
+	public String getPageKey() {
+		return pageKey;
+	}
+
+	public void setPageKey(String pageKey) {
+		this.pageKey = pageKey;
+	}
+
 	/**
 	 * Getter Method: getClassificationAdapter()
 	 */	

@@ -1,6 +1,5 @@
 package ie.ucc.bis.supportinglife.assessment.model;
 
-import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 
 import java.util.ArrayList;
@@ -233,27 +232,6 @@ public abstract class AbstractAssessmentModel extends AbstractModel implements M
             }
         });
 		return reviewItems;
-	}
-	
-    /**
-     * Retrieves the data analytics associated with each assessment page
-     * and each non-assessment page
-     * 
-     * @return ArrayList<DataAnalytic>
-     */
-	public ArrayList<DataAnalytic> gatherPageDataAnalytics() {
-		ArrayList<DataAnalytic> dataAnalyticItems = new ArrayList<DataAnalytic>();
-		
-		// pull back analytics from any question-focused assessment related pages
-        for (AbstractAssessmentPage assessmentPage : getAssessmentPageSequence()) {
-        	assessmentPage.getDataAnalytics(dataAnalyticItems);
-        }
-        
-		// pull back analytics from any non-assessment related pages (e.g. review page)
-        for (AbstractAnalyticsPage analyticsPage : getAnalyticsPages()) {
-        	analyticsPage.getDataAnalytics(dataAnalyticItems);
-        }        
-		return dataAnalyticItems;
 	}
 	
 	public AssessmentPageList getAssessmentPages() {

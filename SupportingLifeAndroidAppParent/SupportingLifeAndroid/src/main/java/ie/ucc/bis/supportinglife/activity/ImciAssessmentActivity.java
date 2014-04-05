@@ -157,6 +157,12 @@ public class ImciAssessmentActivity extends AssessmentActivity {
 		                        .create();
 		            }
 		        };
+		        
+				// before gathering analytic data, call the 'on pause' operation on the review fragment to make
+		        // sure the stop and duration timers for this page are accounted for
+	    		FragmentLifecycle fragmentToHide = (FragmentLifecycle) getAssessmentPagerAdapter().getItem(getViewPager().getCurrentItem());
+	    		fragmentToHide.onPauseFragment(getAssessmentModel());		        
+		        
 		        dg.show(getSupportFragmentManager(), "Submit Assessment");
 		    } else {
 		        if (isEditingAfterReview()) {

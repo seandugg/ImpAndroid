@@ -3,7 +3,11 @@ package ie.ucc.bis.supportinglife.assessment.ccm.ui;
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.activity.AssessmentResultsActivity;
 import ie.ucc.bis.supportinglife.activity.CcmAssessmentResultsActivity;
+import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.CcmClassificationAdapter;
+import ie.ucc.bis.supportinglife.assessment.ccm.model.CcmClassificationsPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAnalyticsPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.domain.PatientAssessment;
@@ -83,10 +87,36 @@ public class CcmAssessmentClassificationsFragment extends ListFragment implement
     }
     
     @Override
-    public void onPauseFragment(AbstractModel assessmentModel) {}
+    public void onPauseFragment(AbstractModel assessmentModel) {
+    	
+    	// need to use bundle to access page data
+		Bundle args = getArguments();
+		AbstractAnalyticsPage analyticsPage = (AbstractAnalyticsPage) assessmentModel.findAnalyticsPageByKey(args.getString(ARG_PAGE_KEY));
+		
+    	if (analyticsPage != null) {
+			// stop analytics timer for page
+			AnalyticUtilities.configurePageTimer(analyticsPage, CcmClassificationsPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY, AnalyticUtilities.STOP_PAGE_TIMER_ACTION);
+			// duration analytics timer for page
+			AnalyticUtilities.determineTimerDuration(analyticsPage,
+													CcmClassificationsPage.ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY,
+													AnalyticUtilities.DURATION_PAGE_TIMER_ACTION,
+													(DataAnalytic) analyticsPage.getPageData().getSerializable(CcmClassificationsPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY),
+													(DataAnalytic) analyticsPage.getPageData().getSerializable(CcmClassificationsPage.ANALTYICS_STOP_PAGE_TIMER_DATA_KEY));
+    	}
+    }
 
     @Override
-    public void onResumeFragment(AbstractModel assessmentModel) {}
+    public void onResumeFragment(AbstractModel assessmentModel) {
+    	
+    	// need to use bundle to access page data
+		Bundle args = getArguments();
+		AbstractAnalyticsPage analyticsPage = (AbstractAnalyticsPage) assessmentModel.findAnalyticsPageByKey(args.getString(ARG_PAGE_KEY));
+    
+		if (analyticsPage != null) {
+			// start analytics timer for page
+    		AnalyticUtilities.configurePageTimer(analyticsPage, CcmClassificationsPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);    		
+    	}    	
+    }
     
 	public String getPageKey() {
 		return pageKey;
