@@ -1,5 +1,6 @@
 package ie.ucc.bis.supportinglife.assessment.model;
 
+import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 
 import java.util.ArrayList;
@@ -214,6 +215,23 @@ public abstract class AbstractAssessmentModel extends AbstractModel implements M
         return flattened;
     }
 
+    /**
+     * Retrieves the data analytics associated with 
+     * each assessment page
+     * 
+     * @return ArrayList<DataAnalytic>
+     */
+	public ArrayList<DataAnalytic> gatherPageDataAnalytics() {
+		ArrayList<DataAnalytic> dataAnalyticItems = new ArrayList<DataAnalytic>();
+        
+		// pull back analytics from any assessment related pages (e.g. CCM Ask page)
+        for (AbstractAnalyticsPage analyticsPage : getAssessmentPages()) {
+        	analyticsPage.getDataAnalytics(dataAnalyticItems);
+        }        
+		return dataAnalyticItems;
+	}
+	
+    
     /**
      * Gets the current list of review items, associated with each assessment page, as
      * entered by the user

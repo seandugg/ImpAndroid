@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.analytics;
 
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAnalyticsPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import android.content.Context;
 
@@ -87,6 +88,17 @@ public class AnalyticUtilities {
 		// Dimension value is associated and sent with this hit.
 		tracker.sendView();
 		
+		// check if any events registered with a question focused assessment
+		if (model instanceof AbstractAssessmentModel) {
+			for (DataAnalytic dataAnalyticItem : ((AbstractAssessmentModel) model).gatherPageDataAnalytics()) {
+				if (dataAnalyticItem != null) {
+					tracker.sendEvent(dataAnalyticItem.getCategory(), dataAnalyticItem.getAction(), 
+							dataAnalyticItem.getLabel(), dataAnalyticItem.getValue());
+				}
+			}
+		}
+
+		// check if any events registered with a results focused assessment
 		for (DataAnalytic dataAnalyticItem : model.gatherPageDataAnalytics()) {
 			if (dataAnalyticItem != null) {
 				tracker.sendEvent(dataAnalyticItem.getCategory(), dataAnalyticItem.getAction(), 

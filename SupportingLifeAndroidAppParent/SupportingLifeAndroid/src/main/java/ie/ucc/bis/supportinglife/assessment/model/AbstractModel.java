@@ -97,8 +97,8 @@ public abstract class AbstractModel {
     }
     
     /**
-     * Retrieves the data analytics associated with each assessment page
-     * and each non-assessment page
+     * Retrieves the data analytics associated with 
+     * each non-assessment page
      * 
      * @return ArrayList<DataAnalytic>
      */
