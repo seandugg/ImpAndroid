@@ -2,7 +2,7 @@
 
 <resources>
     <!--Specify HISRC (Supporting LIFE) Analytics Tracking ID-->
-	<string name="ga_trackingId">UA-49573429-1</string>
+	<string name="ga_trackingId">UA-49828726-1</string>
  
     <!--Enable automatic activity tracking-->
 	<bool name="ga_autoActivityTracking">true</bool>

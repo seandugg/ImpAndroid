@@ -134,10 +134,10 @@ public class SyncActivity extends SupportingLifeBaseActivity {
 	private class NetworkCommunicationAsyncTask extends AsyncTask<PatientAssessmentComms, PatientAssessmentResponseComms, Boolean> {
 		
 		// PRODUCTION AWS URL
-		// private static final String AMAZON_WEB_SERVICE_URL = "http://supportinglife.elasticbeanstalk.com/patientvisits/add";
+		private static final String AMAZON_WEB_SERVICE_URL = "http://sl-technology.eu/patientvisits/add";
 		
 		// DEVELOPMENT AWS URL
-		private static final String AMAZON_WEB_SERVICE_URL = "http://supportinglife-dev.elasticbeanstalk.com/patientvisits/add";
+//		private static final String AMAZON_WEB_SERVICE_URL = "http://supportinglife-dev.elasticbeanstalk.com/patientvisits/add";
 		
 		@Override
 		protected Boolean doInBackground(PatientAssessmentComms... params) {		
