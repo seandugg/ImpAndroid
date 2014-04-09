@@ -92,11 +92,12 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 		
 		protected static final int CLASSIFICATION_TAB_INDEX = 1;
 		protected static final int TREATMENT_TAB_INDEX = 2;
-				
+		
 		private final Context context;
 		private final ActionBar actionBar;
 		private final ViewPager viewPager;
 		private final ArrayList<TabInfo> tabs = new ArrayList<TabInfo>();
+		private int currentPagePosition = 0;
 	 
 		static final class TabInfo {
 			private AbstractAnalyticsPage analyticsPage;
@@ -174,8 +175,18 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 		 * @see android.support.v4.view.ViewPager.OnPageChangeListener#onPageSelected(int)
 		 */
 		@Override
-		public void onPageSelected(int position) {
-			getActionBar().setSelectedNavigationItem(position);
+		public void onPageSelected(int newPosition) {
+    		// inform respective fragment via the FragmentLifecycle interface of pause or resumption
+    		// event
+    		FragmentLifecycle fragmentToShow = (FragmentLifecycle) this.getItem(newPosition);
+    		fragmentToShow.onResumeFragment(((AssessmentResultsActivity) getContext()).getAssessmentResultsModel());
+
+    		FragmentLifecycle fragmentToHide = (FragmentLifecycle) this.getItem(this.currentPagePosition);
+    		fragmentToHide.onPauseFragment(((AssessmentResultsActivity) getContext()).getAssessmentResultsModel());
+
+    		this.currentPagePosition = newPosition;
+    		
+			getActionBar().setSelectedNavigationItem(newPosition);
 		}
 		 
 		@Override
@@ -189,27 +200,12 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 			for (int count=0; count<getTabs().size(); count++) {
 				if (getTabs().get(count) == tag) {
 					getViewPager().setCurrentItem(count);
-		
-			   		// inform respective fragment via the FragmentLifecycle interface of resumption
-		    		// event
-		    		FragmentLifecycle fragmentToShow = (FragmentLifecycle) this.getItem(count);
-		    		fragmentToShow.onResumeFragment(((AssessmentResultsActivity) getContext()).getAssessmentResultsModel());
 				}
 			}		
 		}
 		 
 		@Override
-		public void onTabUnselected(Tab tab, android.app.FragmentTransaction ft) {
-			Object tag = tab.getTag();
-			for (int count=0; count<getTabs().size(); count++) {
-				if (getTabs().get(count) == tag) {					
-		    		// inform respective fragment via the FragmentLifecycle interface of pause
-		    		// event
-		    		FragmentLifecycle fragmentToHide = (FragmentLifecycle) this.getItem(count);
-		    		fragmentToHide.onPauseFragment(((AssessmentResultsActivity) getContext()).getAssessmentResultsModel());					
-				}
-			}
-		}	
+		public void onTabUnselected(Tab tab, android.app.FragmentTransaction ft) {}	
 		
 		/* 
 		 * Return the Fragment associated with a specified position

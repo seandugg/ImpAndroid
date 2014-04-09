@@ -222,7 +222,7 @@ public abstract class AbstractAssessmentModel extends AbstractModel implements M
      * @return ArrayList<DataAnalytic>
      */
 	public ArrayList<DataAnalytic> gatherPageDataAnalytics() {
-		ArrayList<DataAnalytic> dataAnalyticItems = new ArrayList<DataAnalytic>();
+		ArrayList<DataAnalytic> dataAnalyticItems =  super.gatherPageDataAnalytics();
         
 		// pull back analytics from any assessment related pages (e.g. CCM Ask page)
         for (AbstractAnalyticsPage analyticsPage : getAssessmentPages()) {

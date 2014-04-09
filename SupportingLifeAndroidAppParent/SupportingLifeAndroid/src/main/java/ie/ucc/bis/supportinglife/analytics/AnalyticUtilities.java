@@ -97,12 +97,13 @@ public class AnalyticUtilities {
 				}
 			}
 		}
-
-		// check if any events registered with a results focused assessment
-		for (DataAnalytic dataAnalyticItem : model.gatherPageDataAnalytics()) {
-			if (dataAnalyticItem != null) {
-				tracker.sendEvent(dataAnalyticItem.getCategory(), dataAnalyticItem.getAction(), 
-						dataAnalyticItem.getLabel(), dataAnalyticItem.getValue());
+		else if (model instanceof AbstractModel) {
+			// check if any events registered with a results focused assessment
+			for (DataAnalytic dataAnalyticItem : ((AbstractModel) model).gatherPageDataAnalytics()) {
+				if (dataAnalyticItem != null) {
+					tracker.sendEvent(dataAnalyticItem.getCategory(), dataAnalyticItem.getAction(), 
+							dataAnalyticItem.getLabel(), dataAnalyticItem.getValue());
+				}
 			}
 		}
 	}
