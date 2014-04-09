@@ -55,17 +55,20 @@ public class AnalyticUtilities {
 		DataAnalytic dataAnalytic;
 		boolean authoriseUpload = true;
 		
-		Long duration = stopTimerAnalytic.getValue() - startTimerAnalytic.getValue();
-		
-		if (page.getPageData().get(analtyicsDataKey) == null) {
-			dataAnalytic = new DataAnalytic(TIMER_CATEGORY, timerAction, analtyicsDataKey, duration, authoriseUpload);
+		// make sure a start timer and stop timer has been registered
+		if (startTimerAnalytic != null && stopTimerAnalytic != null) {
+			Long duration = stopTimerAnalytic.getValue() - startTimerAnalytic.getValue();
+			
+			if (page.getPageData().get(analtyicsDataKey) == null) {
+				dataAnalytic = new DataAnalytic(TIMER_CATEGORY, timerAction, analtyicsDataKey, duration, authoriseUpload);
+			}
+			else {
+				dataAnalytic = (DataAnalytic) page.getPageData().get(analtyicsDataKey);
+				dataAnalytic.setValue(dataAnalytic.getValue() + duration);
+			}
+			
+			page.getPageData().putSerializable(analtyicsDataKey, dataAnalytic);
 		}
-		else {
-			dataAnalytic = (DataAnalytic) page.getPageData().get(analtyicsDataKey);
-			dataAnalytic.setValue(dataAnalytic.getValue() + duration);
-		}
-		
-		page.getPageData().putSerializable(analtyicsDataKey, dataAnalytic);
 	}
 	
 	/**
