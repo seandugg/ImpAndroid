@@ -138,10 +138,10 @@ public class SyncActivity extends SupportingLifeBaseActivity {
 		
 		// direct ec2 name appears quicker for mobile device to resolve the domain name (i.e. sl-technology.eu) when
 		// performing sync operation.
-	//	private static final String AMAZON_WEB_SERVICE_URL = "http://supportinglife.elasticbeanstalk.com/patientvisits/add";
+		private static final String AMAZON_WEB_SERVICE_URL = "http://supportinglife.elasticbeanstalk.com/patientvisits/add";
 		
 		// DEVELOPMENT AWS URL
-		private static final String AMAZON_WEB_SERVICE_URL = "http://143.239.97.70:8080/SupportingLife/patientvisits/add";
+	//	private static final String AMAZON_WEB_SERVICE_URL = "http://143.239.97.70:8080/SupportingLife/patientvisits/add";
 
 		
 		@Override
