@@ -15,19 +15,20 @@ import android.widget.DatePicker;
  */
 
 public class DateDialogSetListener implements OnDateSetListener {
-
-	public static final String DATE_TIME_CUSTOM_FORMAT = "dd MMMM yyyy";
+	
 	public static final Locale LOCALE = Locale.UK;
 	
 	private DatePickerDialogFragment datePickerDialogFragment;
+	private String slDateFormat;
 	
 	/**
 	 * Constructor
 	 * 
 	 * @param dateEditText
 	 */
-	public DateDialogSetListener(DatePickerDialogFragment datePickerDialogFragment) {
+	public DateDialogSetListener(DatePickerDialogFragment datePickerDialogFragment, String slDateFormat) {
 		setDatePickerDialogFragment(datePickerDialogFragment);
+		setSlDateFormat(slDateFormat);
 	}
 
 
@@ -35,7 +36,7 @@ public class DateDialogSetListener implements OnDateSetListener {
 
 		final Calendar calendar = Calendar.getInstance();
 		calendar.set(year, monthOfYear, dayOfMonth);
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_TIME_CUSTOM_FORMAT, LOCALE);
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(getSlDateFormat(), LOCALE);
 				
 		String dateString = simpleDateFormat.format(calendar.getTime());
 		
@@ -61,6 +62,16 @@ public class DateDialogSetListener implements OnDateSetListener {
 	 */
 	public void setDatePickerDialogFragment(DatePickerDialogFragment datePickerDialogFragment) {
 		this.datePickerDialogFragment = datePickerDialogFragment;
+	}
+
+
+	public String getSlDateFormat() {
+		return slDateFormat;
+	}
+
+
+	public void setSlDateFormat(String slDateFormat) {
+		this.slDateFormat = slDateFormat;
 	}
 
 }

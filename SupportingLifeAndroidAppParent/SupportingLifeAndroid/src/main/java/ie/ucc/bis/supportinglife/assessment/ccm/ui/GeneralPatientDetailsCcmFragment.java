@@ -228,7 +228,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         getTodayDateTextView().addTextChangedListener(
         		new AssessmentWizardTextWatcher(getGeneralPatientDetailsCcmPage(), 
         				GeneralPatientDetailsCcmPage.TODAY_DATE_DATA_KEY));
-        getTodayDateTextView().setText(DateUtilities.getTodaysDate());
+        getTodayDateTextView().setText(new DateUtilities().getTodaysDate());
         
         // Health Surveillance Assistant (HSA)
         getHsaEditText().addTextChangedListener(
@@ -341,7 +341,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
 		Bundle args = getArguments();
 		AbstractAssessmentPage assessmentPage = (AbstractAssessmentPage) ((AbstractAssessmentModel) assessmentModel).findAssessmentPageByKey(args.getString(ARG_PAGE_KEY));
     
-		if (assessmentPage != null) {
+		if (assessmentPage != null) {			
 			// start analytics timer for page
     		AnalyticUtilities.configurePageTimer(assessmentPage, GeneralPatientDetailsCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);    		
     	}

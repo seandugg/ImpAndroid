@@ -2,6 +2,7 @@ package ie.ucc.bis.supportinglife.dao;
 
 import ie.ucc.bis.supportinglife.communication.PatientAssessmentComms;
 import ie.ucc.bis.supportinglife.domain.PatientAssessment;
+import ie.ucc.bis.supportinglife.helper.DateHandlerUtils;
 import ie.ucc.bis.supportinglife.service.SupportingLifeService;
 import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
 
@@ -126,8 +127,10 @@ public class PatientAssessmentDaoImpl implements PatientAssessmentDao {
 		
 	
 		try {
-			values.put(PatientAssessmentTable.COLUMN_BIRTH_DATE, service.getDatabaseHandler().formatDate(patientToAdd.getBirthDate()));	
-			values.put(PatientAssessmentTable.COLUMN_VISIT_DATE, service.getDatabaseHandler().formatDate(patientToAdd.getVisitDate()));
+			values.put(PatientAssessmentTable.COLUMN_BIRTH_DATE, 
+					DateHandlerUtils.formatDate(patientToAdd.getBirthDate(), DateHandlerUtils.BIRTH_DATE_CUSTOM_FORMAT));	
+			values.put(PatientAssessmentTable.COLUMN_VISIT_DATE, 
+					DateHandlerUtils.formatDate(patientToAdd.getVisitDate(), DateHandlerUtils.DATE_TIME_CUSTOM_FORMAT));
 		} catch (ParseException e) {
 			LoggerUtils.i(LOG_TAG, "Parse Exception thrown whilst extracting patient assessment dates");
 			e.printStackTrace();

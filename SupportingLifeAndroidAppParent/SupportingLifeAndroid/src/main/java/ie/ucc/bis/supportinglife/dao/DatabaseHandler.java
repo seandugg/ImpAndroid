@@ -1,11 +1,5 @@
 package ie.ucc.bis.supportinglife.dao;
 
-import ie.ucc.bis.supportinglife.assessment.model.listener.DateDialogSetListener;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -39,25 +33,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		ClassificationTable.onUpgrade(database, oldVersion, newVersion);
 		// create treatment table
 		TreatmentTable.onUpgrade(database, oldVersion, newVersion);
-	}
-	
-	/**
-	 * Convert a Date instance value to it's  
-	 * string value equivalent
-	 * 
-	 * @param Date
-	 * 
-	 * @return Date
-	 * @throws ParseException 
-	 */
-	public String formatDate(Date date) throws ParseException {
-		if (date != null) {
-			String dateString = new SimpleDateFormat(DateDialogSetListener.DATE_TIME_CUSTOM_FORMAT, DateDialogSetListener.LOCALE)
-										.format(date);
-			return dateString;
-		}
-		else {
-			return null;
-		}
 	}
 }

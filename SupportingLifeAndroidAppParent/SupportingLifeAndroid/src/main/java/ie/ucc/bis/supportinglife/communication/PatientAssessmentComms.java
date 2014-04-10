@@ -16,7 +16,8 @@ import java.util.Map;
 
 public class PatientAssessmentComms implements Serializable {
 
-	public static final String DATE_TIME_CUSTOM_FORMAT = "dd MMMM yyyy";
+	public static final String BIRTH_DATE_CUSTOM_FORMAT = "dd MMMM yyyy";
+	public static final String DATE_TIME_CUSTOM_FORMAT = "dd MMMM yyyy HH:mm";
 	public static final Locale LOCALE = Locale.UK;
 
 	/**
@@ -132,8 +133,8 @@ public class PatientAssessmentComms implements Serializable {
 		setCannotTreatProblemDetails(cannotTreatProblemDetails);
 
 		try {
-			setBirthDate(parseDate(birthDate));
-			setVisitDate(parseDate(visitDate));
+			setBirthDate(parseDate(birthDate, BIRTH_DATE_CUSTOM_FORMAT));
+			setVisitDate(parseDate(visitDate, DATE_TIME_CUSTOM_FORMAT));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -142,9 +143,9 @@ public class PatientAssessmentComms implements Serializable {
 		setTreatments(new HashMap<String, String>());
 	}
 
-	public Date parseDate(String dateValue) throws ParseException {
+	public Date parseDate(String dateValue, String slDateFormat) throws ParseException {
 		if (dateValue != null) {
-			Date dateInstance = new SimpleDateFormat(DATE_TIME_CUSTOM_FORMAT, LOCALE)
+			Date dateInstance = new SimpleDateFormat(slDateFormat, LOCALE)
 			.parse(dateValue);
 			return dateInstance;
 		}

@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.ui.utilities;
 
 import ie.ucc.bis.supportinglife.assessment.model.listener.DateDialogSetListener;
+import ie.ucc.bis.supportinglife.helper.DateHandlerUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,7 +30,7 @@ public class DateUtilities {
 	 * @param latestDate
 	 * @return
 	 */
-	public static int getDiffMonths(Date earliestDate, Date latestDate) {
+	public int getDiffMonths(Date earliestDate, Date latestDate) {
 	    Calendar earliestCalendar = getCalendar(earliestDate);
 	    Calendar latestCalendar = getCalendar(latestDate);
 	    
@@ -52,7 +53,7 @@ public class DateUtilities {
 	 * @param latestDate
 	 * @return
 	 */
-	public static int getDiffDays(Date earliestDate, Date latestDate) {
+	public int getDiffDays(Date earliestDate, Date latestDate) {
 		return Long.valueOf((latestDate.getTime() - earliestDate.getTime())
 				/ (MILLISECONDS_IN_A_SECOND * SECONDS_IN_A_MINUTE * MINUTES_IN_A_HOUR * HOURS_IN_A_DAY)).intValue();
 	}	
@@ -63,14 +64,14 @@ public class DateUtilities {
 	 * @param years
 	 * @return long - TimeStamp in milliseconds
 	 */
-	public static long retrieveTimeStampWithYearsSubtracted(int years) {
+	public long retrieveTimeStampWithYearsSubtracted(int years) {
 	    Calendar cal = Calendar.getInstance(Locale.UK);
 	    // convert years to negative value
 	    cal.add(Calendar.YEAR, (years * -1));
 	    return cal.getTimeInMillis();
 	}
 	
-	public static Calendar getCalendar(Date date) {
+	public Calendar getCalendar(Date date) {
 	    Calendar cal = Calendar.getInstance(Locale.UK);
 	    cal.setTime(date);
 	    return cal;
@@ -81,9 +82,9 @@ public class DateUtilities {
 	 * 
 	 * @return String - TimeStamp in milliseconds
 	 */
-	public static String getTodaysDate() {
+	public String getTodaysDate() {
 		Calendar cal = Calendar.getInstance(Locale.UK);
-		SimpleDateFormat dateFormat = new SimpleDateFormat(DateDialogSetListener.DATE_TIME_CUSTOM_FORMAT, DateDialogSetListener.LOCALE);
+		SimpleDateFormat dateFormat = new SimpleDateFormat(DateHandlerUtils.DATE_TIME_CUSTOM_FORMAT, DateDialogSetListener.LOCALE);
 				
 		return dateFormat.format(cal.getTime());
 	}

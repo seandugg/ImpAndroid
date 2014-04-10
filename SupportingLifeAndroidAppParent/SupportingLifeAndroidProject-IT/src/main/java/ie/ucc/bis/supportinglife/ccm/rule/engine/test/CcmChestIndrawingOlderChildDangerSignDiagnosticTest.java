@@ -5,6 +5,7 @@ import ie.ucc.bis.supportinglife.assessment.ccm.model.review.ChestIndrawingDosag
 import ie.ucc.bis.supportinglife.assessment.model.listener.DateDialogSetListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 import ie.ucc.bis.supportinglife.ccm.rule.engine.utilities.CcmRuleEngineUtilities;
+import ie.ucc.bis.supportinglife.helper.DateHandlerUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -67,7 +68,7 @@ public class CcmChestIndrawingOlderChildDangerSignDiagnosticTest extends CcmDiag
     	// 2. Patient Age is older than 12 months and younger than 5 years
     	Calendar cal = Calendar.getInstance(Locale.UK);
 	    cal.add(Calendar.YEAR, (PATIENT_AGE_IN_YEARS * -1));
-    	String birthDate = new SimpleDateFormat(DateDialogSetListener.DATE_TIME_CUSTOM_FORMAT, DateDialogSetListener.LOCALE).format(cal.getTime());
+    	String birthDate = new SimpleDateFormat(DateHandlerUtils.BIRTH_DATE_CUSTOM_FORMAT, DateDialogSetListener.LOCALE).format(cal.getTime());
     	
     	reviewItemLabel = getResources().getString(R.string.ccm_general_patient_details_review_date_of_birth);
     	reviewItemSymptomId = getResources().getString(R.string.ccm_general_patient_details_date_of_birth_symptom_id);

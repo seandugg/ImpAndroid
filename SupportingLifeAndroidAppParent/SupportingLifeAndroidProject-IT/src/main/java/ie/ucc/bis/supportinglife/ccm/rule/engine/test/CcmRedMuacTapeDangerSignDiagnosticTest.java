@@ -5,6 +5,7 @@ import ie.ucc.bis.supportinglife.assessment.ccm.model.review.RedMuacTapeCcmRevie
 import ie.ucc.bis.supportinglife.assessment.model.listener.DateDialogSetListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 import ie.ucc.bis.supportinglife.ccm.rule.engine.utilities.CcmRuleEngineUtilities;
+import ie.ucc.bis.supportinglife.helper.DateHandlerUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -59,7 +60,7 @@ public class CcmRedMuacTapeDangerSignDiagnosticTest extends CcmDiagnosticRuleEng
     	// 1. Patient Age older than 6 months and younger than 5 years
     	Calendar cal = Calendar.getInstance(Locale.UK);
 	    cal.add(Calendar.MONTH, (PATIENT_AGE_IN_MONTHS * -1));
-    	String birthDate = new SimpleDateFormat(DateDialogSetListener.DATE_TIME_CUSTOM_FORMAT, DateDialogSetListener.LOCALE).format(cal.getTime());
+    	String birthDate = new SimpleDateFormat(DateHandlerUtils.BIRTH_DATE_CUSTOM_FORMAT, DateDialogSetListener.LOCALE).format(cal.getTime());
     	
     	String reviewItemLabel = getResources().getString(R.string.ccm_general_patient_details_review_date_of_birth);
     	String reviewItemSymptomId = getResources().getString(R.string.ccm_general_patient_details_date_of_birth_symptom_id);

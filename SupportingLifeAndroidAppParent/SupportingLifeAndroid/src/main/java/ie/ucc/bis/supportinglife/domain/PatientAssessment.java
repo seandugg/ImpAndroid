@@ -124,8 +124,8 @@ public class PatientAssessment implements Serializable {
 		setCannotTreatProblemDetails(cannotTreatProblemDetails);
 				
 		try {
-			setBirthDate(DateHandlerUtils.parseDate(birthDate));
-			setVisitDate(DateHandlerUtils.parseDate(visitDate));
+			setBirthDate(DateHandlerUtils.parseDate(birthDate, DateHandlerUtils.BIRTH_DATE_CUSTOM_FORMAT));
+			setVisitDate(DateHandlerUtils.parseDate(visitDate, DateHandlerUtils.DATE_TIME_CUSTOM_FORMAT));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

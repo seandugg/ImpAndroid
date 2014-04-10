@@ -1,7 +1,6 @@
 package ie.ucc.bis.supportinglife.helper;
 
 import ie.ucc.bis.supportinglife.R;
-import ie.ucc.bis.supportinglife.assessment.model.listener.DateDialogSetListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 import ie.ucc.bis.supportinglife.domain.PatientAssessment;
 
@@ -83,7 +82,8 @@ public class PatientHandlerUtils {
 		patient.setChildSurname(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_child_surname_id))));
 
 		// birthdate
-		patient.setBirthDate(assessDatePatientSymptom(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_date_of_birth_id))));
+		patient.setBirthDate(assessDatePatientSymptom(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_date_of_birth_id)),
+				DateHandlerUtils.BIRTH_DATE_CUSTOM_FORMAT));
 
 		// gender
 		patient.setGender(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_gender_id))));
@@ -101,7 +101,8 @@ public class PatientHandlerUtils {
 		patient.setVillageTa(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_village_ta_id))));
 
 		// visit date
-		patient.setVisitDate(assessDatePatientSymptom(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_visit_date_id))));
+		patient.setVisitDate(assessDatePatientSymptom(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_visit_date_id)),
+				DateHandlerUtils.DATE_TIME_CUSTOM_FORMAT));
 	}
 
 	
@@ -249,9 +250,9 @@ public class PatientHandlerUtils {
 	 * @return Date
 	 * @throws ParseException 
 	 */
-	public Date assessDatePatientSymptom(String dateValue) throws ParseException {
+	public Date assessDatePatientSymptom(String dateValue, String slDateFormat) throws ParseException {
 		if (dateValue != null) {
-			Date dateInstance = new SimpleDateFormat(DateDialogSetListener.DATE_TIME_CUSTOM_FORMAT, LOCALE)
+			Date dateInstance = new SimpleDateFormat(slDateFormat, LOCALE)
 										.parse(dateValue);
 			return dateInstance;
 		}
