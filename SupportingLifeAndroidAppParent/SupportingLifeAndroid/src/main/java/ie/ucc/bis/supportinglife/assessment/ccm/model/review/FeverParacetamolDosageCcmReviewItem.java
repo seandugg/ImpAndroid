@@ -3,7 +3,6 @@ package ie.ucc.bis.supportinglife.assessment.ccm.model.review;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DateDialogSetListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
-import ie.ucc.bis.supportinglife.helper.DateHandlerUtils;
 import ie.ucc.bis.supportinglife.ui.utilities.DateUtilities;
 
 import java.io.Serializable;
@@ -74,10 +73,10 @@ public class FeverParacetamolDosageCcmReviewItem extends ReviewItem implements S
     	ReviewItem birthDateReviewItem = getDependees().get(0);
     	if (birthDateReviewItem.getDisplayValue() != null) {	
 			try {
-				Date birthDate = new SimpleDateFormat(DateHandlerUtils.BIRTH_DATE_CUSTOM_FORMAT, DateDialogSetListener.LOCALE).parse(birthDateReviewItem.getDisplayValue());
+				Date birthDate = new SimpleDateFormat(DateUtilities.DATE_CUSTOM_FORMAT, DateDialogSetListener.LOCALE).parse(birthDateReviewItem.getDisplayValue());
 				Calendar cal = Calendar.getInstance();
 					
-				int monthsDifference = new DateUtilities().getDiffMonths(birthDate, cal.getTime());
+				int monthsDifference = DateUtilities.getDiffMonths(birthDate, cal.getTime());
 
 				/* Rule:
 				 * Age 2 months up to 3 years: 1/4 tablet (total 3 tabs)

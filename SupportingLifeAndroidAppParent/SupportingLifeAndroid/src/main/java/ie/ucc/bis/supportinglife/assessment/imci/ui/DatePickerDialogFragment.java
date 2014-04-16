@@ -4,7 +4,6 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DateDialogSetListener;
-import ie.ucc.bis.supportinglife.helper.DateHandlerUtils;
 import ie.ucc.bis.supportinglife.ui.utilities.DateUtilities;
 
 import java.text.ParseException;
@@ -57,7 +56,7 @@ public class DatePickerDialogFragment extends DialogFragment implements Fragment
 		String datePreviouslyChosen = getPage().getPageData().getString(getDataKey());
 		if (datePreviouslyChosen != null) {
 			try {
-				Date previousDate = new SimpleDateFormat(DateHandlerUtils.BIRTH_DATE_CUSTOM_FORMAT, DateDialogSetListener.LOCALE).parse(datePreviouslyChosen);
+				Date previousDate = new SimpleDateFormat(DateUtilities.DATE_CUSTOM_FORMAT, DateDialogSetListener.LOCALE).parse(datePreviouslyChosen);
 				cal.setTime(previousDate);	
 			} catch (ParseException e) {
 				e.printStackTrace();
@@ -70,12 +69,12 @@ public class DatePickerDialogFragment extends DialogFragment implements Fragment
 
 		// Create a new instance of DatePickerDialog and return it
 		DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), 
-				new DateDialogSetListener(this, DateHandlerUtils.BIRTH_DATE_CUSTOM_FORMAT), year, month, day);
+				new DateDialogSetListener(this, DateUtilities.DATE_CUSTOM_FORMAT), year, month, day);
 		
 		// add constraint to date picker such that the user cannot pick a date further ahead in time than today
 		datePickerDialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
 		// add constraint to date picker such that the user cannot pick a date more than 5 years ago
-		datePickerDialog.getDatePicker().setMinDate(new DateUtilities().retrieveTimeStampWithYearsSubtracted(MAX_AGE_OF_PATIENT));
+		datePickerDialog.getDatePicker().setMinDate(DateUtilities.retrieveTimeStampWithYearsSubtracted(MAX_AGE_OF_PATIENT));
 		
 		return datePickerDialog;
 	}

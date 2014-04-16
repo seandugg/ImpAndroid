@@ -6,7 +6,7 @@ import ie.ucc.bis.supportinglife.assessment.model.listener.DateDialogSetListener
 import ie.ucc.bis.supportinglife.assessment.model.review.FastBreathingReviewItem;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 import ie.ucc.bis.supportinglife.ccm.rule.engine.utilities.CcmRuleEngineUtilities;
-import ie.ucc.bis.supportinglife.helper.DateHandlerUtils;
+import ie.ucc.bis.supportinglife.ui.utilities.DateUtilities;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -66,7 +66,7 @@ public class CcmFastBreathingYoungerChildSickSignDiagnosticTest extends CcmDiagn
     	// 1. Patient Age is older than 2 months and younger than 12 months
     	Calendar cal = Calendar.getInstance(Locale.UK);
 	    cal.add(Calendar.MONTH, (PATIENT_AGE_IN_MONTHS * -1));
-    	String birthDate = new SimpleDateFormat(DateHandlerUtils.BIRTH_DATE_CUSTOM_FORMAT, DateDialogSetListener.LOCALE).format(cal.getTime());
+    	String birthDate = new SimpleDateFormat(DateUtilities.DATE_CUSTOM_FORMAT, DateDialogSetListener.LOCALE).format(cal.getTime());
     	
     	String reviewItemLabel = getResources().getString(R.string.ccm_general_patient_details_review_date_of_birth);
     	String reviewItemSymptomId = getResources().getString(R.string.ccm_general_patient_details_date_of_birth_symptom_id);

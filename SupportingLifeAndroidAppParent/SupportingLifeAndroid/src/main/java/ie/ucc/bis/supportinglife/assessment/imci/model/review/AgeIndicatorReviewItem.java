@@ -59,7 +59,7 @@ public class AgeIndicatorReviewItem extends ReviewItem implements Serializable {
 					Date birthDate = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH).parse(getDisplayValue());
 					Calendar cal = Calendar.getInstance();
 					
-					int daysDifference = new DateUtilities().getDiffDays(birthDate, cal.getTime());
+					int daysDifference = DateUtilities.getDiffDays(birthDate, cal.getTime());
 
 					if (daysDifference >= TWO_YEARS_IN_DAYS) {
 						setSymptomValue(Response.YES.name());

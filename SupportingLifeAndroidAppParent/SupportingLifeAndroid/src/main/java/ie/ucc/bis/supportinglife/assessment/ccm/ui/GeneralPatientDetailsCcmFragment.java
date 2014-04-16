@@ -228,7 +228,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         getTodayDateTextView().addTextChangedListener(
         		new AssessmentWizardTextWatcher(getGeneralPatientDetailsCcmPage(), 
         				GeneralPatientDetailsCcmPage.TODAY_DATE_DATA_KEY));
-        getTodayDateTextView().setText(new DateUtilities().getTodaysDate());
+        getTodayDateTextView().setText(DateUtilities.getTodaysDate());
         
         // Health Surveillance Assistant (HSA)
         getHsaEditText().addTextChangedListener(

@@ -6,7 +6,7 @@ import ie.ucc.bis.supportinglife.assessment.ccm.model.review.FeverLaDosageCcmRev
 import ie.ucc.bis.supportinglife.assessment.model.listener.DateDialogSetListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 import ie.ucc.bis.supportinglife.ccm.rule.engine.utilities.CcmRuleEngineUtilities;
-import ie.ucc.bis.supportinglife.helper.DateHandlerUtils;
+import ie.ucc.bis.supportinglife.ui.utilities.DateUtilities;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -75,7 +75,7 @@ public class CcmFeverYoungerChildDangerSignDiagnosticTest extends CcmDiagnosticR
     	// 3. Patient Age is older than 5 months and younger than 3 years
     	Calendar cal = Calendar.getInstance(Locale.UK);
 	    cal.add(Calendar.YEAR, (PATIENT_AGE_IN_YEARS * -1));
-    	String birthDate = new SimpleDateFormat(DateHandlerUtils.BIRTH_DATE_CUSTOM_FORMAT, DateDialogSetListener.LOCALE).format(cal.getTime());
+    	String birthDate = new SimpleDateFormat(DateUtilities.DATE_CUSTOM_FORMAT, DateDialogSetListener.LOCALE).format(cal.getTime());
     	
     	reviewItemLabel = getResources().getString(R.string.ccm_general_patient_details_review_date_of_birth);
     	reviewItemSymptomId = getResources().getString(R.string.ccm_general_patient_details_date_of_birth_symptom_id);
