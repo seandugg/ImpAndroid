@@ -7,7 +7,7 @@ import ie.ucc.bis.supportinglife.domain.PatientAssessment;
 import java.util.List;
 
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabase;
 
 /**
  * Service Interface layer for coordinating
@@ -31,7 +31,7 @@ public interface SupportingLifeServiceInf {
 	/*******************************************************************************/
 	/***********************GENERAL DATABASE MANAGEMENT*****************************/
 	/*******************************************************************************/
-	public void open() throws SQLException;
+	public void open(String dbKey) throws SQLException;
 	public void close();
 	public SQLiteDatabase getDatabase();
 	public void setDatabase(SQLiteDatabase database);

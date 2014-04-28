@@ -54,6 +54,8 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	public static final String EXIT_ASSESSMENT_DIALOG_TAG = "Exit Assessment";
 	public static final String LANGUAGE_SELECTION_KEY = "language_selection";
 	
+	protected static final String TEMP_DB_KEY = "TEST_DB_KEY";
+	
 	/**
 	 * OnCreate method is called when the activity is first created.
 	 * 

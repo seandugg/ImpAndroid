@@ -1,6 +1,6 @@
 package ie.ucc.bis.supportinglife.dao;
 
-import android.database.sqlite.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabase;
 import android.util.Log;
 
 /**

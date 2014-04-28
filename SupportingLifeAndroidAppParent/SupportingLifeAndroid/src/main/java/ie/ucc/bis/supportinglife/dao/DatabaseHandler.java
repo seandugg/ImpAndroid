@@ -1,8 +1,8 @@
 package ie.ucc.bis.supportinglife.dao;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteOpenHelper;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 	
@@ -15,7 +15,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	
 	
 	@Override
-	public void onCreate(SQLiteDatabase database) {
+	public void onCreate(SQLiteDatabase database) {		
 		// create patient assessment table
 		PatientAssessmentTable.onCreate(database);
 		// create classification table

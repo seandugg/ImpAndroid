@@ -16,7 +16,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteDatabase;
 
 /**
  * Service Interface layer for coordinating
@@ -43,7 +43,10 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 	 * 
 	 * @param context
 	 */
-	public SupportingLifeService(Context context) {
+	public SupportingLifeService(Context context) {	
+		// the call to loadlibs for DB must occur before any other database operation
+		SQLiteDatabase.loadLibs(context);
+		
 		setDatabaseHandler(new DatabaseHandler(context));
 		setPatientAssessmentDao(new PatientAssessmentDaoImpl());
 		setClassificationDao(new ClassificationDaoImpl());
@@ -124,8 +127,8 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 	/***********************GENERAL DATABASE MANAGEMENT*****************************/
 	/*******************************************************************************/
 	@Override
-	public void open() throws SQLException {
-		setDatabase(databaseHandler.getWritableDatabase());
+	public void open(String dbKey) throws SQLException {
+		setDatabase(databaseHandler.getWritableDatabase(dbKey));
 	}
 
 	@Override

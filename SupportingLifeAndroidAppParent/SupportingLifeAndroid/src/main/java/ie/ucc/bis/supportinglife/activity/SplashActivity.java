@@ -34,7 +34,7 @@ public class SplashActivity extends SupportingLifeBaseActivity {
 		setContentView(R.layout.activity_splash);
 
 		// thread for displaying the SplashScreen
-		splashThread = new Thread(new SplashScreenRunnable(this));
+		splashThread = new Thread(new SplashScreenRunnable());
 		splashThread.start();
 	} // end of onCreate(..) method
 
@@ -61,11 +61,8 @@ public class SplashActivity extends SupportingLifeBaseActivity {
 	 * 
 	 */
 	private class SplashScreenRunnable implements Runnable {
-		private SupportingLifeBaseActivity activity;
 		
-		public SplashScreenRunnable(SupportingLifeBaseActivity activity) {
-			this.activity = activity;
-		}
+		public SplashScreenRunnable() {}
 		
 		@Override
 		public void run() {
@@ -78,16 +75,6 @@ public class SplashActivity extends SupportingLifeBaseActivity {
 				startActivity(new Intent(getApplicationContext(), HomeActivity.class));
 				// configure the activity animation transition effect
 				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-	
-				// parse IMCI xml-based rules into memory
-//				ClassificationRuleEngine classificationRuleEngine = new ClassificationRuleEngine();
-//				TreatmentRuleEngine treatmentRuleEngine = new TreatmentRuleEngine();
-//				classificationRuleEngine.readImciClassificationRules(activity);
-//				treatmentRuleEngine.readImciTreatmentRules(activity);
-				
-				// parse CCM xml-based rules into memory
-//				classificationRuleEngine.readCcmClassificationRules(activity);
-//				treatmentRuleEngine.readCcmTreatmentRules(activity);
 				
 				// call finish on SplashActivity to prevent user from using
 				// back button to navigate back to Splash screen

@@ -61,7 +61,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
         
 		// initialise SupportingLifeService
         setSupportingLifeService(new SupportingLifeService(this));
-        getSupportingLifeService().open();
+        getSupportingLifeService().open(SupportingLifeBaseActivity.TEMP_DB_KEY);
 	}
 	
 
@@ -382,7 +382,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
     
     @Override
     protected void onResume() {
-    	getSupportingLifeService().open();
+    	getSupportingLifeService().open(SupportingLifeBaseActivity.TEMP_DB_KEY);
     	super.onResume();
     }
 

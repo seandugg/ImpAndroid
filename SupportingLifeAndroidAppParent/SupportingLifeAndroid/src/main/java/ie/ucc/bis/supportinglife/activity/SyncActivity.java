@@ -73,7 +73,7 @@ public class SyncActivity extends SupportingLifeBaseActivity {
 		
 		// initialise SupportingLifeService
         setSupportingLifeService(new SupportingLifeService(this));
-        getSupportingLifeService().open();
+        getSupportingLifeService().open(SupportingLifeBaseActivity.TEMP_DB_KEY);
         
 		setSyncRecordsRequiredTextView((TextView) findViewById(R.id.sync_records_outstanding));
         // determine the number of records requiring sync
@@ -121,7 +121,7 @@ public class SyncActivity extends SupportingLifeBaseActivity {
 	
     @Override
     protected void onResume() {
-    	getSupportingLifeService().open();
+    	getSupportingLifeService().open(SupportingLifeBaseActivity.TEMP_DB_KEY);
     	super.onResume();
     }
     
