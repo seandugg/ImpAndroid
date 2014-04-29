@@ -2,9 +2,7 @@ package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 
 /**
@@ -26,6 +24,7 @@ public class UserSelectionActivity extends SupportingLifeBaseActivity {
 	 * e.g. create views, bind data to lists, etc.
 	 * 
 	 * The method also provides a Bundle parameter containing the activity's
+	 * 
 	 * previously frozen state (if there was one).
 	 * 
 	 * This method is always followed by onStart().
@@ -34,7 +33,7 @@ public class UserSelectionActivity extends SupportingLifeBaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.activity_user_selection);
+		setContentView(R.layout.activity_user_selection);
 	}
 	
 	/**
