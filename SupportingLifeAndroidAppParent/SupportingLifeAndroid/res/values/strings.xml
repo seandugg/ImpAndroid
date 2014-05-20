@@ -581,6 +581,8 @@
     <!-- ============================================================ -->
     <!-- USER SELECTION SCREEN -->
     <!-- ============================================================ -->
+    <string name="user_selection_registration_title_text">User Registration</string>
+    <string name="user_selection_registration_prompt_text">Please select an option:</string>
 	<string name="user_selection_guest_user_button_text">Guest User</string>
 	<string name="user_selection_hsa_user_button_text">HSA User</string>
 	<string name="guest_user_icon_font">&#xf007;</string>
