@@ -142,5 +142,6 @@
 	<color name="Navy">#000080</color>
 	<color name="Black">#000000</color>
 	<color name="SupportingLifeGreen">#077204</color>
+	<color name="SupportingLifeButtonHighlight">#43BDEB</color>
 </resources>    
     

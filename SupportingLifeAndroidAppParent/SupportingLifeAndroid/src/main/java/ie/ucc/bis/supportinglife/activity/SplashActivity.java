@@ -72,7 +72,7 @@ public class SplashActivity extends SupportingLifeBaseActivity {
 				} // end of sync
 			} catch (InterruptedException interruptExp) {}
 			finally {
-				startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+				startActivity(new Intent(getApplicationContext(), UserSelectionActivity.class));
 				// configure the activity animation transition effect
 				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 				

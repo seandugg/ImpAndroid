@@ -577,10 +577,15 @@
     <!-- SPLASH SCREEN -->
     <!-- ============================================================ -->
 	<string name="splash_screen_image">Supporting LIFE Splash Screen</string>
+	
+    <!-- ============================================================ -->
+    <!-- USER SELECTION SCREEN -->
+    <!-- ============================================================ -->
+	<string name="user_selection_guest_user_button_text">Guest User</string>
+	<string name="user_selection_hsa_user_button_text">HSA User</string>
+	<string name="guest_user_icon_font">&#xf007;</string>
+	<string name="hsa_user_icon_font">&#xf0f0;</string>
+	
     
-    <!-- START: Register Patient Details Screen -->
-	<string name="first_name_label">First Name:</string>
-	<string name="surname_label">Surname:</string>
-	<string name="button_send">Submit</string>
-    <!-- END: Register Patient Details Screen -->
+
 </resources>

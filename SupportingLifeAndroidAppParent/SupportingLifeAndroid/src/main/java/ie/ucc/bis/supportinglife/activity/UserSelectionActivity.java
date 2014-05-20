@@ -2,8 +2,10 @@ package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 /**
  * Activity responsible for facilitating user selection on initial launch
@@ -16,6 +18,9 @@ import android.view.View;
  */
 
 public class UserSelectionActivity extends SupportingLifeBaseActivity {
+	
+	private Button guestUserButton;
+	private Button hsaUserButton;
 	
 	/**
 	 * OnCreate method is called when the activity is first created.
@@ -34,6 +39,15 @@ public class UserSelectionActivity extends SupportingLifeBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_user_selection);
+		
+		// load the font-awesome font for the buttons
+		Typeface font = Typeface.createFromAsset(getAssets(), FONT_AWESOME_TYPEFACE_ASSET);
+		
+		setGuestUserButton((Button) findViewById(R.id.user_selection_guest_user_button));
+		getGuestUserButton().setTypeface(font);
+		
+		setHsaUserButton((Button) findViewById(R.id.user_selection_hsa_user_button));
+		getHsaUserButton().setTypeface(font);
 	}
 	
 	/**
@@ -66,10 +80,26 @@ public class UserSelectionActivity extends SupportingLifeBaseActivity {
 		} // end of switch
 		
 		// TEMP - START
-		startActivity(new Intent(getApplicationContext(), UserSelectionActivity.class));
+		startActivity(new Intent(getApplicationContext(), HomeActivity.class));
 		// TEMP - END
 		
 		// configure the activity animation transition effect
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+	}
+
+	public Button getGuestUserButton() {
+		return guestUserButton;
+	}
+
+	public void setGuestUserButton(Button guestUserButton) {
+		this.guestUserButton = guestUserButton;
+	}
+
+	public Button getHsaUserButton() {
+		return hsaUserButton;
+	}
+
+	public void setHsaUserButton(Button hsaUserButton) {
+		this.hsaUserButton = hsaUserButton;
 	}	
 } // end class
