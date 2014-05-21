@@ -36,6 +36,17 @@ public class AboutActivity extends SupportingLifeBaseActivity {
 	}
 	
 	/**
+	 * Determine if this activity should display an ActionBar when it is
+	 * shown.
+	 * 
+	 * @return boolean
+	 */
+	@Override
+	protected boolean shouldDisplayActionBar() {
+		return true;
+	}
+	
+	/**
 	 * Method: configureAndRunImageAnimator
 	 * 
 	 * Responsible for configuration and running animation of 

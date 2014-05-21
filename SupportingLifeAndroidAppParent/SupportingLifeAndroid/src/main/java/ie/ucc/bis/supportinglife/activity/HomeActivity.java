@@ -50,7 +50,18 @@ public class HomeActivity extends SupportingLifeBaseActivity {
         String lang = settings.getString(LANGUAGE_SELECTION_KEY, "");
         setLocale(lang);
 	    setContentView(R.layout.activity_home);
-	}	
+	}
+	
+	/**
+	 * Determine if this activity should display an ActionBar when it is
+	 * shown.
+	 * 
+	 * @return boolean
+	 */
+	@Override
+	protected boolean shouldDisplayActionBar() {
+		return true;
+	}
 	
 	/**
 	 * Click Handler: Handler the click of a dashboard button

@@ -130,6 +130,17 @@ public class SyncActivity extends SupportingLifeBaseActivity {
     	getSupportingLifeService().close();
     	super.onPause();
     }
+    
+	/**
+	 * Determine if this activity should display an ActionBar when it is
+	 * shown.
+	 * 
+	 * @return boolean
+	 */
+	@Override
+	protected boolean shouldDisplayActionBar() {
+		return true;
+	}
 	
 	private class NetworkCommunicationAsyncTask extends AsyncTask<PatientAssessmentComms, PatientAssessmentResponseComms, Boolean> {
 		

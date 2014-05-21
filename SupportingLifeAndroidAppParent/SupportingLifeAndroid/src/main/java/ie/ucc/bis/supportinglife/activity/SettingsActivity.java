@@ -55,6 +55,17 @@ public class SettingsActivity extends SupportingLifeBaseActivity {
 		.replace(android.R.id.content, new MyPreferenceFragment())
 		.commit();
 	}
+	
+	/**
+	 * Determine if this activity should display an ActionBar when it is
+	 * shown.
+	 * 
+	 * @return boolean
+	 */
+	@Override
+	protected boolean shouldDisplayActionBar() {
+		return true;
+	}
 
 	// static class
 	public static class MyPreferenceFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener

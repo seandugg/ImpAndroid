@@ -54,6 +54,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	protected static final String FEATURE_UNIMPLEMENTED = "Feature not yet implemented";
 	public static final String EXIT_ASSESSMENT_DIALOG_TAG = "Exit Assessment";
 	public static final String LANGUAGE_SELECTION_KEY = "language_selection";
+	public static final String USER_TYPE_KEY = "user_type";
 	
 	protected static final String TEMP_DB_KEY = "TEST_DB_KEY";
 	
@@ -73,7 +74,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (((this instanceof SplashActivity) || (this instanceof UserSelectionActivity)) == false) {
+		if (shouldDisplayActionBar()) {
 			// configure custom action bar
 			configureActionBar();
 		}
@@ -360,6 +361,8 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	    	((ViewGroup) getWindow().getDecorView()).getChildAt(0).requestFocus();
 	    }
 	}
+	
+	protected abstract boolean shouldDisplayActionBar();
 	
 	/**
 	 * Responsible for configuring custom action bar for activity

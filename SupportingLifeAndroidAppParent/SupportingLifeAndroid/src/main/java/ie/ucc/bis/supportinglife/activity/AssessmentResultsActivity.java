@@ -80,6 +80,17 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
         	getActionBar().setSelectedNavigationItem(savedInstanceState.getInt("tab"));
         }  	
     }
+    
+	/**
+	 * Determine if this activity should display an ActionBar when it is
+	 * shown.
+	 * 
+	 * @return boolean
+	 */
+	@Override
+	protected boolean shouldDisplayActionBar() {
+		return true;
+	}
 		
 	/**
 	 * Static Class: TabsAdapter

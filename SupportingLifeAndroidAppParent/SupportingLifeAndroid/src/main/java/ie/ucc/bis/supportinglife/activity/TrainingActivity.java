@@ -107,7 +107,18 @@ public class TrainingActivity extends SupportingLifeBaseActivity {
 		
 		// ascertain locale of user and parse appropriate training content
 		configureTrainingPagerAdapter(); 
-	}	
+	}
+	
+	/**
+	 * Determine if this activity should display an ActionBar when it is
+	 * shown.
+	 * 
+	 * @return boolean
+	 */
+	@Override
+	protected boolean shouldDisplayActionBar() {
+		return true;
+	}
 	
 	/**
 	 * Getter Method: getTrainingViewPager()

@@ -2,7 +2,9 @@ package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 
 /**
@@ -34,7 +36,8 @@ public class SplashActivity extends SupportingLifeBaseActivity {
 		setContentView(R.layout.activity_splash);
 
 		// thread for displaying the SplashScreen
-		splashThread = new Thread(new SplashScreenRunnable());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		splashThread = new Thread(new SplashScreenRunnable(sharedPreferences));
 		splashThread.start();
 	} // end of onCreate(..) method
 
@@ -62,8 +65,15 @@ public class SplashActivity extends SupportingLifeBaseActivity {
 	 */
 	private class SplashScreenRunnable implements Runnable {
 		
-		public SplashScreenRunnable() {}
+		private SharedPreferences sharedPreferences;
 		
+		public SplashScreenRunnable(SharedPreferences sharedPreferences) {
+			this.sharedPreferences = sharedPreferences;	
+		}
+		
+		/* (non-Javadoc)
+		 * @see java.lang.Runnable#run()
+		 */
 		@Override
 		public void run() {
 			try {
@@ -72,7 +82,15 @@ public class SplashActivity extends SupportingLifeBaseActivity {
 				} // end of sync
 			} catch (InterruptedException interruptExp) {}
 			finally {
-				startActivity(new Intent(getApplicationContext(), UserSelectionActivity.class));
+				// need to determine if a HSA user has been registered
+				boolean hsaUserRegistered = isHsaUserRegistered();
+
+		        if (!hsaUserRegistered) {
+		        	startActivity(new Intent(getApplicationContext(), UserSelectionActivity.class));
+		        }
+		        else {
+		        	startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+		        }
 				// configure the activity animation transition effect
 				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 				
@@ -81,5 +99,36 @@ public class SplashActivity extends SupportingLifeBaseActivity {
 				finish();
 			} // end of finally
 		} // end of run() method
+
+		/**
+		 * Responsible for determining if a HSA user has been registered
+		 * 
+		 * @return boolean - true (HSA user registered)
+		 * 				   - false (HSA user not registered)
+		 */
+		private boolean isHsaUserRegistered() {
+			boolean registered = false;
+
+	        String userType = this.sharedPreferences.getString(USER_TYPE_KEY, "");
+	        
+	        // TODO need to enhance to check that a username and HSA user type is present
+	        // in the shared preferences
+	        if (userType.equalsIgnoreCase("hsa_user")) {
+	        	registered = true;
+	        }
+	        
+			return registered;
+		}
 	} // end of SplashScreenRunnable class
+
+	/**
+	 * Determine if this activity should display an ActionBar when it is
+	 * shown.
+	 * 
+	 * @return boolean
+	 */
+	@Override
+	protected boolean shouldDisplayActionBar() {
+		return false;
+	}
 } // end of class

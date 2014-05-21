@@ -295,9 +295,9 @@
 	</style>
 	
     <!-- ============================================================ -->
-    <!-- USER TYPE REGISTRATION TITLE STYLE -->
+    <!-- USER TYPE SELECTION TITLE STYLE -->
     <!-- ============================================================ -->
-	<style name="UserTypeRegistrationTitle">
+	<style name="UserTypeSelectionTitle">
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_marginTop">20dp</item>
@@ -308,9 +308,9 @@
 	</style>
 	
     <!-- ============================================================ -->
-    <!-- USER TYPE REGISTRATION PROMPT STYLE -->
+    <!-- USER TYPE SELECTION PROMPT STYLE -->
     <!-- ============================================================ -->
-	<style name="UserTypeRegistrationPrompt">
+	<style name="UserTypeSelectionPrompt">
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_marginBottom">3dp</item>
@@ -322,5 +322,43 @@
 		<item name="android:paddingTop">5dp</item>
 		<item name="android:textSize">16sp</item>
 	</style>
+	
+    <!-- ============================================================ -->
+    <!-- USER REGISTRATION TITLE STYLE -->
+    <!-- ============================================================ -->
+	<style name="UserRegistrationTitle">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginTop">20dp</item>
+		<item name="android:layout_marginBottom">20dp</item>
+		<item name="android:gravity">center_horizontal</item>
+		<item name="android:textSize">30sp</item>
+		<item name="android:textColor">#ff0099cc</item>
+	</style>
+	
+    <!-- ============================================================ -->
+    <!-- USER REGISTRATION PROMPT STYLE -->
+    <!-- ============================================================ -->
+	<style name="UserRegistrationPrompt">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_marginBottom">3dp</item>
+		<item name="android:layout_marginLeft">40dp</item>
+		<item name="android:textColor">@color/LightCoral</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:paddingLeft">4dp</item>
+		<item name="android:paddingRight">12dp</item>
+		<item name="android:paddingTop">5dp</item>
+		<item name="android:textSize">16sp</item>
+	</style>
+	
+    <!-- ============================================================ -->
+    <!-- USER TYPE REGISTRATION BUTTON TEXT STYLE -->
+    <!-- ============================================================ -->
+	<style name="UserRegistrationButtonAppearance" parent="android:TextAppearance.Medium">
+		<item name="android:textColor">@color/White</item>
+		<item name="android:textSize">18sp</item>
+	</style>
+	
 	
 </resources>

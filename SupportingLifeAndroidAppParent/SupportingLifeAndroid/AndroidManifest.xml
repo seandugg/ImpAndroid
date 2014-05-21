@@ -76,6 +76,12 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="ie.ucc.bis.supportinglife.activity.UserRegistrationActivity"
+            android:theme="@style/Theme.Splash"
+            android:label="@string/activity_title_user_selection"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="ie.ucc.bis.supportinglife.activity.TrainingActivity"
             android:label="@string/activity_title_training"
             android:screenOrientation="portrait" >

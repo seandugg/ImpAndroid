@@ -13,4 +13,9 @@
 		<item name="chichewa">ny</item>
 	</string-array>
 
+	<string-array name="userTypes">
+		<item name="guest_user">guest_user</item>
+		<item name="hsa_user">hsa_user</item>
+	</string-array>
+	
 </resources>

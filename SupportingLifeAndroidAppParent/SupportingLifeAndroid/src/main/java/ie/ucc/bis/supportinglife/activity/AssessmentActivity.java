@@ -135,6 +135,17 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
         getAssessmentModel().unregisterListener(this);
     }
 
+	/**
+	 * Determine if this activity should display an ActionBar when it is
+	 * shown.
+	 * 
+	 * @return boolean
+	 */
+	@Override
+	protected boolean shouldDisplayActionBar() {
+		return true;
+	}
+    
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

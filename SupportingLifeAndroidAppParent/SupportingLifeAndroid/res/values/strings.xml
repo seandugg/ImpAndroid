@@ -581,13 +581,20 @@
     <!-- ============================================================ -->
     <!-- USER SELECTION SCREEN -->
     <!-- ============================================================ -->
-    <string name="user_selection_registration_title_text">User Registration</string>
-    <string name="user_selection_registration_prompt_text">Please select an option:</string>
-	<string name="user_selection_guest_user_button_text">Guest User</string>
-	<string name="user_selection_hsa_user_button_text">HSA User</string>
+    <string name="user_type_preference_category">User Type</string>
+    <string name="user_type_selection_title_text">User Type</string>
+    <string name="user_type_selection_prompt_text">Please select an option:</string>
+	<string name="user_type_selection_guest_user_button_text">Guest User</string>
+	<string name="user_type_selection_hsa_user_button_text">HSA User</string>
 	<string name="guest_user_icon_font">&#xf007;</string>
 	<string name="hsa_user_icon_font">&#xf0f0;</string>
-	
-    
+
+    <!-- ============================================================ -->
+    <!-- USER REGISTRATION SCREEN -->
+    <!-- ============================================================ -->	
+    <string name="user_registration_title_text">HSA User</string>
+    <string name="user_registration_prompt_text">Please enter your login details:</string>
+    <string name="user_registration_submit_button_text">Login</string>
+    <string name="user_registration_clear_button_text">Clear</string>
 
 </resources>

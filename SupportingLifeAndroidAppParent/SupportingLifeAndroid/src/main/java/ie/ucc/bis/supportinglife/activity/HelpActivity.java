@@ -31,4 +31,15 @@ public class HelpActivity extends SupportingLifeBaseActivity {
 		setContentView(R.layout.activity_help);		
 		setTitleFromActivityLabel(R.id.action_bar_title_text);
 	}
+	
+	/**
+	 * Determine if this activity should display an ActionBar when it is
+	 * shown.
+	 * 
+	 * @return boolean
+	 */
+	@Override
+	protected boolean shouldDisplayActionBar() {
+		return true;
+	}
 }
