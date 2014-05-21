@@ -18,6 +18,17 @@
 	<style name="Theme.Splash" parent="android:Theme.Light.NoTitleBar">
 		<item name="android:windowAnimationStyle">@null</item>
 	</style>
+	
+    <!-- ============================================================ -->
+    <!-- USER REGISTRATION STYLE THEME -->
+    <!-- ============================================================ -->
+	<style name="Theme.Registration" parent="android:Theme.Holo.Light">
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowActionBar">false</item>
+		<item name="android:backgroundDimEnabled">false</item>
+		<item name="android:radioButtonStyle">@style/RadioButton</item>
+		<item name="android:windowAnimationStyle">@null</item>
+	</style>
 
     <!-- ============================================================ -->
     <!-- ACTION BAR GENERAL STYLE -->
@@ -342,8 +353,6 @@
 	<style name="UserRegistrationPrompt">
 		<item name="android:layout_width">match_parent</item>
 		<item name="android:layout_height">wrap_content</item>
-		<item name="android:layout_marginBottom">3dp</item>
-		<item name="android:layout_marginLeft">40dp</item>
 		<item name="android:textColor">@color/LightCoral</item>
 		<item name="android:textStyle">bold</item>
 		<item name="android:paddingLeft">4dp</item>
