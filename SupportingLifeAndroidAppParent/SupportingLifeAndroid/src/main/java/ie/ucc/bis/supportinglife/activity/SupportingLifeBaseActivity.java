@@ -50,7 +50,7 @@ import com.google.analytics.tracking.android.EasyTracker;
  */
 public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	
-	protected static final String FONT_AWESOME_TYPEFACE_ASSET = "fontawesome-webfont.ttf";
+	protected static final String FONT_AWESOME_TYPEFACE_ASSET = "fonts/fontawesome-webfont.ttf";
 	protected static final String FEATURE_UNIMPLEMENTED = "Feature not yet implemented";
 	public static final String EXIT_ASSESSMENT_DIALOG_TAG = "Exit Assessment";
 	public static final String LANGUAGE_SELECTION_KEY = "language_selection";
