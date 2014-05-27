@@ -59,9 +59,12 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-		// initialise SupportingLifeService
-        setSupportingLifeService(new SupportingLifeService(this));
-        getSupportingLifeService().open(SupportingLifeBaseActivity.TEMP_DB_KEY);
+        // only initialise DB if dealing with a non-guest user type 
+        if (!isGuestUser()) {
+    		// initialise SupportingLifeService
+            setSupportingLifeService(new SupportingLifeService(this));
+        	getSupportingLifeService().open(SupportingLifeBaseActivity.TEMP_DB_KEY);
+        }
 	}
 	
 
@@ -393,13 +396,19 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
     
     @Override
     protected void onResume() {
-    	getSupportingLifeService().open(SupportingLifeBaseActivity.TEMP_DB_KEY);
+        // only use DB if dealing with a non-guest user type 
+        if (!isGuestUser()) {
+        	getSupportingLifeService().open(SupportingLifeBaseActivity.TEMP_DB_KEY);
+        }
     	super.onResume();
     }
 
     @Override
     protected void onPause() {
-    	getSupportingLifeService().close();
+        // only use DB if dealing with a non-guest user type 
+        if (!isGuestUser()) {
+        	getSupportingLifeService().close();
+        }
     	super.onPause();
     }
     

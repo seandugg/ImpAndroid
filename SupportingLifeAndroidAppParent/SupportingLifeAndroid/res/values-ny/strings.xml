@@ -30,7 +30,7 @@
     <!-- ABOUT SCREEN -->
     <!-- ============================================================ -->
 	<string name="about_version_label">Version</string>
-	<string name="about_version_value">2.0.0 (beta release)</string>
+	<string name="about_version_value">3.0.0 (beta release)</string>
 	<string name="about_release_date_label">Tsiku Lotulutsira</string>
 	<string name="about_release_date_value">March 2014</string>
 	<string name="about_developer_label">Olemba</string>

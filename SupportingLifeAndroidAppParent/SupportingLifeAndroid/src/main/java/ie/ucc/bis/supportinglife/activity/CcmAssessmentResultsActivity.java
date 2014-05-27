@@ -69,8 +69,10 @@ public class CcmAssessmentResultsActivity extends AssessmentResultsActivity {
         getTreatmentRuleEngine().readCcmTreatmentRules((SupportingLifeBaseActivity) this);
         getTreatmentRuleEngine().determineCcmTreatments(this, getReviewItems(), getPatientAssessment());
  
-        // record the patient visit in the DB
-        recordPatientVisit();
+        // only record the patient visit in the DB if dealing with a non-guest user type 
+        if (!isGuestUser()) {
+        	recordPatientVisit();
+        }
                 
         // create a new Action bar and set title to strings.xml
         final ActionBar bar = getActionBar();

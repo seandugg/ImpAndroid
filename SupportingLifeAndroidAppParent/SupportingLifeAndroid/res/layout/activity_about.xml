@@ -81,30 +81,6 @@
     </LinearLayout>
 
     <!-- ============================================================ -->
-    <!-- ABOUT BUSINESS ANALYST -->
-    <!-- ============================================================ -->
-
-    <LinearLayout
-        android:id="@+id/about_business_analyst"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" 
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/about_business_analyst_label"
-            style="@style/AboutLabel"
-            android:layout_gravity="center_horizontal" 
-            android:text="@string/about_business_analyst_label" />
-
-        <TextView
-            android:id="@+id/about_business_analyst_value"
-            style="@style/AboutText"
-            android:layout_gravity="center_horizontal" 
-            android:text="@string/about_business_analyst_value"/>
-    </LinearLayout>
-    
-    <!-- ============================================================ -->
     <!-- ABOUT UI ANALYST -->
     <!-- ============================================================ -->
 
@@ -128,6 +104,30 @@
             android:text="@string/about_ui_analyst_value"/>
     </LinearLayout>
     
+    <!-- ============================================================ -->
+    <!-- ABOUT BUSINESS ANALYST -->
+    <!-- ============================================================ -->
+
+    <LinearLayout
+        android:id="@+id/about_business_analyst"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" 
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/about_business_analyst_label"
+            style="@style/AboutLabel"
+            android:layout_gravity="center_horizontal" 
+            android:text="@string/about_business_analyst_label" />
+
+        <TextView
+            android:id="@+id/about_business_analyst_value"
+            style="@style/AboutText"
+            android:layout_gravity="center_horizontal" 
+            android:text="@string/about_business_analyst_value"/>
+    </LinearLayout>
+        
     <!-- ============================================================ -->
     <!-- ABOUT PROJECT -->
     <!-- ============================================================ -->

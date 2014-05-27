@@ -13,8 +13,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -50,11 +52,15 @@ import com.google.analytics.tracking.android.EasyTracker;
  */
 public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	
+	protected static final String USER_TYPE_KEY = "user_type";
+	protected static final String GUEST_USER = "guest_user";
+	protected static final String HSA_USER = "hsa_user";
+	
 	protected static final String FONT_AWESOME_TYPEFACE_ASSET = "fonts/fontawesome-webfont.ttf";
 	protected static final String FEATURE_UNIMPLEMENTED = "Feature not yet implemented";
 	public static final String EXIT_ASSESSMENT_DIALOG_TAG = "Exit Assessment";
 	public static final String LANGUAGE_SELECTION_KEY = "language_selection";
-	public static final String USER_TYPE_KEY = "user_type";
+	
 	
 	protected static final String TEMP_DB_KEY = "TEST_DB_KEY";
 	
@@ -393,6 +399,32 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.main_activity_actions, menu);
 	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		
+		// need to check the type of user using the SL app
+		// if the user is a 'guest' user then we need to
+		// hide the 'sync' option from the overflow menu
+		if (isGuestUser()) {
+			menu.removeItem(R.id.dashboard_action_sync);			
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	protected boolean isGuestUser() {
+		boolean guestUser = true;
+		
+		// need to check the type of user using the SL app
+		// if the user is a 'guest' user then we need to
+		// hide the 'sync' option from the overflow menu
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		if (settings.getString(USER_TYPE_KEY, "").equalsIgnoreCase(HSA_USER) == true) {
+			guestUser = false;
+		}
+		
+		return guestUser;
 	}
 	
 	@Override

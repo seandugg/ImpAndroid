@@ -1,11 +1,8 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
-import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 
 /**
@@ -68,14 +65,12 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 	 */
 	public void onClickUserRegistrationButton(View view) {
 		int id = view.getId();
-		
-		// TEMP START
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-		SharedPreferences.Editor preferenceEditor = settings.edit();
-		// TEMP END
-		
+				
 		switch(id) {
 			case R.id.user_registration_submit_button:
+				
+				// TODO authenticate the user
+				
 				startActivity(new Intent(getApplicationContext(), HomeActivity.class));	
 				// configure the activity animation transition effect
 				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);	
