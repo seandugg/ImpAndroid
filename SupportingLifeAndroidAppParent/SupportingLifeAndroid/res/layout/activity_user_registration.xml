@@ -61,7 +61,7 @@
             android:layout_marginBottom="20dp"
             android:layout_toRightOf="@+id/user_registration_login_password_label"
             android:hint="@string/user_registration_login_id_hint"
-            android:inputType="textCapWords"
+            android:inputType="textCapWords|textNoSuggestions"
             android:textSize="16sp"
             android:saveEnabled="false" />
 
@@ -87,7 +87,7 @@
             android:layout_toRightOf="@+id/user_registration_login_password_label"
             android:layout_marginBottom="20dp"
             android:hint="@string/user_registration_login_password_hint"
-            android:inputType="textPassword"
+            android:inputType="textPassword|textNoSuggestions"
             android:textSize="16sp"
             android:saveEnabled="false" />
 	    
