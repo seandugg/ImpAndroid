@@ -21,7 +21,8 @@
 		<google.analystics.version>3.0.0</google.analystics.version>
 		<spring.version>1.0.1.RELEASE</spring.version>
 		<json.version>1.9.12</json.version>
-		<android.api.level>17</android.api.level>
+		<android.api.level>17</android.api.level>	
+		<crouton.version>1.8.4</crouton.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -74,6 +75,18 @@
             <artifactId>commons-codec</artifactId>
             <version>1.0</version>
         </dependency>
+        <!-- Crouton - Context sensitive notifications for Android -->
+		<dependency>
+		    <artifactId>crouton</artifactId>
+		    <version>${crouton.version}</version>
+		    <groupId>de.keyboardsurfer.android.widget</groupId>
+		    <exclusions>
+		        <exclusion>
+		            <groupId>com.android.support</groupId>
+		            <artifactId>support-v4</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -96,6 +109,7 @@
 					<sdk>
 						<platform>${android.api.level}</platform>
 					</sdk>
+					<debug>true</debug>
 				</configuration>
 			</plugin>
 		</plugins>

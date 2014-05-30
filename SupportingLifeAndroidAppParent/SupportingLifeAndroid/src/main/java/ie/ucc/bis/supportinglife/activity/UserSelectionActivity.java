@@ -100,11 +100,7 @@ public class UserSelectionActivity extends SupportingLifeBaseActivity {
 				startActivity(new Intent(getApplicationContext(), HomeActivity.class));
 				break;
 			case R.id.user_type_selection_hsa_user_button:
-				
-				// record hsa user type
-				preferenceEditor.putString(USER_TYPE_KEY, HSA_USER);
-				preferenceEditor.commit();
-				
+								
 				startActivity(new Intent(getApplicationContext(), UserRegistrationActivity.class));
 				break;	
 			default : 
