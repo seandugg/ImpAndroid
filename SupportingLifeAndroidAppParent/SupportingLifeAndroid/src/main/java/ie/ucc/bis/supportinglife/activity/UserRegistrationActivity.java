@@ -1,11 +1,20 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.communication.UserAuthenticationComms;
+import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
 import ie.ucc.bis.supportinglife.validation.Field;
 import ie.ucc.bis.supportinglife.validation.Form;
 import ie.ucc.bis.supportinglife.validation.NotEmptyValidation;
 import ie.ucc.bis.supportinglife.validation.ValidationListener;
-import android.content.Intent;
+
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,10 +31,13 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 
+	private final String LOG_TAG = "ie.ucc.bis.supportinglife.activity.UserRegistrationActivity";
+	
 	private EditText userLogin;
 	private EditText userPassword;
 	private Button clearButton;
 	private Button submitButton;
+	private UserAuthenticationAsyncTask userAuthenticationAsyncTask;
 	
 	// Form used for validation
     private Form form;
@@ -37,7 +49,6 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 	 * e.g. create views, bind data to lists, etc.
 	 * 
 	 * The method also provides a Bundle parameter containing the activity's
-	 * 
 	 * previously frozen state (if there was one).
 	 * 
 	 * This method is always followed by onStart().
@@ -95,22 +106,35 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 		if (getForm().isValid()) {
             Crouton.makeText(this, "valid form input", Style.CONFIRM).show();
             
+            setUserAuthenticationAsyncTask(new UserAuthenticationAsyncTask());
+            getUserAuthenticationAsyncTask().execute(new UserAuthenticationComms(getUserLogin().getText().toString(), getUserPassword().getText().toString()));
+            
             // TODO: TEMP - MOVE TO A MORE LOGICAL PLACE
 			// record hsa user type
 //    		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
 //    		SharedPreferences.Editor preferenceEditor = settings.edit();
 //			preferenceEditor.putString(USER_TYPE_KEY, HSA_USER);
 //			preferenceEditor.commit();
+            
+			// TODO authenticate the user
+			
+//			startActivity(new Intent(getApplicationContext(), HomeActivity.class));	
+			// configure the activity animation transition effect
+//			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);	
+            
+            
         }		
 	}
 	
-	private void clearUserInput() {
-		getUserLogin().setText("");
-		getUserPassword().setText("");
-		
+	private void clearUserInput() {	
 		// clear any validation messages
 		getForm().getValidationFailedRenderer().clearAll();
-		// remove validation listeners
+		
+		// clear textual content
+        getUserLogin().setText("");
+        getUserPassword().setText("");
+        
+		// remove UI component validation listeners
 		removeValidationListeners();
 	}
 	
@@ -163,32 +187,63 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 		return false;
 	}
 	
-	/**
-	 * Click Handler: Handler the click of a user registration button
-	 * 
-	 * @param view View
-	 * @return void
-	 */
-	public void onClickUserRegistrationButton(View view) {
-		int id = view.getId();
-				
-		switch(id) {
-			case R.id.user_registration_submit_button:
-				
-				// TODO authenticate the user
-				
-				startActivity(new Intent(getApplicationContext(), HomeActivity.class));	
-				// configure the activity animation transition effect
-				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);	
-				break;
-			case R.id.user_registration_clear_button:
-				break;	
-			default : 
-				break;
-		} // end of switch
 	
-	}
+	private class UserAuthenticationAsyncTask extends AsyncTask<UserAuthenticationComms, Boolean, Boolean> {
+		
+		private static final String REST_REQUEST = AWS_BASE_URL + "user/register";
+				
+		@Override
+		protected Boolean doInBackground(UserAuthenticationComms... params) {
+			RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());		
+			for (UserAuthenticationComms userAuthenticationComm : params) {
+			
+				try {
+					// The default timeout was resulting in the call to the 'restTemplate.postForObject(..)' method
+					// call sometimes returning a null object and sometimes returning a correctly populated object.
+					// Doubling the read timeout led to more reliability in obtaining a correctly populated object.
+					// default timeout is 60 * 1000
+					((HttpComponentsClientHttpRequestFactory)restTemplate.getRequestFactory()).setConnectTimeout(120 * 1000);
+					((HttpComponentsClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(120 * 1000);
+					restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
+				
+					Boolean authenticationResponse = restTemplate.postForObject(REST_REQUEST, userAuthenticationComm, Boolean.class);
+					
+					publishProgress(authenticationResponse);
+				} catch (ResourceAccessException ex) {
+					LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: doInBackground -- ResourceAccessException");
+					LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: doInBackground -- " + ex.getMessage());
+				} catch (RestClientException ex) {
+					LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: doInBackground -- RestClientException");
+					LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: doInBackground -- " + ex.getMessage());
+				}
+			}
+			return true;
+		}
+		
+		@Override
+		protected void onPostExecute(Boolean success) {
+			if (success) {
+				LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: onPostExecute -- USER AUTHENTICATION OPERATION SUCCESSFUL");
+			}
+			else {
+				LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: onPostExecute -- USER AUTHENTICATION OPERATION UNSUCCESSFUL!");
+			}
+		}
+		
+		@Override
+		protected void onProgressUpdate(Boolean... authenticationResponse) {
+			if (authenticationResponse[0].booleanValue()) {
+				LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: onProgressUpdate -- USER AUTHENTICATED SUCCESSFULLY");
+			}
+			else {
+				LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: onProgressUpdate -- USER AUTHENTICATED UNSUCCESSFULLY!");
+			}
+		}
 
+		@Override
+		protected void onPreExecute() {}		
+	} // end of inner class 'UserAuthenticationAsyncTask'	
+	
 	public EditText getUserLogin() {
 		return userLogin;
 	}
@@ -227,5 +282,13 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 
 	public void setForm(Form form) {
 		this.form = form;
+	}
+
+	public UserAuthenticationAsyncTask getUserAuthenticationAsyncTask() {
+		return userAuthenticationAsyncTask;
+	}
+
+	public void setUserAuthenticationAsyncTask(UserAuthenticationAsyncTask userAuthenticationAsyncTask) {
+		this.userAuthenticationAsyncTask = userAuthenticationAsyncTask;
 	}
 } // end class

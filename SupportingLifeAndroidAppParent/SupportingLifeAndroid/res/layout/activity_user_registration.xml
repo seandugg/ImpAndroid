@@ -110,8 +110,7 @@
 				android:layout_marginLeft="40dp"
 				android:layout_marginBottom="20dp"
 				android:background="@drawable/user_registration_clear_button"
-				android:text="@string/user_registration_clear_button_text"
-				android:onClick="onClickUserRegistrationButton"/>
+				android:text="@string/user_registration_clear_button_text"/>
 			
 			<!-- ============================================================ -->
 			<!-- SUBMIT REGISTRATION DETAILS BUTTON -->
@@ -126,8 +125,7 @@
 				android:layout_marginRight="40dp"
 				android:layout_marginBottom="20dp"
 				android:background="@drawable/user_registration_submit_button"
-				android:text="@string/user_registration_submit_button_text"
-				android:onClick="onClickUserRegistrationButton"/>
+				android:text="@string/user_registration_submit_button_text"/>
 			
 		</LinearLayout>
 	</RelativeLayout>

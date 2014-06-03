@@ -52,6 +52,8 @@ import com.google.analytics.tracking.android.EasyTracker;
  */
 public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	
+	protected static final String AWS_BASE_URL = "http://supportinglife.elasticbeanstalk.com/";
+	
 	protected static final String USER_TYPE_KEY = "user_type";
 	protected static final String GUEST_USER = "guest_user";
 	protected static final String HSA_USER = "hsa_user";

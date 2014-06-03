@@ -86,7 +86,6 @@ public class SyncActivity extends SupportingLifeBaseActivity {
 		setHorizontalProgressBarTextView((TextView) findViewById(R.id.horizontal_progress_update_text));
 		getHorizontalProgressBarTextView().setVisibility(View.GONE);
 		
-		
 		// add click listener to the 'Sync' button
 		getSyncButton().setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -145,16 +144,15 @@ public class SyncActivity extends SupportingLifeBaseActivity {
 	private class NetworkCommunicationAsyncTask extends AsyncTask<PatientAssessmentComms, PatientAssessmentResponseComms, Boolean> {
 		
 		// PRODUCTION AWS URL
-//		private static final String AMAZON_WEB_SERVICE_URL = "http://sl-technology.eu/patientvisits/add";
+	//	private static final String FULL_REST_REQUEST = "http://sl-technology.eu/patientvisits/add";
+		
+		// DEVELOPMENT AWS URL
+	//	private static final String FULL_REST_REQUEST = "http://143.239.97.70:8080/SupportingLife/patientvisits/add";
 		
 		// direct ec2 name appears quicker for mobile device to resolve the domain name (i.e. sl-technology.eu) when
 		// performing sync operation.
-		private static final String AMAZON_WEB_SERVICE_URL = "http://supportinglife.elasticbeanstalk.com/patientvisits/add";
-		
-		// DEVELOPMENT AWS URL
-	//	private static final String AMAZON_WEB_SERVICE_URL = "http://143.239.97.70:8080/SupportingLife/patientvisits/add";
-
-		
+		private static final String REST_REQUEST = AWS_BASE_URL + "patientvisits/add";
+				
 		@Override
 		protected Boolean doInBackground(PatientAssessmentComms... params) {
 			RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());		
@@ -169,7 +167,7 @@ public class SyncActivity extends SupportingLifeBaseActivity {
 					((HttpComponentsClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(120 * 1000);
 					restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
 				
-					PatientAssessmentResponseComms assessmentResponse = restTemplate.postForObject(AMAZON_WEB_SERVICE_URL, patientAssessmentComm, PatientAssessmentResponseComms.class);
+					PatientAssessmentResponseComms assessmentResponse = restTemplate.postForObject(REST_REQUEST, patientAssessmentComm, PatientAssessmentResponseComms.class);
 					
 					publishProgress(assessmentResponse);
 				} catch (ResourceAccessException ex) {
