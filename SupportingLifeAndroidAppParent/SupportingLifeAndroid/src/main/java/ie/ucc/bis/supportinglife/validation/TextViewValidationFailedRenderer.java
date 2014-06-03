@@ -24,7 +24,12 @@ public class TextViewValidationFailedRenderer implements ValidationFailedRendere
 	}
 
 	@Override
-	public void clear() {
+	public void clear(EditText textView) {
+		textView.setError(null);
+	}
+	
+	@Override
+	public void clearAll() {
 		for (TextView textView : getTextViews()) {
             textView.setError(null);
         }

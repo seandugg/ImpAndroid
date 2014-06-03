@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.widget.EditText;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
@@ -22,9 +23,14 @@ public class CroutonValidationFailedRenderer implements ValidationFailedRenderer
 		getCroutons().add(crouton);
         crouton.show();
 	}
+	
+	@Override
+	public void clear(EditText textView) {
+		textView.setError(null);
+	}
 
 	@Override
-	public void clear() {
+	public void clearAll() {
 		for (Crouton crouton : getCroutons()) {
 			crouton.cancel();
         }
@@ -46,5 +52,4 @@ public class CroutonValidationFailedRenderer implements ValidationFailedRenderer
 	public void setCroutons(List<Crouton> croutons) {
 		this.croutons = croutons;
 	}
-
 }

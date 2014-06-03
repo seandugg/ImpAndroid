@@ -1,16 +1,15 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
-import ie.ucc.bis.supportinglife.validation.CroutonValidationFailedRenderer;
 import ie.ucc.bis.supportinglife.validation.Field;
 import ie.ucc.bis.supportinglife.validation.Form;
 import ie.ucc.bis.supportinglife.validation.NotEmptyValidation;
+import ie.ucc.bis.supportinglife.validation.ValidationListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
@@ -52,7 +51,6 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 		initGraphicalElements();
 		initValidationForm();
 		initCallbacks();
-		registerValidationErrorRenderer();
 	}
 	
 	private void initGraphicalElements() {
@@ -64,7 +62,6 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 
 	private void initValidationForm() {
         setForm(new Form(this));
-        getForm().setValidationFailedRenderer(new CroutonValidationFailedRenderer(this));
 
         getForm().addField(Field.using(getUserLogin(), getResources().getString(R.string.user_registration_login_id)).validate(NotEmptyValidation.build(this)));
         getForm().addField(Field.using(getUserPassword(), getResources().getString(R.string.user_registration_login_password)).validate(NotEmptyValidation.build(this)));
@@ -74,18 +71,27 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
         getSubmitButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // TODO
-               Toast.makeText(getApplicationContext(), "submit button clicked", Toast.LENGTH_SHORT).show();
                submitLoginDetails();
+            }
+        });
+        
+        getClearButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            	clearUserInput();
             }
         });
     }
     
-    private void registerValidationErrorRenderer() {
-    	getForm().setValidationFailedRenderer(new CroutonValidationFailedRenderer(this));
-    }
-    
 	private void submitLoginDetails() {
+		// register validation listeners on editable UI components such
+		// any subsequent focus change by a user will trigger a validation
+		// check
+		registerValidationListeners();
+		
+		// perform validation check
+		getForm().performValidation();
+		
 		if (getForm().isValid()) {
             Crouton.makeText(this, "valid form input", Style.CONFIRM).show();
             
@@ -96,6 +102,41 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 //			preferenceEditor.putString(USER_TYPE_KEY, HSA_USER);
 //			preferenceEditor.commit();
         }		
+	}
+	
+	private void clearUserInput() {
+		getUserLogin().setText("");
+		getUserPassword().setText("");
+		
+		// clear any validation messages
+		getForm().getValidationFailedRenderer().clearAll();
+		// remove validation listeners
+		removeValidationListeners();
+	}
+	
+	/**
+	 * Responsible for registering validation listeners on editable UI components.
+	 * 
+	 * Generally registration of a validation listener on a UI component should be
+	 * done subsequent to the initial validation check so that the user is not
+	 * plagued with validation feedback when initially filling in the form data.
+	 * 
+	 * In the case of 'User Registration', validation listeners will only be placed
+	 * on the UI components after the user has initially selected the 'submit' button.
+	 *
+	 */
+	private void registerValidationListeners() {
+        getUserLogin().setOnFocusChangeListener(new ValidationListener(getForm()));
+        getUserPassword().setOnFocusChangeListener(new ValidationListener(getForm()));	
+	}
+	
+	/**
+	 * Responsible for removing validation listeners from editable UI components.
+	 *
+	 */
+	private void removeValidationListeners() {
+        getUserLogin().setOnFocusChangeListener(null);
+        getUserPassword().setOnFocusChangeListener(null);	
 	}
 	
 	/**

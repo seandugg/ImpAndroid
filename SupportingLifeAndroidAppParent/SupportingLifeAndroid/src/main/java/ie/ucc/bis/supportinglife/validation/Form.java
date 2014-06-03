@@ -4,46 +4,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.widget.EditText;
 
 public class Form {
 
     private List<Field> fields = new ArrayList<Field>();
     private ValidationFailedRenderer validationFailedRenderer;
     private Context context;
+    private boolean valid;
 
     public Form(Context context) {
         setContext(context);
         setValidationFailedRenderer(new TextViewValidationFailedRenderer(getContext()));
+        setValid(true);
     }
 
     public void addField(Field field) {
         getFields().add(field);
     }
-
-    public boolean isValid() {
-        boolean isValid = true;
-        getValidationFailedRenderer().clear();
+    
+    public void performValidation() {
+        boolean allValid = true;
+        getValidationFailedRenderer().clearAll();
 
         for (Field field : getFields()) {
-            FieldValidationResult result = field.validate();
-
+            FieldValidationResult result = field.validate();      
+            
             if (!result.isValid()) {
-                ValidationResult firstFailedValidation = result.getFailedValidationResults().get(0);
-                EditText textView = firstFailedValidation.getTextView();
-                textView.requestFocus();
-                textView.selectAll();
+                ValidationResult validatedResult = result.getFailedValidationResults().get(0);
 
-//                FormUtils.showKeyboard(mContext, textView);
+                // target the keyboard on the first invalid textview
+                if (allValid) {
+                	FormUtils.showKeyboard(getContext(), validatedResult.getTextView());
+                }
 
-                getValidationFailedRenderer().showErrorMessage(firstFailedValidation);
-
-                isValid = false;
-                break;
+               	getValidationFailedRenderer().showErrorMessage(validatedResult);
+                allValid = false;
+            }
+            else {
+            	getValidationFailedRenderer().clear(field.getTextView());
             }
         }
-
-        return isValid;
+        // update valid flag
+        setValid(allValid);
     }
 
     public void setValidationFailedRenderer(ValidationFailedRenderer renderer) {
@@ -69,4 +71,12 @@ public class Form {
 	public void setContext(Context context) {
 		this.context = context;
 	}
+
+	public void setValid(boolean valid) {
+		this.valid = valid;
+	}
+	
+    public boolean isValid() {
+    	return valid;
+    }
 }
