@@ -103,26 +103,9 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 		// perform validation check
 		getForm().performValidation();
 		
-		if (getForm().isValid()) {
-            Crouton.makeText(this, "valid form input", Style.CONFIRM).show();
-            
+		if (getForm().isValid()) {            
             setUserAuthenticationAsyncTask(new UserAuthenticationAsyncTask());
             getUserAuthenticationAsyncTask().execute(new UserAuthenticationComms(getUserLogin().getText().toString(), getUserPassword().getText().toString()));
-            
-            // TODO: TEMP - MOVE TO A MORE LOGICAL PLACE
-			// record hsa user type
-//    		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-//    		SharedPreferences.Editor preferenceEditor = settings.edit();
-//			preferenceEditor.putString(USER_TYPE_KEY, HSA_USER);
-//			preferenceEditor.commit();
-            
-			// TODO authenticate the user
-			
-//			startActivity(new Intent(getApplicationContext(), HomeActivity.class));	
-			// configure the activity animation transition effect
-//			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);	
-            
-            
         }		
 	}
 	
@@ -190,6 +173,8 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 	
 	private class UserAuthenticationAsyncTask extends AsyncTask<UserAuthenticationComms, Boolean, Boolean> {
 		
+		// DEVELOPMENT AWS URL
+	//	private static final String DEV_REST_REQUEST = DEV_BASE_URL + "user/register";
 		private static final String REST_REQUEST = AWS_BASE_URL + "user/register";
 				
 		@Override
@@ -234,9 +219,23 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 		protected void onProgressUpdate(Boolean... authenticationResponse) {
 			if (authenticationResponse[0].booleanValue()) {
 				LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: onProgressUpdate -- USER AUTHENTICATED SUCCESSFULLY");
+	            Crouton.makeText(UserRegistrationActivity.this, "user authentication successful", Style.CONFIRM).show();            
+	            // TODO: TEMP - MOVE TO A MORE LOGICAL PLACE
+				// record hsa user type
+//	    		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+//	    		SharedPreferences.Editor preferenceEditor = settings.edit();
+//				preferenceEditor.putString(USER_TYPE_KEY, HSA_USER);
+//				preferenceEditor.commit();
+	            
+				// TODO authenticate the user
+				
+//				startActivity(new Intent(getApplicationContext(), HomeActivity.class));	
+				// configure the activity animation transition effect
+//				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);	
 			}
 			else {
 				LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: onProgressUpdate -- USER AUTHENTICATED UNSUCCESSFULLY!");
+				Crouton.makeText(UserRegistrationActivity.this, "user authentication unsuccessful", Style.ALERT).show();    
 			}
 		}
 

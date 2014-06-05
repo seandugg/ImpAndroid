@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.communication;
 
 import java.io.Serializable;
+import java.util.Locale;
 
 
 /** 
@@ -21,7 +22,9 @@ public class UserAuthenticationComms implements Serializable {
 	public UserAuthenticationComms() {}
 
 	public UserAuthenticationComms(String hsaUserId, String password) {
-		setHsaUserId(hsaUserId);
+		// convert user id to lowercase to avoid case-sensitivity 
+		// however password is case sensitive 
+		setHsaUserId(hsaUserId.toLowerCase(Locale.UK));
 		setPassword(password);
 	}
 
