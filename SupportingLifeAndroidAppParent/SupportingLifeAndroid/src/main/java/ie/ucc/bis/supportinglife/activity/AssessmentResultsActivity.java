@@ -18,8 +18,10 @@ import java.util.ArrayList;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -63,7 +65,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
         if (!isGuestUser()) {
     		// initialise SupportingLifeService
             setSupportingLifeService(new SupportingLifeService(this));
-        	getSupportingLifeService().open(SupportingLifeBaseActivity.TEMP_DB_KEY);
+        	getSupportingLifeService().open(this);
         }
 	}
 	
@@ -297,10 +299,13 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 
 		// obtain unique android id for the device
 		String android_device_id = Secure.getString(getApplicationContext().getContentResolver(),
-                Secure.ANDROID_ID); 
+                Secure.ANDROID_ID);
+		
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		String hsaUserId = sharedPreferences.getString(SupportingLifeBaseActivity.USER_ID, "");
 		
 		// add the patient record to the DB
-		getSupportingLifeService().createPatientAssessment(getPatientAssessment(), android_device_id);
+		getSupportingLifeService().createPatientAssessment(getPatientAssessment(), android_device_id, hsaUserId);
 	}
 	
 	/**
@@ -398,7 +403,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
     protected void onResume() {
         // only use DB if dealing with a non-guest user type 
         if (!isGuestUser()) {
-        	getSupportingLifeService().open(SupportingLifeBaseActivity.TEMP_DB_KEY);
+        	getSupportingLifeService().open(this);
         }
     	super.onResume();
     }

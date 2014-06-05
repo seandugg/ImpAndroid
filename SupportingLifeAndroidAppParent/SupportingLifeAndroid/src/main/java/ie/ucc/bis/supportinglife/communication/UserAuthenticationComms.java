@@ -18,6 +18,7 @@ public class UserAuthenticationComms implements Serializable {
 	// User Details
 	private String hsaUserId;
 	private String password;
+	private Boolean authenticated;
 
 	public UserAuthenticationComms() {}
 
@@ -42,5 +43,13 @@ public class UserAuthenticationComms implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Boolean getAuthenticated() {
+		return authenticated;
+	}
+
+	public void setAuthenticated(Boolean authenticated) {
+		this.authenticated = authenticated;
 	}
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PatientAssessmentDao {
 	
-	public PatientAssessmentComms createPatientAssessmentComms(PatientAssessment patientToAdd, String uniquePatientAssessmentIdentifier, SupportingLifeService service);
+	public PatientAssessmentComms createPatientAssessmentComms(PatientAssessment patientToAdd, String uniquePatientAssessmentIdentifier, String hsaUserId, SupportingLifeService service);
 	public void deletePatientAssessment(PatientAssessment patient, SupportingLifeService service);
 	public List<PatientAssessmentComms> getAllNonSyncedPatientAssessmentComms(SupportingLifeService service);
 	public List<PatientAssessmentComms> getAllPatientAssessments(SupportingLifeService service);

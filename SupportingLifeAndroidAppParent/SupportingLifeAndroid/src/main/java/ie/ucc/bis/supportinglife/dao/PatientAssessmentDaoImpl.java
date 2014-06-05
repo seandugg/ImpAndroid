@@ -10,9 +10,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sqlcipher.database.SQLiteStatement;
 import android.content.ContentValues;
 import android.database.Cursor;
-import net.sqlcipher.database.SQLiteStatement;
 
 /**
  * Class: PatientAssessmentDao
@@ -81,7 +81,8 @@ public class PatientAssessmentDaoImpl implements PatientAssessmentDao {
 	 * @return
 	 */
 	@Override
-	public PatientAssessmentComms createPatientAssessmentComms(PatientAssessment patientToAdd, String uniquePatientAssessmentIdentifier, SupportingLifeService service) {		
+	public PatientAssessmentComms createPatientAssessmentComms(PatientAssessment patientToAdd, String uniquePatientAssessmentIdentifier, 
+			String hsaUserId, SupportingLifeService service) {		
 
 		// show the number of patient assessments in debug logger
 		debugOutputShowPatientAssessmentCount(service);
@@ -90,7 +91,7 @@ public class PatientAssessmentDaoImpl implements PatientAssessmentDao {
 		values.put(PatientAssessmentTable.COLUMN_ASSESSMENT_ID, uniquePatientAssessmentIdentifier);
 		values.put(PatientAssessmentTable.COLUMN_NATIONAL_ID, patientToAdd.getNationalId());
 		values.put(PatientAssessmentTable.COLUMN_NATIONAL_HEALTH_ID, patientToAdd.getNationalHealthId());	
-		values.put(PatientAssessmentTable.COLUMN_HSA_USER_ID, patientToAdd.getHsaUserId());		
+		values.put(PatientAssessmentTable.COLUMN_HSA_USER_ID, hsaUserId);		
 		values.put(PatientAssessmentTable.COLUMN_CHILD_FIRST_NAME, patientToAdd.getChildFirstName());					
 		values.put(PatientAssessmentTable.COLUMN_CHILD_SURNAME, patientToAdd.getChildSurname());						
 		values.put(PatientAssessmentTable.COLUMN_GENDER, patientToAdd.getGender());

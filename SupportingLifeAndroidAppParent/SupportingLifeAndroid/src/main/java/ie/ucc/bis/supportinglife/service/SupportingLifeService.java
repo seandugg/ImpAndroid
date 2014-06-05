@@ -1,5 +1,6 @@
 package ie.ucc.bis.supportinglife.service;
 
+import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.communication.PatientAssessmentComms;
 import ie.ucc.bis.supportinglife.dao.ClassificationDao;
 import ie.ucc.bis.supportinglife.dao.ClassificationDaoImpl;
@@ -14,9 +15,11 @@ import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
-import android.database.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.SQLException;
+import android.preference.PreferenceManager;
 
 /**
  * Service Interface layer for coordinating
@@ -57,7 +60,7 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 	/*******************************PATIENT ASSESSMENTS*****************************/
 	/*******************************************************************************/
 	@Override
-	public void createPatientAssessment(PatientAssessment patientToAdd, String android_device_id) {
+	public void createPatientAssessment(PatientAssessment patientToAdd, String android_device_id, String hsaUserId) {
 		
 		// updating multiple tables so wrap in a transaction
 		getDatabase().beginTransaction();
@@ -69,7 +72,7 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 			String uniquePatientAssessmentIdentifier = android_device_id + "_" + timestamp;
 			
 			// add the patient assessment
-			getPatientAssessmentDao().createPatientAssessmentComms(patientToAdd, uniquePatientAssessmentIdentifier, this);
+			getPatientAssessmentDao().createPatientAssessmentComms(patientToAdd, uniquePatientAssessmentIdentifier, hsaUserId, this);
 			
 			// now add the associated 'patient assessment' classifications
 			getClassificationDao().createPatientClassifications(patientToAdd, uniquePatientAssessmentIdentifier, this);
@@ -127,7 +130,9 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 	/***********************GENERAL DATABASE MANAGEMENT*****************************/
 	/*******************************************************************************/
 	@Override
-	public void open(String dbKey) throws SQLException {
+	public void open(SupportingLifeBaseActivity slActivity) throws SQLException {
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(slActivity);
+		String dbKey = sharedPreferences.getString(SupportingLifeBaseActivity.USER_KEY, "");
 		setDatabase(databaseHandler.getWritableDatabase(dbKey));
 	}
 

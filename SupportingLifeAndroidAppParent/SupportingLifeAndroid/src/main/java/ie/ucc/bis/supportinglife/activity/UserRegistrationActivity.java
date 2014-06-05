@@ -14,8 +14,11 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +35,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 
 	private final String LOG_TAG = "ie.ucc.bis.supportinglife.activity.UserRegistrationActivity";
+	private final String UNSUCCESSFUL_AUTHENTICATION = "User Authentication Unsuccessful";
 	
 	private EditText userLogin;
 	private EditText userPassword;
@@ -171,7 +175,7 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 	}
 	
 	
-	private class UserAuthenticationAsyncTask extends AsyncTask<UserAuthenticationComms, Boolean, Boolean> {
+	private class UserAuthenticationAsyncTask extends AsyncTask<UserAuthenticationComms, UserAuthenticationComms, Boolean> {
 		
 		// DEVELOPMENT AWS URL
 	//	private static final String DEV_REST_REQUEST = DEV_BASE_URL + "user/register";
@@ -191,9 +195,9 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 					((HttpComponentsClientHttpRequestFactory)restTemplate.getRequestFactory()).setReadTimeout(120 * 1000);
 					restTemplate.getMessageConverters().add(new MappingJacksonHttpMessageConverter());
 				
-					Boolean authenticationResponse = restTemplate.postForObject(REST_REQUEST, userAuthenticationComm, Boolean.class);
+					userAuthenticationComm.setAuthenticated(restTemplate.postForObject(REST_REQUEST, userAuthenticationComm, Boolean.class));
 					
-					publishProgress(authenticationResponse);
+					publishProgress(userAuthenticationComm);
 				} catch (ResourceAccessException ex) {
 					LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: doInBackground -- ResourceAccessException");
 					LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: doInBackground -- " + ex.getMessage());
@@ -206,41 +210,43 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 		}
 		
 		@Override
-		protected void onPostExecute(Boolean success) {
-			if (success) {
-				LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: onPostExecute -- USER AUTHENTICATION OPERATION SUCCESSFUL");
-			}
-			else {
-				LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: onPostExecute -- USER AUTHENTICATION OPERATION UNSUCCESSFUL!");
-			}
-		}
+		protected void onPostExecute(Boolean success) {}
 		
 		@Override
-		protected void onProgressUpdate(Boolean... authenticationResponse) {
-			if (authenticationResponse[0].booleanValue()) {
+		protected void onProgressUpdate(UserAuthenticationComms... authenticationResponse) {
+			UserAuthenticationComms userAuthenticationResponse = authenticationResponse[0];
+			
+			if (userAuthenticationResponse.getAuthenticated()) {
 				LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: onProgressUpdate -- USER AUTHENTICATED SUCCESSFULLY");
-	            Crouton.makeText(UserRegistrationActivity.this, "user authentication successful", Style.CONFIRM).show();            
-	            // TODO: TEMP - MOVE TO A MORE LOGICAL PLACE
-				// record hsa user type
-//	    		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-//	    		SharedPreferences.Editor preferenceEditor = settings.edit();
-//				preferenceEditor.putString(USER_TYPE_KEY, HSA_USER);
-//				preferenceEditor.commit();
+	       //     Crouton.makeText(UserRegistrationActivity.this, "user authentication successful", Style.CONFIRM).show();            
+
+	            // record user type for future launches of app
+	            recordHsaUserType(userAuthenticationResponse);
 	            
-				// TODO authenticate the user
-				
-//				startActivity(new Intent(getApplicationContext(), HomeActivity.class));	
+				startActivity(new Intent(getApplicationContext(), HomeActivity.class));	
 				// configure the activity animation transition effect
-//				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);	
+				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);	
 			}
 			else {
 				LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: onProgressUpdate -- USER AUTHENTICATED UNSUCCESSFULLY!");
-				Crouton.makeText(UserRegistrationActivity.this, "user authentication unsuccessful", Style.ALERT).show();    
+				Crouton.makeText(UserRegistrationActivity.this, UNSUCCESSFUL_AUTHENTICATION, Style.ALERT).show();    
 			}
 		}
 
 		@Override
-		protected void onPreExecute() {}		
+		protected void onPreExecute() {}
+		
+		/**
+		 * Record HSA user id and type
+		 */
+		private void recordHsaUserType(UserAuthenticationComms userAuthenticationResponse) {
+    		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(UserRegistrationActivity.this);
+    		SharedPreferences.Editor preferenceEditor = settings.edit();
+			preferenceEditor.putString(USER_TYPE_KEY, HSA_USER);
+			preferenceEditor.putString(USER_ID, userAuthenticationResponse.getHsaUserId());
+			preferenceEditor.putString(USER_KEY, userAuthenticationResponse.getPassword());
+			preferenceEditor.commit();
+		}
 	} // end of inner class 'UserAuthenticationAsyncTask'	
 	
 	public EditText getUserLogin() {

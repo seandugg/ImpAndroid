@@ -58,6 +58,8 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	protected static final String USER_TYPE_KEY = "user_type";
 	protected static final String GUEST_USER = "guest_user";
 	protected static final String HSA_USER = "hsa_user";
+	protected static final String USER_ID = "user_id";
+	public static final String USER_KEY = "user_key";
 	
 	protected static final String FONT_AWESOME_TYPEFACE_ASSET = "fonts/fontawesome-webfont.ttf";
 	protected static final String FEATURE_UNIMPLEMENTED = "Feature not yet implemented";
