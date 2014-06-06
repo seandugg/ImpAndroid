@@ -1,12 +1,12 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
 import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 
@@ -87,15 +87,13 @@ public class UserSelectionActivity extends SupportingLifeBaseActivity {
 	 */
 	public void onClickUserTypeButton(View view) {
 		int id = view.getId();
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-		SharedPreferences.Editor preferenceEditor = settings.edit();
+		CustomSharedPreferences preferences = CustomSharedPreferences.getPrefs(this, APP_NAME, Context.MODE_PRIVATE);
 		
 		switch(id) {
 			case R.id.user_type_selection_guest_user_button:
 
 				// record guest user type
-				preferenceEditor.putString(USER_TYPE_KEY, GUEST_USER);
-				preferenceEditor.commit();	
+				preferences.edit().putString(USER_TYPE_KEY, GUEST_USER).commit();
 				
 				startActivity(new Intent(getApplicationContext(), HomeActivity.class));
 				break;
@@ -107,7 +105,7 @@ public class UserSelectionActivity extends SupportingLifeBaseActivity {
 				break;
 		} // end of switch
 		
-		LoggerUtils.i(LOG_TAG, "User Type: " + settings.getString(USER_TYPE_KEY, ""));
+		LoggerUtils.i(LOG_TAG, "User Type: " + preferences.getString(USER_TYPE_KEY, ""));
 		
 		// configure the activity animation transition effect
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

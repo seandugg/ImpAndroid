@@ -1,10 +1,10 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.MotionEvent;
 
 /**
@@ -36,8 +36,8 @@ public class SplashActivity extends SupportingLifeBaseActivity {
 		setContentView(R.layout.activity_splash);
 
 		// thread for displaying the SplashScreen
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-		splashThread = new Thread(new SplashScreenRunnable(sharedPreferences));
+		CustomSharedPreferences preferences = CustomSharedPreferences.getPrefs(this, APP_NAME, Context.MODE_PRIVATE);
+		splashThread = new Thread(new SplashScreenRunnable(preferences));
 		splashThread.start();
 	} // end of onCreate(..) method
 
@@ -65,10 +65,10 @@ public class SplashActivity extends SupportingLifeBaseActivity {
 	 */
 	private class SplashScreenRunnable implements Runnable {
 		
-		private SharedPreferences sharedPreferences;
+		private CustomSharedPreferences customSharedPreferences;
 		
-		public SplashScreenRunnable(SharedPreferences sharedPreferences) {
-			this.sharedPreferences = sharedPreferences;	
+		public SplashScreenRunnable(CustomSharedPreferences customSharedPreferences) {
+			this.customSharedPreferences = customSharedPreferences;	
 		}
 		
 		/* (non-Javadoc)
@@ -109,7 +109,7 @@ public class SplashActivity extends SupportingLifeBaseActivity {
 		private boolean isHsaUserRegistered() {
 			boolean registered = false;
 
-	        String userType = this.sharedPreferences.getString(USER_TYPE_KEY, "");
+	        String userType = this.customSharedPreferences.getString(USER_TYPE_KEY, "");
 	        
 	        // TODO need to enhance to check that a username and HSA user type is present
 	        // in the shared preferences

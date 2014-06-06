@@ -4,6 +4,7 @@ import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.communication.PatientAssessmentComms;
 import ie.ucc.bis.supportinglife.dao.ClassificationDao;
 import ie.ucc.bis.supportinglife.dao.ClassificationDaoImpl;
+import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
 import ie.ucc.bis.supportinglife.dao.DatabaseHandler;
 import ie.ucc.bis.supportinglife.dao.PatientAssessmentDao;
 import ie.ucc.bis.supportinglife.dao.PatientAssessmentDaoImpl;
@@ -17,9 +18,7 @@ import java.util.List;
 
 import net.sqlcipher.database.SQLiteDatabase;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.SQLException;
-import android.preference.PreferenceManager;
 
 /**
  * Service Interface layer for coordinating
@@ -131,8 +130,8 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 	/*******************************************************************************/
 	@Override
 	public void open(SupportingLifeBaseActivity slActivity) throws SQLException {
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(slActivity);
-		String dbKey = sharedPreferences.getString(SupportingLifeBaseActivity.USER_KEY, "");
+		CustomSharedPreferences preferences = CustomSharedPreferences.getPrefs(slActivity, SupportingLifeBaseActivity.APP_NAME, Context.MODE_PRIVATE);
+		String dbKey = preferences.getString(SupportingLifeBaseActivity.USER_KEY, "");
 		setDatabase(databaseHandler.getWritableDatabase(dbKey));
 	}
 

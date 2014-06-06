@@ -2,6 +2,7 @@ package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.communication.UserAuthenticationComms;
+import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
 import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
 import ie.ucc.bis.supportinglife.validation.Field;
 import ie.ucc.bis.supportinglife.validation.Form;
@@ -14,11 +15,10 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -240,12 +240,10 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 		 * Record HSA user id and type
 		 */
 		private void recordHsaUserType(UserAuthenticationComms userAuthenticationResponse) {
-    		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(UserRegistrationActivity.this);
-    		SharedPreferences.Editor preferenceEditor = settings.edit();
-			preferenceEditor.putString(USER_TYPE_KEY, HSA_USER);
-			preferenceEditor.putString(USER_ID, userAuthenticationResponse.getHsaUserId());
-			preferenceEditor.putString(USER_KEY, userAuthenticationResponse.getPassword());
-			preferenceEditor.commit();
+			CustomSharedPreferences preferences = CustomSharedPreferences.getPrefs(UserRegistrationActivity.this, APP_NAME, Context.MODE_PRIVATE);
+			preferences.edit().putString(USER_TYPE_KEY, HSA_USER).commit();
+			preferences.edit().putString(USER_ID, userAuthenticationResponse.getHsaUserId()).commit();
+			preferences.edit().putString(USER_KEY, userAuthenticationResponse.getPassword()).commit();
 		}
 	} // end of inner class 'UserAuthenticationAsyncTask'	
 	

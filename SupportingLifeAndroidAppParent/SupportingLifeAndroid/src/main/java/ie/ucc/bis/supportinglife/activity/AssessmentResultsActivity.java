@@ -5,6 +5,7 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
+import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
 import ie.ucc.bis.supportinglife.domain.PatientAssessment;
 import ie.ucc.bis.supportinglife.helper.PatientHandlerUtils;
 import ie.ucc.bis.supportinglife.rule.engine.ClassificationRuleEngine;
@@ -18,10 +19,8 @@ import java.util.ArrayList;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.Settings.Secure;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -301,8 +300,8 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 		String android_device_id = Secure.getString(getApplicationContext().getContentResolver(),
                 Secure.ANDROID_ID);
 		
-		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-		String hsaUserId = sharedPreferences.getString(SupportingLifeBaseActivity.USER_ID, "");
+		CustomSharedPreferences preferences = CustomSharedPreferences.getPrefs(this, APP_NAME, Context.MODE_PRIVATE);
+		String hsaUserId = preferences.getString(SupportingLifeBaseActivity.USER_ID, null);
 		
 		// add the patient record to the DB
 		getSupportingLifeService().createPatientAssessment(getPatientAssessment(), android_device_id, hsaUserId);

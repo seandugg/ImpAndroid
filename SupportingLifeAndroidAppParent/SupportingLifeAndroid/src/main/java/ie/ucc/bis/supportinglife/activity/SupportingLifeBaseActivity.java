@@ -4,6 +4,7 @@ import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
+import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
 
 import java.util.Locale;
 
@@ -13,10 +14,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -60,6 +59,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	protected static final String HSA_USER = "hsa_user";
 	protected static final String USER_ID = "user_id";
 	public static final String USER_KEY = "user_key";
+	public static final String APP_NAME = "Supporting LIFE";
 	
 	protected static final String FONT_AWESOME_TYPEFACE_ASSET = "fonts/fontawesome-webfont.ttf";
 	protected static final String FEATURE_UNIMPLEMENTED = "Feature not yet implemented";
@@ -424,8 +424,8 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 		// need to check the type of user using the SL app
 		// if the user is a 'guest' user then we need to
 		// hide the 'sync' option from the overflow menu
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-		if (settings.getString(USER_TYPE_KEY, "").equalsIgnoreCase(HSA_USER) == true) {
+		CustomSharedPreferences preferences = CustomSharedPreferences.getPrefs(this, APP_NAME, Context.MODE_PRIVATE);
+		if (preferences.getString(USER_TYPE_KEY, "").equalsIgnoreCase(HSA_USER) == true) {
 			guestUser = false;
 		}
 		
