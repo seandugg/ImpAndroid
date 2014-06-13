@@ -65,9 +65,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	protected static final String FEATURE_UNIMPLEMENTED = "Feature not yet implemented";
 	public static final String EXIT_ASSESSMENT_DIALOG_TAG = "Exit Assessment";
 	public static final String LANGUAGE_SELECTION_KEY = "language_selection";
-	
-	
-	protected static final String TEMP_DB_KEY = "TEST_DB_KEY";
+
 	
 	/**
 	 * OnCreate method is called when the activity is first created.

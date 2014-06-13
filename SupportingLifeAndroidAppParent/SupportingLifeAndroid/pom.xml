@@ -110,6 +110,9 @@
 						<platform>${android.api.level}</platform>
 					</sdk>
 					<debug>true</debug>
+					<proguard>
+					    <skip>false</skip>
+					</proguard>
 				</configuration>
 			</plugin>
 		</plugins>
