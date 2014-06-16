@@ -57,7 +57,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	protected static final String USER_TYPE_KEY = "user_type";
 	protected static final String GUEST_USER = "guest_user";
 	protected static final String HSA_USER = "hsa_user";
-	protected static final String USER_ID = "user_id";
+	public static final String USER_ID = "user_id";
 	public static final String USER_KEY = "user_key";
 	public static final String APP_NAME = "Supporting LIFE";
 	

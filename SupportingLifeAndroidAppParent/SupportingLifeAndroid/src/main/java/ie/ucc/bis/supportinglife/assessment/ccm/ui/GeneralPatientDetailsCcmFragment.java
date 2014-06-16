@@ -15,6 +15,7 @@ import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextW
 import ie.ucc.bis.supportinglife.assessment.model.listener.DatePickerListener;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupCoordinatorListener;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
+import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
 import ie.ucc.bis.supportinglife.ui.utilities.DateUtilities;
 import ie.ucc.bis.supportinglife.ui.utilities.ViewGroupUtilities;
 
@@ -23,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.InputType;
@@ -236,7 +238,9 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         				GeneralPatientDetailsCcmPage.HEALTH_SURVEILLANCE_ASSISTANT_DATA_KEY));
         
         // TODO - To be removed once HSA User Login is supported
-        getHsaEditText().setText("hsauser1");
+		CustomSharedPreferences preferences = CustomSharedPreferences.getPrefs((SupportingLifeBaseActivity) getActivity(), SupportingLifeBaseActivity.APP_NAME, Context.MODE_PRIVATE);
+		String hsaUserId = preferences.getString(SupportingLifeBaseActivity.USER_ID, "guest");
+        getHsaEditText().setText(hsaUserId);
     
         // national id
         getNationalIdEditText().addTextChangedListener(
