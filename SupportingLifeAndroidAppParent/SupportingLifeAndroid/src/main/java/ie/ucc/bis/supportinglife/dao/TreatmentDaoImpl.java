@@ -114,9 +114,11 @@ public class TreatmentDaoImpl implements TreatmentDao {
 	 */
 	private void debugOutputShowTreatmentCount(SupportingLifeService service) {
 		SQLiteStatement assessmentRowCountQuery = service.getDatabase().compileStatement("select count(*) from " + TreatmentTable.TABLE_TREATMENT);
-		long assessmentRowCount = assessmentRowCountQuery.simpleQueryForLong();
-		
-		LoggerUtils.i(LOG_TAG, "Current Treatment Row Count: " + assessmentRowCount);
+		if (assessmentRowCountQuery != null) {
+			long assessmentRowCount = assessmentRowCountQuery.simpleQueryForLong();
+			LoggerUtils.i(LOG_TAG, "Current Treatment Row Count: " + assessmentRowCount);
+			assessmentRowCountQuery.close();
+		}
 	}
 
 } 

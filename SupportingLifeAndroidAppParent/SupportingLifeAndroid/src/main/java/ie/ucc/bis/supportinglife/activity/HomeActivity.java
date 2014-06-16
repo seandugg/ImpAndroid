@@ -3,9 +3,11 @@ package ie.ucc.bis.supportinglife.activity;
 import ie.ucc.bis.supportinglife.R;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.Button;
 
 /**
  * This is a simple activity that demonstrates the Supporting LIFE dashboard user interface.
@@ -31,6 +33,8 @@ public class HomeActivity extends SupportingLifeBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		
+		configureButtonFontIcons();
 	}
 	
 	/**
@@ -50,6 +54,26 @@ public class HomeActivity extends SupportingLifeBaseActivity {
         String lang = settings.getString(LANGUAGE_SELECTION_KEY, "");
         setLocale(lang);
 	    setContentView(R.layout.activity_home);
+	    
+	    // load icon fonts for buttons
+		configureButtonFontIcons();
+	}
+	
+	/**
+	 * Responsible for configuring the font icons (provided by FlatIcon)
+	 * on the dashboard buttons
+	 * 
+	 */
+	private void configureButtonFontIcons() {
+		// load the flaticon font for the buttons
+		Typeface font = Typeface.createFromAsset(getAssets(), DASHBOARD_ICON_TYPEFACE_ASSET);
+		
+		((Button) findViewById(R.id.dashboard_imci_assessment_button)).setTypeface(font);
+		((Button) findViewById(R.id.dashboard_ccm_assessment_button)).setTypeface(font);
+		((Button) findViewById(R.id.dashboard_training_button)).setTypeface(font);
+		((Button) findViewById(R.id.dashboard_search_button)).setTypeface(font);
+		((Button) findViewById(R.id.dashboard_user_profile_button)).setTypeface(font);
+		((Button) findViewById(R.id.dashboard_about_button)).setTypeface(font);
 	}
 	
 	/**
@@ -75,7 +99,7 @@ public class HomeActivity extends SupportingLifeBaseActivity {
 			case R.id.dashboard_about_button :
 				startActivity(new Intent(getApplicationContext(), AboutActivity.class));
 				break;
-			case R.id.ic_dashboard_imci_assessment_button :
+			case R.id.dashboard_imci_assessment_button :
 				startActivity(new Intent(getApplicationContext(), ImciAssessmentActivity.class));
 				break;
 			case R.id.dashboard_ccm_assessment_button :
@@ -96,5 +120,6 @@ public class HomeActivity extends SupportingLifeBaseActivity {
 		
 		// configure the activity animation transition effect
 		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-	}	
+	}
+
 } // end class

@@ -4,7 +4,6 @@ import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
 import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -94,21 +93,17 @@ public class UserSelectionActivity extends SupportingLifeBaseActivity {
 
 				// record guest user type
 				preferences.edit().putString(USER_TYPE_KEY, GUEST_USER).commit();
-				
-				startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+				launchActivity(HomeActivity.class, false);
 				break;
 			case R.id.user_type_selection_hsa_user_button:
 								
-				startActivity(new Intent(getApplicationContext(), UserRegistrationActivity.class));
+				launchActivity(UserRegistrationActivity.class, true);
 				break;	
 			default : 
 				break;
 		} // end of switch
 		
 		LoggerUtils.i(LOG_TAG, "User Type: " + preferences.getString(USER_TYPE_KEY, ""));
-		
-		// configure the activity animation transition effect
-		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 	}
 
 	public Button getGuestUserButton() {

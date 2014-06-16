@@ -16,7 +16,6 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -223,9 +222,7 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 	            // record user type for future launches of app
 	            recordHsaUserType(userAuthenticationResponse);
 	            
-				startActivity(new Intent(getApplicationContext(), HomeActivity.class));	
-				// configure the activity animation transition effect
-				overridePendingTransition(R.anim.fade_in, R.anim.fade_out);	
+	            launchActivity(HomeActivity.class, true);
 			}
 			else {
 				LoggerUtils.i(LOG_TAG, "UserAuthenticationAsyncTask: onProgressUpdate -- USER AUTHENTICATED UNSUCCESSFULLY!");

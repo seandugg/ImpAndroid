@@ -62,6 +62,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	public static final String APP_NAME = "Supporting LIFE";
 	
 	protected static final String FONT_AWESOME_TYPEFACE_ASSET = "fonts/fontawesome-webfont.ttf";
+	protected static final String DASHBOARD_ICON_TYPEFACE_ASSET = "fonts/dashboard-flaticon.ttf";
 	protected static final String FEATURE_UNIMPLEMENTED = "Feature not yet implemented";
 	public static final String EXIT_ASSESSMENT_DIALOG_TAG = "Exit Assessment";
 	public static final String LANGUAGE_SELECTION_KEY = "language_selection";
@@ -183,13 +184,8 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	 * @param context Context
 	 * @return void
 	 */
-	public void goHome(Context context) {
-		final Intent intent = new Intent(context, HomeActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		context.startActivity(intent);
-		
-		// configure the activity animation transition effect
-		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+	public void goHome(Context context, boolean clearActivityStack) {
+		launchActivity(HomeActivity.class, clearActivityStack);
 	}
 	
 	/**
@@ -199,7 +195,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	 * @return void
 	 */
 	public void onClickHome(View view) {
-		goHome(this);
+		goHome(this, true);
 	}
 		
 	/**
@@ -207,11 +203,8 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	 * 
 	 * @return void
 	 */
-	public void goToSettingsScreen() {
-		startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-		
-		// configure the activity animation transition effect
-		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+	public void goToSettingsScreen(boolean clearActivityStack) {
+		launchActivity(SettingsActivity.class, clearActivityStack);
 	}
 	
 	/**
@@ -219,11 +212,8 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	 * 
 	 * @return void
 	 */
-	public void goToSyncScreen() {
-		startActivity(new Intent(getApplicationContext(), SyncActivity.class));
-		
-		// configure the activity animation transition effect
-		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+	public void goToSyncScreen(boolean clearActivityStack) {
+		launchActivity(SyncActivity.class, clearActivityStack);
 	}
 	
 	/**
@@ -231,11 +221,30 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	 * 
 	 * @return void
 	 */
-	public void goToHelpScreen() {
-//		startActivity(new Intent(getApplicationContext(), HelpActivity.class));
-		
+	public void goToHelpScreen(boolean clearActivityStack) {
+//		launchActivity(HelpActivity.class, clearActivityStack);
+	}
+	
+	/**
+	 * Clean handler method for launching a fresh activity. Has capability to clear 
+	 * the activity stack so that the user is unable to use 'back button' to revert back
+	 * to previous activity.
+	 * 
+	 * @param class1
+	 */
+	protected <T extends SupportingLifeBaseActivity> void launchActivity(Class<T> baseActivityClass, boolean clearActivityStack) {
+		final Intent intent = new Intent(getApplicationContext(), baseActivityClass);
+		if (clearActivityStack) {
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			this.startActivity(intent);
+			finish();
+		}
+		else {
+			this.startActivity(intent);
+		}
+
 		// configure the activity animation transition effect
-//		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+		overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 	}
 	
 	/**
@@ -244,7 +253,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	 * @return void
 	 */
 	public void onClickSettings() {
-		goToSettingsScreen();
+		goToSettingsScreen(false);
 	}
 	
 	/**
@@ -253,7 +262,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	 * @return void
 	 */
 	public void onClickSync() {
-		goToSyncScreen();
+		goToSyncScreen(false);
 	}
 	
 	/**
@@ -262,7 +271,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	 * @return void
 	 */
 	public void onClickHelp() {
-		goToHelpScreen();
+		goToHelpScreen(false);
 	}
 	
 	/**

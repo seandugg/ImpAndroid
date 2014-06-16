@@ -2,30 +2,38 @@
 <!-- ============================================================ -->
 <!-- TRANSPARENT BUTTON - PRESSED STATE -->
 <!-- ============================================================ -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/transparent_button" >
-
-    <!-- TRANSPARENCY NOTES -->
-    <!-- #FF000000 will get you a solid black whereas 
-    	 #00000000 will get you a 100% transparency  
-    -->
-    <solid android:color="@color/DarkGreen" />
-
-    <!-- green coloured boundary -->
-    <stroke
-        android:width="5px"
-        android:color="@color/SupportingLifeButtonHighlight" />
-
-    <padding
-        android:bottom="7dp"
-        android:left="10dp"
-        android:right="10dp"
-        android:top="7dp" />
-
-    <corners
-        android:bottomLeftRadius="5dp"
-        android:bottomRightRadius="5dp"
-        android:topLeftRadius="5dp"
-        android:topRightRadius="5dp" />
-
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:top="-6dp"
+        android:left="-6dp"
+        android:right="-6dp"
+        android:bottom="0dp">
+        
+		<shape xmlns:android="http://schemas.android.com/apk/res/android">
+	
+		    <!-- TRANSPARENCY NOTES -->
+		    <!-- #FF000000 will get you a solid black whereas 
+		    	 #00000000 will get you a 100% transparency  
+		    -->
+		    <solid android:color="#00000000" />
+		
+		    <!-- green coloured lower line -->
+		
+		    <stroke
+		        android:width="5px"
+		        android:color="@color/DarkGreen" />
+		<!--
+		    <padding
+		        android:bottom="7dp"
+		        android:left="10dp"
+		        android:right="10dp"
+		        android:top="7dp" />
+		
+		    <corners
+		        android:bottomLeftRadius="5dp"
+		        android:bottomRightRadius="5dp"
+		        android:topLeftRadius="5dp"
+		        android:topRightRadius="5dp" />
+		-->
+		</shape>
+	</item>
+</layer-list>

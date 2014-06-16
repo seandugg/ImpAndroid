@@ -163,9 +163,12 @@ public class PatientAssessmentDaoImpl implements PatientAssessmentDao {
 	 */
 	private void debugOutputShowPatientAssessmentCount(SupportingLifeService service) {
 		SQLiteStatement assessmentRowCountQuery = service.getDatabase().compileStatement("select count(*) from " + PatientAssessmentTable.TABLE_PATIENT_ASSESSMENT);
-		long assessmentRowCount = assessmentRowCountQuery.simpleQueryForLong();
-		
-		LoggerUtils.i(LOG_TAG, "Current Patient Assessment Row Count: " + assessmentRowCount);
+		if (assessmentRowCountQuery != null) {
+			long assessmentRowCount = assessmentRowCountQuery.simpleQueryForLong();
+
+			LoggerUtils.i(LOG_TAG, "Current Patient Assessment Row Count: " + assessmentRowCount);
+			assessmentRowCountQuery.close();
+		}
 	}
 
 	@Override

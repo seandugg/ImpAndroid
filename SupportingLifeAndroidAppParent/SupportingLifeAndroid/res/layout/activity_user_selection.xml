@@ -62,6 +62,7 @@
 			android:background="@drawable/user_selection_user_button"
 			android:text="@string/guest_user_icon_font"
 			android:textSize="90sp"
+			android:textColor="@color/icon_button_text_color"
 			android:onClick="onClickUserTypeButton" />
 		
 		<TextView
@@ -92,6 +93,7 @@
 		    android:background="@drawable/user_selection_user_button"
 		    android:text="@string/hsa_user_icon_font"
 		    android:textSize="90sp"
+		    android:textColor="@color/icon_button_text_color"
 		    android:onClick="onClickUserTypeButton" />
 
 		<TextView

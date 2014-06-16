@@ -286,9 +286,10 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 		public void onClick(DialogInterface dialog, int which) {
 			
 			Intent intent = new Intent(getApplicationContext(), resultsActivity.getClass());
-			
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);		
 			intent.putExtra(ASSESSMENT_REVIEW_ITEMS, getAssessmentModel().gatherAssessmentReviewItems());
 			startActivity(intent);
+			finish();
 			
 			// record any data analytic events logged with any individual page views
 	        AnalyticUtilities.recordDataAnalytics(getApplicationContext(), (AbstractModel) getAssessmentModel());

@@ -47,15 +47,16 @@ public final class AssessmentExitDialogListener implements DialogInterface.OnCli
 		
 		// record any data analytic events logged with any individual page views
         AnalyticUtilities.recordDataAnalytics(supportingLifeBaseActivity.getApplicationContext(), model);
+        boolean clearActivityStack = true;
 		
 		switch (navigationRequest) {
-			case DASHBOARD_SCREEN : 	supportingLifeBaseActivity.goHome(supportingLifeBaseActivity);
+			case DASHBOARD_SCREEN : 	supportingLifeBaseActivity.goHome(supportingLifeBaseActivity, clearActivityStack);
 										break;
-			case SETTINGS_SCREEN : 		supportingLifeBaseActivity.goToSettingsScreen();
+			case SETTINGS_SCREEN : 		supportingLifeBaseActivity.goToSettingsScreen(clearActivityStack);
 								   		break;
-			case SYNC_SCREEN : 			supportingLifeBaseActivity.goToSyncScreen();
+			case SYNC_SCREEN : 			supportingLifeBaseActivity.goToSyncScreen(clearActivityStack);
 										break;
-			case HELP_SCREEN : 			supportingLifeBaseActivity.goToHelpScreen();
+			case HELP_SCREEN : 			supportingLifeBaseActivity.goToHelpScreen(clearActivityStack);
 										break;
 		}
 	}

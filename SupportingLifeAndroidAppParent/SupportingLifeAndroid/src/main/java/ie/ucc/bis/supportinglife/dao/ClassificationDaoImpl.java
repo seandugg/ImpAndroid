@@ -115,9 +115,11 @@ public class ClassificationDaoImpl implements ClassificationDao {
 	 */
 	private void debugOutputShowClassificationCount(SupportingLifeService service) {
 		SQLiteStatement assessmentRowCountQuery = service.getDatabase().compileStatement("select count(*) from " + ClassificationTable.TABLE_CLASSIFICATION);
-		long assessmentRowCount = assessmentRowCountQuery.simpleQueryForLong();
-		
-		LoggerUtils.i(LOG_TAG, "Current Classification Row Count: " + assessmentRowCount);
+		if (assessmentRowCountQuery != null) {
+			long assessmentRowCount = assessmentRowCountQuery.simpleQueryForLong();
+			LoggerUtils.i(LOG_TAG, "Current Classification Row Count: " + assessmentRowCount);
+			assessmentRowCountQuery.close();
+		}
 	}
 
 } 
