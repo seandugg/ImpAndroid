@@ -21,7 +21,7 @@ import android.widget.Button;
  */
 
 public class CcmAssessmentActivity extends AssessmentActivity {
-    
+	
 	/**
 	 * OnCreate method is called when the activity is first created.
 	 * 
@@ -84,9 +84,9 @@ public class CcmAssessmentActivity extends AssessmentActivity {
         
 		// add soft keyboard handler - essentially hiding soft
 		// keyboard when an EditText is not in focus
-		 addSoftKeyboardHandling(findViewById(R.id.assessment_wizard));
+		addSoftKeyboardHandling(findViewById(R.id.assessment_wizard));
     }
-    
+	
     /**
      * Anonymous Inner Class: OnPageChangeListener
      * 

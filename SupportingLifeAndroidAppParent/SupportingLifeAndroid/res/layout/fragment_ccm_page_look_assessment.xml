@@ -53,15 +53,38 @@
 				style="@style/AssessmentFormLabel"
 				android:text="@string/ccm_look_assessment_radio_breaths_per_minute_label" />
 			
-            <EditText
-                android:id="@+id/ccm_look_assessment_breaths_per_minute"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:inputType="number"
-                android:maxLength="3"
-                android:hint="@string/ccm_look_assessment_breaths_per_minute_hint"/>
-
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:orientation="horizontal" >
+							
+	            <EditText
+	                android:id="@+id/ccm_look_assessment_breaths_per_minute"
+	                android:layout_weight="2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="20dp"
+	                android:inputType="number"
+	                android:maxLength="3"
+	                android:hint="@string/ccm_look_assessment_breaths_per_minute_hint"/>
+	            
+	            <!-- ============================================================ -->
+	            <!-- BREATH COUNTER BUTTON -->
+	            <!-- ============================================================ -->
+	
+	            <Button
+	                android:id="@+id/ccm_look_assessment_breath_counter_button"
+	                android:background="@drawable/breathe_button"
+	                android:layout_weight="1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginRight="10dp"
+	                android:layout_marginBottom="20dp"
+	                android:text="@string/ccm_look_assessment_breathe_icon_font"
+	                android:textColor="@color/default_black_icon_button_text_color"
+	                android:textSize="40sp" />
+			</LinearLayout>
+		
             <!-- ============================================================ -->
            	<!-- VERY SLEEPY OR UNCONSCIOUS 								  -->
            	<!-- ============================================================ -->

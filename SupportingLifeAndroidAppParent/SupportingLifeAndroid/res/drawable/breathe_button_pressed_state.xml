@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================================ -->
+<!-- BREATHE BUTTON - PRESSED STATE -->
+<!-- ============================================================ -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- TRANSPARENCY NOTES -->
+    <!--
+                 #FF000000 will get you a solid black whereas 
+		    	 #00000000 will get you a 100% transparency  
+    -->
+    <solid android:color="#00000000" />
+
+    <stroke
+        android:width="3px"
+        android:color="@color/DarkGreen" />
+
+    <padding
+        android:bottom="2dp"
+        android:left="2dp"
+        android:right="2dp"
+        android:top="2dp" />
+
+    <corners
+        android:bottomLeftRadius="5dp"
+        android:bottomRightRadius="5dp"
+        android:topLeftRadius="5dp"
+        android:topRightRadius="5dp" />
+
+</shape>

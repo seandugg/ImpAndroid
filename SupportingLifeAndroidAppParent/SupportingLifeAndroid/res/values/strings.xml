@@ -487,7 +487,7 @@
 	<string name="ccm_look_assessment_radio_muac_tape_colour_red">Red</string>
 
 	<string name="ccm_look_assessment_radio_swelling_of_both_feet_label">Swelling of both feet?</string>
-
+	
 	<!-- Look Assessment Review -->
 	<string name="ccm_look_assessment_review_chest_indrawing">Chest Indrawing?</string>
 	<string name="ccm_look_assessment_review_breaths_per_minute">Breaths per Minute</string>
@@ -498,6 +498,19 @@
 	
 	<!-- HINTS -->
 	<string name="ccm_look_assessment_breaths_per_minute_hint">Enter value between 1 and 100</string>
+
+	<!-- ICON FONTS -->
+	<string name="ccm_look_assessment_breathe_icon_font">&#xe000;</string>
+	
+    <!-- ============================================================ -->	
+	<!--  BREATH COUNTER  											  -->
+	<!-- ============================================================ -->
+	<string name="ccm_breath_counter_assessment_title">Breath Counter</string>
+	<string name="ccm_breath_counter_assessment_zero_count">0</string>
+	
+	<!-- ICON FONTS -->
+	<string name="ccm_breath_counter_assessment_reset_icon_font">&#xe000;</string>
+	<string name="ccm_breath_counter_assessment_increment_icon_font">&#xe000;</string>
 	
     <!-- ============================================================ -->
     <!-- CCM ASSESSMENT RESULTS TABS 								  -->

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================================ -->
+<!-- BREATH COUNTER RESET BUTTON -->
+<!-- ============================================================ -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:drawable="@drawable/breath_counter_reset_button_pressed_state" android:state_pressed="true"/>
+	<item android:drawable="@drawable/breath_counter_reset_button_pressed_state" android:state_focused="true"/>
+	<item android:drawable="@drawable/breath_counter_reset_button_neutral_state" android:state_pressed="false"/>
+</selector>

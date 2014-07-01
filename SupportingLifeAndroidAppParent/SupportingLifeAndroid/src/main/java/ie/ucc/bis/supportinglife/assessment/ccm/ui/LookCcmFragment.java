@@ -14,11 +14,14 @@ import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextW
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.ui.custom.ToggleButtonGroupTableLayout;
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -31,7 +34,9 @@ import android.widget.TextView;
  * 
  */
 public class LookCcmFragment extends Fragment implements FragmentLifecycle {
-
+    
+	static final String BREATHE_ICON_TYPEFACE_ASSET = "fonts/breathe-flaticon.ttf";
+	
 	private LookCcmPage lookCcmPage;    
 	private PageFragmentCallbacks pageFragmentCallbacks;
 	private String pageKey;
@@ -41,6 +46,7 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
 	private ToggleButtonGroupTableLayout muacTapeCustomRadioGroup;
 	private RadioGroup swellingOfBothFeetRadioGroup;
 	private EditText breathsPerMinuteEditText;
+	private Button breatheButton;
 	
 	public static LookCcmFragment create(String pageKey) {
 		Bundle args = new Bundle();
@@ -101,6 +107,9 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
 		// add soft keyboard handler - essentially hiding soft
 		// keyboard when an EditText is not in focus
 		((SupportingLifeBaseActivity) getActivity()).addSoftKeyboardHandling(rootView);
+		
+		// load icon fonts for breathe
+		configureBreatheButtonFontIcon(rootView);
 
 		return rootView;
 	}
@@ -153,7 +162,15 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
 		// add listener to 'swelling of both feet' radio group
 		getSwellingOfBothFeetRadioGroup().setOnCheckedChangeListener(
 				new RadioGroupListener(getLookCcmPage(),
-						LookCcmPage.SWELLING_OF_BOTH_FEET_DATA_KEY));		
+						LookCcmPage.SWELLING_OF_BOTH_FEET_DATA_KEY));
+		
+		getBreatheButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            	DialogFragment breathCounterFragment = new BreathCounterDialogFragment();
+            	breathCounterFragment.show(getFragmentManager(), "Breath Counter");
+            }
+        });
 	}
 
     @Override
@@ -188,6 +205,19 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
     	}
     }
 	
+	/**
+	 * Responsible for configuring the font icon (provided by FlatIcon)
+	 * for the Breathe Icon
+	 * 
+	 */
+	private void configureBreatheButtonFontIcon(View rootView) {
+		// load the flaticon font for the buttons
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), BREATHE_ICON_TYPEFACE_ASSET);
+		
+		setBreatheButton((Button) rootView.findViewById(R.id.ccm_look_assessment_breath_counter_button));
+		getBreatheButton().setTypeface(font);
+	}
+    
 	/**
 	 * Getter Method: getLookCcmPage()
 	 */
@@ -312,6 +342,14 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
 	 */	
 	public void setBreathsPerMinuteEditText(EditText breathsPerMinuteEditText) {
 		this.breathsPerMinuteEditText = breathsPerMinuteEditText;
+	}
+
+	public Button getBreatheButton() {
+		return breatheButton;
+	}
+
+	public void setBreatheButton(Button breatheButton) {
+		this.breatheButton = breatheButton;
 	}
 
 

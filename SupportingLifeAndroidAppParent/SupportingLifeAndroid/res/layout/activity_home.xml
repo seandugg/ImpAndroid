@@ -30,7 +30,7 @@
 		    android:background="@drawable/user_selection_user_button"
 		    android:text="@string/dashboard_imci_assessment_icon_font"
 		    android:textSize="70sp"
-		    android:textColor="@color/icon_button_text_color"
+		    android:textColor="@color/default_black_icon_button_text_color"
 			android:onClick="onClickDashboardButton" />
 		
 		<TextView
@@ -61,7 +61,7 @@
 		    android:background="@drawable/user_selection_user_button"
 		    android:onClick="onClickDashboardButton"
 		    android:text="@string/dashboard_ccm_assessment_icon_font"
-		    android:textColor="@color/icon_button_text_color"
+		    android:textColor="@color/default_black_icon_button_text_color"
 		    android:textSize="75sp" />
 		
 		<TextView
@@ -100,7 +100,7 @@
 		    android:background="@drawable/user_selection_user_button"
 		    android:text="@string/dashboard_training_icon_font"
 		    android:textSize="50sp"
-		    android:textColor="@color/icon_button_text_color"
+		    android:textColor="@color/default_black_icon_button_text_color"
 			android:onClick="onClickDashboardButton" />
 		
 		<TextView
@@ -130,7 +130,7 @@
 		    android:background="@drawable/user_selection_user_button"
 		    android:onClick="onClickDashboardButton"
 		    android:text="@string/dashboard_search_icon_font"
-		    android:textColor="@color/icon_button_text_color"
+		    android:textColor="@color/default_black_icon_button_text_color"
 		    android:textSize="70sp" />
 		
 		<TextView
@@ -169,7 +169,7 @@
 		    android:background="@drawable/user_selection_user_button"
 		    android:text="@string/dashboard_user_profile_icon_font"
 		    android:textSize="75sp"
-		    android:textColor="@color/icon_button_text_color"
+		    android:textColor="@color/default_black_icon_button_text_color"
 		    android:onClick="onClickDashboardButton" />
 		
 		<TextView
@@ -199,7 +199,7 @@
 		    android:background="@drawable/user_selection_user_button"
 		    android:onClick="onClickDashboardButton"
 		    android:text="@string/dashboard_about_icon_font"
-		    android:textColor="@color/icon_button_text_color"
+		    android:textColor="@color/default_black_icon_button_text_color"
 		    android:textSize="70sp" />
 		
 		<TextView

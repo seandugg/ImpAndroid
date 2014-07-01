@@ -369,5 +369,16 @@
 		<item name="android:textSize">18sp</item>
 	</style>
 	
+    <!-- ============================================================ -->
+    <!-- BREATH COUNTER DIALOG STYLE -->
+    <!-- ============================================================ -->
+	<style name="BreathCounterDialog" parent="android:style/Theme.Holo.Light.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:orientation">vertical</item>
+		<item name="android:paddingLeft">16dp</item>
+		<item name="android:paddingRight">16dp</item>
+    </style>
 	
 </resources>
