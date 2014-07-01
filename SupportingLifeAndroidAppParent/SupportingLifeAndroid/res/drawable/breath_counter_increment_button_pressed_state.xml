@@ -3,6 +3,15 @@
 <!-- BREATH COUNTER INCREMENT BUTTON - PRESSED STATE -->
 <!-- ============================================================ -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- "shadow" -->
+    <item>
+        <shape android:shape="rectangle" >
+           <solid android:color="#000000"/>
+           <corners android:radius="6dp" />
+        </shape>
+    </item>
+    
     <item android:top="0dp"
         android:left="0dp"
         android:right="0dp"
@@ -17,8 +26,8 @@
 		    <solid android:color="@color/DarkGreen" />
 		
 		    <stroke
-		        android:width="5px"
-		        android:color="@color/Black" />
+		        android:width="1px"
+		        android:color="@color/DarkGreen" />
 
 		    <padding
 		        android:bottom="7dp"
@@ -26,11 +35,14 @@
 		        android:right="10dp"
 		        android:top="7dp" />
 		
-		    <corners
-		        android:bottomLeftRadius="5dp"
-		        android:bottomRightRadius="5dp"
-		        android:topLeftRadius="5dp"
-		        android:topRightRadius="5dp" />		    
+		    <corners android:radius="6dp" />
+		    
+		    <gradient
+                android:angle="90"
+                android:centerColor="@color/Green"
+                android:endColor="@color/LightGreen"
+                android:startColor="@color/DarkGreen"
+                android:type="linear" />
 		</shape>
 	</item>
 </layer-list>
