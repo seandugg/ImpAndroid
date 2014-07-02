@@ -9,7 +9,7 @@
 
     <TextView 
         android:id="@+id/ccm_breath_counter_assessment_title"
-        style="@style/WizardPageTitle" 
+        style="@style/BreathCounterTitle" 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -28,12 +28,9 @@
         android:text="@string/ccm_breath_counter_assessment_reset_icon_font"
         android:textColor="@color/default_white_icon_button_text_color"
         android:textSize="40sp" />
-    <!-- ============================================================ -->
-    <!-- TIMER														  -->
-    <!-- ============================================================ -->
-
-    <!-- ============================================================ -->
-    <!-- BREATH COUNT STATUS DISPLAY								  -->
+    	
+	<!-- ============================================================ -->
+    <!-- Lungs Visual Indicator										  -->
     <!-- ============================================================ -->
     
     <TextView
@@ -41,21 +38,68 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-    	android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/ccm_look_assessment_breathe_icon_font"
         android:textColor="@color/DarkRed"
         android:textSize="50sp" />
+ 
+    <!-- ============================================================ -->
+    <!-- TIMER														  -->
+    <!-- ============================================================ -->
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        style="@style/BreathCountTimer"
+        android:background="@drawable/non_selectable_border_indicator">
+
+        <TextView
+            android:id="@+id/ccm_breath_counter_assessment_progress_timer_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center_horizontal"
+            android:text="@string/ccm_breath_counter_assessment_timer_title"
+            android:textColor="@color/SkyBlue"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/ccm_breath_counter_assessment_progress_timer_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:textColor="@color/SkyBlue"
+            android:textSize="20sp" />
+
+        <ProgressBar
+            android:id="@+id/ccm_breath_counter_assessment_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
+            android:indeterminate="false"
+            android:progress="1"
+            android:minHeight="20dp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+	<!-- ============================================================ -->
+    <!-- BREATH COUNT STATUS DISPLAY								  -->
+    <!-- ============================================================ -->
     
     <TextView
         android:id="@+id/ccm_breath_counter_assessment_breath_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
-    	android:layout_marginBottom="10dp"
         android:text="@string/ccm_breath_counter_assessment_zero_count"
-        android:textColor="@color/SkyBlue"
-        android:textSize="60sp"
+        android:textColor="@color/DarkGreen"
+        android:textSize="40sp"
         android:textStyle="bold|italic" />
 
 	<!-- ============================================================ -->
@@ -71,10 +115,5 @@
         android:text="@string/ccm_breath_counter_assessment_increment_icon_font"
         android:textColor="@color/default_white_icon_button_text_color"
         android:textSize="40sp" />
-
-    <!-- ============================================================ -->
-    <!-- BREATHS PER MINUTE -->
-    <!-- ============================================================ -->
-
 
 </LinearLayout>

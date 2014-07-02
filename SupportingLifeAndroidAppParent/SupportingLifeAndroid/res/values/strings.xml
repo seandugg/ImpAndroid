@@ -506,7 +506,8 @@
 	<!--  BREATH COUNTER  											  -->
 	<!-- ============================================================ -->
 	<string name="ccm_breath_counter_assessment_title">Breath Counter</string>
-	<string name="ccm_breath_counter_assessment_zero_count">0</string>
+	<string name="ccm_breath_counter_assessment_timer_title">Timer</string>	
+	<string name="ccm_breath_counter_assessment_zero_count">0 Breaths</string>
 	
 	<!-- ICON FONTS -->
 	<string name="ccm_breath_counter_assessment_reset_icon_font">&#xe000;</string>
