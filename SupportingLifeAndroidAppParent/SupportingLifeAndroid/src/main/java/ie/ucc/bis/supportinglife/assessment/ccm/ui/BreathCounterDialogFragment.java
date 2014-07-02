@@ -90,6 +90,8 @@ public class BreathCounterDialogFragment extends DialogFragment {
             	setProgressStatus(Integer.valueOf(ZERO_BREATHS));
             	getProgressBar().setProgress(getProgressStatus());
             	displayProgressTime();
+				// need to enable breath counter button
+				getIncrementCounterButton().setEnabled(true);
             }
         });		
 		
@@ -155,11 +157,18 @@ public class BreathCounterDialogFragment extends DialogFragment {
 					}
 				});
 				try {
-					// Sleep for 1 second
 					Thread.sleep(ONE_SECOND_IN_MILLISECONDS);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+			}
+			if (getProgressStatus() == ONE_MINUTE_IN_SECONDS) {
+				getHandler().post(new Runnable() {
+					public void run() {
+						// need to disable breath counter button
+						getIncrementCounterButton().setEnabled(false);
+					}
+				});	
 			}
 		}		
 	}
@@ -204,11 +213,11 @@ public class BreathCounterDialogFragment extends DialogFragment {
 		this.progressBar = progressBar;
 	}
 
-	public Button getIncrementCounterButton() {
+	public synchronized Button getIncrementCounterButton() {
 		return incrementCounterButton;
 	}
 
-	public void setIncrementCounterButton(Button incrementCounterButton) {
+	public synchronized void setIncrementCounterButton(Button incrementCounterButton) {
 		this.incrementCounterButton = incrementCounterButton;
 	}
 

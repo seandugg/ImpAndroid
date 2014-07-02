@@ -3,7 +3,8 @@
 <!-- BREATH COUNTER INCREMENT BUTTON -->
 <!-- ============================================================ -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-	<item android:drawable="@drawable/breath_counter_increment_button_pressed_state" android:state_pressed="true"/>
-	<item android:drawable="@drawable/breath_counter_increment_button_pressed_state" android:state_focused="true"/>
-	<item android:drawable="@drawable/breath_counter_increment_button_neutral_state" android:state_pressed="false"/>
+	<item android:drawable="@drawable/breath_counter_increment_button_pressed_state" android:state_enabled="true" android:state_pressed="true"/>
+	<item android:drawable="@drawable/breath_counter_increment_button_pressed_state" android:state_enabled="true" android:state_focused="true"/>
+	<item android:drawable="@drawable/breath_counter_increment_button_neutral_state" android:state_enabled="true" android:state_pressed="false"/>
+	<item android:drawable="@drawable/breath_counter_increment_button_disabled_state" android:state_enabled="false"/>
 </selector>
