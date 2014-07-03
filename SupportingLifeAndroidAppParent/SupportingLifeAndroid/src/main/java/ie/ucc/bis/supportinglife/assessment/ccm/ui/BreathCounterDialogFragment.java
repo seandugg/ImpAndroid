@@ -1,12 +1,19 @@
 package ie.ucc.bis.supportinglife.assessment.ccm.ui;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
+import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Typeface;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
@@ -21,8 +28,9 @@ import android.widget.ProgressBar;
 import android.widget.SearchView.OnCloseListener;
 import android.widget.TextView;
 
-public class BreathCounterDialogFragment extends DialogFragment implements OnCloseListener {
+public class BreathCounterDialogFragment extends DialogFragment implements OnCloseListener, SensorEventListener {
 	
+	private static final String LOG_TAG = " ie.ucc.bis.supportinglife.assessment.ccm.ui.BreathCounterDialogFragment";
 	private static final String BREATHE_COUNTER_RESET_ICON_TYPEFACE_ASSET = "fonts/breathe-reset-flaticon.ttf";
 	private static final String BREATHE_COUNTER_INCREMENT_ICON_TYPEFACE_ASSET = "fonts/breathe-increment-flaticon.ttf";
 	private static final String BREATH_COUNT_TYPEFACE_ASSET = "fonts/RobotoCondensed-Light.ttf";
@@ -41,6 +49,16 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 	private static final String MIDWAY_NOTIFCATION_SOUND = "Midway";
 	private static final String FINISHED_NOTIFICATION_SOUND = "Finished";
 	
+	/* Motion Direction */
+	private static final String BREATHE_IN = "BREATHE_IN";
+	private static final String BREATHE_OUT = "BREATHE_OUT";
+	
+	private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private long sensorTimestamp;
+    private float axisZPosition;
+    private String motionDirection;
+    
 	private Button resetCounterButton;
 	private TextView breathCountTextView;
 	private TextView lungsIconTextView;
@@ -66,10 +84,9 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 	    customDialog.setContentView(inflater.inflate(R.layout.fragment_ccm_breath_counter_assessment, null));
 	    
 		configureFonts(customDialog);
-				
 		configureProgressBar(customDialog);
-		
 		configureSounds();
+		configureSensors();
 		
 		setBreathCount(ZERO_BREATHS);
 		setTimerThreadRunning(false);
@@ -91,7 +108,10 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 
             	// let's animate the lungs icon to provide visual indicator to user
             	// add scaling effect to lungs
-            	getLungsIconTextView().startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.scale));         
+            	getLungsIconTextView().startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.scale));
+            	
+            	// *** sensor handling ***
+            	setSensorTimestamp(System.currentTimeMillis());
             }
         });
 		
@@ -124,6 +144,12 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
         });		
 		
 		return customDialog;
+	}
+	
+	@Override
+	public void onDismiss(DialogInterface dialog) {
+		getSensorManager().unregisterListener(this);
+		super.onDismiss(dialog);
 	}
 
 	/**
@@ -183,6 +209,20 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 		
 		setHandler(new Handler());
 	}
+	
+	/**
+	 * Responsible for configuring the accelerometer sensor
+	 * 
+	 * @param customDialog
+	 */
+	private void configureSensors() {
+		if (getActivity() != null) {
+			setSensorManager((SensorManager) getActivity().getSystemService(SupportingLifeBaseActivity.SENSOR_SERVICE));
+	        setAccelerometer(getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+	        getSensorManager().registerListener(this, getAccelerometer() , SensorManager.SENSOR_DELAY_NORMAL);
+		}
+	}
+
 	
 	/**
 	 * Thread class to facilitate updates to Timer
@@ -281,6 +321,64 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 	}
 	
 	/**
+	 * Handle Accelerometer sensor event
+	 */
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		Sensor slSensor = event.sensor;
+		boolean directionChange = false;
+
+		if (slSensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+			// float x = event.values[0];
+			// float y = event.values[1];
+			float z = event.values[2];
+
+			long currentTime = System.currentTimeMillis();
+
+			if ((currentTime - getSensorTimestamp()) > 500) {
+				float zPosChange = getAxisZPosition() - z;
+				
+				if (getMotionDirection() == null) {
+					if (zPosChange > 4) {
+						setMotionDirection(BREATHE_IN); // Upward motion
+					}
+					else if (zPosChange < -4){
+						setMotionDirection(BREATHE_OUT); // Downward motion
+					}
+				}
+				else {
+					if (zPosChange < -4 && getMotionDirection().equals(BREATHE_IN)) {
+						setMotionDirection(BREATHE_OUT); // Upward motion
+						directionChange = true;
+					}
+					else if (zPosChange > 4 && getMotionDirection().equals(BREATHE_OUT)){
+						setMotionDirection(BREATHE_IN); // Downward motion
+						directionChange = true;
+					}
+				}
+
+				if (directionChange) {
+					LoggerUtils.i(LOG_TAG, "Z Original: " + getAxisZPosition());
+					LoggerUtils.i(LOG_TAG, "Z New: " + z);
+					LoggerUtils.i(LOG_TAG, "Z Change: " + zPosChange);
+					LoggerUtils.i(LOG_TAG, "Direction Change!! " + getMotionDirection());
+					LoggerUtils.i(LOG_TAG, "===================");
+				}
+
+				setAxisZPosition(z);
+				setSensorTimestamp(currentTime);
+			}
+		}		
+	}
+
+	/**
+	 * SensorEventListener event
+	 */
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+	
+	
+	/**
 	 * display current timer progress 
 	 */
 	private void displayProgressTime() {
@@ -300,6 +398,46 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 		}
 	}
 	
+	public SensorManager getSensorManager() {
+		return sensorManager;
+	}
+
+	public void setSensorManager(SensorManager sensorManager) {
+		this.sensorManager = sensorManager;
+	}
+
+	public Sensor getAccelerometer() {
+		return accelerometer;
+	}
+
+	public void setAccelerometer(Sensor accelerometer) {
+		this.accelerometer = accelerometer;
+	}
+
+	public long getSensorTimestamp() {
+		return sensorTimestamp;
+	}
+
+	public void setSensorTimestamp(long sensorTimestamp) {
+		this.sensorTimestamp = sensorTimestamp;
+	}
+
+	public float getAxisZPosition() {
+		return axisZPosition;
+	}
+
+	public void setAxisZPosition(float axisZPosition) {
+		this.axisZPosition = axisZPosition;
+	}
+
+	public String getMotionDirection() {
+		return motionDirection;
+	}
+
+	public void setMotionDirection(String motionDirection) {
+		this.motionDirection = motionDirection;
+	}
+
 	public Button getResetCounterButton() {
 		return resetCounterButton;
 	}
