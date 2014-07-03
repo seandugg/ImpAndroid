@@ -335,23 +335,23 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 
 			long currentTime = System.currentTimeMillis();
 
-			if ((currentTime - getSensorTimestamp()) > 400) {
+			if ((currentTime - getSensorTimestamp()) > 500) {
 				float zPosChange = getAxisZPosition() - z;
 				
 				if (getMotionDirection() == null) {
-					if (zPosChange > 2) {
+					if (zPosChange > 3) {
 						setMotionDirection(BREATHE_IN); // Upward motion
 					}
-					else if (zPosChange < -2){
+					else if (zPosChange < -3){
 						setMotionDirection(BREATHE_OUT); // Downward motion
 					}
 				}
 				else {
-					if (zPosChange < -2 && getMotionDirection().equals(BREATHE_IN)) {
+					if (zPosChange < -3 && getMotionDirection().equals(BREATHE_IN)) {
 						setMotionDirection(BREATHE_OUT); // Upward motion
 						directionChange = true;
 					}
-					else if (zPosChange > 2 && getMotionDirection().equals(BREATHE_OUT)){
+					else if (zPosChange > 3 && getMotionDirection().equals(BREATHE_OUT)){
 						setMotionDirection(BREATHE_IN); // Downward motion
 						directionChange = true;
 					}
@@ -366,7 +366,7 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 				}
 
 				setAxisZPosition(z);
-				setSensorTimestamp(currentTime);
+				setSensorTimestamp(System.currentTimeMillis());
 			}
 		}		
 	}
