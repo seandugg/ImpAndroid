@@ -6,16 +6,14 @@
     <!-- ============================================================ -->
     <!-- BREATH COUNTER INTERFACE -->
     <!-- ============================================================ -->
-
-    <TextView 
+    
+    <TextView
         android:id="@+id/ccm_breath_counter_assessment_title"
-        style="@style/BreathCounterTitle" 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/BreathCounterTitle"
         android:gravity="center_horizontal"
         android:text="@string/ccm_breath_counter_assessment_title" />
     
-    <!-- ============================================================ -->
+	<!-- ============================================================ -->
     <!-- RESET COUNTER BUTTON 										  -->
     <!-- ============================================================ -->
     
