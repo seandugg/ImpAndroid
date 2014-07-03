@@ -7,8 +7,8 @@ import java.util.Map;
 
 import android.app.Dialog;
 import android.graphics.Typeface;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,14 +29,17 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 	
 	private static final int ZERO_BREATHS = 0;
 	private static final int SECOND = 1;
+	private static final int THIRTY_SECONDS = 30;
+	private static final int ONE_MINUTE_IN_SECONDS = 60;
 	private static final int ONE_SECOND_IN_MILLISECONDS = 1000;
-	private static final int ONE_MINUTE_IN_SECONDS = 10;
 	private static final String BREATHS = "Breaths";
 	private static final String BREATH = "Breath";
 	private static final String SECONDS = "Seconds";
 	
 	/* Sounds */
 	private static final String TICK_SOUND = "Tick";
+	private static final String MIDWAY_NOTIFCATION_SOUND = "Midway";
+	private static final String FINISHED_NOTIFICATION_SOUND = "Finished";
 	
 	private Button resetCounterButton;
 	private TextView breathCountTextView;
@@ -102,7 +105,7 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
             	}
             	// stop ticking sound if timer still going
             	if (isTimerThreadRunning()) {
-	            	getSoundPlayer().stop();
+	            	getSoundPlayer().reset();
 	            	getSoundPlayer().release();
             	}
             	
@@ -131,10 +134,8 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 	private void configureSounds() {	
 		setSounds(new HashMap<String, Integer>());
 		getSounds().put(TICK_SOUND, R.raw.second_tick);
-		// configure 'second tick' sound
-		setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(TICK_SOUND)));
-		getSoundPlayer().setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
-		getSoundPlayer().setOnPreparedListener(new MediaPlayerPreparedListener(getSoundPlayer()));
+		getSounds().put(MIDWAY_NOTIFCATION_SOUND, R.raw.midway_notification);
+		getSounds().put(FINISHED_NOTIFICATION_SOUND, R.raw.timer_finish);
 	}
 
 	/**
@@ -198,10 +199,15 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 						getProgressBar().setProgress(getProgressStatus());
 						displayProgressTime();
 						
-						if (getActivity() != null) {
-							getSoundPlayer().release();
-							setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(TICK_SOUND)));
-							getSoundPlayer().setOnPreparedListener(new MediaPlayerPreparedListener(getSoundPlayer()));
+						if (getActivity() != null) {						
+							switch(getProgressStatus()) {
+								case THIRTY_SECONDS: setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(MIDWAY_NOTIFCATION_SOUND)));
+													  break;
+								default: setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(TICK_SOUND)));
+										 break;
+							}
+							getSoundPlayer().setOnPreparedListener(new MediaPlayerListener(getSoundPlayer()));
+							getSoundPlayer().setOnCompletionListener(new MediaPlayerListener(getSoundPlayer()));
 						}
 					}
 				});
@@ -214,13 +220,16 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 			if (getProgressStatus() == ONE_MINUTE_IN_SECONDS) {
 				getHandler().post(new Runnable() {
 					public void run() {
+						if (getActivity() != null) {
+							setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(FINISHED_NOTIFICATION_SOUND)));
+							getSoundPlayer().setOnPreparedListener(new MediaPlayerListener(getSoundPlayer()));
+							getSoundPlayer().setOnCompletionListener(new MediaPlayerListener(getSoundPlayer()));
+						}
+						
 						// need to disable breath counter button
 						getIncrementCounterButton().setEnabled(false);
 						
 						setTimerThreadRunning(false);
-		            	// stop ticking sound
-		            	getSoundPlayer().stop();
-		            	getSoundPlayer().release();
 					}
 				});	
 			}
@@ -230,10 +239,10 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 	/**
 	 * MediaPlayer Listener to play sound once sound is prepared to be played
 	 */
-	private class MediaPlayerPreparedListener implements OnPreparedListener {
+	private class MediaPlayerListener implements OnPreparedListener, OnCompletionListener {
 		private MediaPlayer mediaPlayer;
 		
-		public MediaPlayerPreparedListener(MediaPlayer mediaPlayer) {
+		public MediaPlayerListener(MediaPlayer mediaPlayer) {
 			this.mediaPlayer = mediaPlayer;
 		}
 		
@@ -243,6 +252,14 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
             	mediaPlayer.start();
             }
         }
+
+		@Override
+		public void onCompletion(MediaPlayer mp) {
+            if (mp == mediaPlayer) {
+            	mediaPlayer.reset();
+            	mediaPlayer.release();
+            }
+		}
     }
 
 	/**
@@ -257,7 +274,7 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
     	
 		if (getSoundPlayer() != null) {
         	// stop ticking sound
-        	getSoundPlayer().stop();
+        	getSoundPlayer().reset();
         	getSoundPlayer().release();
 		}
 		return false;
