@@ -20,6 +20,7 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
+import android.util.FloatMath;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -58,6 +59,11 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
     private long sensorTimestamp;
     private float axisZPosition;
     private String motionDirection;
+    private float[] mGravity;
+    private float mAccel;
+    private float mAccelCurrent;
+    private float mAccelLast;
+
     
 	private Button resetCounterButton;
 	private TextView breathCountTextView;
@@ -331,27 +337,41 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 		if (slSensor.getType() == Sensor.TYPE_ACCELEROMETER) {
 			// float x = event.values[0];
 			// float y = event.values[1];
-			float z = event.values[2];
+			//  float z = event.values[1];
 
 			long currentTime = System.currentTimeMillis();
+			
+			
+			mGravity = event.values.clone();
+	        // Shake detection
+	        float x = mGravity[0];
+	        float y = mGravity[1];
+	        float z = mGravity[2];
+	        mAccelLast = mAccelCurrent;
+	        mAccelCurrent = FloatMath.sqrt(x*x + y*y + z*z);
+	        float delta = mAccelCurrent - mAccelLast;
+	        mAccel = mAccel * 1.5f + delta;
+	            // Make this higher or lower according to how much
+	            // motion you want to detect
 
-			if ((currentTime - getSensorTimestamp()) > 500) {
+	        if(mAccel > 0.1){ 
+			if ((currentTime - getSensorTimestamp()) > 100) {
 				float zPosChange = getAxisZPosition() - z;
 				
 				if (getMotionDirection() == null) {
-					if (zPosChange > 3) {
+					if (zPosChange > 1) {
 						setMotionDirection(BREATHE_IN); // Upward motion
 					}
-					else if (zPosChange < -3){
+					else if (zPosChange < - 1){
 						setMotionDirection(BREATHE_OUT); // Downward motion
 					}
 				}
 				else {
-					if (zPosChange < -3 && getMotionDirection().equals(BREATHE_IN)) {
+					if (zPosChange < -1 && getMotionDirection().equals(BREATHE_IN)) {
 						setMotionDirection(BREATHE_OUT); // Upward motion
 						directionChange = true;
 					}
-					else if (zPosChange > 3 && getMotionDirection().equals(BREATHE_OUT)){
+					else if (zPosChange > 1 && getMotionDirection().equals(BREATHE_OUT)){
 						setMotionDirection(BREATHE_IN); // Downward motion
 						directionChange = true;
 					}
@@ -368,6 +388,7 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 				setAxisZPosition(z);
 				setSensorTimestamp(System.currentTimeMillis());
 			}
+	        }
 		}		
 	}
 
