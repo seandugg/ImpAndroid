@@ -4,7 +4,9 @@ import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.app.Dialog;
@@ -20,7 +22,6 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.DialogFragment;
-import android.util.FloatMath;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -57,13 +58,16 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 	private SensorManager sensorManager;
     private Sensor accelerometer;
     private long sensorTimestamp;
+    private long directionChangeTimestamp;
     private float axisZPosition;
     private String motionDirection;
     private float[] mGravity;
-    private float mAccel;
-    private float mAccelCurrent;
-    private float mAccelLast;
-
+    private float mAccelNoGrav;
+    private float mAccelWithGravCurrent;
+    private float mAccelWithGravLast;
+    private List<Float> z = new ArrayList<Float>();
+    
+    
     
 	private Button resetCounterButton;
 	private TextView breathCountTextView;
@@ -118,6 +122,7 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
             	
             	// *** sensor handling ***
             	setSensorTimestamp(System.currentTimeMillis());
+            	setDirectionChangeTimestamp(System.currentTimeMillis());
             }
         });
 		
@@ -226,6 +231,11 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 			setSensorManager((SensorManager) getActivity().getSystemService(SupportingLifeBaseActivity.SENSOR_SERVICE));
 	        setAccelerometer(getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
 	        getSensorManager().registerListener(this, getAccelerometer() , SensorManager.SENSOR_DELAY_NORMAL);
+	        mAccelNoGrav = 0.0f;
+	        mAccelWithGravCurrent = SensorManager.GRAVITY_EARTH;
+	        mAccelWithGravLast = SensorManager.GRAVITY_EARTH;
+	        setMotionDirection(BREATHE_OUT);
+	        z.add(0.0f);
 		}
 	}
 
@@ -335,63 +345,73 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 		boolean directionChange = false;
 
 		if (slSensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-			// float x = event.values[0];
-			// float y = event.values[1];
-			//  float z = event.values[1];
-
-			long currentTime = System.currentTimeMillis();
-			
-			
-			mGravity = event.values.clone();
-	        // Shake detection
-	        float x = mGravity[0];
-	        float y = mGravity[1];
-	        float z = mGravity[2];
-	        mAccelLast = mAccelCurrent;
-	        mAccelCurrent = FloatMath.sqrt(x*x + y*y + z*z);
-	        float delta = mAccelCurrent - mAccelLast;
-	        mAccel = mAccel * 1.5f + delta;
-	            // Make this higher or lower according to how much
-	            // motion you want to detect
-
-	        if(mAccel > 0.1){ 
-			if ((currentTime - getSensorTimestamp()) > 100) {
-				float zPosChange = getAxisZPosition() - z;
 				
-				if (getMotionDirection() == null) {
-					if (zPosChange > 1) {
-						setMotionDirection(BREATHE_IN); // Upward motion
-					}
-					else if (zPosChange < - 1){
-						setMotionDirection(BREATHE_OUT); // Downward motion
-					}
-				}
-				else {
-					if (zPosChange < -1 && getMotionDirection().equals(BREATHE_IN)) {
-						setMotionDirection(BREATHE_OUT); // Upward motion
-						directionChange = true;
-					}
-					else if (zPosChange > 1 && getMotionDirection().equals(BREATHE_OUT)){
-						setMotionDirection(BREATHE_IN); // Downward motion
-						directionChange = true;
-					}
-				}
+	        	mGravity = event.values.clone();
+		        float x = mGravity[0];
+		        float y = mGravity[1];
+		        z.add((mGravity[1])-SensorManager.GRAVITY_EARTH);
+		        
+		        if (z.size() > 100) {
+		        	z = z.subList(z.size() - 80, z.size());
+		        }
+		        
+		        mAccelWithGravLast = mAccelWithGravCurrent;
+		        mAccelWithGravCurrent =  (float) java.lang.Math.sqrt(x * x + y * y + z.get(z.size()-1) * z.get(z.size()-1));
+		        float delta = mAccelWithGravCurrent - mAccelWithGravLast;
+		        mAccelNoGrav = mAccelNoGrav * 0.05f + delta; // Low-cut filter
+		        
+	        	if(mAccelNoGrav > .1) { 
+	        		if (getMotionDirection().equals(BREATHE_OUT)) {
+	        			if (checkMotionDirection(BREATHE_IN)) {
+		        			setMotionDirection(BREATHE_IN); // Upward motion
+		        			directionChange = true;
+	        			}
+	        		}
+	        		else if (getMotionDirection().equals(BREATHE_IN)){
+	        			if (checkMotionDirection(BREATHE_OUT)) {
+		        			setMotionDirection(BREATHE_OUT); // Downward motion
+		        			directionChange = true;
+	        			}
+	        		}
 
-				if (directionChange) {
-					LoggerUtils.i(LOG_TAG, "Z Original: " + getAxisZPosition());
-					LoggerUtils.i(LOG_TAG, "Z New: " + z);
-					LoggerUtils.i(LOG_TAG, "Z Change: " + zPosChange);
-					LoggerUtils.i(LOG_TAG, "Direction Change!! " + getMotionDirection());
-					LoggerUtils.i(LOG_TAG, "===================");
-				}
-
-				setAxisZPosition(z);
-				setSensorTimestamp(System.currentTimeMillis());
-			}
-	        }
+	        		if (directionChange) {
+	        			LoggerUtils.i(LOG_TAG, "Direction Change!! " + getMotionDirection());
+	        			LoggerUtils.i(LOG_TAG, "===================");
+	        			setDirectionChangeTimestamp(System.currentTimeMillis() + 400);
+	        		}
+        			setSensorTimestamp(System.currentTimeMillis());
+	        	}
 		}		
 	}
 
+	private boolean checkMotionDirection(String motion) {
+		int sequenceNumber = 0;
+		
+		if (motion.equals(BREATHE_IN)) {
+			for (int counter = z.size(); counter > 1; counter--) {
+				if (z.get(counter - 1) > z.get(counter - 2)) {
+					sequenceNumber++;
+					if (sequenceNumber == 30) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		if (motion.equals(BREATHE_OUT)) {
+			for (int counter = z.size(); counter > 1; counter--) {
+				if (z.get(counter - 1) < z.get(counter - 2)) {
+					sequenceNumber++;
+					if (sequenceNumber == 30) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
 	/**
 	 * SensorEventListener event
 	 */
@@ -441,6 +461,14 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 
 	public void setSensorTimestamp(long sensorTimestamp) {
 		this.sensorTimestamp = sensorTimestamp;
+	}
+
+	public long getDirectionChangeTimestamp() {
+		return directionChangeTimestamp;
+	}
+
+	public void setDirectionChangeTimestamp(long directionChangeTimestamp) {
+		this.directionChangeTimestamp = directionChangeTimestamp;
 	}
 
 	public float getAxisZPosition() {
