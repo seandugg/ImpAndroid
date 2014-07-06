@@ -114,6 +114,11 @@ public class SettingsActivity extends SupportingLifeBaseActivity {
 					LoggerUtils.i(LOG_TAG, "User Language Preference changed to: " + listPreference.getValue());
 				}
 				
+				// check if this relates to the breath counter duration selection preference
+				if (listPreference.getKey().equalsIgnoreCase(BREATHING_DURATION_SELECTION_KEY)) {
+					LoggerUtils.i(LOG_TAG, "Breathing Duration Preference changed to: " + listPreference.getValue());
+				}				
+				
 				listPreference.setSummary(listPreference.getEntry());
 			}
 			else if (preference instanceof EditTextPreference) {

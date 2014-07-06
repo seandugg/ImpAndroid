@@ -19,4 +19,16 @@
             android:entryValues="@array/languageSelectionValues"/>
 	           
     </PreferenceCategory>
+    
+	<PreferenceCategory android:title="@string/breathing_duration_preference_category"
+	    android:key="breathing_duration">
+
+		<ListPreference android:key="breathing_duration_selection"
+            android:title="@string/breathing_duration_list_preference_title"
+            android:summary="@string/breathing_duration_list_preference_summary"
+            android:defaultValue="60"
+            android:entries="@array/breathingDurationSelection"
+            android:entryValues="@array/breathingDurationSelectionValues"/>
+	           
+    </PreferenceCategory>
 </PreferenceScreen>

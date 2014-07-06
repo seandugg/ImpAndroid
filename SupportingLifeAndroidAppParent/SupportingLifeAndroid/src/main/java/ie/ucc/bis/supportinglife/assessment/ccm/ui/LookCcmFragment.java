@@ -11,12 +11,14 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextWatcher;
+import ie.ucc.bis.supportinglife.assessment.model.listener.BreathCounterDialogListener;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.ui.custom.ToggleButtonGroupTableLayout;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +27,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
  * Responsible for UI fragment to display CCM 
@@ -35,6 +39,7 @@ import android.widget.TextView;
  */
 public class LookCcmFragment extends Fragment implements FragmentLifecycle {
     
+	private static final String BREATH_COUNTER_NOT_APPLICABLE = "Not Applicable";
 	static final String BREATHE_ICON_TYPEFACE_ASSET = "fonts/breathe-flaticon.ttf";
 	
 	private LookCcmPage lookCcmPage;    
@@ -167,8 +172,33 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
 		getBreatheButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            	DialogFragment breathCounterFragment = new BreathCounterDialogFragment();
-            	breathCounterFragment.show(getFragmentManager(), "Breath Counter");
+        		// need to determine if breath counter has been turned on in user preferences
+            	SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        		String breathingDurationPreference = settings.getString(SupportingLifeBaseActivity.BREATHING_DURATION_SELECTION_KEY, "");
+        		if (breathingDurationPreference.equalsIgnoreCase(BREATH_COUNTER_NOT_APPLICABLE) == true) {
+        			Crouton.makeText(getActivity(), "Breath Counter Feature Not Enabled", Style.INFO).show();   
+        		}
+        		else {
+        			BreathCounterDialogFragment breathCounterFragment = BreathCounterDialogFragment.create(breathingDurationPreference);
+                	
+                	breathCounterFragment.setBreathCounterDialogListener(new BreathCounterDialogListener() {
+						@Override
+						public void dialogClosed(boolean timerComplete, boolean fullTimeAssessment, int breathCount) {
+							if (timerComplete && fullTimeAssessment) {
+								getBreathsPerMinuteEditText().setText(String.valueOf(breathCount));
+								Crouton.makeText(getActivity(), "Breath Count Assessment Complete", Style.INFO).show();
+							}
+							else if (timerComplete && !fullTimeAssessment) {
+								getBreathsPerMinuteEditText().setText(String.valueOf(breathCount));
+								Crouton.makeText(getActivity(), "Breath Count Assessment Complete (*Estimated Total)", Style.INFO).show();								
+							}
+							else {
+								Crouton.makeText(getActivity(), "Breath Count Assessment Incomplete", Style.ALERT).show();
+							}
+						}
+					});                	
+                	breathCounterFragment.show(getFragmentManager(), "Breath Counter");	
+        		}
             }
         });
 	}

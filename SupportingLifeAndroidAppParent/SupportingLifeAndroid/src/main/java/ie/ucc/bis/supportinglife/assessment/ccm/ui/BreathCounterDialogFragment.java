@@ -1,21 +1,15 @@
 package ie.ucc.bis.supportinglife.assessment.ccm.ui;
 
 import ie.ucc.bis.supportinglife.R;
-import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
-import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
+import ie.ucc.bis.supportinglife.assessment.model.listener.BreathCounterDialogListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Typeface;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
@@ -27,12 +21,11 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.SearchView.OnCloseListener;
 import android.widget.TextView;
 
-public class BreathCounterDialogFragment extends DialogFragment implements OnCloseListener, SensorEventListener {
-	
-	private static final String LOG_TAG = " ie.ucc.bis.supportinglife.assessment.ccm.ui.BreathCounterDialogFragment";
+public class BreathCounterDialogFragment extends DialogFragment implements OnDismissListener {
+
+	private static final String BREATHING_DURATION_PREFERENCE = "BREATHING_DURATION_PREFERENCE";
 	private static final String BREATHE_COUNTER_RESET_ICON_TYPEFACE_ASSET = "fonts/breathe-reset-flaticon.ttf";
 	private static final String BREATHE_COUNTER_INCREMENT_ICON_TYPEFACE_ASSET = "fonts/breathe-increment-flaticon.ttf";
 	private static final String BREATH_COUNT_TYPEFACE_ASSET = "fonts/RobotoCondensed-Light.ttf";
@@ -50,25 +43,8 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 	private static final String TICK_SOUND = "Tick";
 	private static final String MIDWAY_NOTIFCATION_SOUND = "Midway";
 	private static final String FINISHED_NOTIFICATION_SOUND = "Finished";
-	
-	/* Motion Direction */
-	private static final String BREATHE_IN = "BREATHE_IN";
-	private static final String BREATHE_OUT = "BREATHE_OUT";
-	
-	private SensorManager sensorManager;
-    private Sensor accelerometer;
-    private long sensorTimestamp;
-    private long directionChangeTimestamp;
-    private float axisZPosition;
-    private String motionDirection;
-    private float[] mGravity;
-    private float mAccelNoGrav;
-    private float mAccelWithGravCurrent;
-    private float mAccelWithGravLast;
-    private List<Float> z = new ArrayList<Float>();
     
-    
-    
+	private BreathCounterDialogListener breathCounterDialogListener;
 	private Button resetCounterButton;
 	private TextView breathCountTextView;
 	private TextView lungsIconTextView;
@@ -80,9 +56,25 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 	private Handler handler;
 	private Thread timerThread;
 	private boolean timerThreadRunning;
+	private int totalDuration;
 	private MediaPlayer soundPlayer;
 	private Map<String, Integer> sounds;
 	
+	/**
+	 * Constructor
+	 *
+	 */
+	public BreathCounterDialogFragment() {}
+	
+	public static BreathCounterDialogFragment create(String breathingDurationPreference) {
+		Bundle args = new Bundle();
+		args.putInt(BREATHING_DURATION_PREFERENCE, Integer.parseInt(breathingDurationPreference));
+
+		BreathCounterDialogFragment fragment = new BreathCounterDialogFragment();
+		fragment.setArguments(args);
+		return fragment;
+	}
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		Dialog customDialog = new Dialog(getActivity(), R.style.BreathCounterDialog);
@@ -92,11 +84,10 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 
 	    // Inflate and set the layout for the dialog
 	    customDialog.setContentView(inflater.inflate(R.layout.fragment_ccm_breath_counter_assessment, null));
-	    
+	    	
 		configureFonts(customDialog);
 		configureProgressBar(customDialog);
 		configureSounds();
-		configureSensors();
 		
 		setBreathCount(ZERO_BREATHS);
 		setTimerThreadRunning(false);
@@ -119,10 +110,6 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
             	// let's animate the lungs icon to provide visual indicator to user
             	// add scaling effect to lungs
             	getLungsIconTextView().startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.scale));
-            	
-            	// *** sensor handling ***
-            	setSensorTimestamp(System.currentTimeMillis());
-            	setDirectionChangeTimestamp(System.currentTimeMillis());
             }
         });
 		
@@ -155,12 +142,6 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
         });		
 		
 		return customDialog;
-	}
-	
-	@Override
-	public void onDismiss(DialogInterface dialog) {
-		getSensorManager().unregisterListener(this);
-		super.onDismiss(dialog);
 	}
 
 	/**
@@ -212,41 +193,23 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 		setProgressBar((ProgressBar) customDialog.findViewById(R.id.ccm_breath_counter_assessment_progressbar));
 		
 		// configure max time for progress bar
-		// TODO - this should be read from preferences with potential
-		// 		  values being 15, 30, 45, 60
-		getProgressBar().setMax(ONE_MINUTE_IN_SECONDS);
+		// this should be read from preferences with potential
+		// values being 15, 30, 45, 60
+	    setTotalDuration(getArguments().getInt(BREATHING_DURATION_PREFERENCE));
+		getProgressBar().setMax(getTotalDuration());
 		
 		setProgressTimer((TextView) customDialog.findViewById(R.id.ccm_breath_counter_assessment_progress_timer_status));
 		
 		setHandler(new Handler());
 	}
-	
-	/**
-	 * Responsible for configuring the accelerometer sensor
-	 * 
-	 * @param customDialog
-	 */
-	private void configureSensors() {
-		if (getActivity() != null) {
-			setSensorManager((SensorManager) getActivity().getSystemService(SupportingLifeBaseActivity.SENSOR_SERVICE));
-	        setAccelerometer(getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
-	        getSensorManager().registerListener(this, getAccelerometer() , SensorManager.SENSOR_DELAY_NORMAL);
-	        mAccelNoGrav = 0.0f;
-	        mAccelWithGravCurrent = SensorManager.GRAVITY_EARTH;
-	        mAccelWithGravLast = SensorManager.GRAVITY_EARTH;
-	        setMotionDirection(BREATHE_OUT);
-	        z.add(0.0f);
-		}
-	}
-
-	
+		
 	/**
 	 * Thread class to facilitate updates to Timer
 	 */
 	private class BreathTimerThread extends Thread implements Runnable {
 		public void run() {
 			
-			while (isTimerThreadRunning() && getProgressStatus() < ONE_MINUTE_IN_SECONDS) {
+			while (isTimerThreadRunning() && getProgressStatus() < getTotalDuration()) {
 				// Update the progress bar and display the 
 				//current value in the text view
 				getHandler().post(new Runnable() {
@@ -257,7 +220,9 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 						
 						if (getActivity() != null) {						
 							switch(getProgressStatus()) {
-								case THIRTY_SECONDS: setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(MIDWAY_NOTIFCATION_SOUND)));
+								case THIRTY_SECONDS: if (fullTimerDurationConfigured()) {
+														setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(MIDWAY_NOTIFCATION_SOUND)));
+													  }
 													  break;
 								default: setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(TICK_SOUND)));
 										 break;
@@ -322,7 +287,7 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 	 * capture dialog close event
 	 */
 	@Override
-	public boolean onClose() {
+	public void onDismiss(DialogInterface dialog) {
     	setTimerThreadRunning(false);
     	if (getTimerThread() != null) {
     		getTimerThread().interrupt();
@@ -330,36 +295,228 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
     	
 		if (getSoundPlayer() != null) {
         	// stop ticking sound
-        	getSoundPlayer().reset();
         	getSoundPlayer().release();
 		}
-		return false;
+		
+		// return results of breath count to calling fragment
+		boolean timerComplete = getProgressStatus() == getTotalDuration();
+		boolean fullTimeAssessment = getTotalDuration() == ONE_MINUTE_IN_SECONDS;
+
+		if (timerComplete && !fullTimeAssessment) {
+			// need to estimate breath count expectation if
+			// assessment was run over a full minute
+			int breathCountEstimate = (int) (((float) getBreathCount() / getTotalDuration()) * (float) ONE_MINUTE_IN_SECONDS);
+			getBreathCounterDialogListener().dialogClosed(timerComplete, fullTimeAssessment, breathCountEstimate);
+		}
+		else {			
+			getBreathCounterDialogListener().dialogClosed(timerComplete, fullTimeAssessment, getBreathCount());	
+		}
+		super.onDismiss(dialog);
 	}
 	
 	/**
+	 * Indicator for whether the timer duration is 
+	 * configured to sixty seconds
+	 * 
+	 */
+	private boolean fullTimerDurationConfigured() {
+		if (getTotalDuration() == ONE_MINUTE_IN_SECONDS)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * display current timer progress 
+	 */
+	private void displayProgressTime() {
+		getProgressTimer().setText(getProgressStatus() + "/" + getProgressBar().getMax() + " " + SECONDS);
+	}
+	
+	/**
+	 * display current number of breaths recorded
+	 * 
+	 */
+	private void displayBreathNumber() {
+		if (getBreathCount() == 1) {
+			getBreathCountTextView().setText(getBreathCount() + " " + BREATH);
+		}
+		else {
+			getBreathCountTextView().setText(getBreathCount() + " " + BREATHS);
+		}
+	}
+
+	public BreathCounterDialogListener getBreathCounterDialogListener() {
+		return breathCounterDialogListener;
+	}
+
+	public void setBreathCounterDialogListener(
+			BreathCounterDialogListener breathCounterDialogListener) {
+		this.breathCounterDialogListener = breathCounterDialogListener;
+	}
+
+	private Button getResetCounterButton() {
+		return resetCounterButton;
+	}
+
+	private void setResetCounterButton(Button resetCounterButton) {
+		this.resetCounterButton = resetCounterButton;
+	}
+
+	private TextView getBreathCountTextView() {
+		return breathCountTextView;
+	}
+
+	private void setBreathCountTextView(TextView breathCountTextView) {
+		this.breathCountTextView = breathCountTextView;
+	}
+
+	private TextView getLungsIconTextView() {
+		return lungsIconTextView;
+	}
+
+	private void setLungsIconTextView(TextView lungsIconTextView) {
+		this.lungsIconTextView = lungsIconTextView;
+	}
+
+	private synchronized TextView getProgressTimer() {
+		return progressTimer;
+	}
+
+	private synchronized void setProgressTimer(TextView progressTimer) {
+		this.progressTimer = progressTimer;
+	}
+
+	private synchronized ProgressBar getProgressBar() {
+		return progressBar;
+	}
+
+	private synchronized void setProgressBar(ProgressBar progressBar) {
+		this.progressBar = progressBar;
+	}
+
+	private synchronized Button getIncrementCounterButton() {
+		return incrementCounterButton;
+	}
+
+	private synchronized void setIncrementCounterButton(Button incrementCounterButton) {
+		this.incrementCounterButton = incrementCounterButton;
+	}
+
+	private synchronized int getProgressStatus() {
+		return progressStatus;
+	}
+
+	private synchronized void setProgressStatus(int progressStatus) {
+		this.progressStatus = progressStatus;
+	}
+
+	private int getBreathCount() {
+		return breathCount;
+	}
+
+	private void setBreathCount(int breathCount) {
+		this.breathCount = breathCount;
+	}
+
+	private Handler getHandler() {
+		return handler;
+	}
+
+	private void setHandler(Handler handler) {
+		this.handler = handler;
+	}
+
+	private Thread getTimerThread() {
+		return timerThread;
+	}
+
+	private void setTimerThread(Thread timerThread) {
+		this.timerThread = timerThread;
+	}
+
+	private synchronized boolean isTimerThreadRunning() {
+		return timerThreadRunning;
+	}
+
+	private synchronized void setTimerThreadRunning(boolean timerThreadRunning) {
+		this.timerThreadRunning = timerThreadRunning;
+	}
+
+	private int getTotalDuration() {
+		return totalDuration;
+	}
+
+	private void setTotalDuration(int totalDuration) {
+		this.totalDuration = totalDuration;
+	}
+
+	private synchronized MediaPlayer getSoundPlayer() {
+		return soundPlayer;
+	}
+
+	private synchronized void setSoundPlayer(MediaPlayer soundPlayer) {
+		this.soundPlayer = soundPlayer;
+	}
+
+	private Map<String, Integer> getSounds() {
+		return sounds;
+	}
+
+	private void setSounds(Map<String, Integer>  sounds) {
+		this.sounds = sounds;
+	}
+	
+	/*
+	 * The following is an initial effort at calculating breathing rate
+	 * of a patient by placing the device on their chest and using the
+	 * acceleromter to determine upward and downward motion.
+	 * 
+	 * Determining the precision of movement with the current implementation
+	 * was not successful. 
+	 * 
+	 * TODO Needs to be revisited
+	 */
+		
+	/**
 	 * Handle Accelerometer sensor event
 	 */
+	/*
+
+	private void configureSensors() {
+		if (getActivity() != null) {
+			setSensorManager((SensorManager) getActivity().getSystemService(SupportingLifeBaseActivity.SENSOR_SERVICE));
+	        setAccelerometer(getSensorManager().getDefaultSensor(Sensor.TYPE_ACCELEROMETER));
+	        getSensorManager().registerListener(this, getAccelerometer() , SensorManager.SENSOR_DELAY_NORMAL);
+	        mAccelNoGrav = 0.0f;
+	        mAccelWithGravCurrent = SensorManager.GRAVITY_EARTH;
+	        mAccelWithGravLast = SensorManager.GRAVITY_EARTH;
+	        setMotionDirection(BREATHE_OUT);
+	        z.add(0.0f);
+		}
+	}
+	 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		Sensor slSensor = event.sensor;
 		boolean directionChange = false;
 
 		if (slSensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-				
+
 	        	mGravity = event.values.clone();
 		        float x = mGravity[0];
 		        float y = mGravity[1];
 		        z.add((mGravity[1])-SensorManager.GRAVITY_EARTH);
-		        
+
 		        if (z.size() > 100) {
 		        	z = z.subList(z.size() - 80, z.size());
 		        }
-		        
+
 		        mAccelWithGravLast = mAccelWithGravCurrent;
 		        mAccelWithGravCurrent =  (float) java.lang.Math.sqrt(x * x + y * y + z.get(z.size()-1) * z.get(z.size()-1));
 		        float delta = mAccelWithGravCurrent - mAccelWithGravLast;
 		        mAccelNoGrav = mAccelNoGrav * 0.05f + delta; // Low-cut filter
-		        
+
 	        	if(mAccelNoGrav > .1) { 
 	        		if (getMotionDirection().equals(BREATHE_OUT)) {
 	        			if (checkMotionDirection(BREATHE_IN)) {
@@ -383,6 +540,10 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 	        	}
 		}		
 	}
+	
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+	
 
 	private boolean checkMotionDirection(String motion) {
 		int sequenceNumber = 0;
@@ -411,183 +572,6 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnClo
 		
 		return false;
 	}
+	*/
 	
-	/**
-	 * SensorEventListener event
-	 */
-	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {}
-	
-	
-	/**
-	 * display current timer progress 
-	 */
-	private void displayProgressTime() {
-		getProgressTimer().setText(getProgressStatus() + "/" + getProgressBar().getMax() + " " + SECONDS);
-	}
-	
-	/**
-	 * display current number of breaths recorded
-	 * 
-	 */
-	private void displayBreathNumber() {
-		if (getBreathCount() == 1) {
-			getBreathCountTextView().setText(getBreathCount() + " " + BREATH);
-		}
-		else {
-			getBreathCountTextView().setText(getBreathCount() + " " + BREATHS);
-		}
-	}
-	
-	public SensorManager getSensorManager() {
-		return sensorManager;
-	}
-
-	public void setSensorManager(SensorManager sensorManager) {
-		this.sensorManager = sensorManager;
-	}
-
-	public Sensor getAccelerometer() {
-		return accelerometer;
-	}
-
-	public void setAccelerometer(Sensor accelerometer) {
-		this.accelerometer = accelerometer;
-	}
-
-	public long getSensorTimestamp() {
-		return sensorTimestamp;
-	}
-
-	public void setSensorTimestamp(long sensorTimestamp) {
-		this.sensorTimestamp = sensorTimestamp;
-	}
-
-	public long getDirectionChangeTimestamp() {
-		return directionChangeTimestamp;
-	}
-
-	public void setDirectionChangeTimestamp(long directionChangeTimestamp) {
-		this.directionChangeTimestamp = directionChangeTimestamp;
-	}
-
-	public float getAxisZPosition() {
-		return axisZPosition;
-	}
-
-	public void setAxisZPosition(float axisZPosition) {
-		this.axisZPosition = axisZPosition;
-	}
-
-	public String getMotionDirection() {
-		return motionDirection;
-	}
-
-	public void setMotionDirection(String motionDirection) {
-		this.motionDirection = motionDirection;
-	}
-
-	public Button getResetCounterButton() {
-		return resetCounterButton;
-	}
-
-	public void setResetCounterButton(Button resetCounterButton) {
-		this.resetCounterButton = resetCounterButton;
-	}
-
-	public TextView getBreathCountTextView() {
-		return breathCountTextView;
-	}
-
-	public void setBreathCountTextView(TextView breathCountTextView) {
-		this.breathCountTextView = breathCountTextView;
-	}
-
-	public TextView getLungsIconTextView() {
-		return lungsIconTextView;
-	}
-
-	public void setLungsIconTextView(TextView lungsIconTextView) {
-		this.lungsIconTextView = lungsIconTextView;
-	}
-
-	public synchronized TextView getProgressTimer() {
-		return progressTimer;
-	}
-
-	public synchronized void setProgressTimer(TextView progressTimer) {
-		this.progressTimer = progressTimer;
-	}
-
-	public synchronized ProgressBar getProgressBar() {
-		return progressBar;
-	}
-
-	public synchronized void setProgressBar(ProgressBar progressBar) {
-		this.progressBar = progressBar;
-	}
-
-	public synchronized Button getIncrementCounterButton() {
-		return incrementCounterButton;
-	}
-
-	public synchronized void setIncrementCounterButton(Button incrementCounterButton) {
-		this.incrementCounterButton = incrementCounterButton;
-	}
-
-	public synchronized int getProgressStatus() {
-		return progressStatus;
-	}
-
-	public synchronized void setProgressStatus(int progressStatus) {
-		this.progressStatus = progressStatus;
-	}
-
-	public int getBreathCount() {
-		return breathCount;
-	}
-
-	public void setBreathCount(int breathCount) {
-		this.breathCount = breathCount;
-	}
-
-	public Handler getHandler() {
-		return handler;
-	}
-
-	public void setHandler(Handler handler) {
-		this.handler = handler;
-	}
-
-	public Thread getTimerThread() {
-		return timerThread;
-	}
-
-	public void setTimerThread(Thread timerThread) {
-		this.timerThread = timerThread;
-	}
-
-	public synchronized boolean isTimerThreadRunning() {
-		return timerThreadRunning;
-	}
-
-	public synchronized void setTimerThreadRunning(boolean timerThreadRunning) {
-		this.timerThreadRunning = timerThreadRunning;
-	}
-
-	public synchronized MediaPlayer getSoundPlayer() {
-		return soundPlayer;
-	}
-
-	public synchronized void setSoundPlayer(MediaPlayer soundPlayer) {
-		this.soundPlayer = soundPlayer;
-	}
-
-	public Map<String, Integer> getSounds() {
-		return sounds;
-	}
-
-	public void setSounds(Map<String, Integer>  sounds) {
-		this.sounds = sounds;
-	}
 }

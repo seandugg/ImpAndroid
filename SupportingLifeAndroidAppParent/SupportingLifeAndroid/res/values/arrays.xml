@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Internationalisation Support - Language Selection -->
+
 	<string-array name="languageSelection">
 		<item name="english">English</item>
 		<item name="tumbuka">Tumbuka</item>
@@ -12,10 +14,28 @@
 		<item name="tumbuka">tu</item>
 		<item name="chichewa">ny</item>
 	</string-array>
+	
+    <!-- Breath Count Support - Breathing Duration Selection -->
 
+	<string-array name="breathingDurationSelection">
+		<item name="none">Not Applicable</item>
+		<item name="fifthteen">15 seconds</item>
+		<item name="thirty">30 seconds</item>
+		<item name="fortyfive">45 seconds</item>
+		<item name="sixty">60 seconds</item>
+	</string-array>
+
+	<string-array name="breathingDurationSelectionValues">
+		<item name="none">Not Applicable</item>
+		<item name="fifthteen">15</item>
+		<item name="thirty">30</item>
+		<item name="fortyfive">45</item>
+		<item name="sixty">60</item>
+	</string-array>
+  
 	<string-array name="userTypes">
 		<item name="guest_user">guest_user</item>
 		<item name="hsa_user">hsa_user</item>
 	</string-array>
-	
+
 </resources>
