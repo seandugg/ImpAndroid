@@ -10,7 +10,7 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
-import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextWatcher;
+import ie.ucc.bis.supportinglife.assessment.model.listener.BreathCountTextWatcher;
 import ie.ucc.bis.supportinglife.assessment.model.listener.BreathCounterDialogListener;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.ui.custom.ToggleButtonGroupTableLayout;
@@ -51,7 +51,10 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
 	private ToggleButtonGroupTableLayout muacTapeCustomRadioGroup;
 	private RadioGroup swellingOfBothFeetRadioGroup;
 	private EditText breathsPerMinuteEditText;
+	
+	// Breath Count Feature
 	private Button breatheButton;
+	private BreathCountTextWatcher breathCountTextWatcher;
 	
 	public static LookCcmFragment create(String pageKey) {
 		Bundle args = new Bundle();
@@ -146,9 +149,10 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
 						LookCcmPage.CHEST_INDRAWING_DATA_KEY));
 
 		// add listener to 'breaths per minute' textfield
-		getBreathsPerMinuteEditText().addTextChangedListener(
-				new AssessmentWizardTextWatcher(getLookCcmPage(), 
-						LookCcmPage.BREATHS_PER_MINUTE_DATA_KEY));		
+		setBreathCountTextWatcher(new BreathCountTextWatcher(getLookCcmPage(), 
+						LookCcmPage.BREATHS_PER_MINUTE_DATA_KEY, LookCcmPage.BREATHS_COUNTER_USED_DATA_KEY,
+						LookCcmPage.FULL_BREATH_COUNT_TIME_ASSESSMENT_DATA_KEY));
+		getBreathsPerMinuteEditText().addTextChangedListener(getBreathCountTextWatcher());	
 
 		// add listener to 'very sleepy or unconscious' radio group
 		getVerySleepyOrUnconsciousRadioGroup().setOnCheckedChangeListener(
@@ -185,6 +189,8 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
                 	breathCounterFragment.setBreathCounterDialogListener(new BreathCounterDialogListener() {
 						@Override
 						public void dialogClosed(boolean timerComplete, boolean fullTimeAssessment, int breathCount) {
+							getBreathCountTextWatcher().setBreathCounterUsed(true);
+							getBreathCountTextWatcher().setFullBreathCountTimeAssessment(fullTimeAssessment);
 							if (timerComplete && fullTimeAssessment) {
 								getBreathsPerMinuteEditText().setText(String.valueOf(breathCount));
 								Crouton.makeText(getActivity(), "Breath Count Assessment Complete", Style.INFO).show();
@@ -252,136 +258,142 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
 	/**
 	 * Getter Method: getLookCcmPage()
 	 */
-	public LookCcmPage getLookCcmPage() {
+	private LookCcmPage getLookCcmPage() {
 		return lookCcmPage;
 	}
 
 	/**
 	 * Setter Method: setLookCcmPage()
 	 */   	
-	public void setLookCcmPage(LookCcmPage lookCcmPage) {
+	private void setLookCcmPage(LookCcmPage lookCcmPage) {
 		this.lookCcmPage = lookCcmPage;
 	}
 
 	/**
 	 * Getter Method: getPageFragmentCallbacks()
 	 */
-	public PageFragmentCallbacks getPageFragmentCallbacks() {
+	private PageFragmentCallbacks getPageFragmentCallbacks() {
 		return pageFragmentCallbacks;
 	}
 
 	/**
 	 * Setter Method: setPageFragmentCallbacks()
 	 */
-	public void setPageFragmentCallbacks(PageFragmentCallbacks pageFragmentCallbacks) {
+	private void setPageFragmentCallbacks(PageFragmentCallbacks pageFragmentCallbacks) {
 		this.pageFragmentCallbacks = pageFragmentCallbacks;
 	}
 
 	/**
 	 * Getter Method: getPageKey()
 	 */	
-	public String getPageKey() {
+	private String getPageKey() {
 		return pageKey;
 	}
 
 	/**
 	 * Setter Method: setPageKey()
 	 */	
-	public void setPageKey(String pageKey) {
+	private void setPageKey(String pageKey) {
 		this.pageKey = pageKey;
 	}
 
 	/**
 	 * Getter Method: getChestIndrawingRadioGroup()
 	 */	
-	public RadioGroup getChestIndrawingRadioGroup() {
+	private RadioGroup getChestIndrawingRadioGroup() {
 		return chestIndrawingRadioGroup;
 	}
 
 	/**
 	 * Setter Method: setChestIndrawingRadioGroup()
 	 */	
-	public void setChestIndrawingRadioGroup(RadioGroup chestIndrawingRadioGroup) {
+	private void setChestIndrawingRadioGroup(RadioGroup chestIndrawingRadioGroup) {
 		this.chestIndrawingRadioGroup = chestIndrawingRadioGroup;
 	}
 
 	/**
 	 * Getter Method: getVerySleepyOrUnconsciousRadioGroup()
 	 */	
-	public RadioGroup getVerySleepyOrUnconsciousRadioGroup() {
+	private RadioGroup getVerySleepyOrUnconsciousRadioGroup() {
 		return verySleepyOrUnconsciousRadioGroup;
 	}
 
 	/**
 	 * Setter Method: setVerySleepyOrUnconsciousRadioGroup()
 	 */	
-	public void setVerySleepyOrUnconsciousRadioGroup(RadioGroup verySleepyOrUnconsciousRadioGroup) {
+	private void setVerySleepyOrUnconsciousRadioGroup(RadioGroup verySleepyOrUnconsciousRadioGroup) {
 		this.verySleepyOrUnconsciousRadioGroup = verySleepyOrUnconsciousRadioGroup;
 	}
 
 	/**
 	 * Getter Method: getPalmarPallorRadioGroup()
 	 */	
-	public RadioGroup getPalmarPallorRadioGroup() {
+	private RadioGroup getPalmarPallorRadioGroup() {
 		return palmarPallorRadioGroup;
 	}
 
 	/**
 	 * Setter Method: setPalmarPallorRadioGroup()
 	 */	
-	public void setPalmarPallorRadioGroup(RadioGroup palmarPallorRadioGroup) {
+	private void setPalmarPallorRadioGroup(RadioGroup palmarPallorRadioGroup) {
 		this.palmarPallorRadioGroup = palmarPallorRadioGroup;
 	}
 
 	/**
 	 * Getter Method: getMuacTapeCustomRadioGroup()
 	 */	
-	public ToggleButtonGroupTableLayout getMuacTapeCustomRadioGroup() {
+	private ToggleButtonGroupTableLayout getMuacTapeCustomRadioGroup() {
 		return muacTapeCustomRadioGroup;
 	}
 
 	/**
 	 * Setter Method: setMuacTapeCustomRadioGroup()
 	 */	
-	public void setMuacTapeCustomRadioGroup(ToggleButtonGroupTableLayout muacTapeCustomRadioGroup) {
+	private void setMuacTapeCustomRadioGroup(ToggleButtonGroupTableLayout muacTapeCustomRadioGroup) {
 		this.muacTapeCustomRadioGroup = muacTapeCustomRadioGroup;
 	}
 
 	/**
 	 * Getter Method: getSwellingOfBothFeetRadioGroup()
 	 */	
-	public RadioGroup getSwellingOfBothFeetRadioGroup() {
+	private RadioGroup getSwellingOfBothFeetRadioGroup() {
 		return swellingOfBothFeetRadioGroup;
 	}
 
 	/**
 	 * Setter Method: setSwellingOfBothFeetRadioGroup()
 	 */	
-	public void setSwellingOfBothFeetRadioGroup(RadioGroup swellingOfBothFeetRadioGroup) {
+	private void setSwellingOfBothFeetRadioGroup(RadioGroup swellingOfBothFeetRadioGroup) {
 		this.swellingOfBothFeetRadioGroup = swellingOfBothFeetRadioGroup;
 	}
 
 	/**
 	 * Getter Method: getBreathsPerMinuteEditText()
 	 */	
-	public EditText getBreathsPerMinuteEditText() {
+	private EditText getBreathsPerMinuteEditText() {
 		return breathsPerMinuteEditText;
 	}
 
 	/**
 	 * Setter Method: setBreathsPerMinuteEditText()
 	 */	
-	public void setBreathsPerMinuteEditText(EditText breathsPerMinuteEditText) {
+	private void setBreathsPerMinuteEditText(EditText breathsPerMinuteEditText) {
 		this.breathsPerMinuteEditText = breathsPerMinuteEditText;
 	}
 
-	public Button getBreatheButton() {
+	private Button getBreatheButton() {
 		return breatheButton;
 	}
 
-	public void setBreatheButton(Button breatheButton) {
+	private void setBreatheButton(Button breatheButton) {
 		this.breatheButton = breatheButton;
 	}
 
+	private BreathCountTextWatcher getBreathCountTextWatcher() {
+		return breathCountTextWatcher;
+	}
 
+	private void setBreathCountTextWatcher(BreathCountTextWatcher breathCountTextWatcher) {
+		this.breathCountTextWatcher = breathCountTextWatcher;
+	}
 }

@@ -26,6 +26,7 @@ public class ReviewItem implements Serializable {
     private String title;
     private String displayValue;
     private String symptomId;
+    private String usageId;
     private String pageKey;
     private boolean headerItem;
     private boolean visible;
@@ -78,6 +79,7 @@ public class ReviewItem implements Serializable {
      * @param title
      * @param displayValue
      * @param symptomId
+     * @param usageId
      * @param pageKey
      * @param weight
      * @param identifier (i.e. unique identifier for review item)
@@ -93,6 +95,19 @@ public class ReviewItem implements Serializable {
         setSymptomValue(null);
         setIdentifier(identifier);
         setVisible(true);
+    }
+    
+    /**
+     * Method: indicateAnalyticsUsageReviewItem()
+     * 
+     * Review item to record user behaviour during 
+     * assessment
+     * 
+     * @param usageId 
+     */
+    public void indicateAnalyticsUsageReviewItem(String usageId) {
+    	setVisible(false);
+    	setUsageId(usageId);
     }
     
     /**
@@ -165,6 +180,14 @@ public class ReviewItem implements Serializable {
 
 	public void setSymptomId(String symptomId) {
 		this.symptomId = symptomId;
+	}
+
+	public String getUsageId() {
+		return usageId;
+	}
+
+	public void setUsageId(String usageId) {
+		this.usageId = usageId;
 	}
 
 	public List<ReviewItem> getDependees() {

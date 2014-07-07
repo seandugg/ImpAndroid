@@ -68,6 +68,10 @@ public class PatientAssessment implements Serializable {
 	// Classification and Treatment Diagnostics
 	private List<Diagnostic> diagnostics;
 	
+	// assessment specific analytics
+	private boolean breathCounterUsed;
+	private boolean breathFullTimeAssessment;
+	
 	public PatientAssessment() {
 		setDiagnostics(new ArrayList<Diagnostic>());
 	}
@@ -451,5 +455,21 @@ public class PatientAssessment implements Serializable {
 
 	public void setDiagnostics(List<Diagnostic> diagnostics) {
 		this.diagnostics = diagnostics;
-	}	
+	}
+	
+	public boolean isBreathCounterUsed() {
+		return breathCounterUsed;
+	}
+
+	public void setBreathCounterUsed(boolean breathCounterUsed) {
+		this.breathCounterUsed = breathCounterUsed;
+	}
+
+	public boolean isBreathFullTimeAssessment() {
+		return breathFullTimeAssessment;
+	}
+
+	public void setBreathFullTimeAssessment(boolean breathFullTimeAssessment) {
+		this.breathFullTimeAssessment = breathFullTimeAssessment;
+	}
 }

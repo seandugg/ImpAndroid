@@ -78,6 +78,10 @@ public class PatientAssessmentComms implements Serializable {
 
 	// treatments
 	private Map<String, String> treatments;
+	
+	// assessment specific analytics
+	private boolean breathCounterUsed;
+	private boolean breathFullTimeAssessment;
 
 	public PatientAssessmentComms() {}
 
@@ -482,4 +486,20 @@ public class PatientAssessmentComms implements Serializable {
 	public void setTreatments(Map<String, String> treatments) {
 		this.treatments = treatments;
 	}
+	
+	public boolean isBreathCounterUsed() {
+		return breathCounterUsed;
+	}
+
+	public void setBreathCounterUsed(boolean breathCounterUsed) {
+		this.breathCounterUsed = breathCounterUsed;
+	}
+
+	public boolean isBreathFullTimeAssessment() {
+		return breathFullTimeAssessment;
+	}
+
+	public void setBreathFullTimeAssessment(boolean breathFullTimeAssessment) {
+		this.breathFullTimeAssessment = breathFullTimeAssessment;
+	}	
 }

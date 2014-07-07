@@ -50,9 +50,11 @@ public class PatientHandlerUtils {
 		retrieveGeneralPatientDetails(patient, resources, reviewItemMap);
 		retrieveLookSymptoms(patient, resources, reviewItemMap);
 		retrieveAskLookSymptoms(patient, resources, reviewItemMap);
+		retrieveAssessmentSpecificAnalytics(patient, resources, reviewItemMap);
 
 		return patient;
 	}
+
 
 	/**
 	 * Method to populate a patient instance with the following:
@@ -225,6 +227,25 @@ public class PatientHandlerUtils {
 		patient.setCannotTreatProblemDetails(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_ask_secondary_assessment_cannot_treat_problems_details_id))));
 	}
 
+	/**
+	 * Method to populate a patient instance with the following:
+	 * 
+	 * - Assessment Specific Analytics
+	 * 
+	 * @param patient
+	 * @param resources
+	 * @param reviewItems
+	 * 
+	 * @throws ParseException 
+	 */
+	private void retrieveAssessmentSpecificAnalytics(PatientAssessment patient,	Resources resources, Map<String, String> reviewItemMap) {
+		// breath counter used
+		patient.setBreathCounterUsed(assessBooleanPatientSymptom(reviewItemMap.get(resources.getString(R.string.ccm_look_assessment_breath_counter_used_id))));
+		
+		// breath count - full time assessment employed
+		patient.setBreathFullTimeAssessment(assessBooleanPatientSymptom(reviewItemMap.get(resources.getString(R.string.ccm_look_assessment_breath_full_time_assessment_id))));
+	}
+	
 	/**
 	 * Assess whether boolean symptom review item is true or false
 	 * 

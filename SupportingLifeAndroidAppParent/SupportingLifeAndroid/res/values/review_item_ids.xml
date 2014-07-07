@@ -195,6 +195,8 @@
 	<!-- Review Item Identifiers (NOT TO BE TRANSLATED!)-->
 	<string name="ccm_look_assessment_chest_indrawing_id">ccm_look_assessment_chest_indrawing_id</string>
 	<string name="ccm_look_assessment_breaths_per_minute_id">ccm_look_assessment_breaths_per_minute_id</string>
+	<string name="ccm_look_assessment_breath_counter_used_id">ccm_look_assessment_breath_counter_used_id</string>
+	<string name="ccm_look_assessment_breath_full_time_assessment_id">ccm_look_assessment_breath_full_time_assessment_id</string>
 	<string name="ccm_look_assessment_very_sleepy_or_unconscious_id">ccm_look_assessment_very_sleepy_or_unconscious_id</string>
 	<string name="ccm_look_assessment_palmar_pallor_id">ccm_look_assessment_palmar_pallor_id</string>
 	<string name="ccm_look_assessment_muac_tape_colour_id">ccm_look_assessment_muac_tape_colour_id</string>

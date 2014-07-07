@@ -32,6 +32,8 @@ import android.support.v4.app.Fragment;
 public class LookCcmPage extends AbstractAssessmentPage {
 	public static final String CHEST_INDRAWING_DATA_KEY = "CHEST_INDRAWING";
     public static final String BREATHS_PER_MINUTE_DATA_KEY = "BREATHS_PER_MINUTE";
+    public static final String BREATHS_COUNTER_USED_DATA_KEY = "BREATHS_COUNTER_USED";
+    public static final String FULL_BREATH_COUNT_TIME_ASSESSMENT_DATA_KEY = "FULL_BREATH_COUNT_TIME_ASSESSMENT";
     public static final String VERY_SLEEPY_OR_UNCONSCIOUS_DATA_KEY = "VERY_SLEEPY_OR_UNCONSCIOUS";
     public static final String PALMAR_PALLOR_DATA_KEY = "PALMAR_PALLOR";
     public static final String MUAC_TAPE_COLOUR_DATA_KEY = "MUAC_TAPE_COLOUR";
@@ -99,6 +101,22 @@ public class LookCcmPage extends AbstractAssessmentPage {
     	reviewItems.add(new FastBreathingReviewItem(reviewItemLabel, getPageData().getString(BREATHS_PER_MINUTE_DATA_KEY), 
     			reviewItemSymptomId, getKey(), -1, Arrays.asList(birthDateReviewItem), reviewItemIdentifier));
   
+    	// breath counter used
+    	// ANALYTICS REVIEW ITEM TO RECORD WHETHER BREATH COUNTER WAS USED IN CALCULATION OF BREATH COUNT
+    	String reviewItemUsageId = resources.getString(R.string.ccm_look_assessment_breath_counter_used_id);
+    	reviewItemValue = getPageData().getString(BREATHS_COUNTER_USED_DATA_KEY);
+    	ReviewItem breathCounterReviewItem = new ReviewItem(null, reviewItemValue, null, getKey(), -1, null);
+    	breathCounterReviewItem.indicateAnalyticsUsageReviewItem(reviewItemUsageId);
+    	reviewItems.add(breathCounterReviewItem);
+    	
+    	// breath counter assessment time
+    	// ANALYTICS REVIEW ITEM TO RECORD WHETHER FULL TIME ASSESSMENT (I.E. 60 SECS) WAS PERFORMED
+    	reviewItemUsageId = resources.getString(R.string.ccm_look_assessment_breath_full_time_assessment_id);
+    	reviewItemValue = getPageData().getString(FULL_BREATH_COUNT_TIME_ASSESSMENT_DATA_KEY);
+    	ReviewItem breathCounterTimeAssessmentReviewItem = new ReviewItem(null, reviewItemValue, null, getKey(), -1, null);
+    	breathCounterTimeAssessmentReviewItem.indicateAnalyticsUsageReviewItem(reviewItemUsageId);
+    	reviewItems.add(breathCounterTimeAssessmentReviewItem);
+    	
     	// fast breathing dosage
     	reviewItemSymptomId = resources.getString(R.string.ccm_look_assessment_fast_breathing_dosage_symptom_id);
     	// note: In assessing the oral antibiotic dosage for fast breathing,

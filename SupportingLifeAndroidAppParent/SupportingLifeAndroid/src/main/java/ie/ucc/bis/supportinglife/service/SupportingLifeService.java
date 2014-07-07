@@ -2,6 +2,8 @@ package ie.ucc.bis.supportinglife.service;
 
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.communication.PatientAssessmentComms;
+import ie.ucc.bis.supportinglife.dao.AssessmentAnalyticsDao;
+import ie.ucc.bis.supportinglife.dao.AssessmentAnalyticsDaoImpl;
 import ie.ucc.bis.supportinglife.dao.ClassificationDao;
 import ie.ucc.bis.supportinglife.dao.ClassificationDaoImpl;
 import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
@@ -35,6 +37,7 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 	private PatientAssessmentDao patientAssessmentDao;
 	private ClassificationDao classificationDao;
 	private TreatmentDao treatmentDao;
+	private AssessmentAnalyticsDao assessmentAnalyticsDao;
 	
 	// Database fields
 	private SQLiteDatabase database;
@@ -53,6 +56,7 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 		setPatientAssessmentDao(new PatientAssessmentDaoImpl());
 		setClassificationDao(new ClassificationDaoImpl());
 		setTreatmentDao(new TreatmentDaoImpl());
+		setAssessmentAnalyticsDao(new AssessmentAnalyticsDaoImpl());
 	}
 	
 	/*******************************************************************************/
@@ -78,6 +82,9 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 			
 			// now add the associated 'patient assessment' treatments
 			getTreatmentDao().createPatientTreatments(patientToAdd, uniquePatientAssessmentIdentifier, this);
+			
+			// now add the associated 'assessment' analytics
+			getAssessmentAnalyticsDao().createAssessmentAnalytics(patientToAdd, uniquePatientAssessmentIdentifier, this);
 			
 			// commit the transaction
 			getDatabase().setTransactionSuccessful();
@@ -111,6 +118,9 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 			
 			// 3. For the patient assessments pulled back, pull back the associated classifications
 			getTreatmentDao().populatePatientTreatments(patientAssessmentComms, this);
+			
+			// 4. For the patient assessments pulled back, pull back the associated analytics
+			getAssessmentAnalyticsDao().populateAssessmentAnalytics(patientAssessmentComms, this);
 		}
 		
 		return patientAssessmentComms;
@@ -162,6 +172,14 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 
 	public void setTreatmentDao(TreatmentDao treatmentDao) {
 		this.treatmentDao = treatmentDao;
+	}
+
+	public AssessmentAnalyticsDao getAssessmentAnalyticsDao() {
+		return assessmentAnalyticsDao;
+	}
+
+	public void setAssessmentAnalyticsDao(AssessmentAnalyticsDao assessmentAnalyticsDao) {
+		this.assessmentAnalyticsDao = assessmentAnalyticsDao;
 	}
 
 	@Override
