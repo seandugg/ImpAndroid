@@ -33,7 +33,7 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnDis
 	private static final int ZERO_BREATHS = 0;
 	private static final int SECOND = 1;
 	private static final int THIRTY_SECONDS = 30;
-	private static final int ONE_MINUTE_IN_SECONDS = 60;
+	static final int ONE_MINUTE_IN_SECONDS = 60;
 	private static final int ONE_SECOND_IN_MILLISECONDS = 1000;
 	private static final String BREATHS = "Breaths";
 	private static final String BREATH = "Breath";
@@ -238,13 +238,15 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnDis
 					e.printStackTrace();
 				}
 			}
-			if (getProgressStatus() == ONE_MINUTE_IN_SECONDS) {
+			if (getProgressStatus() == getTotalDuration()) {
 				getHandler().post(new Runnable() {
 					public void run() {
 						if (getActivity() != null) {
-							setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(FINISHED_NOTIFICATION_SOUND)));
-							getSoundPlayer().setOnPreparedListener(new MediaPlayerListener(getSoundPlayer()));
-							getSoundPlayer().setOnCompletionListener(new MediaPlayerListener(getSoundPlayer()));
+							if (fullTimerDurationConfigured()) {
+								setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(FINISHED_NOTIFICATION_SOUND)));
+								getSoundPlayer().setOnPreparedListener(new MediaPlayerListener(getSoundPlayer()));
+								getSoundPlayer().setOnCompletionListener(new MediaPlayerListener(getSoundPlayer()));
+							}
 						}
 						
 						// need to disable breath counter button

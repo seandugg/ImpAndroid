@@ -174,7 +174,8 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
             public void onClick(View view) {
         		// need to determine if breath counter has been turned on in user preferences
             	SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        		String breathingDurationPreference = settings.getString(SupportingLifeBaseActivity.BREATHING_DURATION_SELECTION_KEY, "");
+        		String breathingDurationPreference = settings.getString(SupportingLifeBaseActivity.BREATHING_DURATION_SELECTION_KEY, 
+        				String.valueOf(BreathCounterDialogFragment.ONE_MINUTE_IN_SECONDS));
         		if (breathingDurationPreference.equalsIgnoreCase(BREATH_COUNTER_NOT_APPLICABLE) == true) {
         			Crouton.makeText(getActivity(), "Breath Counter Feature Not Enabled", Style.INFO).show();   
         		}
