@@ -240,10 +240,10 @@ public class PatientHandlerUtils {
 	 */
 	private void retrieveAssessmentSpecificAnalytics(PatientAssessment patient,	Resources resources, Map<String, String> reviewItemMap) {
 		// breath counter used
-		patient.setBreathCounterUsed(assessBooleanPatientSymptom(reviewItemMap.get(resources.getString(R.string.ccm_look_assessment_breath_counter_used_id))));
+		patient.setBreathCounterUsed(Boolean.valueOf(reviewItemMap.get(resources.getString(R.string.ccm_look_assessment_breath_counter_used_id))));
 		
 		// breath count - full time assessment employed
-		patient.setBreathFullTimeAssessment(assessBooleanPatientSymptom(reviewItemMap.get(resources.getString(R.string.ccm_look_assessment_breath_full_time_assessment_id))));
+		patient.setBreathFullTimeAssessment(Boolean.valueOf(reviewItemMap.get(resources.getString(R.string.ccm_look_assessment_breath_full_time_assessment_id))));
 	}
 	
 	/**

@@ -105,7 +105,7 @@ public class LookCcmPage extends AbstractAssessmentPage {
     	// ANALYTICS REVIEW ITEM TO RECORD WHETHER BREATH COUNTER WAS USED IN CALCULATION OF BREATH COUNT
     	String reviewItemUsageId = resources.getString(R.string.ccm_look_assessment_breath_counter_used_id);
     	reviewItemValue = getPageData().getString(BREATHS_COUNTER_USED_DATA_KEY);
-    	ReviewItem breathCounterReviewItem = new ReviewItem(null, reviewItemValue, null, getKey(), -1, null);
+    	ReviewItem breathCounterReviewItem = new ReviewItem(null, reviewItemValue, null, getKey(), -1, reviewItemUsageId);
     	breathCounterReviewItem.indicateAnalyticsUsageReviewItem(reviewItemUsageId);
     	reviewItems.add(breathCounterReviewItem);
     	
@@ -113,7 +113,7 @@ public class LookCcmPage extends AbstractAssessmentPage {
     	// ANALYTICS REVIEW ITEM TO RECORD WHETHER FULL TIME ASSESSMENT (I.E. 60 SECS) WAS PERFORMED
     	reviewItemUsageId = resources.getString(R.string.ccm_look_assessment_breath_full_time_assessment_id);
     	reviewItemValue = getPageData().getString(FULL_BREATH_COUNT_TIME_ASSESSMENT_DATA_KEY);
-    	ReviewItem breathCounterTimeAssessmentReviewItem = new ReviewItem(null, reviewItemValue, null, getKey(), -1, null);
+    	ReviewItem breathCounterTimeAssessmentReviewItem = new ReviewItem(null, reviewItemValue, null, getKey(), -1, reviewItemUsageId);
     	breathCounterTimeAssessmentReviewItem.indicateAnalyticsUsageReviewItem(reviewItemUsageId);
     	reviewItems.add(breathCounterTimeAssessmentReviewItem);
     	
