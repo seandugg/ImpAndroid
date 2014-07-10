@@ -201,6 +201,7 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle {
 							}
 							else {
 								Crouton.makeText(getActivity(), "Breath Count Assessment Incomplete", Style.ALERT).show();
+								getBreathsPerMinuteEditText().setText("");
 							}
 						}
 					});                	

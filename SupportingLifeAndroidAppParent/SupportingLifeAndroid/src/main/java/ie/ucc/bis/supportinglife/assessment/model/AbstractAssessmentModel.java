@@ -135,7 +135,9 @@ public abstract class AbstractAssessmentModel extends AbstractModel implements M
     public void loadAssessmentPages(Bundle savedValues) {
     	// load assessment pages into memory    	
         for (String key : savedValues.keySet()) {
-        	getAssessmentPages().findAssessmentPageByKey(key).resetPageData(savedValues.getBundle(key));
+        	if (getAssessmentPages() != null) {
+        		getAssessmentPages().findAssessmentPageByKey(key).resetPageData(savedValues.getBundle(key));
+        	}
         }
     }
     
@@ -148,7 +150,9 @@ public abstract class AbstractAssessmentModel extends AbstractModel implements M
     public void loadAnalyticPages(Bundle savedValues) {
     	// load data analytic pages into memory
         for (String key : savedValues.keySet()) {
-        	getAnalyticsPages().findAnalyticsPageByKey(key).setPageData(savedValues.getBundle(key));
+        	if (getAnalyticsPages() != null) {
+        		getAnalyticsPages().findAnalyticsPageByKey(key).setPageData(savedValues.getBundle(key));
+        	}
         }
     }
 
