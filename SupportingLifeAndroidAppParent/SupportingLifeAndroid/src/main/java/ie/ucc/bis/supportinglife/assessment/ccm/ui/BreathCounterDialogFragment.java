@@ -8,7 +8,6 @@ import java.util.Map;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
@@ -23,9 +22,10 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class BreathCounterDialogFragment extends DialogFragment implements OnDismissListener {
+public class BreathCounterDialogFragment extends DialogFragment {
 
 	private static final String BREATHING_DURATION_PREFERENCE = "BREATHING_DURATION_PREFERENCE";
+	private static final String BREATHE_COUNTER_DISMISS_ICON_TYPEFACE_ASSET = "fonts/breathe-dismiss-flaticon.ttf";
 	private static final String BREATHE_COUNTER_RESET_ICON_TYPEFACE_ASSET = "fonts/breathe-reset-flaticon.ttf";
 	private static final String BREATHE_COUNTER_INCREMENT_ICON_TYPEFACE_ASSET = "fonts/breathe-increment-flaticon.ttf";
 	private static final String BREATH_COUNT_TYPEFACE_ASSET = "fonts/RobotoCondensed-Light.ttf";
@@ -45,6 +45,7 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnDis
 	private static final String FINISHED_NOTIFICATION_SOUND = "Finished";
     
 	private BreathCounterDialogListener breathCounterDialogListener;
+	private Button dismissDialogButton;
 	private Button resetCounterButton;
 	private TextView breathCountTextView;
 	private TextView lungsIconTextView;
@@ -77,7 +78,7 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnDis
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		Dialog customDialog = new Dialog(getActivity(), R.style.BreathCounterDialog);
+		final Dialog customDialog = new Dialog(getActivity(), R.style.BreathCounterDialog);
 
 	    // Get the layout inflater
 	    LayoutInflater inflater = getActivity().getLayoutInflater();
@@ -93,6 +94,17 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnDis
 		setTimerThreadRunning(false);
 		
 		displayProgressTime();
+	
+		// don't dismiss the dialog if user clicks outside dialog
+		customDialog.setCanceledOnTouchOutside(false);
+		
+		// listen for dismiss dialog event
+		getDismissDialogButton().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            	dismissDialog(customDialog);
+            }
+        });
 		
 		// listen for breath count increment event
 		getIncrementCounterButton().setOnClickListener(new View.OnClickListener() {
@@ -163,8 +175,13 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnDis
 	 * @param customDialog
 	 */
 	private void configureFonts(Dialog customDialog) {
+		// load the flaticon 'dismiss dialog' button font
+		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), BREATHE_COUNTER_DISMISS_ICON_TYPEFACE_ASSET);		
+		setDismissDialogButton((Button) customDialog.findViewById(R.id.ccm_breath_counter_assessment_dismiss_button));
+		getDismissDialogButton().setTypeface(font);
+		
 		// load the flaticon 'counter reset' button font
-		Typeface font = Typeface.createFromAsset(getActivity().getAssets(), BREATHE_COUNTER_RESET_ICON_TYPEFACE_ASSET);		
+		font = Typeface.createFromAsset(getActivity().getAssets(), BREATHE_COUNTER_RESET_ICON_TYPEFACE_ASSET);		
 		setResetCounterButton((Button) customDialog.findViewById(R.id.ccm_breath_counter_assessment_reset_button));
 		getResetCounterButton().setTypeface(font);
 		
@@ -286,10 +303,9 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnDis
     }
 
 	/**
-	 * capture dialog close event
+	 * dialog close clean up operation
 	 */
-	@Override
-	public void onDismiss(DialogInterface dialog) {
+	public void dismissDialog(DialogInterface dialog) {
     	setTimerThreadRunning(false);
     	if (getTimerThread() != null) {
     		getTimerThread().interrupt();
@@ -355,6 +371,14 @@ public class BreathCounterDialogFragment extends DialogFragment implements OnDis
 	public void setBreathCounterDialogListener(
 			BreathCounterDialogListener breathCounterDialogListener) {
 		this.breathCounterDialogListener = breathCounterDialogListener;
+	}
+
+	private Button getDismissDialogButton() {
+		return dismissDialogButton;
+	}
+
+	private void setDismissDialogButton(Button dismissDialogButton) {
+		this.dismissDialogButton = dismissDialogButton;
 	}
 
 	private Button getResetCounterButton() {

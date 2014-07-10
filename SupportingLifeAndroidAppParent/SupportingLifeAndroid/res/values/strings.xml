@@ -512,6 +512,7 @@
 	<!-- ICON FONTS -->
 	<string name="ccm_breath_counter_assessment_reset_icon_font">&#xe000;</string>
 	<string name="ccm_breath_counter_assessment_increment_icon_font">&#xe000;</string>
+	<string name="ccm_breath_counter_assessment_dismiss_icon_font">&#xe000;</string>
 	
     <!-- ============================================================ -->
     <!-- CCM ASSESSMENT RESULTS TABS 								  -->

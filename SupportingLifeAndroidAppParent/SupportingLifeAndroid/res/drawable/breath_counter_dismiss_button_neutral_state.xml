@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================================ -->
+<!-- BREATH COUNTER DISMISS BUTTON - NEUTRAL STATE (i.e. not pressed) -->
+<!-- ============================================================ -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item android:top="0dp"
+        android:left="0dp"
+        android:right="0dp"
+        android:bottom="0dp">
+        
+		<shape xmlns:android="http://schemas.android.com/apk/res/android">
+	
+		    <!-- TRANSPARENCY NOTES -->
+		    <!-- #FF000000 will get you a solid black whereas 
+		    	 #00000000 will get you a 100% transparency  
+		    -->
+		    <solid android:color="#00000000" />
+		</shape>
+	</item>
+</layer-list>
