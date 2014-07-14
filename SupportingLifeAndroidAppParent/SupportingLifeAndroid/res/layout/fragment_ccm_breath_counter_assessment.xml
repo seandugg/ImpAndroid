@@ -29,7 +29,7 @@
             android:layout_alignBottom="@+id/ccm_breath_counter_assessment_title"
             android:background="@drawable/breath_counter_dismiss_button"
             android:text="@string/ccm_breath_counter_assessment_dismiss_icon_font"
-            android:textColor="@color/default_red_icon_button_text_color" />
+            android:textColor="@color/default_green_icon_button_text_color" />
 
     </RelativeLayout>
 
