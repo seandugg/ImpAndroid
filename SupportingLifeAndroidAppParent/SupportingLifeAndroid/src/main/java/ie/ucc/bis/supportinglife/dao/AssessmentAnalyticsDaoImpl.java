@@ -10,6 +10,7 @@ import java.util.List;
 import net.sqlcipher.database.SQLiteStatement;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.location.Location;
 
 public class AssessmentAnalyticsDaoImpl implements AssessmentAnalyticsDao {
 	
@@ -18,7 +19,9 @@ public class AssessmentAnalyticsDaoImpl implements AssessmentAnalyticsDao {
 	private String[] allColumns = { AssessmentAnalyticsTable.COLUMN_ID,
 									AssessmentAnalyticsTable.COLUMN_ASSESSMENT_ID,
 									AssessmentAnalyticsTable.COLUMN_BREATH_COUNTER_USED_ID,
-									AssessmentAnalyticsTable.COLUMN_BREATH_FULL_TIME_ASSESSMENT_ID};
+									AssessmentAnalyticsTable.COLUMN_BREATH_FULL_TIME_ASSESSMENT_ID,
+									AssessmentAnalyticsTable.COLUMN_LATITUDE_COORDINATE,
+									AssessmentAnalyticsTable.COLUMN_LONGITUDE_COORDINATE};
 
 	public AssessmentAnalyticsDaoImpl() {}
 	
@@ -32,14 +35,20 @@ public class AssessmentAnalyticsDaoImpl implements AssessmentAnalyticsDao {
 	 * @return
 	 */
 	@Override
-	public void createAssessmentAnalytics(PatientAssessment assessmentToAdd, String uniquePatientAssessmentIdentifier, SupportingLifeService service) {
+	public void createAssessmentAnalytics(PatientAssessment assessmentToAdd, String uniquePatientAssessmentIdentifier, Location locat, SupportingLifeService service) {
 		// show the number of analytic assessments in debug logger
 		debugOutputShowAnalyticsCount(service);
 
 		ContentValues values = new ContentValues();
 		values.put(AssessmentAnalyticsTable.COLUMN_ASSESSMENT_ID, uniquePatientAssessmentIdentifier);
 		values.put(AssessmentAnalyticsTable.COLUMN_BREATH_COUNTER_USED_ID, String.valueOf(assessmentToAdd.isBreathCounterUsed()));
-		values.put(AssessmentAnalyticsTable.COLUMN_BREATH_FULL_TIME_ASSESSMENT_ID, String.valueOf(assessmentToAdd.isBreathFullTimeAssessment()));	
+		values.put(AssessmentAnalyticsTable.COLUMN_BREATH_FULL_TIME_ASSESSMENT_ID, String.valueOf(assessmentToAdd.isBreathFullTimeAssessment()));
+		
+		// add GPS coordinates if we managed to ascertain a location
+		if (locat != null) {
+			values.put(AssessmentAnalyticsTable.COLUMN_LATITUDE_COORDINATE, String.valueOf(locat.getLatitude()));
+			values.put(AssessmentAnalyticsTable.COLUMN_LONGITUDE_COORDINATE, String.valueOf(locat.getLongitude()));
+		}
 			
 		// add the assessment analytics row
 		long insertId = service.getDatabase().insert(AssessmentAnalyticsTable.TABLE_ASSESSMENT_ANALYTICS, null, values);
@@ -75,6 +84,8 @@ public class AssessmentAnalyticsDaoImpl implements AssessmentAnalyticsDao {
 			// only one analytics record returned - one-to-one relationship assessment and analytics
 			patientAssessmentComm.setBreathCounterUsed(Boolean.valueOf(cursor.getString(2)));
 			patientAssessmentComm.setBreathFullTimeAssessment(Boolean.valueOf(cursor.getString(3)));
+			patientAssessmentComm.setLatitudeLocation(cursor.getString(4));
+			patientAssessmentComm.setLongitudeLocation(cursor.getString(5));
 		}
 		
 		if (cursor != null) {

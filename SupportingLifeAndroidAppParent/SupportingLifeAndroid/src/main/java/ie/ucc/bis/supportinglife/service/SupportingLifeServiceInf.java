@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.sqlcipher.database.SQLiteDatabase;
 import android.database.SQLException;
+import android.location.Location;
 
 /**
  * Service Interface layer for coordinating
@@ -23,7 +24,7 @@ public interface SupportingLifeServiceInf {
 	/*******************************************************************************/
 	/*******************************PATIENT ASSESSMENTS*****************************/
 	/*******************************************************************************/
-	public void createPatientAssessment(PatientAssessment patientToAdd, String android_device_id, String hsaUserId);
+	public void createPatientAssessment(PatientAssessment patientToAdd, String android_device_id, String hsaUserId, Location locat);
 	public void deletePatientAssessment(PatientAssessment patient);
 	public List<PatientAssessmentComms> getAllNonSyncedPatientAssessmentComms();
 	public List<PatientAssessmentComms> getAllPatientAssessmentComms();

@@ -20,6 +20,7 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.content.Context;
 import android.content.res.Resources;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
 
 /**
  * Class: AssessmentResultsActivity
@@ -37,7 +42,7 @@ import android.view.View;
  * @author TOSullivan
  *
  */
-public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
+public class AssessmentResultsActivity extends SupportingLifeBaseActivity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
 	
 	private final String LOG_TAG = "ie.ucc.bis.supportinglife.activity.AssessmentResultsActivity";
 	
@@ -49,6 +54,9 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 	private TreatmentRuleEngine treatmentRuleEngine;
 	private SupportingLifeService supportingLifeService;
 	private AbstractModel assessmentResultsModel;
+	
+	// location handling
+	private LocationClient locationClient;
 
 	/* 
 	 * Method: onCreate() 
@@ -291,20 +299,37 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 	}
 	
 	/**
-	 * Responsible for recording the patient visit in the SQLite DB
+	 * Responsible for recording the patient visit
+	 *   -> Involves ascertaining the assessment location
 	 * 
 	 */	
 	protected void recordPatientVisit() {
+		
+		// obtain the device's last location
+		// note: the callback method onConnected() will be invoked once
+		// 		 a connection is established or onConnectionFailed()
+		//		 if we fail to resolve location. It is within these
+		//		 two callback methods that we will push the patient visit
+		//		 record to the SQLite DB
+		setLocationClient(new LocationClient(this, this, this));
+		getLocationClient().connect();
+	}
 
+
+	/**
+	 * Responsible for recording the patient visit in the SQLite DB
+	 * 
+	 * @param locat 
+	 */
+	private void storePatientVisitRecord(Location locat) {
 		// obtain unique android id for the device
-		String android_device_id = Secure.getString(getApplicationContext().getContentResolver(),
-                Secure.ANDROID_ID);
+		String android_device_id = Secure.getString(getApplicationContext().getContentResolver(), Secure.ANDROID_ID);
 		
 		CustomSharedPreferences preferences = CustomSharedPreferences.getPrefs(this, APP_NAME, Context.MODE_PRIVATE);
 		String hsaUserId = preferences.getString(SupportingLifeBaseActivity.USER_ID, null);
 		
 		// add the patient record to the DB
-		getSupportingLifeService().createPatientAssessment(getPatientAssessment(), android_device_id, hsaUserId);
+		getSupportingLifeService().createPatientAssessment(getPatientAssessment(), android_device_id, hsaUserId, locat);
 	}
 	
 	/**
@@ -416,6 +441,34 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
     	super.onPause();
     }
     
+	@Override
+	public void onConnectionFailed(ConnectionResult paramConnectionResult) {
+		LoggerUtils.i(LOG_TAG, "Location Connection Status : Failed");
+		
+		// even though we failed to ascertain the assessment location
+		// we still need to record the patient visit details to the SQLite DB
+		storePatientVisitRecord(null);	
+	}
+
+
+	@Override
+	public void onConnected(Bundle paramBundle) {
+		LoggerUtils.i(LOG_TAG, "Location Connection Status : Connected");
+		if (getLocationClient() != null) {
+			Location locat = getLocationClient().getLastLocation();
+			LoggerUtils.i(LOG_TAG, "Last Known Location :" + locat.getLatitude() + "," + locat.getLongitude());
+			
+			// now we should record the patient visit details to the SQLite DB
+			storePatientVisitRecord(locat);
+		}
+		getLocationClient().disconnect();
+	}
+
+
+	@Override
+	public void onDisconnected() {
+		LoggerUtils.i(LOG_TAG, "Location Connection Status : Disconnected");
+	}
     
 	public ViewPager getViewPager() {
 		return ViewPager;
@@ -481,6 +534,16 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity {
 
 	public void setAssessmentResultsModel(AbstractModel assessmentResultsModel) {
 		this.assessmentResultsModel = assessmentResultsModel;
+	}
+
+
+	private LocationClient getLocationClient() {
+		return locationClient;
+	}
+
+
+	private void setLocationClient(LocationClient locationClient) {
+		this.locationClient = locationClient;
 	}
 }
 

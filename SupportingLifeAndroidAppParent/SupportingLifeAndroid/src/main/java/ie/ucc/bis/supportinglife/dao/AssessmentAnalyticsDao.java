@@ -2,6 +2,8 @@ package ie.ucc.bis.supportinglife.dao;
 
 import java.util.List;
 
+import android.location.Location;
+
 import ie.ucc.bis.supportinglife.communication.PatientAssessmentComms;
 import ie.ucc.bis.supportinglife.domain.PatientAssessment;
 import ie.ucc.bis.supportinglife.service.SupportingLifeService;
@@ -17,7 +19,7 @@ import ie.ucc.bis.supportinglife.service.SupportingLifeService;
  */
 public interface AssessmentAnalyticsDao {
 	
-	public void createAssessmentAnalytics(PatientAssessment assessmentToAdd, String uniquePatientAssessmentIdentifier, SupportingLifeService service);
+	public void createAssessmentAnalytics(PatientAssessment assessmentToAdd, String uniquePatientAssessmentIdentifier, Location locat, SupportingLifeService service);
 
 	public void populateAssessmentAnalytics(List<PatientAssessmentComms> patientAssessmentComms, SupportingLifeService service);
 }

@@ -82,6 +82,8 @@ public class PatientAssessmentComms implements Serializable {
 	// assessment specific analytics
 	private boolean breathCounterUsed;
 	private boolean breathFullTimeAssessment;
+	private String longitudeLocation;
+	private String latitudeLocation;
 
 	public PatientAssessmentComms() {}
 
@@ -501,5 +503,21 @@ public class PatientAssessmentComms implements Serializable {
 
 	public void setBreathFullTimeAssessment(boolean breathFullTimeAssessment) {
 		this.breathFullTimeAssessment = breathFullTimeAssessment;
+	}
+
+	public String getLongitudeLocation() {
+		return longitudeLocation;
+	}
+
+	public void setLongitudeLocation(String longitudeLocation) {
+		this.longitudeLocation = longitudeLocation;
+	}
+
+	public String getLatitudeLocation() {
+		return latitudeLocation;
+	}
+
+	public void setLatitudeLocation(String latitudeLocation) {
+		this.latitudeLocation = latitudeLocation;
 	}	
 }

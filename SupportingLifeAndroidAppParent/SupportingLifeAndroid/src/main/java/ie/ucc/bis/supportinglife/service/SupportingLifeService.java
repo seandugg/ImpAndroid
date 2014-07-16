@@ -21,6 +21,7 @@ import java.util.List;
 import net.sqlcipher.database.SQLiteDatabase;
 import android.content.Context;
 import android.database.SQLException;
+import android.location.Location;
 
 /**
  * Service Interface layer for coordinating
@@ -63,7 +64,7 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 	/*******************************PATIENT ASSESSMENTS*****************************/
 	/*******************************************************************************/
 	@Override
-	public void createPatientAssessment(PatientAssessment patientToAdd, String android_device_id, String hsaUserId) {
+	public void createPatientAssessment(PatientAssessment patientToAdd, String android_device_id, String hsaUserId, Location locat) {
 		
 		// updating multiple tables so wrap in a transaction
 		getDatabase().beginTransaction();
@@ -84,7 +85,7 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 			getTreatmentDao().createPatientTreatments(patientToAdd, uniquePatientAssessmentIdentifier, this);
 			
 			// now add the associated 'assessment' analytics
-			getAssessmentAnalyticsDao().createAssessmentAnalytics(patientToAdd, uniquePatientAssessmentIdentifier, this);
+			getAssessmentAnalyticsDao().createAssessmentAnalytics(patientToAdd, uniquePatientAssessmentIdentifier, locat, this);
 			
 			// commit the transaction
 			getDatabase().setTransactionSuccessful();

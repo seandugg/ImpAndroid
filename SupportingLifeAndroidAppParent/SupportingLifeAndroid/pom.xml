@@ -23,6 +23,7 @@
 		<json.version>1.9.12</json.version>
 		<android.api.level>17</android.api.level>	
 		<crouton.version>1.8.4</crouton.version>
+		<google.play.version>14.0.0</google.play.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -86,6 +87,18 @@
 		            <artifactId>support-v4</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+		  <groupId>com.google.android.gms</groupId>
+		  <artifactId>google-play-services</artifactId>
+		  <version>${google.play.version}</version>
+		  <type>apklib</type>
+		</dependency>
+		<dependency>
+		  <groupId>com.google.android.gms</groupId>
+		  <artifactId>google-play-services</artifactId>
+		  <version>${google.play.version}</version>
+		  <type>jar</type>
 		</dependency>
 	</dependencies>
 	<build>
