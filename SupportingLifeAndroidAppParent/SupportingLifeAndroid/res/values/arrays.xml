@@ -2,7 +2,6 @@
 <resources>
 
     <!-- Internationalisation Support - Language Selection -->
-
 	<string-array name="languageSelection">
 		<item name="english">English</item>
 		<item name="tumbuka">Tumbuka</item>
@@ -16,7 +15,6 @@
 	</string-array>
 	
     <!-- Breath Count Support - Breathing Duration Selection -->
-
 	<string-array name="breathingDurationSelection">
 		<item name="none">Not Applicable</item>
 		<item name="fifthteen">15 seconds</item>
@@ -32,7 +30,20 @@
 		<item name="fortyfive">45</item>
 		<item name="sixty">60</item>
 	</string-array>
-  
+	
+	
+    <!-- Zephyr Sensor Availability Selection -->
+	<string-array name="sensorAvailabilitySelection">
+		<item name="No">No</item>
+		<item name="Yes">Yes</item>
+	</string-array>
+
+	<string-array name="sensorAvailabilitySelectionValues">
+		<item name="No">No</item>
+		<item name="Yes">Yes</item>
+	</string-array>
+	
+	<!-- User Types -->
 	<string-array name="userTypes">
 		<item name="guest_user">guest_user</item>
 		<item name="hsa_user">hsa_user</item>

@@ -201,5 +201,16 @@
 	<string name="ccm_look_assessment_palmar_pallor_id">ccm_look_assessment_palmar_pallor_id</string>
 	<string name="ccm_look_assessment_muac_tape_colour_id">ccm_look_assessment_muac_tape_colour_id</string>
 	<string name="ccm_look_assessment_swelling_of_both_feet_id">ccm_look_assessment_swelling_of_both_feet_id</string>
+	
+	
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT BREAD-CRUMB UI 								  -->
+    <!-- STAGE 5: SENSOR ASSESSMENT		 							  -->
+    <!-- ============================================================ -->
+    
+	<!-- Review Item Identifiers (NOT TO BE TRANSLATED!)-->
+	<string name="ccm_sensor_assessment_heart_rate_id">ccm_sensor_assessment_heart_rate_id</string>
+	<string name="ccm_sensor_assessment_respiration_rate_id">ccm_sensor_assessment_respiration_rate_id</string>
+	<string name="ccm_sensor_assessment_skin_temperature_id">ccm_sensor_assessment_skin_temperature_id</string>
 
 </resources>

@@ -8,6 +8,7 @@
     <!-- SYNC LOGO -->
     <!-- ============================================================ -->
 
+	<!-- Language Selection -->
 	<PreferenceCategory android:title="@string/language_preference_category"
 	    android:key="language">
 
@@ -16,10 +17,10 @@
             android:summary="@string/language_list_preference_summary"
             android:defaultValue="en"
             android:entries="@array/languageSelection"
-            android:entryValues="@array/languageSelectionValues"/>
-	           
+            android:entryValues="@array/languageSelectionValues"/>        
     </PreferenceCategory>
     
+	<!-- Breath Counter Duration -->
 	<PreferenceCategory android:title="@string/breathing_duration_preference_category"
 	    android:key="breathing_duration">
 
@@ -28,7 +29,18 @@
             android:summary="@string/breathing_duration_list_preference_summary"
             android:defaultValue="60"
             android:entries="@array/breathingDurationSelection"
-            android:entryValues="@array/breathingDurationSelectionValues"/>
-	           
+            android:entryValues="@array/breathingDurationSelectionValues"/>        
+    </PreferenceCategory>
+    
+	<!-- Zephyr Sensor Availability -->
+	<PreferenceCategory android:title="@string/sensor_preference_category"
+	    android:key="sensor_availability">
+
+		<ListPreference android:key="sensor_availability_selection"
+            android:title="@string/sensor_list_preference_title"
+            android:summary="@string/sensor_list_preference_summary"
+            android:defaultValue="No"
+            android:entries="@array/sensorAvailabilitySelection"
+            android:entryValues="@array/sensorAvailabilitySelectionValues"/>         
     </PreferenceCategory>
 </PreferenceScreen>

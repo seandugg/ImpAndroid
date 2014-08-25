@@ -193,5 +193,13 @@
 	<string name="ccm_look_assessment_red_muac_tape_colour_symptom_id">red_muac_tape_colour</string>
 	<string name="ccm_look_assessment_swelling_of_both_feet_symptom_id">swelling_of_both_feet</string>
 
-
+    <!-- ============================================================ -->
+    <!-- CCM ASSESSMENT BREAD-CRUMB UI 								  -->
+    <!-- STAGE 5: SENSOR ASSESSMENT		 							  -->
+    <!-- ============================================================ -->
+    
+	<!-- Symptom Ids (NOT TO BE TRANSLATED!)-->
+	<string name="ccm_sensor_assessment_heart_rate_symptom_id">heart_rate</string>
+	<string name="ccm_sensor_assessment_respiration_rate_symptom_id">respiration_rate</string>
+	<string name="ccm_sensor_assessment_skin_temperature_symptom_id">skin_temperature</string>
 </resources>
