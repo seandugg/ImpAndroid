@@ -131,7 +131,7 @@
 					</sdk>
 					<debug>true</debug>
 					<proguard>
-					    <skip>true</skip>
+					    <skip>false</skip>
 					</proguard>
 				</configuration>
 			</plugin>
