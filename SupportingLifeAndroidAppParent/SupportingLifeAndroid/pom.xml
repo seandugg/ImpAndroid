@@ -24,6 +24,7 @@
 		<android.api.level>17</android.api.level>	
 		<crouton.version>1.8.4</crouton.version>
 		<google.play.version>14.0.0</google.play.version>
+		<zephyr.bioharness.version>1.0</zephyr.bioharness.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -100,6 +101,12 @@
 		  <version>${google.play.version}</version>
 		  <type>jar</type>
 		</dependency>
+		<!-- Zephyr BioHarness -->
+        <dependency>
+            <groupId>bioharness</groupId>
+            <artifactId>bioharness</artifactId>
+            <version>${zephyr.bioharness.version}</version>
+        </dependency>		
 	</dependencies>
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -124,7 +131,7 @@
 					</sdk>
 					<debug>true</debug>
 					<proguard>
-					    <skip>false</skip>
+					    <skip>true</skip>
 					</proguard>
 				</configuration>
 			</plugin>

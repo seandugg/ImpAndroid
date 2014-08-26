@@ -425,6 +425,38 @@
 		<item name="android:orientation">vertical</item>
 		<item name="android:paddingLeft">16dp</item>
 		<item name="android:paddingRight">16dp</item>
-	</style>	
+	</style>
+	
+    <!-- ============================================================ -->
+    <!-- CCM SENSOR FRAGMENT SCREEN - SENSOR BUTTON TEXT STYLE 		  -->
+    <!-- ============================================================ -->
+	<style name="SensorScreenTextAppearanceFinish" parent="android:TextAppearance.Medium">
+		<item name="android:textColor">@color/White</item>
+	</style>
+	
+    <!-- ============================================================ -->
+    <!-- CCM SENSOR FRAGMENT SCREEN - VITAL SIGNS TITLE -->
+    <!-- ============================================================ -->
+	<style name="SensorScreenVitalSignsTitle">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">match_parent</item>
+		<item name="android:orientation">vertical</item>
+		<item name="android:layout_gravity">center_horizontal</item>
+		<item name="android:paddingLeft">16dp</item>
+		<item name="android:paddingRight">16dp</item>
+		<item name="android:layout_marginTop">10dp</item>
+		<item name="android:layout_marginBottom">20dp</item>
+	</style>
+	
+    <!-- ============================================================ -->
+    <!-- CCM SENSOR FRAGMENT SCREEN - PROGRESS TIMER				  -->
+    <!-- ============================================================ -->
+	<style name="SensorProgressTimerTextView">
+		<item name="android:layout_width">match_parent</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textColor">@color/Black</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:textSize">20sp</item>
+	</style>
 	
 </resources>

@@ -14,6 +14,9 @@
     <!-- android.permission.ACCESS_NETWORK_STATE is needed for accessing ConnectivityManager -->
     <!-- (mainly for monitoring network connections in general) -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- used for zephyr sensor integration -->
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
          
     <application
         android:allowBackup="true"

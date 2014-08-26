@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ============================================================ -->
+<!-- BLUETOOTH CONNECT SENSOR BUTTON - PRESSED STATE 			  -->
+<!-- ============================================================ -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- "shadow" -->
+    <item>
+        <shape android:shape="oval">
+           <solid android:color="#000000"/>
+           <corners android:radius="6dp" />
+        </shape>
+    </item>
+    
+    <item android:top="0dp"
+        android:left="0dp"
+        android:right="0dp"
+        android:bottom="0dp">
+        
+		<shape android:shape="oval">
+	
+		    <!-- TRANSPARENCY NOTES -->
+		    <!-- #FF000000 will get you a solid black whereas 
+		    	 #00000000 will get you a 100% transparency  
+		    -->
+		    <solid android:color="@color/DarkGreen" />
+		
+		    <stroke
+		        android:width="1px"
+		        android:color="@color/DarkGreen" />
+
+		    <padding
+		        android:bottom="7dp"
+		        android:left="10dp"
+		        android:right="10dp"
+		        android:top="7dp" />
+		
+		    <corners android:radius="6dp" />
+		    
+		    <gradient
+                android:angle="90"
+                android:centerColor="@color/Green"
+                android:endColor="@color/LightGreen"
+                android:startColor="@color/DarkGreen"
+                android:type="linear" />
+		</shape>
+	</item>
+</layer-list>

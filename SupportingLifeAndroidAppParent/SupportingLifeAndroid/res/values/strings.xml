@@ -506,16 +506,20 @@
     <!-- CCM ASSESSMENT WIZARD BREAD-CRUMB UI 						  -->
     <!-- STAGE 5: ZEPHYR SENSOR ASSESSMENT							  -->
     <!-- ============================================================ -->
+    <string name="ccm_sensor_assessment_vital_signs_title_text">Vital Signs</string>
 	<string name="ccm_sensor_assessment_title">Sensor Assessment</string>
-	<string name="ccm_sensor_assessment_heart_rate_label">Heart Rate</string>
-	<string name="ccm_sensor_assessment_respiration_rate_label">Respiration Rate</string>
-	<string name="ccm_sensor_assessment_skin_temperature_label">Skin Temperature</string>
-	
+	<string name="ccm_sensor_assessment_heart_rate_label">Heart Rate:</string>
+	<string name="ccm_sensor_assessment_respiration_rate_label">Respiration Rate:</string>
+	<string name="ccm_sensor_assessment_skin_temperature_label">Body Temperature:</string>
+			
 	<!-- Zephyr Sensor Assessment Review -->
 	<string name="ccm_sensor_assessment_review_heart_rate">Sensor Heart Rate</string>
 	<string name="ccm_sensor_assessment_review_respiration_rate">Sensor Respiration Rate</string>
 	<string name="ccm_sensor_assessment_review_skin_temperature">Sensor Skin Temperature</string>
 	
+	<!-- ICON FONTS -->
+	<string name="ccm_sensor_assessment_connect_bluetooth_reset_icon_font">&#xe000;</string>
+	<string name="ccm_sensor_assessment_connect_bluetooth_connect_icon_font">&#xe000;</string>
 	
     <!-- ============================================================ -->	
 	<!--  BREATH COUNTER  											  -->
