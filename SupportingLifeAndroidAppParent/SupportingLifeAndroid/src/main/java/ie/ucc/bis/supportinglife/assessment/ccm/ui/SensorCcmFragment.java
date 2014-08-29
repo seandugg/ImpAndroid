@@ -592,7 +592,10 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 			// disconnect listener from acting on received messages	
 			getBluetoothClient().removeConnectedEventListener(getBioHarnessConnectedListener());
 			// close the communication with the device & throw an exception if failure
-			getBluetoothClient().Close();
+			if (getBluetoothClient().IsConnected()) {
+				LoggerUtils.i(LOG_TAG, "Closing bluetooth client connection");
+				getBluetoothClient().Close();
+			}
 			
 			setBluetoothClient(null);
 		}
