@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/SupportingLifePage"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:gravity="right" >
 
     <!-- ============================================================ -->
     <!-- ASSESSMENT BREAD-CRUMB WIZARD UI 							  -->
@@ -66,73 +67,75 @@
 		            android:textSize="20sp" />
 	
 				<!-- ============================================================ -->
-	            <!-- HEART RATE													  -->
+	            <!-- VITAL SIGNS												  -->
 	            <!-- ============================================================ -->
-	
-		        <LinearLayout
-		            android:layout_width="match_parent"
+
+		        <TableLayout android:layout_width="match_parent"
 		            android:layout_height="wrap_content"
 		            android:orientation="horizontal"
-		            android:paddingBottom="5dp" >
-		            <TextView
-		                style="@style/AssessmentFormLabel"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:text="@string/ccm_sensor_assessment_heart_rate_label" />
-		
-		            <TextView
-		                style="@style/AssessmentDisabledTextView"
-		                android:id="@+id/ccm_sensor_assessment_heart_rate"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:enabled="false"/>
-				</LinearLayout>
-				
-	            <!-- ============================================================ -->
-	            <!-- RESPIRATION RATE											  -->
-	            <!-- ============================================================ -->
+		            android:paddingBottom="5dp"
+		            android:stretchColumns="1">
+		            
+		            <!-- ============================================================ -->
+	            	<!-- HEART RATE													  -->
+	            	<!-- ============================================================ -->
+		            <TableRow>
+		                <TextView style="@style/AssessmentFormLabel"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/ccm_sensor_assessment_heart_rate_label" />
+
+			            <TextView
+			                style="@style/AssessmentDisabledTextView"
+			                android:id="@+id/ccm_sensor_assessment_heart_rate"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:enabled="false"/>		                
+
+	                	<CheckBox
+	                	    android:id="@+id/ccm_sensor_assessment_heart_rate_checkbox"
+	                	    style="@style/SensorAssessmentCheckbox"/>		                
+		            </TableRow>
+		            <!-- ============================================================ -->
+	            	<!-- RESPIRATION RATE											  -->
+	            	<!-- ============================================================ -->
+		            <TableRow>
+			            <TextView
+			                style="@style/AssessmentFormLabel"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:text="@string/ccm_sensor_assessment_respiration_rate_label" />
+			
+			            <TextView
+			                style="@style/AssessmentDisabledTextView"
+			                android:id="@+id/ccm_sensor_assessment_respiration_rate"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:enabled="false"/>
 	
-		        <LinearLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            android:orientation="horizontal"
-		            android:paddingBottom="5dp" >
-		            <TextView
-		                style="@style/AssessmentFormLabel"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:text="@string/ccm_sensor_assessment_respiration_rate_label" />
-		
-		            <TextView
-		                style="@style/AssessmentDisabledTextView"
-		                android:id="@+id/ccm_sensor_assessment_respiration_rate"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:enabled="false"/>
-				</LinearLayout>
-				
-	            <!-- ============================================================ -->
-	            <!-- SKIN TEMPERATURE											  -->
-	            <!-- ============================================================ -->
+			          	<CheckBox
+			                android:id="@+id/ccm_sensor_assessment_respiration_rate_checkbox"
+			                style="@style/SensorAssessmentCheckbox"/>		                
+		            </TableRow>
+		            <TableRow>
+			            <TextView
+			                style="@style/AssessmentFormLabel"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:text="@string/ccm_sensor_assessment_skin_temperature_label" />
 	
-		        <LinearLayout
-		            android:layout_width="match_parent"
-		            android:layout_height="wrap_content"
-		            android:orientation="horizontal"
-		            android:paddingBottom="5dp" >
-		            <TextView
-		                style="@style/AssessmentFormLabel"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:text="@string/ccm_sensor_assessment_skin_temperature_label" />
-		
-		            <TextView
-		                style="@style/AssessmentDisabledTextView"
-		                android:id="@+id/ccm_sensor_assessment_skin_temperature"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:enabled="false"/>
-				</LinearLayout>
+			            <TextView
+			                android:id="@+id/ccm_sensor_assessment_skin_temperature"
+			                style="@style/AssessmentDisabledTextView"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:enabled="false" />
+	
+			            <CheckBox
+			                android:id="@+id/ccm_sensor_assessment_skin_temperature_checkbox"
+			                style="@style/SensorAssessmentCheckbox" />		                
+		            </TableRow>
+		        </TableLayout>
 			</LinearLayout>
 				
 	        <LinearLayout

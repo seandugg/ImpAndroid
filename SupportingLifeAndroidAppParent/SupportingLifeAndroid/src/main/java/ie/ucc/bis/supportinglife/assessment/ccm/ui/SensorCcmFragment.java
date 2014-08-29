@@ -46,6 +46,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -66,7 +67,7 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 	
 	private static final String CONNECTION_ESTABLISHED = "Connection to BioHarness successfully established";
 	private static final String FAILED_TO_ESTABLISH_CONNECTION = "Failed to establish connection to BioHarness";
-	private static final String RESETTING_CONNECTION = "Resetting connection to BioHarness";
+	private static final String RESETTING_CONNECTION = "Disconnecting BioHarness";
 		
 	private static final String BLUETOOTH_CONNECTION_CONNECT_ICON_TYPEFACE_ASSET = "fonts/bluetooth-connect-flaticon.ttf";
 	private static final String BLUETOOTH_CONNECTION_RESET_ICON_TYPEFACE_ASSET = "fonts/bluetooth-reset-flaticon.ttf";
@@ -88,6 +89,10 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
     private TextView heartRateTextView;
     private TextView respirationRateTextView;
     private TextView skinTemperatureTextView;
+    
+    private CheckBox heartRateCheckBox;
+    private CheckBox respirationRateCheckBox;
+    private CheckBox skinTemperatureCheckBox;
     
     private ProgressBar progressTimer;
     private Thread timerThread;
@@ -144,14 +149,17 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
         // heart rate
         setHeartRateTextView(((TextView) rootView.findViewById(R.id.ccm_sensor_assessment_heart_rate)));
         getHeartRateTextView().setText(getSensorCcmPage().getPageData().getString(SensorCcmPage.HEART_RATE_DATA_KEY));
+        setHeartRateCheckBox(((CheckBox) rootView.findViewById(R.id.ccm_sensor_assessment_heart_rate_checkbox)));
         
         // respiration rate
         setRespirationRateTextView(((TextView) rootView.findViewById(R.id.ccm_sensor_assessment_respiration_rate)));
         getRespirationRateTextView().setText(getSensorCcmPage().getPageData().getString(SensorCcmPage.RESPIRATION_RATE_DATA_KEY));
+        setRespirationRateCheckBox(((CheckBox) rootView.findViewById(R.id.ccm_sensor_assessment_respiration_rate_checkbox)));
         
         // skin temperature
         setSkinTemperatureTextView(((TextView) rootView.findViewById(R.id.ccm_sensor_assessment_skin_temperature)));
         getSkinTemperatureTextView().setText(getSensorCcmPage().getPageData().getString(SensorCcmPage.SKIN_TEMPERATURE_DATA_KEY));
+        setSkinTemperatureCheckBox(((CheckBox) rootView.findViewById(R.id.ccm_sensor_assessment_skin_temperature_checkbox)));
         		
 		configureProgressTimer(rootView);
 
@@ -208,6 +216,9 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 		getConnectSensorButton().setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
             	LoggerUtils.i(LOG_TAG, "Connect Sensor Button: onClick -- Connect Sensor Button on CCM Sensor Assessment Fragment Clicked!");
+            	
+				// untick vital sign acceptance indicators
+				signalVitalSignsAcceptance(false);
 
             	String bioHarnessMacID = null;    			
             	setBluetoothAdapter(BluetoothAdapter.getDefaultAdapter());
@@ -257,10 +268,13 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
             }
 		});
 		
-		// add click listener to the connect 'sensor' button
+		// add click listener to the disconnect 'sensor' button
 		getDisconnectSensorButton().setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				// untick vital sign acceptance indicators
+				signalVitalSignsAcceptance(false);
+
 				disconnectBioHarness();
 			}
 		});
@@ -338,14 +352,29 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 							setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(FINISHED_NOTIFICATION_SOUND)));
 							getSoundPlayer().setOnPreparedListener(new MediaPlayerListener(getSoundPlayer()));
 							getSoundPlayer().setOnCompletionListener(new MediaPlayerListener(getSoundPlayer()));
+							
+							// indicate acceptance of transmitted vital sign values
+							signalVitalSignsAcceptance(true);
 						}
 						setTimerThreadRunning(false);
-					}						
+					}		
 				});
 			}
 		} // end run
 	} // end inner class
     
+	/**
+	 * Signals to user whether vital sign reading are accepted
+	 * i.e. by ticking/unticking associated vital sign checkboxes
+	 * 
+	 * @param acceptance
+	 */
+	private void signalVitalSignsAcceptance(boolean acceptance) {
+		getHeartRateCheckBox().setChecked(acceptance);
+		getRespirationRateCheckBox().setChecked(acceptance);
+//		getSkinTemperatureCheckBox().setChecked(acceptance);
+	}		
+	
     /** 
      * Inner class to handle callback from the BioHarnessConnectedListener
      */
@@ -573,11 +602,11 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 	/**
 	 * Responsible for disconnecting/disabling the connection from the SL App to the BioHarness
 	 */
-	private void disconnectBioHarness() {
+	private void disconnectBioHarness() {		
 		if (getBluetoothClient() != null) {
 			LoggerUtils.i(LOG_TAG, String.format("Disconnecting from BioHarness: %s", getBluetoothClient().getDevice().getName()));
-			Crouton.makeText((SensorCcmFragment.this).getActivity(), RESETTING_CONNECTION, Style.INFO).show();     
-
+			Crouton.makeText((SensorCcmFragment.this).getActivity(), RESETTING_CONNECTION, Style.INFO).show();
+			
 			setTimerThreadRunning(false);
 			if (getTimerThread() != null) {
 				getTimerThread().interrupt();
@@ -684,6 +713,30 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 
 	private void setSkinTemperatureTextView(TextView skinTemperatureTextView) {
 		this.skinTemperatureTextView = skinTemperatureTextView;
+	}
+
+	private CheckBox getHeartRateCheckBox() {
+		return heartRateCheckBox;
+	}
+
+	private void setHeartRateCheckBox(CheckBox heartRateCheckBox) {
+		this.heartRateCheckBox = heartRateCheckBox;
+	}
+
+	private CheckBox getRespirationRateCheckBox() {
+		return respirationRateCheckBox;
+	}
+
+	private void setRespirationRateCheckBox(CheckBox respirationRateCheckBox) {
+		this.respirationRateCheckBox = respirationRateCheckBox;
+	}
+
+	private CheckBox getSkinTemperatureCheckBox() {
+		return skinTemperatureCheckBox;
+	}
+
+	private void setSkinTemperatureCheckBox(CheckBox skinTemperatureCheckBox) {
+		this.skinTemperatureCheckBox = skinTemperatureCheckBox;
 	}
 
 	private ProgressBar getProgressTimer() {
