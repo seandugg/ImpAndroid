@@ -614,6 +614,9 @@
 	<string name="sensor_list_preference_title">Zephyr Sensor Availability</string>
 	<string name="sensor_list_preference_summary">Use zephyr sensor in CCM assessment</string>
 	
+	<string name="sensor_reading_duration_preference_title">Sensor Reading Duration</string>
+	<string name="sensor_reading_duration_preference_summary">Choose sensor reading duration</string>	
+	
     <!-- ============================================================ -->
     <!-- SYNC SCREEN -->
     <!-- ============================================================ -->

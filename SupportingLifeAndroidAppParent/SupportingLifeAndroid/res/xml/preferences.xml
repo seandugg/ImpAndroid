@@ -41,6 +41,13 @@
             android:summary="@string/sensor_list_preference_summary"
             android:defaultValue="No"
             android:entries="@array/sensorAvailabilitySelection"
-            android:entryValues="@array/sensorAvailabilitySelectionValues"/>         
+            android:entryValues="@array/sensorAvailabilitySelectionValues"/>
+		
+		<ListPreference android:key="sensor_reading_duration_selection"
+            android:title="@string/sensor_reading_duration_preference_title"
+            android:summary="@string/sensor_reading_duration_preference_summary"
+            android:defaultValue="30"
+            android:entries="@array/sensorReadingDurationSelection"
+            android:entryValues="@array/sensorReadingDurationSelectionValues"/>     
     </PreferenceCategory>
 </PreferenceScreen>

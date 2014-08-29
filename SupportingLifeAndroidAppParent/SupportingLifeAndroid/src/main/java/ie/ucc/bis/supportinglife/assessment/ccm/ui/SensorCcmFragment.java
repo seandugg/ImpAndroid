@@ -1,8 +1,8 @@
 package ie.ucc.bis.supportinglife.assessment.ccm.ui;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.activity.CcmAssessmentActivity;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
-import ie.ucc.bis.supportinglife.activity.UserRegistrationActivity;
 import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.GeneralPatientDetailsCcmPage;
@@ -12,16 +12,16 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
+import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextWatcher;
 import ie.ucc.bis.supportinglife.sensor.BioHarnessConnectedListener;
 import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
-
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 import zephyr.android.BioHarnessBT.BTClient;
 import android.app.Activity;
@@ -31,10 +31,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
+import android.media.MediaPlayer.OnPreparedListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +48,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
  * Responsible for UI fragment to display CCM 
@@ -55,15 +62,18 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 	
 	private static final int SECOND = 1;
 	private static final int ONE_SECOND_IN_MILLISECONDS = 1000;
-	private static final int SENSOR_TIMER_DURATION = 30;
+	private static final int THIRTY_SECONDS = 30;
 	
 	private static final String CONNECTION_ESTABLISHED = "Connection to BioHarness successfully established";
 	private static final String FAILED_TO_ESTABLISH_CONNECTION = "Failed to establish connection to BioHarness";
+	private static final String RESETTING_CONNECTION = "Resetting connection to BioHarness";
+		
 	private static final String BLUETOOTH_CONNECTION_CONNECT_ICON_TYPEFACE_ASSET = "fonts/bluetooth-connect-flaticon.ttf";
 	private static final String BLUETOOTH_CONNECTION_RESET_ICON_TYPEFACE_ASSET = "fonts/bluetooth-reset-flaticon.ttf";
 	private static final String BLUETOOTH_PAIRING_REQUEST = "android.bluetooth.device.action.PAIRING_REQUEST";
 	private static final String BLUETOOTH_BOND_STATE_CHANGED = "android.bluetooth.device.action.BOND_STATE_CHANGED";
 	private static final String BIO_HARNESS_TAG = "BH";
+	public static final String SENSOR_READING_DURATION_SELECTION_KEY = "sensor_reading_duration_selection";
 	
 	private final String LOG_TAG = "ie.ucc.bis.supportinglife.assessment.ccm.ui.SensorCcmFragment";
 
@@ -90,6 +100,13 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
     private Button connectSensorButton;
     private Button disconnectSensorButton;
     private Handler bioHarnessListenerHandler;
+    
+	private MediaPlayer soundPlayer;
+	private Map<String, Integer> sounds;
+    
+	/* Sounds */
+	private static final String TICK_SOUND = "Tick";
+	private static final String FINISHED_NOTIFICATION_SOUND = "Finished";
 
     public static SensorCcmFragment create(String pageKey) {
         Bundle args = new Bundle();
@@ -122,6 +139,7 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
         ((TextView) rootView.findViewById(android.R.id.title)).setText(getSensorCcmPage().getTitle());
         
 		configureFonts(rootView);
+		configureSounds();
 
         // heart rate
         setHeartRateTextView(((TextView) rootView.findViewById(R.id.ccm_sensor_assessment_heart_rate)));
@@ -164,18 +182,27 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 		getConnectSensorButton().setTypeface(font);		
 	}
     
+	/**
+	 * Responsible for configuring the sounds associated
+	 * with the Breath Counter
+	 * 
+	 */
+	private void configureSounds() {	
+		setSounds(new HashMap<String, Integer>());
+		getSounds().put(TICK_SOUND, R.raw.second_tick);
+		getSounds().put(FINISHED_NOTIFICATION_SOUND, R.raw.timer_finish);
+	}
     
 	/**
 	 * Responsible for handling comms between the device 
 	 * and the bioharness over bluetooth
 	 */
-	private void configureBioharnessCommunication() {
-		// initiate intents to handle bluetooth pairing request
-		// between android device and bioharness
-		configureBioHarnessBluetoothPairing();		
-		
+	private void configureBioharnessCommunication() {	
 		// configure handler for BioHarness Listener
 		configureBioHarnessListenerHandler();
+		
+    	// reset progress timer
+    	initialiseProgressTimer();
 		
 		// add click listener to the connect 'sensor' button
 		getConnectSensorButton().setOnClickListener(new View.OnClickListener() {
@@ -199,9 +226,14 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
             	
             	if (bioHarnessMacID != null) {
 	    			setBluetoothClient(new BTClient(getBluetoothAdapter(), bioHarnessMacID));
-	    			getBluetoothClient().addConnectedEventListener(new BioHarnessConnectedListener(getBioHarnessListenerHandler()));
+	    			setBioHarnessConnectedListener(new BioHarnessConnectedListener(getBioHarnessListenerHandler()));
+	    			getBluetoothClient().addConnectedEventListener(getBioHarnessConnectedListener());
 	    			
 	    			if(getBluetoothClient().IsConnected()) {
+	    				
+	    				// disable sensor connection button
+	    				getConnectSensorButton().setEnabled(false);
+	    				
 	    				getBluetoothClient().start();
 	    				
 	            		// need to kick off timer
@@ -218,6 +250,10 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 	    				Crouton.makeText((SensorCcmFragment.this).getActivity(), FAILED_TO_ESTABLISH_CONNECTION, Style.ALERT).show();
 	    			}
             	}
+            	else {
+    				LoggerUtils.i(LOG_TAG, String.format("Unable to establish connection"));
+    				Crouton.makeText((SensorCcmFragment.this).getActivity(), FAILED_TO_ESTABLISH_CONNECTION, Style.ALERT).show();           		
+            	}
             }
 		});
 		
@@ -225,17 +261,7 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 		getDisconnectSensorButton().setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				LoggerUtils.i(LOG_TAG, String.format("Disconnecting from BioHarness: %s", getBluetoothClient().getDevice().getName()));
-
-				setTimerThreadRunning(false);
-            	if (getTimerThread() != null) {
-            		getTimerThread().interrupt();
-            	}
-				
-				// disconnect listener from acting on received messages	
-				getBluetoothClient().removeConnectedEventListener(getBioHarnessConnectedListener());
-				// close the communication with the device & throw an exception if failure
-				getBluetoothClient().Close();
+				disconnectBioHarness();
 			}
 		});
 	}
@@ -248,10 +274,13 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 		// send message to android that we are going to initiate a pairing request
 		IntentFilter pairingRequestFilter = new IntentFilter(BLUETOOTH_PAIRING_REQUEST);
 		// register a new BTBroadcast receiver from the fragment's parent activity context with pairing request event
-		this.getActivity().registerReceiver(new BluetoothBroadcastReceiver(), pairingRequestFilter);
+		((CcmAssessmentActivity) this.getActivity()).setBluetoothBroadcastReceiver(new BluetoothBroadcastReceiver());
+		this.getActivity().registerReceiver(((CcmAssessmentActivity) this.getActivity()).getBluetoothBroadcastReceiver(), pairingRequestFilter);
+		
 		// register the BTBondReceiver in the application that the status of the receiver has changed to Paired
 		IntentFilter pairedRequestFilter = new IntentFilter(BLUETOOTH_BOND_STATE_CHANGED);
-		this.getActivity().registerReceiver(new BluetoothBondReceiver(), pairedRequestFilter);
+		((CcmAssessmentActivity) this.getActivity()).setBluetoothBondReceiver(new BluetoothBondReceiver());
+		this.getActivity().registerReceiver(((CcmAssessmentActivity) this.getActivity()).getBluetoothBondReceiver(), pairedRequestFilter);
 	}
 
 	/**
@@ -264,7 +293,11 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 		setProgressTimerTextView(((TextView) rootView.findViewById(R.id.ccm_sensor_assessment_progress_timer_text)));
 		
 		// configure max time for progress bar
-	    setTotalDuration(SENSOR_TIMER_DURATION);
+    	SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		String sensorReadingDurationPreference = settings.getString(SupportingLifeBaseActivity.SENSOR_READING_DURATION_SELECTION_KEY, 
+				String.valueOf(THIRTY_SECONDS));
+		// increment by one second to facilitate timer count-down approach
+	    setTotalDuration(Integer.valueOf(sensorReadingDurationPreference) + SECOND);
 		getProgressTimer().setMax(getTotalDuration());
 	
 		setTimerHandler(new Handler());
@@ -272,7 +305,7 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 
 	private class SensorReadingTimerThread extends Thread implements Runnable {
 		public void run() {
-			
+
 			while (isTimerThreadRunning() && getProgressStatus() < getTotalDuration()) {
 				// Update the progress bar and display the 
 				//current value in the text view
@@ -281,18 +314,14 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 						setProgressStatus(getProgressStatus() + SECOND);
 						getProgressTimer().setProgress(getProgressStatus());
 						getProgressTimerTextView().setText(String.valueOf((getTotalDuration() - getProgressStatus()) + "s"));
-						
+
 						if (getActivity() != null) {						
 							switch(getProgressStatus()) {
-//								case THIRTY_SECONDS: if (fullTimerDurationConfigured()) {
-//														setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(MIDWAY_NOTIFCATION_SOUND)));
-//													  }
-//													  break;
-//								default: setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(TICK_SOUND)));
-//										 break;
+										default: 	setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(TICK_SOUND)));
+													break;
 							}
-//							getSoundPlayer().setOnPreparedListener(new MediaPlayerListener(getSoundPlayer()));
-//							getSoundPlayer().setOnCompletionListener(new MediaPlayerListener(getSoundPlayer()));
+							getSoundPlayer().setOnPreparedListener(new MediaPlayerListener(getSoundPlayer()));
+							getSoundPlayer().setOnCompletionListener(new MediaPlayerListener(getSoundPlayer()));
 						}
 					}
 				});
@@ -306,25 +335,18 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 				getTimerHandler().post(new Runnable() {
 					public void run() {
 						if (getActivity() != null) {
-//							if (fullTimerDurationConfigured()) {
-//								setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(FINISHED_NOTIFICATION_SOUND)));
-//								getSoundPlayer().setOnPreparedListener(new MediaPlayerListener(getSoundPlayer()));
-//								getSoundPlayer().setOnCompletionListener(new MediaPlayerListener(getSoundPlayer()));
-//							}
+							setSoundPlayer(MediaPlayer.create(getActivity(), getSounds().get(FINISHED_NOTIFICATION_SOUND)));
+							getSoundPlayer().setOnPreparedListener(new MediaPlayerListener(getSoundPlayer()));
+							getSoundPlayer().setOnCompletionListener(new MediaPlayerListener(getSoundPlayer()));
 						}
-						
-						// need to disable breath counter button
-//						getIncrementCounterButton().setEnabled(false);
-						
 						setTimerThreadRunning(false);
-					}
-				});	
+					}						
+				});
 			}
-		}		
-	}
+		} // end run
+	} // end inner class
     
-    
-    /* 
+    /** 
      * Inner class to handle callback from the BioHarnessConnectedListener
      */
 	private static final class HandlerExtension extends Handler {
@@ -364,7 +386,7 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 		}
 	} // end HandlerExtension inner class
 
-	/* 
+	/** 
 	 * Inner class to handle callback from the pairing request event
 	 */ 
 	private class BluetoothBroadcastReceiver extends BroadcastReceiver {
@@ -397,7 +419,7 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 		}
 	} // end inner class
 	
-	/* 
+	/** 
 	 * Inner class to handle callback from the paired request event
 	 */    
 	private class BluetoothBondReceiver extends BroadcastReceiver {
@@ -409,6 +431,32 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 		}
 	} // end inner class
     	
+	/**
+	 * MediaPlayer Listener to play sound once sound is prepared to be played
+	 */
+	private class MediaPlayerListener implements OnPreparedListener, OnCompletionListener {
+		private MediaPlayer mediaPlayer;
+		
+		public MediaPlayerListener(MediaPlayer mediaPlayer) {
+			this.mediaPlayer = mediaPlayer;
+		}
+		
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+            if (mp == mediaPlayer) {
+            	mediaPlayer.start();
+            }
+        }
+
+		@Override
+		public void onCompletion(MediaPlayer mp) {
+            if (mp == mediaPlayer) {
+            	mediaPlayer.reset();
+            	mediaPlayer.release();
+            }
+		}
+    }	
+		
     private void configureBioHarnessListenerHandler() {
 		setBioHarnessListenerHandler(new HandlerExtension(this));
 	}
@@ -432,11 +480,67 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        
+        // heart rate
+        getHeartRateTextView().addTextChangedListener(
+        		new AssessmentWizardTextWatcher(getSensorCcmPage(), 
+        				SensorCcmPage.HEART_RATE_DATA_KEY));
+        
+        // respiratory rate
+        getRespirationRateTextView().addTextChangedListener(
+        		new AssessmentWizardTextWatcher(getSensorCcmPage(), 
+        				SensorCcmPage.RESPIRATION_RATE_DATA_KEY));
+        
+        // core body temperature
+       getSkinTemperatureTextView().addTextChangedListener(
+        		new AssessmentWizardTextWatcher(getSensorCcmPage(), 
+        				SensorCcmPage.SKIN_TEMPERATURE_DATA_KEY));
+    }
+    
+    @Override
+    public void onPause() {
+    	// remove connection to BioHarness
+    	disconnectBioHarness();
+    	
+       	if (((CcmAssessmentActivity) this.getActivity()).getBluetoothBroadcastReceiver() != null) {
+       		this.getActivity().unregisterReceiver(((CcmAssessmentActivity) this.getActivity()).getBluetoothBroadcastReceiver());
+        }
+
+       	if (((CcmAssessmentActivity) this.getActivity()).getBluetoothBondReceiver() != null) {
+       		this.getActivity().unregisterReceiver(((CcmAssessmentActivity) this.getActivity()).getBluetoothBondReceiver());
+       	}
+       	
+       	super.onPause();
     }
 	
     @Override
-    public void onPauseFragment(AbstractModel assessmentModel) {
-    	
+    public void onResume() {   	
+        super.onResume();
+   
+		// initiate intents to handle bluetooth pairing request
+		// between android device and bioharness
+        configureBioHarnessBluetoothPairing();
+        
+    	// put progress timer back to starting point
+    	initialiseProgressTimer();
+    }
+	
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) { 
+        	// put progress timer back to starting point
+        	initialiseProgressTimer();
+        }
+        else {  
+        	// remove connection to BioHarness
+        	disconnectBioHarness();
+        }
+    }
+    
+    
+    @Override
+    public void onPauseFragment(AbstractModel assessmentModel) {   	
     	// need to use bundle to access page data
 		Bundle args = getArguments();
 		AbstractAssessmentPage assessmentPage = (AbstractAssessmentPage) ((AbstractAssessmentModel) assessmentModel).findAssessmentPageByKey(args.getString(ARG_PAGE_KEY));
@@ -466,155 +570,212 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
     	}
     }
     
-	public BluetoothAdapter getBluetoothAdapter() {
+	/**
+	 * Responsible for disconnecting/disabling the connection from the SL App to the BioHarness
+	 */
+	private void disconnectBioHarness() {
+		if (getBluetoothClient() != null) {
+			LoggerUtils.i(LOG_TAG, String.format("Disconnecting from BioHarness: %s", getBluetoothClient().getDevice().getName()));
+			Crouton.makeText((SensorCcmFragment.this).getActivity(), RESETTING_CONNECTION, Style.INFO).show();     
+
+			setTimerThreadRunning(false);
+			if (getTimerThread() != null) {
+				getTimerThread().interrupt();
+			}
+			
+			// reset progress timer
+			initialiseProgressTimer();
+			
+			// enable sensor connection button
+			getConnectSensorButton().setEnabled(true);
+			
+			// disconnect listener from acting on received messages	
+			getBluetoothClient().removeConnectedEventListener(getBioHarnessConnectedListener());
+			// close the communication with the device & throw an exception if failure
+			getBluetoothClient().Close();
+			
+			setBluetoothClient(null);
+		}
+	}
+    
+	/**
+	 * Responsible for initialising/resetting the progress timer 
+	 */
+	private void initialiseProgressTimer() {
+		setProgressStatus(SECOND);
+		if (getProgressTimer() != null) {
+			getProgressTimer().setProgress(getProgressStatus());
+		}
+		if (getProgressTimerTextView() != null) {
+			getProgressTimerTextView().setText(String.valueOf((getTotalDuration() - getProgressStatus()) + "s"));
+		}
+	}
+    
+	private BluetoothAdapter getBluetoothAdapter() {
 		return bluetoothAdapter;
 	}
 
-	public void setBluetoothAdapter(BluetoothAdapter bluetoothAdapter) {
+	private void setBluetoothAdapter(BluetoothAdapter bluetoothAdapter) {
 		this.bluetoothAdapter = bluetoothAdapter;
 	}
 
-	public BTClient getBluetoothClient() {
+	private BTClient getBluetoothClient() {
 		return bluetoothClient;
 	}
 
-	public void setBluetoothClient(BTClient bluetoothClient) {
+	private void setBluetoothClient(BTClient bluetoothClient) {
 		this.bluetoothClient = bluetoothClient;
 	}
 
-	public BioHarnessConnectedListener getBioHarnessConnectedListener() {
+	private BioHarnessConnectedListener getBioHarnessConnectedListener() {
 		return bioHarnessConnectedListener;
 	}
 
-	public void setBioHarnessConnectedListener(BioHarnessConnectedListener bioHarnessConnectedListener) {
+	private void setBioHarnessConnectedListener(BioHarnessConnectedListener bioHarnessConnectedListener) {
 		this.bioHarnessConnectedListener = bioHarnessConnectedListener;
 	}
 
-	public SensorCcmPage getSensorCcmPage() {
+	private SensorCcmPage getSensorCcmPage() {
 		return sensorCcmPage;
 	}
 
-	public void setSensorCcmPage(SensorCcmPage sensorCcmPage) {
+	private void setSensorCcmPage(SensorCcmPage sensorCcmPage) {
 		this.sensorCcmPage = sensorCcmPage;
 	}
 
-	public PageFragmentCallbacks getPageFragmentCallbacks() {
+	private PageFragmentCallbacks getPageFragmentCallbacks() {
 		return pageFragmentCallbacks;
 	}
 
-	public void setPageFragmentCallbacks(PageFragmentCallbacks pageFragmentCallbacks) {
+	private void setPageFragmentCallbacks(PageFragmentCallbacks pageFragmentCallbacks) {
 		this.pageFragmentCallbacks = pageFragmentCallbacks;
 	}
 
-	public String getPageKey() {
+	private String getPageKey() {
 		return pageKey;
 	}
 
-	public void setPageKey(String pageKey) {
+	private void setPageKey(String pageKey) {
 		this.pageKey = pageKey;
 	}
 
-	public TextView getHeartRateTextView() {
+	private TextView getHeartRateTextView() {
 		return heartRateTextView;
 	}
 
-	public void setHeartRateTextView(TextView heartRateTextView) {
+	private void setHeartRateTextView(TextView heartRateTextView) {
 		this.heartRateTextView = heartRateTextView;
 	}
 
-	public TextView getRespirationRateTextView() {
+	private TextView getRespirationRateTextView() {
 		return respirationRateTextView;
 	}
 
-	public void setRespirationRateTextView(TextView respirationRateTextView) {
+	private void setRespirationRateTextView(TextView respirationRateTextView) {
 		this.respirationRateTextView = respirationRateTextView;
 	}
 
-	public TextView getSkinTemperatureTextView() {
+	private TextView getSkinTemperatureTextView() {
 		return skinTemperatureTextView;
 	}
 
-	public void setSkinTemperatureTextView(TextView skinTemperatureTextView) {
+	private void setSkinTemperatureTextView(TextView skinTemperatureTextView) {
 		this.skinTemperatureTextView = skinTemperatureTextView;
 	}
 
-	public ProgressBar getProgressTimer() {
+	private ProgressBar getProgressTimer() {
 		return progressTimer;
 	}
 
-	public void setProgressTimer(ProgressBar progressTimer) {
+	private void setProgressTimer(ProgressBar progressTimer) {
 		this.progressTimer = progressTimer;
 	}
 
-	public Thread getTimerThread() {
+	private Thread getTimerThread() {
 		return timerThread;
 	}
 
-	public void setTimerThread(Thread timerThread) {
+	private void setTimerThread(Thread timerThread) {
 		this.timerThread = timerThread;
 	}
 
-	public boolean isTimerThreadRunning() {
+	private boolean isTimerThreadRunning() {
 		return timerThreadRunning;
 	}
 
-	public void setTimerThreadRunning(boolean timerThreadRunning) {
+	private void setTimerThreadRunning(boolean timerThreadRunning) {
 		this.timerThreadRunning = timerThreadRunning;
 	}
 
-	public int getProgressStatus() {
+	private int getProgressStatus() {
 		return progressStatus;
 	}
 
-	public void setProgressStatus(int progressStatus) {
+	private void setProgressStatus(int progressStatus) {
 		this.progressStatus = progressStatus;
 	}
 
-	public int getTotalDuration() {
+	private int getTotalDuration() {
 		return totalDuration;
 	}
 
-	public void setTotalDuration(int totalDuration) {
+	private void setTotalDuration(int totalDuration) {
 		this.totalDuration = totalDuration;
 	}
 
-	public Handler getTimerHandler() {
+	private Handler getTimerHandler() {
 		return timerHandler;
 	}
 
-	public void setTimerHandler(Handler timerHandler) {
+	private void setTimerHandler(Handler timerHandler) {
 		this.timerHandler = timerHandler;
 	}
 
-	public TextView getProgressTimerTextView() {
+	private TextView getProgressTimerTextView() {
 		return progressTimerTextView;
 	}
 
-	public void setProgressTimerTextView(TextView progressTimerTextView) {
+	private void setProgressTimerTextView(TextView progressTimerTextView) {
 		this.progressTimerTextView = progressTimerTextView;
 	}
 
-	public Button getConnectSensorButton() {
+	private Button getConnectSensorButton() {
 		return connectSensorButton;
 	}
 
-	public void setConnectSensorButton(Button connectSensorButton) {
+	private void setConnectSensorButton(Button connectSensorButton) {
 		this.connectSensorButton = connectSensorButton;
 	}
 
-	public Button getDisconnectSensorButton() {
+	private Button getDisconnectSensorButton() {
 		return disconnectSensorButton;
 	}
 
-	public void setDisconnectSensorButton(Button disconnectSensorButton) {
+	private void setDisconnectSensorButton(Button disconnectSensorButton) {
 		this.disconnectSensorButton = disconnectSensorButton;
 	}
 
-	public Handler getBioHarnessListenerHandler() {
+	private Handler getBioHarnessListenerHandler() {
 		return bioHarnessListenerHandler;
 	}
 
-	public void setBioHarnessListenerHandler(Handler bioHarnessListenerHandler) {
+	private void setBioHarnessListenerHandler(Handler bioHarnessListenerHandler) {
 		this.bioHarnessListenerHandler = bioHarnessListenerHandler;
+	}
+
+	private MediaPlayer getSoundPlayer() {
+		return soundPlayer;
+	}
+
+	private void setSoundPlayer(MediaPlayer soundPlayer) {
+		this.soundPlayer = soundPlayer;
+	}
+
+	private Map<String, Integer> getSounds() {
+		return sounds;
+	}
+
+	private void setSounds(Map<String, Integer> sounds) {
+		this.sounds = sounds;
 	}
 }

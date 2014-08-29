@@ -68,6 +68,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	public static final String LANGUAGE_SELECTION_KEY = "language_selection";
 	public static final String BREATHING_DURATION_SELECTION_KEY = "breathing_duration_selection";
 	public static final String SENSOR_AVAILABILITY_SELECTION_KEY = "sensor_availability_selection";
+	public static final String SENSOR_READING_DURATION_SELECTION_KEY = "sensor_reading_duration_selection";
 
 	
 	/**

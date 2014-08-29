@@ -141,24 +141,7 @@
 	            android:layout_gravity="center_horizontal"
 	            android:layout_marginTop="10dp"
 	            android:paddingBottom="5dp" >
-	 
-				<!-- ============================================================ -->
-				<!-- BLUETOOTH DISCONNECT SENSOR BUTTON -->
-				<!-- ============================================================ -->
-	
-				<Button
-				    android:id="@+id/disconnect_sensor_button"
-				    style="@style/SensorScreenTextAppearanceFinish"
-				    android:layout_width="80dp"
-				    android:layout_height="80dp"
-				    android:layout_gravity="center_horizontal"
-				    android:layout_marginTop="10dp"
-				    android:layout_marginRight="10dp"
-				    android:background="@drawable/bluetooth_disconnect_sensor_button"
-				    android:text="@string/ccm_sensor_assessment_connect_bluetooth_reset_icon_font"
-	       			android:textColor="@color/default_white_icon_button_text_color"
-	        		android:textSize="50sp"/>
-	            
+
 	            <!-- ============================================================ -->
 				<!-- BLUETOOTH CONNECT SENSOR BUTTON -->
 				<!-- ============================================================ -->
@@ -170,12 +153,29 @@
 				    android:layout_height="80dp"
 				    android:layout_gravity="center_horizontal"
 				    android:layout_marginTop="10dp"
-				    android:layout_marginLeft="10dp"
+				    android:layout_marginRight="10dp"
 				    android:background="@drawable/bluetooth_connect_sensor_button"
 				    android:text="@string/ccm_sensor_assessment_connect_bluetooth_connect_icon_font"
 	       			android:textColor="@color/default_white_icon_button_text_color"
 	        		android:textSize="50sp"/>
-				
+	            	 
+				<!-- ============================================================ -->
+				<!-- BLUETOOTH DISCONNECT SENSOR BUTTON -->
+				<!-- ============================================================ -->
+	
+				<Button
+				    android:id="@+id/disconnect_sensor_button"
+				    style="@style/SensorScreenTextAppearanceFinish"
+				    android:layout_width="80dp"
+				    android:layout_height="80dp"
+				    android:layout_gravity="center_horizontal"
+				    android:layout_marginTop="10dp"
+				    android:layout_marginLeft="10dp"
+				    android:background="@drawable/bluetooth_disconnect_sensor_button"
+				    android:text="@string/ccm_sensor_assessment_connect_bluetooth_reset_icon_font"
+	       			android:textColor="@color/default_white_icon_button_text_color"
+	        		android:textSize="50sp"/>
+	            				
 			</LinearLayout>
             
         </LinearLayout>

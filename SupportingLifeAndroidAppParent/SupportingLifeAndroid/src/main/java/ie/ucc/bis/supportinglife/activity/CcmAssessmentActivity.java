@@ -8,6 +8,7 @@ import ie.ucc.bis.supportinglife.assessment.model.AssessmentPagerAdapter;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
@@ -21,6 +22,9 @@ import android.widget.Button;
  */
 
 public class CcmAssessmentActivity extends AssessmentActivity {
+	
+	private BroadcastReceiver bluetoothBroadcastReceiver;
+	private BroadcastReceiver bluetoothBondReceiver;
 	
 	/**
 	 * OnCreate method is called when the activity is first created.
@@ -85,7 +89,7 @@ public class CcmAssessmentActivity extends AssessmentActivity {
 		// add soft keyboard handler - essentially hiding soft
 		// keyboard when an EditText is not in focus
 		addSoftKeyboardHandling(findViewById(R.id.assessment_wizard));
-    }
+    }  
 	
     /**
      * Anonymous Inner Class: OnPageChangeListener
@@ -132,8 +136,24 @@ public class CcmAssessmentActivity extends AssessmentActivity {
 
     	public void onPageScrollStateChanged(int arg0) { }
     };
-    
-    /**
+     
+    public BroadcastReceiver getBluetoothBroadcastReceiver() {
+		return bluetoothBroadcastReceiver;
+	}
+
+	public void setBluetoothBroadcastReceiver(BroadcastReceiver bluetoothBroadcastReceiver) {
+		this.bluetoothBroadcastReceiver = bluetoothBroadcastReceiver;
+	}
+	
+	public BroadcastReceiver getBluetoothBondReceiver() {
+		return bluetoothBondReceiver;
+	}
+
+	public void setBluetoothBondReceiver(BroadcastReceiver bluetoothBondReceiver) {
+		this.bluetoothBondReceiver = bluetoothBondReceiver;
+	}
+
+	/**
      * Inner Class: NextButtonListener
      * 
      * Provides OnClick handler functionality for Next Button
