@@ -68,6 +68,7 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 	private static final String CONNECTION_ESTABLISHED = "Connection to BioHarness successfully established";
 	private static final String FAILED_TO_ESTABLISH_CONNECTION = "Failed to establish connection to BioHarness";
 	private static final String RESETTING_CONNECTION = "Disconnecting BioHarness";
+	private static final String DEFAULT_SENSOR_READING = "0";
 		
 	private static final String BLUETOOTH_CONNECTION_CONNECT_ICON_TYPEFACE_ASSET = "fonts/bluetooth-connect-flaticon.ttf";
 	private static final String BLUETOOTH_CONNECTION_RESET_ICON_TYPEFACE_ASSET = "fonts/bluetooth-reset-flaticon.ttf";
@@ -373,6 +374,12 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 		getHeartRateCheckBox().setChecked(acceptance);
 		getRespirationRateCheckBox().setChecked(acceptance);
 //		getSkinTemperatureCheckBox().setChecked(acceptance);
+		
+		if (!acceptance) {
+			getHeartRateTextView().setText(DEFAULT_SENSOR_READING);
+			getRespirationRateTextView().setText(DEFAULT_SENSOR_READING);
+//			getSkinTemperatureTextView().setText(DEFAULT_SENSOR_READING);
+		}
 	}		
 	
     /** 
