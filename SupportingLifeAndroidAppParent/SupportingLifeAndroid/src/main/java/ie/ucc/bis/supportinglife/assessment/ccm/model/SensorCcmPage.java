@@ -61,8 +61,7 @@ public class SensorCcmPage extends AbstractAssessmentPage {
     	String reviewItemSymptomId = null;
 
     	boolean sensorReadingsAccepted = getPageData().getBoolean(SensorCcmPage.VITAL_SIGN_READINGS_ACCEPTED_DATA_KEY);
-    	
-    	
+    	    	
     	// review header
     	reviewItemLabel = resources.getString(R.string.ccm_sensor_assessment_title);
     	reviewItems.add(new ReviewItem(reviewItemLabel, getKey()));	

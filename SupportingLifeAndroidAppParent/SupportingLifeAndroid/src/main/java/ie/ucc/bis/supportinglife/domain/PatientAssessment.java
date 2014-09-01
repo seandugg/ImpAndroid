@@ -72,6 +72,11 @@ public class PatientAssessment implements Serializable {
 	private boolean breathCounterUsed;
 	private boolean breathFullTimeAssessment;
 	
+	// sensor readings
+	private String sensorHeartRate;
+	private String sensorRespiratoryRate;
+	private String sensorBodyTemperature;
+	
 	public PatientAssessment() {
 		setDiagnostics(new ArrayList<Diagnostic>());
 	}
@@ -471,5 +476,29 @@ public class PatientAssessment implements Serializable {
 
 	public void setBreathFullTimeAssessment(boolean breathFullTimeAssessment) {
 		this.breathFullTimeAssessment = breathFullTimeAssessment;
+	}
+
+	public String getSensorHeartRate() {
+		return sensorHeartRate;
+	}
+
+	public void setSensorHeartRate(String sensorHeartRate) {
+		this.sensorHeartRate = sensorHeartRate;
+	}
+
+	public String getSensorRespiratoryRate() {
+		return sensorRespiratoryRate;
+	}
+
+	public void setSensorRespiratoryRate(String sensorRespiratoryRate) {
+		this.sensorRespiratoryRate = sensorRespiratoryRate;
+	}
+
+	public String getSensorBodyTemperature() {
+		return sensorBodyTemperature;
+	}
+
+	public void setSensorBodyTemperature(String sensorBodyTemperature) {
+		this.sensorBodyTemperature = sensorBodyTemperature;
 	}
 }

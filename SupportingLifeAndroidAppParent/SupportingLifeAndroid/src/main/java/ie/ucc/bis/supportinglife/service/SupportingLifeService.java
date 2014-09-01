@@ -10,6 +10,8 @@ import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
 import ie.ucc.bis.supportinglife.dao.DatabaseHandler;
 import ie.ucc.bis.supportinglife.dao.PatientAssessmentDao;
 import ie.ucc.bis.supportinglife.dao.PatientAssessmentDaoImpl;
+import ie.ucc.bis.supportinglife.dao.SensorVitalSignsDao;
+import ie.ucc.bis.supportinglife.dao.SensorVitalSignsDaoImpl;
 import ie.ucc.bis.supportinglife.dao.TreatmentDao;
 import ie.ucc.bis.supportinglife.dao.TreatmentDaoImpl;
 import ie.ucc.bis.supportinglife.domain.PatientAssessment;
@@ -39,6 +41,7 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 	private ClassificationDao classificationDao;
 	private TreatmentDao treatmentDao;
 	private AssessmentAnalyticsDao assessmentAnalyticsDao;
+	private SensorVitalSignsDao sensorVitalSignsDao;
 	
 	// Database fields
 	private SQLiteDatabase database;
@@ -58,6 +61,7 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 		setClassificationDao(new ClassificationDaoImpl());
 		setTreatmentDao(new TreatmentDaoImpl());
 		setAssessmentAnalyticsDao(new AssessmentAnalyticsDaoImpl());
+		setSensorVitalSignsDao(new SensorVitalSignsDaoImpl());
 	}
 	
 	/*******************************************************************************/
@@ -84,6 +88,9 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 			// now add the associated 'patient assessment' treatments
 			getTreatmentDao().createPatientTreatments(patientToAdd, uniquePatientAssessmentIdentifier, this);
 			
+			// now add the associated 'assessment' sensor readings
+			getSensorVitalSignsDao().createSensorVitalSigns(patientToAdd, uniquePatientAssessmentIdentifier, locat, this);
+
 			// now add the associated 'assessment' analytics
 			getAssessmentAnalyticsDao().createAssessmentAnalytics(patientToAdd, uniquePatientAssessmentIdentifier, locat, this);
 			
@@ -122,6 +129,9 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 			
 			// 4. For the patient assessments pulled back, pull back the associated analytics
 			getAssessmentAnalyticsDao().populateAssessmentAnalytics(patientAssessmentComms, this);
+			
+			// 5. For the patient assessments pulled back, pull back the associated vital sign sensor readings
+			getSensorVitalSignsDao().populateSensorVitalSigns(patientAssessmentComms, this);
 		}
 		
 		return patientAssessmentComms;
@@ -151,19 +161,19 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 		getDatabaseHandler().close();
 	}
 	
-	public PatientAssessmentDao getPatientAssessmentDao() {
+	private PatientAssessmentDao getPatientAssessmentDao() {
 		return patientAssessmentDao;
 	}
 
-	public void setPatientAssessmentDao(PatientAssessmentDao patientAssessmentDao) {
+	private void setPatientAssessmentDao(PatientAssessmentDao patientAssessmentDao) {
 		this.patientAssessmentDao = patientAssessmentDao;
 	}
 
-	public ClassificationDao getClassificationDao() {
+	private ClassificationDao getClassificationDao() {
 		return classificationDao;
 	}
 
-	public void setClassificationDao(ClassificationDao classificationDao) {
+	private void setClassificationDao(ClassificationDao classificationDao) {
 		this.classificationDao = classificationDao;
 	}
 
@@ -171,16 +181,24 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 		return treatmentDao;
 	}
 
-	public void setTreatmentDao(TreatmentDao treatmentDao) {
+	private void setTreatmentDao(TreatmentDao treatmentDao) {
 		this.treatmentDao = treatmentDao;
 	}
 
-	public AssessmentAnalyticsDao getAssessmentAnalyticsDao() {
+	private AssessmentAnalyticsDao getAssessmentAnalyticsDao() {
 		return assessmentAnalyticsDao;
 	}
 
-	public void setAssessmentAnalyticsDao(AssessmentAnalyticsDao assessmentAnalyticsDao) {
+	private void setAssessmentAnalyticsDao(AssessmentAnalyticsDao assessmentAnalyticsDao) {
 		this.assessmentAnalyticsDao = assessmentAnalyticsDao;
+	}
+
+	private SensorVitalSignsDao getSensorVitalSignsDao() {
+		return sensorVitalSignsDao;
+	}
+
+	private void setSensorVitalSignsDao(SensorVitalSignsDao sensorVitalSignsDao) {
+		this.sensorVitalSignsDao = sensorVitalSignsDao;
 	}
 
 	@Override

@@ -110,6 +110,16 @@ public class CcmReviewFragment extends ReviewListFragment implements ModelCallba
     	onPageTreeChanged();
     }
     
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) { 
+        	// gather all review items to show latest
+        	// review data
+        	onPageDataChanged(null);
+        }
+    }
+    
     public void onPageTreeChanged() {
         onPageDataChanged(null);
     }
@@ -123,13 +133,15 @@ public class CcmReviewFragment extends ReviewListFragment implements ModelCallba
     }
 
     public void onPageDataChanged(AbstractAssessmentPage changedPage) {
-       setCurrentReviewItems(getWizardModel().gatherAssessmentReviewItems());
-
-        if (getReviewAssessmentAdapter() != null) {
-        	getReviewAssessmentAdapter().getFilter().filter(null);// apply filter to remove review items which we indicated should be invisible
-    		
-        	getReviewAssessmentAdapter().notifyDataSetChanged();
-        }
+    	if (getWizardModel() != null) {
+    		setCurrentReviewItems(getWizardModel().gatherAssessmentReviewItems());
+	
+	        if (getReviewAssessmentAdapter() != null) {
+	        	getReviewAssessmentAdapter().getFilter().filter(null);// apply filter to remove review items which we indicated should be invisible
+	    		
+	        	getReviewAssessmentAdapter().notifyDataSetChanged();
+	        }
+    	}
     }
     
     @Override

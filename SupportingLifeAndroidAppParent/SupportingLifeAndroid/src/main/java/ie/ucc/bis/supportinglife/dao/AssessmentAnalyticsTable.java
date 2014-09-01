@@ -39,7 +39,7 @@ public class AssessmentAnalyticsTable {
 
 	public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
 		Log.w(DatabaseHandler.class.getName(),
-				"Upgrading database classification table from version " + oldVersion + " to "
+				"Upgrading database analytics table from version " + oldVersion + " to "
 						+ newVersion + ", which will destroy all old data");
 		database.execSQL("DROP TABLE IF EXISTS " + DATABASE_ASSESSMENT_ANALYTICS_TABLE_CREATE);
 		onCreate(database);

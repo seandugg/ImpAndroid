@@ -24,6 +24,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		TreatmentTable.onCreate(database);
 		// create analytics table
 		AssessmentAnalyticsTable.onCreate(database);
+		// create 'sensor vital signs' table
+		SensorVitalSignsTable.onCreate(database);
 	}
 
 	
@@ -37,5 +39,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		TreatmentTable.onUpgrade(database, oldVersion, newVersion);
 		// create analytics table
 		AssessmentAnalyticsTable.onUpgrade(database, oldVersion, newVersion);
+		// create 'sensor vital signs' table
+		SensorVitalSignsTable.onUpgrade(database, oldVersion, newVersion);
 	}
 }

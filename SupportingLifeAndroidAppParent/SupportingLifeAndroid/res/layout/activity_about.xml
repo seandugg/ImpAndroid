@@ -122,13 +122,14 @@
 		       <TextView android:id="@+id/about_tester_label"
 		            style="@style/AboutLabel"
 		            android:layout_gravity="left"
-		            android:paddingLeft="10dp"
+		            android:paddingLeft="25dp"
 		            android:text="@string/about_tester_label"/>		        
 		    </TableRow>
 		    <TableRow>
 		        <TextView android:id="@+id/about_business_analyst_value"
                 	style="@style/AboutText"
                 	android:layout_gravity="left"
+                	android:paddingLeft="13dp"
                 	android:text="@string/about_business_analyst_value"/>
 
 	            <TextView android:id="@+id/about_tester_value"

@@ -50,6 +50,7 @@ public class PatientHandlerUtils {
 		retrieveGeneralPatientDetails(patient, resources, reviewItemMap);
 		retrieveLookSymptoms(patient, resources, reviewItemMap);
 		retrieveAskLookSymptoms(patient, resources, reviewItemMap);
+		retrieveAssessmentSensorReadings(patient, resources, reviewItemMap);
 		retrieveAssessmentSpecificAnalytics(patient, resources, reviewItemMap);
 
 		return patient;
@@ -225,6 +226,26 @@ public class PatientHandlerUtils {
 
 		// 'cannot treat problems' details
 		patient.setCannotTreatProblemDetails(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_ask_secondary_assessment_cannot_treat_problems_details_id))));
+	}
+	
+	/**
+	 * Method to populate a patient instance with the following:
+	 * 
+	 * - Sensor Vital Sign Reading
+	 * 
+	 * @param patient
+	 * @param resources
+	 * @param reviewItems
+	 * 
+	 * @throws ParseException 
+	 */
+	private void retrieveAssessmentSensorReadings(PatientAssessment patient, Resources resources, Map<String, String> reviewItemMap) {
+		// sensor heart rate
+		patient.setSensorHeartRate(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_sensor_assessment_heart_rate_id))));
+		// sensor respiration rate
+		patient.setSensorRespiratoryRate(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_sensor_assessment_respiration_rate_id))));
+		// sensor body temperature
+		patient.setSensorBodyTemperature(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_sensor_assessment_skin_temperature_id))));
 	}
 
 	/**
