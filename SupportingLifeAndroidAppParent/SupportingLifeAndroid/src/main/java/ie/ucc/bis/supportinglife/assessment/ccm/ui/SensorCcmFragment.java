@@ -356,6 +356,9 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 							
 							// indicate acceptance of transmitted vital sign values
 							signalVitalSignsAcceptance(true);
+							
+							// stop updating vital sign textfields
+							disconnectBioHarness();
 						}
 						setTimerThreadRunning(false);
 					}		
@@ -379,6 +382,13 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 			getHeartRateTextView().setText(DEFAULT_SENSOR_READING);
 			getRespirationRateTextView().setText(DEFAULT_SENSOR_READING);
 //			getSkinTemperatureTextView().setText(DEFAULT_SENSOR_READING);
+			
+			// vital sign readings not accepted
+			getSensorCcmPage().getPageData().remove(SensorCcmPage.VITAL_SIGN_READINGS_ACCEPTED_DATA_KEY);
+		}
+		else {
+			// vital sign readings accepted
+			getSensorCcmPage().getPageData().putBoolean(SensorCcmPage.VITAL_SIGN_READINGS_ACCEPTED_DATA_KEY, true);
 		}
 	}		
 	

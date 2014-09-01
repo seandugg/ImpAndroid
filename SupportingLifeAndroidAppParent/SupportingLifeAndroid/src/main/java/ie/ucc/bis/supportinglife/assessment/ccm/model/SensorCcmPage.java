@@ -26,6 +26,7 @@ public class SensorCcmPage extends AbstractAssessmentPage {
 	public static final String HEART_RATE_DATA_KEY = "HEART_RATE";
     public static final String RESPIRATION_RATE_DATA_KEY = "RESPIRATION_RATE";
     public static final String SKIN_TEMPERATURE_DATA_KEY = "SKIN_TEMPERATURE";
+    public static final String VITAL_SIGN_READINGS_ACCEPTED_DATA_KEY = "VITAL_SIGN_READINGS_ACCEPTED";
     
     // ANALYTICS DATA KEYS
     public static final String ANALTYICS_START_PAGE_TIMER_DATA_KEY = "ANALYTICS_ZEPHYR_SENSOR_CCM_PAGE_START_PAGE_TIMER";
@@ -58,6 +59,9 @@ public class SensorCcmPage extends AbstractAssessmentPage {
     	String reviewItemLabel = null;
     	String reviewItemValue = null;
     	String reviewItemSymptomId = null;
+
+    	boolean sensorReadingsAccepted = getPageData().getBoolean(SensorCcmPage.VITAL_SIGN_READINGS_ACCEPTED_DATA_KEY);
+    	
     	
     	// review header
     	reviewItemLabel = resources.getString(R.string.ccm_sensor_assessment_title);
@@ -66,24 +70,45 @@ public class SensorCcmPage extends AbstractAssessmentPage {
     	// heart rate
     	reviewItemIdentifier = resources.getString(R.string.ccm_sensor_assessment_heart_rate_id);
     	reviewItemLabel = resources.getString(R.string.ccm_sensor_assessment_review_heart_rate);
-    	reviewItemValue = getPageData().getString(HEART_RATE_DATA_KEY);
+    	reviewItemValue = getSensorReading(sensorReadingsAccepted, HEART_RATE_DATA_KEY);
     	reviewItemSymptomId = resources.getString(R.string.ccm_sensor_assessment_heart_rate_symptom_id);
     	reviewItems.add(new ReviewItem(reviewItemLabel, reviewItemValue, reviewItemSymptomId, getKey(), -1, reviewItemIdentifier));
     	
     	// respiration rate
     	reviewItemIdentifier = resources.getString(R.string.ccm_sensor_assessment_respiration_rate_id);
     	reviewItemLabel = resources.getString(R.string.ccm_sensor_assessment_review_respiration_rate);
-    	reviewItemValue = getPageData().getString(RESPIRATION_RATE_DATA_KEY);
+    	reviewItemValue = getSensorReading(sensorReadingsAccepted, RESPIRATION_RATE_DATA_KEY);
     	reviewItemSymptomId = resources.getString(R.string.ccm_sensor_assessment_respiration_rate_symptom_id);
     	reviewItems.add(new ReviewItem(reviewItemLabel, reviewItemValue, reviewItemSymptomId, getKey(), -1, reviewItemIdentifier));
     	
     	// skin temperature
     	reviewItemIdentifier = resources.getString(R.string.ccm_sensor_assessment_skin_temperature_id);
     	reviewItemLabel = resources.getString(R.string.ccm_sensor_assessment_review_skin_temperature);
-    	reviewItemValue = getPageData().getString(SKIN_TEMPERATURE_DATA_KEY);
+    	reviewItemValue = getSensorReading(sensorReadingsAccepted, SKIN_TEMPERATURE_DATA_KEY);
     	reviewItemSymptomId = resources.getString(R.string.ccm_sensor_assessment_skin_temperature_symptom_id);
     	reviewItems.add(new ReviewItem(reviewItemLabel, reviewItemValue, reviewItemSymptomId, getKey(), -1, reviewItemIdentifier));    	
     }
+
+	/**
+	 * Responsible for retrieving the sensor reading value requested. Will return
+	 * a null value if a full reading of the sensors (i.e. 15/30/45/60 seconds) was
+	 * not completed.
+	 * 
+	 * @param sensorReadingsAccepted
+	 * @param dataKey
+	 * 
+	 * @return sensor reading
+	 */
+	private String getSensorReading(boolean sensorReadingsAccepted, String dataKey) {
+		String reviewItemValue;
+		if (sensorReadingsAccepted) {
+    		reviewItemValue = getPageData().getString(dataKey);
+    	}
+    	else {
+    		reviewItemValue = null;
+    	}
+		return reviewItemValue;
+	}
 
     /**
      * Method: getDataAnalytics
