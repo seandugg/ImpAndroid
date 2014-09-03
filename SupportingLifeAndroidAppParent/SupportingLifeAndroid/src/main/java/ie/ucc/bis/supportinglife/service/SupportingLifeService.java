@@ -89,7 +89,7 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 			getTreatmentDao().createPatientTreatments(patientToAdd, uniquePatientAssessmentIdentifier, this);
 			
 			// now add the associated 'assessment' sensor readings
-			getSensorVitalSignsDao().createSensorVitalSigns(patientToAdd, uniquePatientAssessmentIdentifier, locat, this);
+			getSensorVitalSignsDao().createSensorVitalSigns(patientToAdd, uniquePatientAssessmentIdentifier, this);
 
 			// now add the associated 'assessment' analytics
 			getAssessmentAnalyticsDao().createAssessmentAnalytics(patientToAdd, uniquePatientAssessmentIdentifier, locat, this);

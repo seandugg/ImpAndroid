@@ -10,7 +10,6 @@ import java.util.List;
 import net.sqlcipher.database.SQLiteStatement;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.location.Location;
 
 public class SensorVitalSignsDaoImpl implements SensorVitalSignsDao {
 	
@@ -34,7 +33,7 @@ public class SensorVitalSignsDaoImpl implements SensorVitalSignsDao {
 	 * @return
 	 */
 	@Override
-	public void createSensorVitalSigns(PatientAssessment assessmentToAdd, String uniquePatientAssessmentIdentifier, Location locat, SupportingLifeService service) {
+	public void createSensorVitalSigns(PatientAssessment assessmentToAdd, String uniquePatientAssessmentIdentifier, SupportingLifeService service) {
 		// show the number of assessment specific 'sensor vital sign readings; in debug logger
 		debugOutputShowSensorReadingsCount(service);
 

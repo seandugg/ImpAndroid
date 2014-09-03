@@ -456,6 +456,11 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity implem
 		LoggerUtils.i(LOG_TAG, "Location Connection Status : Connected");
 		if (getLocationClient() != null) {
 			Location locat = getLocationClient().getLastLocation();
+			
+			if (locat == null) {
+				locat = new Location("Default Location");
+			}
+			
 			LoggerUtils.i(LOG_TAG, "Last Known Location :" + locat.getLatitude() + "," + locat.getLongitude());
 			
 			// now we should record the patient visit details to the SQLite DB

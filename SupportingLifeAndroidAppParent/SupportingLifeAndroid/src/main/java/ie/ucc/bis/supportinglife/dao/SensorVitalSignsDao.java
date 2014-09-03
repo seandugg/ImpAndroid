@@ -1,12 +1,10 @@
 package ie.ucc.bis.supportinglife.dao;
 
-import java.util.List;
-
-import android.location.Location;
-
 import ie.ucc.bis.supportinglife.communication.PatientAssessmentComms;
 import ie.ucc.bis.supportinglife.domain.PatientAssessment;
 import ie.ucc.bis.supportinglife.service.SupportingLifeService;
+
+import java.util.List;
 
 /**
  * Class: SensorVitalSignsDao
@@ -19,7 +17,7 @@ import ie.ucc.bis.supportinglife.service.SupportingLifeService;
  */
 public interface SensorVitalSignsDao {
 	
-	public void createSensorVitalSigns(PatientAssessment assessmentToAdd, String uniquePatientAssessmentIdentifier, Location locat, SupportingLifeService service);
+	public void createSensorVitalSigns(PatientAssessment assessmentToAdd, String uniquePatientAssessmentIdentifier, SupportingLifeService service);
 
 	public void populateSensorVitalSigns(List<PatientAssessmentComms> patientAssessmentComms, SupportingLifeService service);
 }
