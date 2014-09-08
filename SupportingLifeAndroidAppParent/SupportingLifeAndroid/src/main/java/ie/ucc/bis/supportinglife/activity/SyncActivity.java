@@ -143,14 +143,12 @@ public class SyncActivity extends SupportingLifeBaseActivity {
 	
 	private class NetworkCommunicationAsyncTask extends AsyncTask<PatientAssessmentComms, PatientAssessmentResponseComms, Boolean> {
 		
-		// PRODUCTION AWS URL
-	//	private static final String FULL_REST_REQUEST = "http://sl-technology.eu/patientvisits/add";
-		
-		// DEVELOPMENT AWS URL
-	//	private static final String FULL_REST_REQUEST = "http://143.239.97.70:8080/SupportingLife/patientvisits/add";
-		
 		// direct ec2 name appears quicker for mobile device to resolve the domain name (i.e. sl-technology.eu) when
 		// performing sync operation.
+		// DEV URL
+	//	private static final String DEV_REST_REQUEST = DEV_BASE_URL + "patientvisits/add";
+		
+		// PRODUCTION AWS URL
 		private static final String REST_REQUEST = AWS_BASE_URL + "patientvisits/add";
 				
 		@Override
