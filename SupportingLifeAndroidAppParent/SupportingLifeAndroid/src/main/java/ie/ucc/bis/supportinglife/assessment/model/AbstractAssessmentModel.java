@@ -136,7 +136,10 @@ public abstract class AbstractAssessmentModel extends AbstractModel implements M
     	// load assessment pages into memory    	
         for (String key : savedValues.keySet()) {
         	if (getAssessmentPages() != null) {
-        		getAssessmentPages().findAssessmentPageByKey(key).resetPageData(savedValues.getBundle(key));
+        		AbstractAssessmentPage assessmentPage = getAssessmentPages().findAssessmentPageByKey(key);
+        		if (assessmentPage != null) {
+        			assessmentPage.resetPageData(savedValues.getBundle(key));
+        		}
         	}
         }
     }
