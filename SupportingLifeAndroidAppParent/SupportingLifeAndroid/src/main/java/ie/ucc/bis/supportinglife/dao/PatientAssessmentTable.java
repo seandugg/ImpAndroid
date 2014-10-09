@@ -25,6 +25,7 @@ public class PatientAssessmentTable {
 	protected static final String COLUMN_CHILD_FIRST_NAME = "child_first_name";
 	protected static final String COLUMN_CHILD_SURNAME = "child_surname";
 	protected static final String COLUMN_BIRTH_DATE = "birth_date";
+	protected static final String COLUMN_AGE_MONTHS = "age_months";
 	protected static final String COLUMN_GENDER = "gender";
 	protected static final String COLUMN_CAREGIVER_NAME = "caregiver";
 	protected static final String COLUMN_RELATIONSHIP = "relationship";
@@ -68,6 +69,7 @@ public class PatientAssessmentTable {
 									+ COLUMN_CHILD_FIRST_NAME 			+ " TEXT, "
 									+ COLUMN_CHILD_SURNAME 				+ " TEXT, "
 									+ COLUMN_BIRTH_DATE 				+ " TEXT, "
+									+ COLUMN_AGE_MONTHS 				+ " INTEGER, "
 									+ COLUMN_GENDER 					+ " TEXT, "
 									+ COLUMN_CAREGIVER_NAME 			+ " TEXT, "
 									+ COLUMN_RELATIONSHIP 				+ " TEXT, "

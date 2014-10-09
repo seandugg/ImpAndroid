@@ -7,6 +7,7 @@ import ie.ucc.bis.supportinglife.ui.utilities.DateUtilities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -88,6 +89,8 @@ public class PatientHandlerUtils {
 		// birthdate
 		patient.setBirthDate(assessDatePatientSymptom(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_date_of_birth_id)),
 				DateUtilities.DATE_CUSTOM_FORMAT));
+		
+		patient.setMonthsAge(determineAgeInMonths(patient.getBirthDate()));
 
 		// gender
 		patient.setGender(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_gender_id))));
@@ -108,7 +111,6 @@ public class PatientHandlerUtils {
 		patient.setVisitDate(DateUtilities.getTodaysDateTimestamp());
 	}
 
-	
 	/**
 	 * Utility method to check for null and convert string to upper case
 	 * 
@@ -302,6 +304,24 @@ public class PatientHandlerUtils {
 			return null;
 		}
 	}
+	
+	/**
+	 * Determines age of patient in month
+	 * 
+	 * @param Data
+	 * 
+	 * @return Integer
+	 */	
+	private Integer determineAgeInMonths(Date birthDate) {
+		Integer months = null;
+
+		if (birthDate != null) {
+			Calendar cal = Calendar.getInstance();
+			months = DateUtilities.getDiffMonths(birthDate, cal.getTime());
+		}
+		return months;
+	}
+
 	
 	/**
 	 * Assess whether a symptom review item is null and 

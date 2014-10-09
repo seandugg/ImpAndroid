@@ -79,6 +79,9 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 			long timestamp = System.currentTimeMillis();
 			String uniquePatientAssessmentIdentifier = android_device_id + "_" + timestamp;
 			
+			// DATA ANONYMISATION - Key change for the feasibility study and the clinical trial (ref. JIRA SL-166)
+			anonymisePatientAssessment(patientToAdd);
+			
 			// add the patient assessment
 			getPatientAssessmentDao().createPatientAssessmentComms(patientToAdd, uniquePatientAssessmentIdentifier, hsaUserId, this);
 			
@@ -104,6 +107,26 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 			// end the database transaction
 			getDatabase().endTransaction();
 		}		
+	}
+
+	/**
+	 * Responsible for the anonymisation of key properties of a patient assessment that could
+	 * identify a patient. This feature is implemented for the feasibility study and
+	 * the clinical trial only.
+	 * 
+	 * This functionality was agreed by UCC, UOxf (UW), and LIN.
+	 * 
+	 * @param patientAssessment
+	 */
+	private void anonymisePatientAssessment(PatientAssessment patientAssessment) {
+		patientAssessment.setNationalId(null);
+		patientAssessment.setNationalHealthId(null);
+		patientAssessment.setChildFirstName(null);
+		patientAssessment.setChildSurname(null);
+		patientAssessment.setCaregiverName(null);
+		patientAssessment.setPhysicalAddress(null);
+		patientAssessment.setVillageTa(null);
+		patientAssessment.setBirthDate(null);
 	}
 
 	@Override

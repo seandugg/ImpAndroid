@@ -34,7 +34,8 @@ public class PatientAssessmentDaoImpl implements PatientAssessmentDao {
 									PatientAssessmentTable.COLUMN_HSA_USER_ID,
 									PatientAssessmentTable.COLUMN_CHILD_FIRST_NAME,
 									PatientAssessmentTable.COLUMN_CHILD_SURNAME,
-									PatientAssessmentTable.COLUMN_BIRTH_DATE,						
+									PatientAssessmentTable.COLUMN_BIRTH_DATE,
+									PatientAssessmentTable.COLUMN_AGE_MONTHS,	
 									PatientAssessmentTable.COLUMN_GENDER,
 									PatientAssessmentTable.COLUMN_CAREGIVER_NAME,
 									PatientAssessmentTable.COLUMN_RELATIONSHIP,
@@ -93,7 +94,8 @@ public class PatientAssessmentDaoImpl implements PatientAssessmentDao {
 		values.put(PatientAssessmentTable.COLUMN_NATIONAL_HEALTH_ID, patientToAdd.getNationalHealthId());	
 		values.put(PatientAssessmentTable.COLUMN_HSA_USER_ID, hsaUserId);		
 		values.put(PatientAssessmentTable.COLUMN_CHILD_FIRST_NAME, patientToAdd.getChildFirstName());					
-		values.put(PatientAssessmentTable.COLUMN_CHILD_SURNAME, patientToAdd.getChildSurname());						
+		values.put(PatientAssessmentTable.COLUMN_CHILD_SURNAME, patientToAdd.getChildSurname());
+		values.put(PatientAssessmentTable.COLUMN_AGE_MONTHS, patientToAdd.getMonthsAge());
 		values.put(PatientAssessmentTable.COLUMN_GENDER, patientToAdd.getGender());
 		values.put(PatientAssessmentTable.COLUMN_CAREGIVER_NAME, patientToAdd.getCaregiverName());
 		values.put(PatientAssessmentTable.COLUMN_RELATIONSHIP, patientToAdd.getRelationship());
@@ -219,30 +221,30 @@ public class PatientAssessmentDaoImpl implements PatientAssessmentDao {
 	private PatientAssessmentComms cursorToPatientAssessmentComms(Cursor cursor) {
 
 //		Param Line 1: 	Integer id (0), String deviceGeneratedAssessmentId (1), String nationalId (2), String nationalHealthId (3), String nationalHealthId (4),
-//		Param Line 2: 	String childFirstName (5), String childSurname (6), String birthDate (7),
-//		Param Line 3: 	String gender (8), String caregiverName (9), String relationship (10), String physicalAddress (11),
-//		Param Line 4: 	String villageTa (12), String visitDate (13), String chestIndrawing (14), Integer breathsPerMinute (15),
-//		Param Line 5: 	String sleepyUnconscious (16), String palmarPallor (17), String muacTapeColour (18), 
-//		Param Line 6: 	String swellingBothFeet (19), String problem (20), String cough (21), Integer coughDuration (22),
-//		Param Line 7: 	String diarrhoea (23), Integer diarrhoeaDuration (24), String bloodInStool (25), String fever (26),
-//		Param Line 8: 	Integer feverDuration (27), String convulsions (28), String difficultyDrinkingOrFeeding (29),
-//		Param Line 9: 	String unableToDrinkOrFeed (30), String vomiting (31), String vomitsEverything (32),
-//		Param Line 10: 	String redEye (33), Integer redEyeDuration (34), String difficultySeeing (35),
-//		Param Line 11:	Integer difficultySeeingDuration (36), String cannotTreatProblem (37), 
-//		Param Line 12: 	String cannotTreatProblemDetails (38)
+//		Param Line 2: 	String childFirstName (5), String childSurname (6), String birthDate (7), Integer monthsAge (8),
+//		Param Line 3: 	String gender (9), String caregiverName (10), String relationship (11), String physicalAddress (12),
+//		Param Line 4: 	String villageTa (13), String visitDate (14), String chestIndrawing (15), Integer breathsPerMinute (16),
+//		Param Line 5: 	String sleepyUnconscious (17), String palmarPallor (18), String muacTapeColour (19), 
+//		Param Line 6: 	String swellingBothFeet (20), String problem (21), String cough (22), Integer coughDuration (23),
+//		Param Line 7: 	String diarrhoea (24), Integer diarrhoeaDuration (25), String bloodInStool (26), String fever (27),
+//		Param Line 8: 	Integer feverDuration (28), String convulsions (29), String difficultyDrinkingOrFeeding (30),
+//		Param Line 9: 	String unableToDrinkOrFeed (31), String vomiting (32), String vomitsEverything (33),
+//		Param Line 10: 	String redEye (34), Integer redEyeDuration (35), String difficultySeeing (36),
+//		Param Line 11:	Integer difficultySeeingDuration (37), String cannotTreatProblem (38), 
+//		Param Line 12: 	String cannotTreatProblemDetails (39)
 		
 		PatientAssessmentComms patientAssessmentComms = new PatientAssessmentComms(DaoUtilities.readInt(cursor, 0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), 
-													cursor.getString(5), cursor.getString(6), cursor.getString(7),
-													cursor.getString(8), cursor.getString(9), cursor.getString(10), cursor.getString(11),
-													cursor.getString(12), cursor.getString(13), cursor.getString(14), DaoUtilities.readInt(cursor, 15),
-													cursor.getString(16), cursor.getString(17), cursor.getString(18),
-													cursor.getString(19), cursor.getString(20), cursor.getString(21), DaoUtilities.readInt(cursor, 22),
-													cursor.getString(23), DaoUtilities.readInt(cursor, 24), cursor.getString(25), cursor.getString(26),
-													DaoUtilities.readInt(cursor, 27), cursor.getString(28), cursor.getString(29),
-													cursor.getString(30), cursor.getString(31), cursor.getString(32),
-													cursor.getString(33), DaoUtilities.readInt(cursor, 34), cursor.getString(35),
-													DaoUtilities.readInt(cursor, 36), cursor.getString(37),
-													cursor.getString(38));
+													cursor.getString(5), cursor.getString(6), cursor.getString(7), DaoUtilities.readInt(cursor, 8),
+													cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),
+													cursor.getString(13), cursor.getString(14), cursor.getString(15), DaoUtilities.readInt(cursor, 16),
+													cursor.getString(17), cursor.getString(18), cursor.getString(19),
+													cursor.getString(20), cursor.getString(21), cursor.getString(22), DaoUtilities.readInt(cursor, 23),
+													cursor.getString(24), DaoUtilities.readInt(cursor, 25), cursor.getString(26), cursor.getString(27),
+													DaoUtilities.readInt(cursor, 28), cursor.getString(29), cursor.getString(30),
+													cursor.getString(31), cursor.getString(32), cursor.getString(33),
+													cursor.getString(34), DaoUtilities.readInt(cursor, 35), cursor.getString(36),
+													DaoUtilities.readInt(cursor, 37), cursor.getString(38),
+													cursor.getString(39));
 		
 		return patientAssessmentComms;
 	}

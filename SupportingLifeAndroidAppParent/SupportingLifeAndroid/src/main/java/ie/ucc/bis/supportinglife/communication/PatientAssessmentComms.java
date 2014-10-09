@@ -37,6 +37,7 @@ public class PatientAssessmentComms implements Serializable {
 	private String childFirstName;
 	private String childSurname;
 	private Date birthDate;
+	private Integer monthsAge;
 	private String gender;
 	private String caregiverName;
 	private String relationship;
@@ -93,7 +94,7 @@ public class PatientAssessmentComms implements Serializable {
 	public PatientAssessmentComms() {}
 
 	public PatientAssessmentComms(Integer id, String deviceGeneratedAssessmentId, String nationalId, String nationalHealthId, String hsaUserId, 
-			String childFirstName, String childSurname, String birthDate,
+			String childFirstName, String childSurname, String birthDate, Integer monthsAge,
 			String gender, String caregiverName, String relationship, String physicalAddress,
 			String villageTa, String visitDate, String chestIndrawing, Integer breathsPerMinute,
 			String sleepyUnconscious, String palmarPallor, String muacTapeColour, 
@@ -112,6 +113,7 @@ public class PatientAssessmentComms implements Serializable {
 		setHsaUserId(hsaUserId);
 		setChildFirstName(childFirstName);
 		setChildSurname(childSurname);
+		setMonthsAge(monthsAge);
 		setGender(gender);
 		setCaregiverName(caregiverName);
 		setRelationship(relationship);
@@ -228,6 +230,14 @@ public class PatientAssessmentComms implements Serializable {
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public Integer getMonthsAge() {
+		return monthsAge;
+	}
+
+	public void setMonthsAge(Integer monthsAge) {
+		this.monthsAge = monthsAge;
 	}
 
 	public String getGender() {

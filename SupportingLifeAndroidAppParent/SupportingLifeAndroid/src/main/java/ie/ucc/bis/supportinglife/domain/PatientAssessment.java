@@ -1,10 +1,8 @@
 package ie.ucc.bis.supportinglife.domain;
 
 import ie.ucc.bis.supportinglife.rule.engine.Diagnostic;
-import ie.ucc.bis.supportinglife.ui.utilities.DateUtilities;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +27,7 @@ public class PatientAssessment implements Serializable {
 	private String childFirstName;
 	private String childSurname;
 	private Date birthDate;
+	private Integer monthsAge;
 	private String gender;
 	private String caregiverName;
 	private String relationship;
@@ -78,67 +77,6 @@ public class PatientAssessment implements Serializable {
 	private String sensorBodyTemperature;
 	
 	public PatientAssessment() {
-		setDiagnostics(new ArrayList<Diagnostic>());
-	}
-	
-	public PatientAssessment(Integer id, String deviceGeneratedAssessmentId, String nationalId, String nationalHealthId, String hsaUserId, 
-					String childFirstName, String childSurname, String birthDate,
-					String gender, String caregiverName, String relationship, String physicalAddress,
-					String villageTa, String visitDate, String chestIndrawing, Integer breathsPerMinute,
-					String sleepyUnconscious, String palmarPallor, String muacTapeColour, 
-					String swellingBothFeet, String problem, String cough, Integer coughDuration,
-					String diarrhoea, Integer diarrhoeaDuration, String bloodInStool, String fever,
-					Integer feverDuration, String convulsions, String difficultyDrinkingOrFeeding,
-					String unableToDrinkOrFeed, String vomiting, String vomitsEverything,
-					String redEye, Integer redEyeDuration, String difficultySeeing,
-					Integer difficultySeeingDuration, String cannotTreatProblem, 
-					String cannotTreatProblemDetails) {
-		
-		setId(id);
-		setDeviceGeneratedAssessmentId(deviceGeneratedAssessmentId);
-		setNationalId(nationalId);
-		setNationalHealthId(nationalHealthId);
-		setHsaUserId(hsaUserId);
-		setChildFirstName(childFirstName);
-		setChildSurname(childSurname);
-		setGender(gender);
-		setCaregiverName(caregiverName);
-		setRelationship(relationship);
-		setPhysicalAddress(physicalAddress);
-		setVillageTa(villageTa);
-		setChestIndrawing(Boolean.valueOf(chestIndrawing));
-		setBreathsPerMinute(breathsPerMinute);
-		setSleepyUnconscious(Boolean.valueOf(sleepyUnconscious));
-		setPalmarPallor(Boolean.valueOf(palmarPallor));
-		setMuacTapeColour(muacTapeColour);
-		setSwellingBothFeet(Boolean.valueOf(swellingBothFeet));
-		setProblem(problem);
-		setCough(Boolean.valueOf(cough));
-		setCoughDuration(coughDuration);		
-		setDiarrhoea(Boolean.valueOf(diarrhoea));
-		setDiarrhoeaDuration(diarrhoeaDuration);
-		setBloodInStool(Boolean.valueOf(bloodInStool));
-		setFever(Boolean.valueOf(fever));
-		setFeverDuration(feverDuration);
-		setConvulsions(Boolean.valueOf(convulsions));
-		setDifficultyDrinkingOrFeeding(Boolean.valueOf(difficultyDrinkingOrFeeding));
-		setUnableToDrinkOrFeed(Boolean.valueOf(unableToDrinkOrFeed));
-		setVomiting(Boolean.valueOf(vomiting));
-		setVomitsEverything(Boolean.valueOf(vomitsEverything));
-		setRedEye(Boolean.valueOf(redEye));
-		setRedEyeDuration(redEyeDuration);
-		setDifficultySeeing(Boolean.valueOf(difficultySeeing));
-		setDifficultySeeingDuration(difficultySeeingDuration);
-		setCannotTreatProblem(Boolean.valueOf(cannotTreatProblem));
-		setCannotTreatProblemDetails(cannotTreatProblemDetails);
-				
-		try {
-			setBirthDate(DateUtilities.parseDate(birthDate, DateUtilities.DATE_CUSTOM_FORMAT));
-			setVisitDate(DateUtilities.parseDate(visitDate, DateUtilities.DATE_TIME_CUSTOM_FORMAT));
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
 		setDiagnostics(new ArrayList<Diagnostic>());
 	}
 	
@@ -204,6 +142,14 @@ public class PatientAssessment implements Serializable {
 
 	public void setBirthDate(Date birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	public Integer getMonthsAge() {
+		return monthsAge;
+	}
+
+	public void setMonthsAge(Integer monthsAge) {
+		this.monthsAge = monthsAge;
 	}
 
 	public String getGender() {
