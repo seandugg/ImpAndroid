@@ -1,22 +1,22 @@
 package ie.ucc.bis.supportinglife.validation;
 
-import android.widget.EditText;
+import android.widget.TextView;
 
 public class ValidationResult {
 
     private final boolean isValid;
     private final String message;
-    private final EditText textView;
+    private final TextView textView;
 
-    public static ValidationResult buildSuccess(EditText textView) {
+    public static ValidationResult buildSuccess(TextView textView) {
         return new ValidationResult(true, "", textView);
     }
 
-    public static ValidationResult buildFailed(EditText textView, String message) {
+    public static ValidationResult buildFailed(TextView textView, String message) {
         return new ValidationResult(false, message, textView);
     }
 
-    private ValidationResult(boolean isValid, String message, EditText textView) {
+    private ValidationResult(boolean isValid, String message, TextView textView) {
         this.isValid = isValid;
         this.message = message;
         this.textView = textView;
@@ -30,7 +30,7 @@ public class ValidationResult {
 		return message;
 	}
 
-	public EditText getTextView() {
+	public TextView getTextView() {
 		return textView;
 	}
 }

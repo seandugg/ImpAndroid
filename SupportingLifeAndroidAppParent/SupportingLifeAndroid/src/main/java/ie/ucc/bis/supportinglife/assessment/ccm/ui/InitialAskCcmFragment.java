@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.ccm.ui;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
@@ -11,11 +12,17 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentValidator;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextWatcher;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DynamicViewListenerUtilities;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupCoordinatorListener;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.ui.utilities.ViewGroupUtilities;
+import ie.ucc.bis.supportinglife.validation.Field;
+import ie.ucc.bis.supportinglife.validation.Form;
+import ie.ucc.bis.supportinglife.validation.NotEmptyValidation;
+import ie.ucc.bis.supportinglife.validation.RadioGroupValidation;
+import ie.ucc.bis.supportinglife.validation.ValidationListener;
 
 import java.util.Arrays;
 
@@ -36,7 +43,7 @@ import android.widget.TextView;
  * @author timothyosullivan
  * 
  */
-public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle {
+public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle, FragmentValidator {
 
 	private InitialAskCcmPage initialAskCcmPage;    
 	private PageFragmentCallbacks pageFragmentCallbacks;
@@ -65,6 +72,9 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 	private Boolean animatedDiarrhoeaDurationViewInVisibleState;
 	private Boolean animatedFeverDurationViewInVisibleState;
 	private Boolean animatedUnableDrinkFeedViewInVisibleState;
+	
+	// Form used for validation
+    private Form form;
 	
 	public static InitialAskCcmFragment create(String pageKey) {
 		Bundle args = new Bundle();
@@ -200,6 +210,10 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 		// add soft keyboard handler - essentially hiding soft
 		// keyboard when an EditText is not in focus
 		((SupportingLifeBaseActivity) getActivity()).addSoftKeyboardHandling(rootView);
+		
+		// validation
+		configureValidation();
+		((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
 
 		return rootView;
 	}
@@ -417,381 +431,270 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
     	}
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) { 
+        	((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
+        }
+    }
+    
 	/**
-	 * Getter Method: getInitialAskCcmPage()
+	 * Responsible for configuring validation on the CCM page
 	 */
+	private void configureValidation() {
+        setForm(new Form(this.getActivity()));
+        registerValidationListeners();
+
+        getForm().addField(Field.using(getCoughView(), getResources().getString(R.string.ccm_ask_initial_assessment_review_cough)).validate(RadioGroupValidation.build(this.getActivity())));
+        getForm().addField(Field.using(getProblemsEditText(), getResources().getString(R.string.ccm_ask_initial_assessment_problems_label)).validate(NotEmptyValidation.build(this.getActivity())));
+	}
+	
+	/**
+	 * Responsible for registering validation listeners on editable UI components.
+	 * 
+	 * Generally registration of a validation listener on a UI component should be
+	 * done subsequent to the initial validation check so that the user is not
+	 * plagued with validation feedback when initially filling in the form data.
+	 * 
+	 * In the case of 'Register Patient Details page', validation listeners will only be placed
+	 * on the UI components after the user has performed an initial swipe.
+	 */
+	private void registerValidationListeners() {
+		getProblemsEditText().setOnFocusChangeListener(new ValidationListener(getForm(), this));
+	}
+	
+	@Override
+	public boolean performValidation() {
+		if (getForm() != null) {
+			return getForm().performValidation();
+		}
+		else {
+			return false;
+		}
+	}
+    
 	public InitialAskCcmPage getInitialAskCcmPage() {
 		return initialAskCcmPage;
 	}
 
-	/**
-	 * Setter Method: setInitialAskCcmPage()
-	 */   	
 	public void setInitialAskCcmPage(InitialAskCcmPage initialAskCcmPage) {
 		this.initialAskCcmPage = initialAskCcmPage;
 	}
 
-	/**
-	 * Getter Method: getPageFragmentCallbacks()
-	 */
 	public PageFragmentCallbacks getPageFragmentCallbacks() {
 		return pageFragmentCallbacks;
 	}
 
-	/**
-	 * Setter Method: setPageFragmentCallbacks()
-	 */
 	public void setPageFragmentCallbacks(PageFragmentCallbacks pageFragmentCallbacks) {
 		this.pageFragmentCallbacks = pageFragmentCallbacks;
 	}
 
-	/**
-	 * Getter Method: getPageKey()
-	 */	
 	public String getPageKey() {
 		return pageKey;
 	}
 
-	/**
-	 * Setter Method: setPageKey()
-	 */	
 	public void setPageKey(String pageKey) {
 		this.pageKey = pageKey;
 	}
 
-	/**
-	 * Getter Method: getProblemsEditText()
-	 */
 	public EditText getProblemsEditText() {
 		return problemsEditText;
 	}
 
-	/**
-	 * Setter Method: setProblemsEditText()
-	 */
 	public void setProblemsEditText(EditText problemsEditText) {
 		this.problemsEditText = problemsEditText;
 	}
 
-	/**
-	 * Getter Method: getCoughRadioGroup()
-	 */
 	public RadioGroup getCoughRadioGroup() {
 		return coughRadioGroup;
 	}
 
-	/**
-	 * Setter Method: setCoughRadioGroup()
-	 */
 	public void setCoughRadioGroup(RadioGroup coughRadioGroup) {
 		this.coughRadioGroup = coughRadioGroup;
 	}
 
-	/**
-	 * Getter Method: getDiarrhoeaRadioGroup()
-	 */
 	public RadioGroup getDiarrhoeaRadioGroup() {
 		return diarrhoeaRadioGroup;
 	}
 
-	/**
-	 * Setter Method: setDiarrhoeaRadioGroup()
-	 */
 	public void setDiarrhoeaRadioGroup(RadioGroup diarrhoeaRadioGroup) {
 		this.diarrhoeaRadioGroup = diarrhoeaRadioGroup;
 	}
 
-	/**
-	 * Getter Method: getBloodInStoolRadioGroup()
-	 */
 	public RadioGroup getBloodInStoolRadioGroup() {
 		return bloodInStoolRadioGroup;
 	}
 
-	/**
-	 * Setter Method: setBloodInStoolRadioGroup()
-	 */
 	public void setBloodInStoolRadioGroup(RadioGroup bloodInStoolRadioGroup) {
 		this.bloodInStoolRadioGroup = bloodInStoolRadioGroup;
 	}
 
-	/**
-	 * Getter Method: getFeverRadioGroup()
-	 */
 	public RadioGroup getFeverRadioGroup() {
 		return feverRadioGroup;
 	}
 
-	/**
-	 * Setter Method: setFeverRadioGroup()
-	 */
 	public void setFeverRadioGroup(RadioGroup feverRadioGroup) {
 		this.feverRadioGroup = feverRadioGroup;
 	}
 
-	/**
-	 * Getter Method: getConvulsionsRadioGroup()
-	 */
 	public RadioGroup getConvulsionsRadioGroup() {
 		return convulsionsRadioGroup;
 	}
 
-	/**
-	 * Setter Method: setConvulsionsRadioGroup()
-	 */
 	public void setConvulsionsRadioGroup(RadioGroup convulsionsRadioGroup) {
 		this.convulsionsRadioGroup = convulsionsRadioGroup;
 	}
 
-	/**
-	 * Getter Method: getDrinkFeedDifficultyRadioGroup()
-	 */
 	public RadioGroup getDrinkFeedDifficultyRadioGroup() {
 		return drinkFeedDifficultyRadioGroup;
 	}
 
-	/**
-	 * Setter Method: setDrinkFeedDifficultyRadioGroup()
-	 */
 	public void setDrinkFeedDifficultyRadioGroup(RadioGroup drinkFeedDifficultyRadioGroup) {
 		this.drinkFeedDifficultyRadioGroup = drinkFeedDifficultyRadioGroup;
 	}
 
-	/**
-	 * Getter Method: getUnableDrinkFeedRadioGroup()
-	 */
 	public RadioGroup getUnableDrinkFeedRadioGroup() {
 		return unableDrinkFeedRadioGroup;
 	}
 
-	/**
-	 * Setter Method: setUnableDrinkFeedRadioGroup()
-	 */
 	public void setUnableDrinkFeedRadioGroup(RadioGroup unableDrinkFeedRadioGroup) {
 		this.unableDrinkFeedRadioGroup = unableDrinkFeedRadioGroup;
 	}
 
-	/**
-	 * Getter Method: getCoughDurationEditText()
-	 */
 	public EditText getCoughDurationEditText() {
 		return coughDurationEditText;
 	}
 
-	/**
-	 * Setter Method: setCoughDurationEditText()
-	 */
 	public void setCoughDurationEditText(EditText coughDurationEditText) {
 		this.coughDurationEditText = coughDurationEditText;
 	}
 
-	/**
-	 * Getter Method: getDiarrhoeaDurationEditText()
-	 */
 	public EditText getDiarrhoeaDurationEditText() {
 		return diarrhoeaDurationEditText;
 	}
 
-	/**
-	 * Setter Method: setDiarrhoeaDurationEditText()
-	 */
 	public void setDiarrhoeaDurationEditText(EditText diarrhoeaDurationEditText) {
 		this.diarrhoeaDurationEditText = diarrhoeaDurationEditText;
 	}
 
-	/**
-	 * Getter Method: getFeverDurationEditText()
-	 */
 	public EditText getFeverDurationEditText() {
 		return feverDurationEditText;
 	}
 
-	/**
-	 * Setter Method: setFeverDurationEditText()
-	 */
 	public void setFeverDurationEditText(EditText feverDurationEditText) {
 		this.feverDurationEditText = feverDurationEditText;
 	}
-	
-	/**
-	 * Getter Method: getAnimatedTopLevelView()
-	 */
+
 	public ViewGroup getAnimatedTopLevelView() {
 		return animatedTopLevelView;
 	}
 
-	/**
-	 * Setter Method: setAnimatedTopLevelView()
-	 */
 	public void setAnimatedTopLevelView(ViewGroup animatedTopLevelView) {
 		this.animatedTopLevelView = animatedTopLevelView;
 	}
 
-	/**
-	 * Getter Method: getCoughView()
-	 */
 	public View getCoughView() {
 		return coughView;
 	}
 
-	/**
-	 * Setter Method: setCoughView()
-	 */
 	public void setCoughView(View coughView) {
 		this.coughView = coughView;
 	}
 
-	/**
-	 * Getter Method: getDiarrhoeaView()
-	 */
 	public View getDiarrhoeaView() {
 		return diarrhoeaView;
 	}
 
-	/**
-	 * Setter Method: setDiarrhoeaView()
-	 */
 	public void setDiarrhoeaView(View diarrhoeaView) {
 		this.diarrhoeaView = diarrhoeaView;
 	}
 
-	/**
-	 * Getter Method: getFeverView()
-	 */
 	public View getFeverView() {
 		return feverView;
 	}
 
-	/**
-	 * Setter Method: setFeverView()
-	 */
 	public void setFeverView(View feverView) {
 		this.feverView = feverView;
 	}
 
-	/**
-	 * Getter Method: getDrinkFeedView()
-	 */
 	public View getDrinkFeedView() {
 		return drinkFeedView;
 	}
 
-	/**
-	 * Setter Method: setDrinkFeedView()
-	 */
 	public void setDrinkFeedView(View drinkFeedView) {
 		this.drinkFeedView = drinkFeedView;
 	}
-	
-	/**
-	 * Getter Method: getCoughDurationDynamicView()
-	 */
+
 	public DynamicView getCoughDurationDynamicView() {
 		return coughDurationDynamicView;
 	}
 
-	/**
-	 * Setter Method: setCoughDurationDynamicView()
-	 */
 	public void setCoughDurationDynamicView(DynamicView coughDurationDynamicView) {
 		this.coughDurationDynamicView = coughDurationDynamicView;
 	}
 
-	/**
-	 * Getter Method: getDiarrhoeaDurationDynamicView()
-	 */
 	public DynamicView getDiarrhoeaDurationDynamicView() {
 		return diarrhoeaDurationDynamicView;
 	}
 
-	/**
-	 * Setter Method: setDiarrhoeaDurationDynamicView()
-	 */
 	public void setDiarrhoeaDurationDynamicView(DynamicView diarrhoeaDurationDynamicView) {
 		this.diarrhoeaDurationDynamicView = diarrhoeaDurationDynamicView;
 	}
 
-	/**
-	 * Getter Method: getFeverDurationDynamicView()
-	 */
 	public DynamicView getFeverDurationDynamicView() {
 		return feverDurationDynamicView;
 	}
 
-	/**
-	 * Setter Method: setFeverDurationDynamicView()
-	 */
 	public void setFeverDurationDynamicView(DynamicView feverDurationDynamicView) {
 		this.feverDurationDynamicView = feverDurationDynamicView;
 	}
 
-	/**
-	 * Getter Method: getDrinkFeedDDynamicView()
-	 */
 	public DynamicView getDrinkFeedDynamicView() {
 		return drinkFeedDynamicView;
 	}
 
-	/**
-	 * Setter Method: setDrinkFeedDynamicView()
-	 */
 	public void setDrinkFeedDynamicView(DynamicView drinkFeedDynamicView) {
 		this.drinkFeedDynamicView = drinkFeedDynamicView;
 	}
-	
-	/**
-	 * Getter Method: isAnimatedCoughDurationViewInVisibleState()
-	 */
+
 	public Boolean isAnimatedCoughDurationViewInVisibleState() {
 		return animatedCoughDurationViewInVisibleState;
 	}
 
-	/**
-	 * Setter Method: setAnimatedCoughDurationViewInVisibleState()
-	 */
 	public void setAnimatedCoughDurationViewInVisibleState(Boolean animatedCoughDurationViewInVisibleState) {
 		this.animatedCoughDurationViewInVisibleState = animatedCoughDurationViewInVisibleState;
 	}
 
-	/**
-	 * Getter Method: isAnimatedDiarrhoeaDurationViewInVisibleState()
-	 */
 	public Boolean isAnimatedDiarrhoeaDurationViewInVisibleState() {
 		return animatedDiarrhoeaDurationViewInVisibleState;
 	}
 
-	/**
-	 * Setter Method: setAnimatedCoughDurationViewInVisibleState()
-	 */
 	public void setAnimatedDiarrhoeaDurationViewInVisibleState(Boolean animatedDiarrhoeaDurationViewInVisibleState) {
 		this.animatedDiarrhoeaDurationViewInVisibleState = animatedDiarrhoeaDurationViewInVisibleState;
 	}
 
-	/**
-	 * Getter Method: isAnimatedFeverDurationViewInVisibleState()
-	 */
 	public Boolean isAnimatedFeverDurationViewInVisibleState() {
 		return animatedFeverDurationViewInVisibleState;
 	}
 
-	/**
-	 * Setter Method: setAnimatedFeverDurationViewInVisibleState()
-	 */
 	public void setAnimatedFeverDurationViewInVisibleState(Boolean animatedFeverDurationViewInVisibleState) {
 		this.animatedFeverDurationViewInVisibleState = animatedFeverDurationViewInVisibleState;
 	}
 
-	/**
-	 * Getter Method: isAnimatedUnableDrinkFeedViewInVisibleState()
-	 */
 	public Boolean isAnimatedUnableDrinkFeedViewInVisibleState() {
 		return animatedUnableDrinkFeedViewInVisibleState;
 	}
 
-	/**
-	 * Setter Method: setAnimatedUnableDrinkFeedViewInVisibleState()
-	 */
 	public void setAnimatedUnableDrinkFeedViewInVisibleState(Boolean animatedUnableDrinkFeedViewInVisibleState) {
 		this.animatedUnableDrinkFeedViewInVisibleState = animatedUnableDrinkFeedViewInVisibleState;
+	}
+	
+	public Form getForm() {
+		return form;
+	}
+
+	public void setForm(Form form) {
+		this.form = form;
 	}
 }

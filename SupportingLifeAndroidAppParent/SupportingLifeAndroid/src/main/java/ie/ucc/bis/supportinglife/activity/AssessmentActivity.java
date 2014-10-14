@@ -9,13 +9,13 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.AssessmentPagerAdapter;
+import ie.ucc.bis.supportinglife.assessment.model.AssessmentViewPager;
 import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 
@@ -29,7 +29,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 
 	protected static final String ASSESSMENT_REVIEW_ITEMS = "ASSESSMENT_REVIEW_ITEMS";
 	
-	private ViewPager viewPager;
+	private AssessmentViewPager assessmentViewPager;
     private AssessmentPagerAdapter assessmentPagerAdapter;
 	private AbstractAssessmentModel assessmentModel;
 	private StepPagerStrip stepPagerStrip;
@@ -53,7 +53,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
             if (getAssessmentModel().getAssessmentPageSequence().get(i).getKey().equals(key)) {
                 setConsumePageSelectedEvent(true);
                 setEditingAfterReview(true);
-                getViewPager().setCurrentItem(i);
+                getAssessmentViewPager().setCurrentItem(i);
                 updateBottomBar();
                 break;
             }
@@ -98,7 +98,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 	 * 
 	 */      
     protected void updateBottomBar() {
-        int position = getViewPager().getCurrentItem();
+        int position = getAssessmentViewPager().getCurrentItem();
         if (position == getAssessmentModel().getAssessmentPageSequence().size()) {
             // change text on the next button to indicate
         	// assessment data entry is complete
@@ -185,7 +185,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN,
     								(AbstractModel) getAssessmentModel(),
     								(FragmentStatePagerAdapter) getAssessmentPagerAdapter(),
-    								getViewPager().getCurrentItem());
+    								getAssessmentViewPager().getCurrentItem());
     }
     
 	/**
@@ -206,7 +206,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN,
     								(AbstractModel) getAssessmentModel(),
     								(FragmentStatePagerAdapter) getAssessmentPagerAdapter(),
-    								getViewPager().getCurrentItem());
+    								getAssessmentViewPager().getCurrentItem());
     }
     
 	/**
@@ -223,7 +223,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     	exitAssessmentDialogHandler(AssessmentExitDialogListener.SETTINGS_SCREEN,
     								(AbstractModel) getAssessmentModel(),
     								(FragmentStatePagerAdapter) getAssessmentPagerAdapter(),
-    								getViewPager().getCurrentItem());
+    								getAssessmentViewPager().getCurrentItem());
 	}
 	
 	/**
@@ -240,7 +240,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     	exitAssessmentDialogHandler(AssessmentExitDialogListener.SYNC_SCREEN,
     								(AbstractModel) getAssessmentModel(),
     								(FragmentStatePagerAdapter) getAssessmentPagerAdapter(),
-    								getViewPager().getCurrentItem());
+    								getAssessmentViewPager().getCurrentItem());
 	}
 	
 	/**
@@ -257,7 +257,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
     	exitAssessmentDialogHandler(AssessmentExitDialogListener.HELP_SCREEN,
     								(AbstractModel) getAssessmentModel(),
     								(FragmentStatePagerAdapter) getAssessmentPagerAdapter(),
-    								getViewPager().getCurrentItem());
+    								getAssessmentViewPager().getCurrentItem());
 	}
     
     /**
@@ -307,12 +307,12 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 		this.assessmentPagerAdapter = assessmentPagerAdapter;
 	}
 	
-	public ViewPager getViewPager() {
-		return viewPager;
+	public AssessmentViewPager getAssessmentViewPager() {
+		return assessmentViewPager;
 	}
 
-	public void setViewPager(ViewPager viewPager) {
-		this.viewPager = viewPager;
+	public void setAssessmentViewPager(AssessmentViewPager assessmentViewPager) {
+		this.assessmentViewPager = assessmentViewPager;
 	}
 
 	public StepPagerStrip getStepPagerStrip() {

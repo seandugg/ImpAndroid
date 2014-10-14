@@ -5,12 +5,12 @@ import ie.ucc.bis.supportinglife.assessment.imci.model.ImciAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.PageSelectedListener;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.StepPagerStrip;
 import ie.ucc.bis.supportinglife.assessment.model.AssessmentPagerAdapter;
+import ie.ucc.bis.supportinglife.assessment.model.AssessmentViewPager;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.widget.Button;
@@ -51,16 +51,16 @@ public class ImciAssessmentActivity extends AssessmentActivity {
         getAssessmentModel().registerListener(this);
 
         setAssessmentPagerAdapter(new AssessmentPagerAdapter(this, getSupportFragmentManager()));
-        setViewPager((ViewPager) findViewById(R.id.pager));
-        getViewPager().setAdapter(getAssessmentPagerAdapter());
+        setAssessmentViewPager((AssessmentViewPager) findViewById(R.id.pager));
+        getAssessmentViewPager().setAdapter(getAssessmentPagerAdapter());
         setStepPagerStrip((StepPagerStrip) findViewById(R.id.strip));
         
         // configure listener on StepPagerStrip UI component
         getStepPagerStrip().setPageSelectedListener(new PageSelectedListener() {
             public void onPageStripSelected(int position) {
                 position = Math.min(getAssessmentPagerAdapter().getCount() - 1, position);
-                if (getViewPager().getCurrentItem() != position) {
-                	getViewPager().setCurrentItem(position);
+                if (getAssessmentViewPager().getCurrentItem() != position) {
+                	getAssessmentViewPager().setCurrentItem(position);
                 }
             }
         });
@@ -68,14 +68,14 @@ public class ImciAssessmentActivity extends AssessmentActivity {
         setNextButton((Button) findViewById(R.id.next_button));
         setPrevButton((Button) findViewById(R.id.prev_button));
 
-        getViewPager().setOnPageChangeListener(pageChangeListener);
+        getAssessmentViewPager().setOnPageChangeListener(pageChangeListener);
 
         // configure click listener on Next Button       
         getNextButton().setOnClickListener(new ImciAssessmentActivity.NextButtonListener());
 
         getPrevButton().setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-            	getViewPager().setCurrentItem(getViewPager().getCurrentItem() - 1);
+            	getAssessmentViewPager().setCurrentItem(getAssessmentViewPager().getCurrentItem() - 1);
             }
         });
 
@@ -144,7 +144,7 @@ public class ImciAssessmentActivity extends AssessmentActivity {
      */
     private final class NextButtonListener implements View.OnClickListener {
 		public void onClick(View view) {
-		    if (getViewPager().getCurrentItem() == getAssessmentModel().getAssessmentPageSequence().size()) {
+		    if (getAssessmentViewPager().getCurrentItem() == getAssessmentModel().getAssessmentPageSequence().size()) {
 		    	// we're currently on the review pane so display confirmation dialog
 		        DialogFragment dg = new DialogFragment() {
 		            @Override
@@ -160,15 +160,15 @@ public class ImciAssessmentActivity extends AssessmentActivity {
 		        
 				// before gathering analytic data, call the 'on pause' operation on the review fragment to make
 		        // sure the stop and duration timers for this page are accounted for
-	    		FragmentLifecycle fragmentToHide = (FragmentLifecycle) getAssessmentPagerAdapter().getItem(getViewPager().getCurrentItem());
+	    		FragmentLifecycle fragmentToHide = (FragmentLifecycle) getAssessmentPagerAdapter().getItem(getAssessmentViewPager().getCurrentItem());
 	    		fragmentToHide.onPauseFragment(getAssessmentModel());		        
 		        
 		        dg.show(getSupportFragmentManager(), "Submit Assessment");
 		    } else {
 		        if (isEditingAfterReview()) {
-		        	getViewPager().setCurrentItem(getAssessmentPagerAdapter().getCount() - 1);
+		        	getAssessmentViewPager().setCurrentItem(getAssessmentPagerAdapter().getCount() - 1);
 		        } else {
-		        	getViewPager().setCurrentItem(getViewPager().getCurrentItem() + 1);
+		        	getAssessmentViewPager().setCurrentItem(getAssessmentViewPager().getCurrentItem() + 1);
 		        }
 		    }
 		}

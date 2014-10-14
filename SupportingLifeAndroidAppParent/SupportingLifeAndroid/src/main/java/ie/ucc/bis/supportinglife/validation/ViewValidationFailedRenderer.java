@@ -7,20 +7,20 @@ import android.content.Context;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class TextViewValidationFailedRenderer implements ValidationFailedRenderer {
+public class ViewValidationFailedRenderer implements ValidationFailedRenderer {
 
 	private Context context;
 	private List<TextView> textViews = new ArrayList<TextView>();
 	
-	public TextViewValidationFailedRenderer(Context context) {
+	public ViewValidationFailedRenderer(Context context) {
 		setContext(context);
 	}
 	
 	@Override
 	public void showErrorMessage(ValidationResult validationResult) {
-		EditText textView = validationResult.getTextView();
-        getTextViews().add(textView);
-        textView.setError(validationResult.getMessage());
+		TextView textView = validationResult.getTextView();
+		getTextViews().add(textView);
+		textView.setError(validationResult.getMessage());
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class TextViewValidationFailedRenderer implements ValidationFailedRendere
 	@Override
 	public void clearAll() {
 		for (TextView textView : getTextViews()) {
-            textView.setError(null);
+			textView.setError(null);
         }
 		getTextViews().clear();
     }

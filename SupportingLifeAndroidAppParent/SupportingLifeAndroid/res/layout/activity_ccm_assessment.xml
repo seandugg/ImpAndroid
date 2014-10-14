@@ -27,7 +27,7 @@
 	<!-- PAGE SWIPING UI -->
 	<!-- ============================================================ -->
 
-	<android.support.v4.view.ViewPager
+	<ie.ucc.bis.supportinglife.assessment.model.AssessmentViewPager
 		android:id="@+id/pager"
 		android:layout_width="match_parent"
 		android:layout_height="0dp"

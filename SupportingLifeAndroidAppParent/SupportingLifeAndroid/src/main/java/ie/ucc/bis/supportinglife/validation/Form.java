@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.widget.EditText;
 
 public class Form {
 
@@ -14,7 +15,7 @@ public class Form {
 
     public Form(Context context) {
         setContext(context);
-        setValidationFailedRenderer(new TextViewValidationFailedRenderer(getContext()));
+        setValidationFailedRenderer(new ViewValidationFailedRenderer(getContext()));
         setValid(true);
     }
 
@@ -22,7 +23,7 @@ public class Form {
         getFields().add(field);
     }
     
-    public void performValidation() {
+    public boolean performValidation() {
         boolean allValid = true;
         getValidationFailedRenderer().clearAll();
 
@@ -41,11 +42,13 @@ public class Form {
                 allValid = false;
             }
             else {
-            	getValidationFailedRenderer().clear(field.getTextView());
+            	getValidationFailedRenderer().clear((EditText) field.getTextView());
             }
         }
         // update valid flag
         setValid(allValid);
+        
+        return isValid();
     }
 
     public void setValidationFailedRenderer(ValidationFailedRenderer renderer) {

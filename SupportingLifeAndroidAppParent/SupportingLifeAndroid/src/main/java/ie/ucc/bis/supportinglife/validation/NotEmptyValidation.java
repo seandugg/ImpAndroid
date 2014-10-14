@@ -16,11 +16,13 @@ public class NotEmptyValidation extends BaseValidation {
     }
 
     @Override
-    public ValidationResult validate(Field fieldValidation) {
-        boolean isValid = !TextUtils.isEmpty(fieldValidation.getTextView().getText());
-        return isValid ?
-            ValidationResult.buildSuccess(fieldValidation.getTextView())
-            : ValidationResult.buildFailed(fieldValidation.getTextView(), fieldValidation.getLabel() + EMPTY_ALERT);
+    public ValidationResult validate(Field field) {
+		boolean isValid = true;
+		
+   		isValid = !TextUtils.isEmpty(field.getTextView().getText());
+	    return isValid ?
+	            ValidationResult.buildSuccess(field.getTextView())
+	            : ValidationResult.buildFailed(field.getTextView(), field.getLabel() + EMPTY_ALERT);
     }
 	
 }

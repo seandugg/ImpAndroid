@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.ccm.ui;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
@@ -11,6 +12,7 @@ import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentValidator;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextWatcher;
 import ie.ucc.bis.supportinglife.assessment.model.listener.DatePickerListener;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupCoordinatorListener;
@@ -18,6 +20,10 @@ import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
 import ie.ucc.bis.supportinglife.ui.utilities.DateUtilities;
 import ie.ucc.bis.supportinglife.ui.utilities.ViewGroupUtilities;
+import ie.ucc.bis.supportinglife.validation.Field;
+import ie.ucc.bis.supportinglife.validation.Form;
+import ie.ucc.bis.supportinglife.validation.NotEmptyValidation;
+import ie.ucc.bis.supportinglife.validation.ValidationListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +48,7 @@ import android.widget.TextView;
  * @author timothyosullivan
  * 
  */
-public class GeneralPatientDetailsCcmFragment extends Fragment implements FragmentLifecycle {
+public class GeneralPatientDetailsCcmFragment extends Fragment implements FragmentLifecycle, FragmentValidator {
 	    
     private GeneralPatientDetailsCcmPage generalPatientDetailsCcmPage;    
     private PageFragmentCallbacks pageFragmentCallbacks;
@@ -64,6 +70,9 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
     private View relationshipView;
     private DynamicView relationshipSpecifiedDynamicView;
     private Boolean animatedRelationshipViewInVisibleState;
+    
+	// Form used for validation
+    private Form form;
     
     public static GeneralPatientDetailsCcmFragment create(String pageKey) {
         Bundle args = new Bundle();
@@ -174,6 +183,10 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
 		// add soft keyboard handler - essentially hiding soft
 		// keyboard when an EditText is not in focus
 		((SupportingLifeBaseActivity) getActivity()).addSoftKeyboardHandling(rootView);
+		
+		// validation
+		configureValidation();
+		((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
 
         return rootView;
     }
@@ -350,59 +363,79 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
     		AnalyticUtilities.configurePageTimer(assessmentPage, GeneralPatientDetailsCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);    		
     	}
     }
+   
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) { 
+        	((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
+        }
+    }
     
 	/**
-	 * Getter Method: getGeneralPatientDetailsCcmPage()
+	 * Responsible for configuring validation on the CCM page
 	 */
+	private void configureValidation() {
+        setForm(new Form(this.getActivity()));
+        registerValidationListeners();
+
+        getForm().addField(Field.using(getFirstNameEditText(), getResources().getString(R.string.ccm_general_patient_details_first_name_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        getForm().addField(Field.using(getSurnameEditText(), getResources().getString(R.string.ccm_general_patient_details_surname_label)).validate(NotEmptyValidation.build(this.getActivity())));
+	}
+	
+	/**
+	 * Responsible for registering validation listeners on editable UI components.
+	 * 
+	 * Generally registration of a validation listener on a UI component should be
+	 * done subsequent to the initial validation check so that the user is not
+	 * plagued with validation feedback when initially filling in the form data.
+	 * 
+	 * In the case of 'Register Patient Details page', validation listeners will only be placed
+	 * on the UI components after the user has performed an initial swipe.
+	 */
+	private void registerValidationListeners() {
+        getFirstNameEditText().setOnFocusChangeListener(new ValidationListener(getForm(), this));
+        getSurnameEditText().setOnFocusChangeListener(new ValidationListener(getForm(), this));	
+	}
+	
+	@Override
+	public boolean performValidation() {
+		if (getForm() != null) {
+			return getForm().performValidation();
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public GeneralPatientDetailsCcmPage getGeneralPatientDetailsCcmPage() {
 		return generalPatientDetailsCcmPage;
 	}
-
-	/**
-	 * Setter Method: setGeneralPatientDetailsCcmPage()
-	 */   	
+	
 	public void setGeneralPatientDetailsCcmPage(GeneralPatientDetailsCcmPage generalPatientDetailsCcmPage) {
 		this.generalPatientDetailsCcmPage = generalPatientDetailsCcmPage;
 	}
 
-	/**
-	 * Getter Method: getPageFragmentCallbacks()
-	 */
 	public PageFragmentCallbacks getPageFragmentCallbacks() {
 		return pageFragmentCallbacks;
 	}
 
-	/**
-	 * Setter Method: setPageFragmentCallbacks()
-	 */
 	public void setPageFragmentCallbacks(PageFragmentCallbacks pageFragmentCallbacks) {
 		this.pageFragmentCallbacks = pageFragmentCallbacks;
 	}
-	
-	/**
-	 * Getter Method: getPageKey()
-	 */	
+
 	public String getPageKey() {
 		return pageKey;
 	}
 
-	/**
-	 * Setter Method: setPageKey()
-	 */	
 	public void setPageKey(String pageKey) {
 		this.pageKey = pageKey;
 	}
 
-	/**
-	 * Getter Method: getTodayDateTextView()
-	 */
 	public TextView getTodayDateTextView() {
 		return todayDateTextView;
 	}
 
-	/**
-	 * Setter Method: setTodayDateTextView()
-	 */	
 	public void setTodayDateTextView(TextView todayDateTextView) {
 		this.todayDateTextView = todayDateTextView;
 	}
@@ -423,199 +456,123 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
 		this.nationalHealthIdEditText = nationalHealthIdEditText;
 	}
 
-	/**
-	 * Getter Method: getHsaEditText()
-	 */
 	public EditText getHsaEditText() {
 		return hsaEditText;
 	}
 
-	/**
-	 * Setter Method: setHsaEditText()
-	 */	
 	public void setHsaEditText(EditText hsaEditText) {
 		this.hsaEditText = hsaEditText;
 	}
 
-	/**
-	 * Getter Method: getFirstNameEditText()
-	 */
 	public EditText getFirstNameEditText() {
 		return firstNameEditText;
 	}
 
-	/**
-	 * Setter Method: setFirstNameEditText()
-	 */		
 	public void setFirstNameEditText(EditText firstNameEditText) {
 		this.firstNameEditText = firstNameEditText;
 	}
 
-	/**
-	 * Getter Method: getSurnameEditText()
-	 */		
 	public EditText getSurnameEditText() {
 		return surnameEditText;
 	}
 
-	/**
-	 * Setter Method: setSurnameEditText()
-	 */		
 	public void setSurnameEditText(EditText surnameEditText) {
 		this.surnameEditText = surnameEditText;
 	}
 
-	/**
-	 * Getter Method: getGenderRadioGroup()
-	 */	
 	public RadioGroup getGenderRadioGroup() {
 		return genderRadioGroup;
 	}
 
-	/**
-	 * Setter Method: setGenderRadioGroup()
-	 */			
 	public void setGenderRadioGroup(RadioGroup genderRadioGroup) {
 		this.genderRadioGroup = genderRadioGroup;
 	}
 
-	/**
-	 * Getter Method: getDateBirthEditText()
-	 */	
 	public EditText getDateBirthEditText() {
 		return dateBirthEditText;
 	}
 
-	/**
-	 * Setter Method: setDateBirthEditText()
-	 */	
 	public void setDateBirthEditText(EditText dateBirthEditText) {
 		this.dateBirthEditText = dateBirthEditText;
 	}
 
-	/**
-	 * Getter Method: getCaregiverEditText()
-	 */
 	public EditText getCaregiverEditText() {
 		return caregiverEditText;
 	}
 
-	/**
-	 * Setter Method: setCaregiverEditText()
-	 */
 	public void setCaregiverEditText(EditText caregiverEditText) {
 		this.caregiverEditText = caregiverEditText;
 	}
 
-	/**
-	 * Getter Method: getRelationshipRadioGroup()
-	 */
 	public RadioGroup getRelationshipRadioGroup() {
 		return relationshipRadioGroup;
 	}
 
-	/**
-	 * Setter Method: setRelationshipRadioGroup()
-	 */
 	public void setRelationshipRadioGroup(RadioGroup relationshipRadioGroup) {
 		this.relationshipRadioGroup = relationshipRadioGroup;
 	}
 
-	/**
-	 * Getter Method: getRelationshipSpecifiedEditText()
-	 */
 	public EditText getRelationshipSpecifiedEditText() {
 		return relationshipSpecifiedEditText;
 	}
 
-	/**
-	 * Setter Method: setRelationshipSpecifiedEditText()
-	 */
 	public void setRelationshipSpecifiedEditText(EditText relationshipSpecifiedEditText) {
 		this.relationshipSpecifiedEditText = relationshipSpecifiedEditText;
 	}
 
-	/**
-	 * Getter Method: getPhysicalAddressEditText()
-	 */
 	public EditText getPhysicalAddressEditText() {
 		return physicalAddressEditText;
 	}
 
-	/**
-	 * Setter Method: setPhysicalAddressEditText()
-	 */
 	public void setPhysicalAddressEditText(EditText physicalAddressEditText) {
 		this.physicalAddressEditText = physicalAddressEditText;
 	}
 
-	/**
-	 * Getter Method: getVillageEditText()
-	 */
 	public EditText getVillageEditText() {
 		return villageEditText;
 	}
 
-	/**
-	 * Setter Method: setVillageEditText()
-	 */
 	public void setVillageEditText(EditText villageEditText) {
 		this.villageEditText = villageEditText;
 	}
 
-	/**
-	 * Getter Method: getAnimatedRelationshipSpecifiedView()
-	 */
 	public ViewGroup getAnimatedRelationshipSpecifiedView() {
 		return animatedRelationshipSpecifiedView;
 	}
 
-	/**
-	 * Setter Method: setAnimatedRelationshipSpecifiedView()
-	 */
 	public void setAnimatedRelationshipSpecifiedView(ViewGroup animatedRelationshipSpecifiedView) {
 		this.animatedRelationshipSpecifiedView = animatedRelationshipSpecifiedView;
 	}
 
-	/**
-	 * Getter Method: getRelationshipView()
-	 */
 	public View getRelationshipView() {
 		return relationshipView;
 	}
 
-	/**
-	 * Setter Method: setRelationshipView()
-	 */
 	public void setRelationshipView(View relationshipView) {
 		this.relationshipView = relationshipView;
 	}
 
-	/**
-	 * Getter Method: getRelationshipSpecifiedDynamicView()
-	 */
 	public DynamicView getRelationshipSpecifiedDynamicView() {
 		return relationshipSpecifiedDynamicView;
 	}
 
-	/**
-	 * Setter Method: setRelationshipSpecifiedDynamicView()
-	 */
 	public void setRelationshipSpecifiedDynamicView(DynamicView relationshipOtherDynamicView) {
 		this.relationshipSpecifiedDynamicView = relationshipOtherDynamicView;
 	}
 
-	/**
-	 * Getter Method: isAnimatedRelationshipViewInVisibleState()
-	 */
 	public Boolean isAnimatedRelationshipViewInVisibleState() {
 		return animatedRelationshipViewInVisibleState;
 	}
 
-	/**
-	 * Setter Method: setAnimatedRelationshipViewInVisibleState()
-	 */
 	public void setAnimatedRelationshipViewInVisibleState(Boolean animatedRelationshipViewInVisibleState) {
 		this.animatedRelationshipViewInVisibleState = animatedRelationshipViewInVisibleState;
+	}
+	
+	public Form getForm() {
+		return form;
+	}
+
+	public void setForm(Form form) {
+		this.form = form;
 	}
 }
