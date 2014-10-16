@@ -138,7 +138,7 @@ public class CcmAssessmentActivity extends AssessmentActivity {
     		}
     		else {
     			getAssessmentViewPager().setCurrentItem(currentPosition);
-			    			
+		    			
     			// validation errors exist
     			Crouton.clearCroutonsForActivity(CcmAssessmentActivity.this);
     			Crouton.makeText(CcmAssessmentActivity.this, VALIDATION_ERRORS, Style.ALERT).show();   

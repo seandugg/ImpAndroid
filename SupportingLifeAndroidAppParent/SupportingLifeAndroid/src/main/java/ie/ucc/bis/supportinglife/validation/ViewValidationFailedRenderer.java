@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class ViewValidationFailedRenderer implements ValidationFailedRenderer {
@@ -24,7 +23,7 @@ public class ViewValidationFailedRenderer implements ValidationFailedRenderer {
 	}
 
 	@Override
-	public void clear(EditText textView) {
+	public void clear(TextView textView) {
 		textView.setError(null);
 	}
 	

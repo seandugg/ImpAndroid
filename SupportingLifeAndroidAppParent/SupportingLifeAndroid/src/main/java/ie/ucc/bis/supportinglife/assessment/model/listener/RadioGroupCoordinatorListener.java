@@ -1,11 +1,15 @@
 package ie.ucc.bis.supportinglife.assessment.model.listener;
 
+import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
+import ie.ucc.bis.supportinglife.validation.Form;
+import ie.ucc.bis.supportinglife.validation.TextFieldValidations;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -33,6 +37,9 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 	private List<DynamicView> dynamicViews;
 	private ViewGroup parentView;
 	private View animatedView;
+	private Fragment fragment;
+	private Form form;
+	private TextFieldValidations fieldValidations;
 
 	public RadioGroupCoordinatorListener(AbstractAssessmentPage page, String dataKey, List<DynamicView> dynamicViews, 
 			ViewGroup parentView, View animatedView) {
@@ -58,6 +65,17 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 		setRadioButtonAnimateUpText(animateUpTextTriggers);
 	}
 
+	public RadioGroupCoordinatorListener(AbstractAssessmentPage page, String dataKey, List<DynamicView> dynamicViews, 
+			ViewGroup parentView, View animatedView, List<String> animateUpTextTriggers, 
+			Form form, Fragment fragment, TextFieldValidations fieldValidations) {
+		
+		this(page, dataKey, dynamicViews, 
+				parentView, animatedView, animateUpTextTriggers);
+		setForm(form);
+		setFragment(fragment);
+		setFieldValidations(fieldValidations);
+	}
+
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 
 		int indexPosition = getParentView().indexOfChild(getAnimatedView()) + 1;
@@ -80,6 +98,8 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 				}
 				else if (dynamicView.getControlledElement() instanceof EditText) {
 					((EditText) dynamicView.getControlledElement()).setText(null);
+					// remove validations from the view being removed
+					getForm().removeTextFieldValidations(getFieldValidations());
 				}
 
 				int index = getParentView().indexOfChild(dynamicView.getWrappedView());
@@ -91,8 +111,19 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 		else { // e.g. user has selected 'YES'
 			for (int counter = 0; counter < getDynamicViews().size(); counter++) {
 				getParentView().addView(getDynamicViews().get(counter).getWrappedView(), indexPosition + counter);
+				// add any associated validations to the view being added
+				getForm().addTextFieldValidations(getFieldValidations());
 			}
 		}
+		
+		// valiation check
+		if (getForm() != null) {
+			boolean valid = getForm().performValidation();
+			if (getFragment() != null) {
+				((AssessmentActivity) fragment.getActivity()).getAssessmentViewPager().setPagingEnabled(valid);
+			}
+		}
+		
 		getPage().notifyDataChanged();
 	}
 
@@ -114,88 +145,76 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 		return false;
 	}
 
-	/**
-	 * Getter Method: getPage()
-	 */
 	public AbstractAssessmentPage getPage() {
 		return page;
 	}
 
-	/**
-	 * Setter Method: setPage()
-	 */
 	public void setPage(AbstractAssessmentPage page) {
 		this.page = page;
 	}
 
-	/**
-	 * Getter Method: getDataKey()
-	 */
 	public String getDataKey() {
 		return dataKey;
 	}
 
-	/**
-	 * Setter Method: setDataKey()
-	 */
 	public void setDataKey(String dataKey) {
 		this.dataKey = dataKey;
 	}
 
-	/**
-	 * Getter Method: getRadioButtonAnimateUpText()
-	 */
 	public List<String> getRadioButtonAnimateUpText() {
 		return radioButtonAnimateUpText;
 	}
 
-	/**
-	 * Setter Method: setRadioButtonAnimateUpText()
-	 */
 	public void setRadioButtonAnimateUpText(List<String> radioButtonAnimateUpText) {
 		this.radioButtonAnimateUpText = radioButtonAnimateUpText;
 	}
 
-	/**
-	 * Getter Method: getDynamicViews()
-	 */
 	private List<DynamicView> getDynamicViews() {
 		return dynamicViews;
 	}
 
-	/**
-	 * Setter Method: setDynamicViews()
-	 */
 	private void setDynamicViews(List<DynamicView> dynamicViews) {
 		this.dynamicViews = dynamicViews;
 	}
 
-	/**
-	 * Getter Method: getParentView()
-	 */
 	private ViewGroup getParentView() {
 		return parentView;
 	}
 
-	/**
-	 * Setter Method: setParentView()
-	 */
 	private void setParentView(ViewGroup parentView) {
 		this.parentView = parentView;
 	}
 
-	/**
-	 * Getter Method: getAnimatedView()
-	 */
 	public View getAnimatedView() {
 		return animatedView;
 	}
 
-	/**
-	 * Setter Method: setAnimatedView()
-	 */
 	public void setAnimatedView(View animatedView) {
 		this.animatedView = animatedView;
 	}
 
+	private Fragment getFragment() {
+		return fragment;
+	}
+
+	private void setFragment(Fragment fragment) {
+		this.fragment = fragment;
+	}
+
+	public Form getForm() {
+		return form;
+	}
+
+	public void setForm(Form form) {
+		this.form = form;
+	}
+
+	public TextFieldValidations getFieldValidations() {
+		return fieldValidations;
+	}
+
+	public void setFieldValidations(TextFieldValidations fieldValidations) {
+		this.fieldValidations = fieldValidations;
+	}
+	
 }

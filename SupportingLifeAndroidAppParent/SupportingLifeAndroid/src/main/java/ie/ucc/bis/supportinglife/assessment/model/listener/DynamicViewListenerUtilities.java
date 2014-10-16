@@ -3,12 +3,15 @@ package ie.ucc.bis.supportinglife.assessment.model.listener;
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
+import ie.ucc.bis.supportinglife.validation.Form;
+import ie.ucc.bis.supportinglife.validation.TextFieldValidations;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import android.content.res.Resources;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -55,6 +58,35 @@ public class DynamicViewListenerUtilities {
 		editText.addTextChangedListener(
 				new AssessmentWizardTextWatcher(page, 
 						editTextDataKey));	
+	}
+
+	public static void addGenericDynamicViewListeners(View animatedView, DynamicView dynamicView, ViewGroup topLevelView,
+			RadioGroup radioGroup, EditText editText, String radioGroupDataKey, 
+			String editTextDataKey,	Resources resources, AbstractAssessmentPage page, 
+			Form form, Fragment fragment, TextFieldValidations textEntryValidation) {
+		
+		List<String> animateUpRadioButtonTextTriggers = new ArrayList<String>();
+		animateUpRadioButtonTextTriggers.add(resources.getString(R.string.assessment_wizard_radio_no));
+
+		// add listener to 'RadioGroup'
+		radioGroup.setOnCheckedChangeListener(
+				new RadioGroupCoordinatorListener(page,
+						radioGroupDataKey, 
+						Arrays.asList(dynamicView),
+						topLevelView,
+						animatedView,
+						animateUpRadioButtonTextTriggers,
+						form,
+						fragment,
+						textEntryValidation));
+
+		// add listener to 'EditText'
+		editText.addTextChangedListener(
+				new AssessmentWizardTextWatcher(page, 
+						editTextDataKey,
+						form,
+						fragment));	
+		
 	}
 
 	

@@ -18,11 +18,11 @@ import ie.ucc.bis.supportinglife.assessment.model.listener.DynamicViewListenerUt
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupCoordinatorListener;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.ui.utilities.ViewGroupUtilities;
-import ie.ucc.bis.supportinglife.validation.Field;
 import ie.ucc.bis.supportinglife.validation.Form;
 import ie.ucc.bis.supportinglife.validation.NotEmptyValidation;
+import ie.ucc.bis.supportinglife.validation.RadioGroupFieldValidations;
 import ie.ucc.bis.supportinglife.validation.RadioGroupValidation;
-import ie.ucc.bis.supportinglife.validation.ValidationListener;
+import ie.ucc.bis.supportinglife.validation.TextFieldValidations;
 
 import java.util.Arrays;
 
@@ -213,7 +213,6 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 		
 		// validation
 		configureValidation();
-		((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
 
 		return rootView;
 	}
@@ -352,14 +351,15 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 		// child's problems
 		getProblemsEditText().addTextChangedListener(
 				new AssessmentWizardTextWatcher(getInitialAskCcmPage(), 
-						InitialAskCcmPage.PROBLEMS_DATA_KEY));
-
+						InitialAskCcmPage.PROBLEMS_DATA_KEY, getForm(), this));
+		
 		// add dynamic view listener to cough radio group
+		TextFieldValidations coughDurationValidation = TextFieldValidations.using(getCoughDurationEditText(), getResources().getString(R.string.ccm_ask_initial_assessment_cough_duration_label)).validate(NotEmptyValidation.build(this.getActivity()));
 		DynamicViewListenerUtilities.addGenericDynamicViewListeners(getCoughView(), getCoughDurationDynamicView(),
 				getAnimatedTopLevelView(),
 				getCoughRadioGroup(), getCoughDurationEditText(),
 				InitialAskCcmPage.COUGH_DATA_KEY, InitialAskCcmPage.COUGH_DURATION_DATA_KEY, 
-				getResources(), getInitialAskCcmPage());
+				getResources(), getInitialAskCcmPage(), getForm(), this, coughDurationValidation);
 
 		// add dynamic view listener to diarrhoea radio group
 		DynamicViewListenerUtilities.addGenericDynamicViewListeners(getDiarrhoeaView(), getDiarrhoeaDurationDynamicView(),
@@ -371,7 +371,7 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 		// add listener to blood in stool radio group
 		getBloodInStoolRadioGroup().setOnCheckedChangeListener(
 				new RadioGroupListener(getInitialAskCcmPage(),
-						InitialAskCcmPage.BLOOD_IN_STOOL_DATA_KEY));		 
+						InitialAskCcmPage.BLOOD_IN_STOOL_DATA_KEY, getForm(), this));		 
 
 		// add dynamic view listener to fever radio group
 		DynamicViewListenerUtilities.addGenericDynamicViewListeners(getFeverView(), getFeverDurationDynamicView(),
@@ -444,24 +444,10 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 	 */
 	private void configureValidation() {
         setForm(new Form(this.getActivity()));
-        registerValidationListeners();
 
-        getForm().addField(Field.using(getCoughView(), getResources().getString(R.string.ccm_ask_initial_assessment_review_cough)).validate(RadioGroupValidation.build(this.getActivity())));
-        getForm().addField(Field.using(getProblemsEditText(), getResources().getString(R.string.ccm_ask_initial_assessment_problems_label)).validate(NotEmptyValidation.build(this.getActivity())));
-	}
-	
-	/**
-	 * Responsible for registering validation listeners on editable UI components.
-	 * 
-	 * Generally registration of a validation listener on a UI component should be
-	 * done subsequent to the initial validation check so that the user is not
-	 * plagued with validation feedback when initially filling in the form data.
-	 * 
-	 * In the case of 'Register Patient Details page', validation listeners will only be placed
-	 * on the UI components after the user has performed an initial swipe.
-	 */
-	private void registerValidationListeners() {
-		getProblemsEditText().setOnFocusChangeListener(new ValidationListener(getForm(), this));
+        getForm().addTextFieldValidations(TextFieldValidations.using(getProblemsEditText(), getResources().getString(R.string.ccm_ask_initial_assessment_problems_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getCoughView(), getResources().getString(R.string.ccm_ask_initial_assessment_review_cough)).validate(RadioGroupValidation.build(this.getActivity())));
+   //     getForm().addRadioGroupField(RadioGroupField.using(getCoughView(), getResources().getString(R.string.ccm_ask_initial_assessment_review_cough)).validate(RadioGroupValidation.build(this.getActivity())));
 	}
 	
 	@Override

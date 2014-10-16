@@ -1,7 +1,6 @@
 package ie.ucc.bis.supportinglife.validation;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 public class RadioGroupValidation extends BaseValidation {
 	
@@ -16,16 +15,17 @@ public class RadioGroupValidation extends BaseValidation {
     }
 
     @Override
-    public ValidationResult validate(Field field) {
+    public ValidationResult validate(RadioGroupFieldValidations field) {
 		boolean isValid = true;
-		
-//		if (field.get)
-//		
-//   		isValid = !TextUtils.isEmpty(field.getTextView().getText());
-//	    return isValid ?
-//	            ValidationResult.buildSuccess(field.getTextView())
-//	            : ValidationResult.buildFailed(field.getTextView(), field.getLabel() + SELECTION_ALERT);
-		return null;
-    }
+			
+		// check if no radio button in the group has been selected
+		if (field.getRadioGroup().getCheckedRadioButtonId() == 0) {
+			isValid = false;
+		}
 	
+		return isValid ?
+				ValidationResult.buildSuccess(field.getRadioGroupLabel())
+				: ValidationResult.buildFailed(field.getRadioGroupLabel(), field.getLabel() + SELECTION_ALERT);
+		
+    }
 }

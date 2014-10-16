@@ -154,7 +154,10 @@ public abstract class AbstractAssessmentModel extends AbstractModel implements M
     	// load data analytic pages into memory
         for (String key : savedValues.keySet()) {
         	if (getAnalyticsPages() != null) {
-        		getAnalyticsPages().findAnalyticsPageByKey(key).setPageData(savedValues.getBundle(key));
+        		AbstractAnalyticsPage analyticsPage = getAnalyticsPages().findAnalyticsPageByKey(key);
+        		if (analyticsPage != null) {
+        			analyticsPage.setPageData(savedValues.getBundle(key));
+        		}
         	}
         }
     }

@@ -4,7 +4,7 @@ import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.communication.UserAuthenticationComms;
 import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
 import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
-import ie.ucc.bis.supportinglife.validation.Field;
+import ie.ucc.bis.supportinglife.validation.TextFieldValidations;
 import ie.ucc.bis.supportinglife.validation.Form;
 import ie.ucc.bis.supportinglife.validation.NotEmptyValidation;
 import ie.ucc.bis.supportinglife.validation.ValidationListener;
@@ -77,8 +77,8 @@ public class UserRegistrationActivity extends SupportingLifeBaseActivity {
 	private void initValidationForm() {
         setForm(new Form(this));
 
-        getForm().addField(Field.using(getUserLogin(), getResources().getString(R.string.user_registration_login_id)).validate(NotEmptyValidation.build(this)));
-        getForm().addField(Field.using(getUserPassword(), getResources().getString(R.string.user_registration_login_password)).validate(NotEmptyValidation.build(this)));
+        getForm().addTextFieldValidations(TextFieldValidations.using(getUserLogin(), getResources().getString(R.string.user_registration_login_id)).validate(NotEmptyValidation.build(this)));
+        getForm().addTextFieldValidations(TextFieldValidations.using(getUserPassword(), getResources().getString(R.string.user_registration_login_password)).validate(NotEmptyValidation.build(this)));
     }
 	
     private void initCallbacks() {

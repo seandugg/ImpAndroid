@@ -18,4 +18,14 @@ public abstract class BaseValidation implements Validation {
 		this.context = context;
 	}
 
+    @Override
+    public ValidationResult validate(RadioGroupFieldValidations field) {
+		return null;
+    }
+
+	@Override
+	public ValidationResult validate(TextFieldValidations fieldValidation) {
+		return null;
+	}
+	
 }

@@ -1,12 +1,14 @@
 package ie.ucc.bis.supportinglife.assessment.model.listener;
 
+import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
+import ie.ucc.bis.supportinglife.validation.Form;
+import android.support.v4.app.Fragment;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 /**
- * 
  * @author timothyosullivan
  */
 
@@ -16,10 +18,19 @@ public class RadioGroupListener implements OnCheckedChangeListener {
 	
 	private AbstractAssessmentPage page;
 	private String dataKey;
+	private Fragment fragment;
+	private Form form;
 	
 	public RadioGroupListener(AbstractAssessmentPage page, String dataKey) {
 		setPage(page);
 		setDataKey(dataKey);
+	}
+	
+	public RadioGroupListener(AbstractAssessmentPage page, String dataKey, Form form, Fragment fragment) {
+		setPage(page); 
+		setDataKey(dataKey);
+		setForm(form);
+		setFragment(fragment);
 	}
 	
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -42,34 +53,47 @@ public class RadioGroupListener implements OnCheckedChangeListener {
 			getPage().getPageData().remove(dataKey + RADIO_BUTTON_TEXT_DATA_KEY);
 			getPage().getPageData().remove(dataKey);
 		}
+		
+		// valiation check
+		if (getForm() != null) {
+			boolean valid = getForm().performValidation();
+			if (getFragment() != null) {
+				((AssessmentActivity) fragment.getActivity()).getAssessmentViewPager().setPagingEnabled(valid);
+			}
+		}
+		
     	getPage().notifyDataChanged();
 	}
 
-	/**
-	 * Getter Method: getPage()
-	 */
 	public AbstractAssessmentPage getPage() {
 		return page;
 	}
 
-	/**
-	 * Setter Method: setPage()
-	 */
 	public void setPage(AbstractAssessmentPage page) {
 		this.page = page;
 	}
 
-	/**
-	 * Getter Method: getDataKey()
-	 */
 	public String getDataKey() {
 		return dataKey;
 	}
 
-	/**
-	 * Setter Method: setDataKey()
-	 */
 	public void setDataKey(String dataKey) {
 		this.dataKey = dataKey;
+	}
+	
+	private Fragment getFragment() {
+		return fragment;
+	}
+
+	private void setFragment(Fragment fragment) {
+		this.fragment = fragment;
+	}
+
+	public Form getForm() {
+		return form;
+	}
+
+	public void setForm(Form form) {
+		this.form = form;
 	}
 }

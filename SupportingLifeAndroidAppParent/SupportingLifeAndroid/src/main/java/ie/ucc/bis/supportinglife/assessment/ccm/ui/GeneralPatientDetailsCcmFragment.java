@@ -20,10 +20,9 @@ import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
 import ie.ucc.bis.supportinglife.ui.utilities.DateUtilities;
 import ie.ucc.bis.supportinglife.ui.utilities.ViewGroupUtilities;
-import ie.ucc.bis.supportinglife.validation.Field;
 import ie.ucc.bis.supportinglife.validation.Form;
 import ie.ucc.bis.supportinglife.validation.NotEmptyValidation;
-import ie.ucc.bis.supportinglife.validation.ValidationListener;
+import ie.ucc.bis.supportinglife.validation.TextFieldValidations;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -186,7 +185,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
 		
 		// validation
 		configureValidation();
-		((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
+	//	((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
 
         return rootView;
     }
@@ -268,12 +267,12 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         // child's first name
         getFirstNameEditText().addTextChangedListener(
         		new AssessmentWizardTextWatcher(getGeneralPatientDetailsCcmPage(), 
-        				GeneralPatientDetailsCcmPage.FIRST_NAME_DATA_KEY));  
+        				GeneralPatientDetailsCcmPage.FIRST_NAME_DATA_KEY, getForm(), this));  
 
         // child's surname
         getSurnameEditText().addTextChangedListener(
         		new AssessmentWizardTextWatcher(getGeneralPatientDetailsCcmPage(), 
-        				GeneralPatientDetailsCcmPage.SURNAME_DATA_KEY));
+        				GeneralPatientDetailsCcmPage.SURNAME_DATA_KEY, getForm(), this));
         
         // date of birth
         getDateBirthEditText().setOnFocusChangeListener(new DatePickerListener(this, getGeneralPatientDetailsCcmPage(), 
@@ -377,25 +376,9 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
 	 */
 	private void configureValidation() {
         setForm(new Form(this.getActivity()));
-        registerValidationListeners();
 
-        getForm().addField(Field.using(getFirstNameEditText(), getResources().getString(R.string.ccm_general_patient_details_first_name_label)).validate(NotEmptyValidation.build(this.getActivity())));
-        getForm().addField(Field.using(getSurnameEditText(), getResources().getString(R.string.ccm_general_patient_details_surname_label)).validate(NotEmptyValidation.build(this.getActivity())));
-	}
-	
-	/**
-	 * Responsible for registering validation listeners on editable UI components.
-	 * 
-	 * Generally registration of a validation listener on a UI component should be
-	 * done subsequent to the initial validation check so that the user is not
-	 * plagued with validation feedback when initially filling in the form data.
-	 * 
-	 * In the case of 'Register Patient Details page', validation listeners will only be placed
-	 * on the UI components after the user has performed an initial swipe.
-	 */
-	private void registerValidationListeners() {
-        getFirstNameEditText().setOnFocusChangeListener(new ValidationListener(getForm(), this));
-        getSurnameEditText().setOnFocusChangeListener(new ValidationListener(getForm(), this));	
+        getForm().addTextFieldValidations(TextFieldValidations.using(getFirstNameEditText(), getResources().getString(R.string.ccm_general_patient_details_first_name_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        getForm().addTextFieldValidations(TextFieldValidations.using(getSurnameEditText(), getResources().getString(R.string.ccm_general_patient_details_surname_label)).validate(NotEmptyValidation.build(this.getActivity())));
 	}
 	
 	@Override
