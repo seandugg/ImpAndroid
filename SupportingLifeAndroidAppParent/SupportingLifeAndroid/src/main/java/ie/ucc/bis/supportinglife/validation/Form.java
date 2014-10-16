@@ -1,5 +1,7 @@
 package ie.ucc.bis.supportinglife.validation;
 
+import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,12 @@ public class Form {
     }
     
     public boolean performValidation() {
+    	
+    	// if validation is off, then always return a positive result
+    	if (((AssessmentActivity) getContext()).isValidationOn() == false) {
+    		return true;
+    	}
+    	
         boolean allValid = true;
         getValidationFailedRenderer().clearAll();
 

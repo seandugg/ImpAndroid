@@ -617,7 +617,12 @@
 	<string name="sensor_list_preference_summary">Use zephyr sensor in CCM assessment</string>
 	
 	<string name="sensor_reading_duration_preference_title">Sensor Reading Duration</string>
-	<string name="sensor_reading_duration_preference_summary">Choose sensor reading duration</string>	
+	<string name="sensor_reading_duration_preference_summary">Choose sensor reading duration</string>
+	
+	<string name="validator_preference_category">Validator</string>
+	<string name="validator_list_preference_title">Assessment Validation</string>
+	<string name="validator_list_preference_summary">Turn on validation for medical assessment</string>
+
 	
     <!-- ============================================================ -->
     <!-- SYNC SCREEN -->

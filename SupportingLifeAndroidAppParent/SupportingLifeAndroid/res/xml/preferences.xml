@@ -50,4 +50,17 @@
             android:entries="@array/sensorReadingDurationSelection"
             android:entryValues="@array/sensorReadingDurationSelectionValues"/>     
     </PreferenceCategory>
+    
+	
+	<!-- Validator Preference -->
+	<PreferenceCategory android:title="@string/validator_preference_category"
+	    android:key="validator_preference">
+
+		<ListPreference android:key="validator_preference_selection"
+            android:title="@string/validator_list_preference_title"
+            android:summary="@string/validator_list_preference_summary"
+            android:defaultValue="No"
+            android:entries="@array/validatorPreferenceSelection"
+            android:entryValues="@array/validatorPreferenceSelectionValues"/>
+    </PreferenceCategory>
 </PreferenceScreen>

@@ -64,21 +64,24 @@ public class CcmAssessmentActivity extends AssessmentActivity {
         setStepPagerStrip((StepPagerStrip) findViewById(R.id.strip));
         
         // configure listener on StepPagerStrip UI component
-        getStepPagerStrip().setPageSelectedListener(new PageSelectedListener() {
-            public void onPageStripSelected(int position) {
-            	if (getAssessmentViewPager().isPagingEnabled()) {
-	                position = Math.min(getAssessmentPagerAdapter().getCount() - 1, position);
-	                if (getAssessmentViewPager().getCurrentItem() != position) {
-	                	getAssessmentViewPager().setCurrentItem(position);
-	                }
-            	}
-            	else {
-        			// validation errors exist
-        			Crouton.clearCroutonsForActivity(CcmAssessmentActivity.this);
-        			Crouton.makeText(CcmAssessmentActivity.this, VALIDATION_ERRORS, Style.ALERT).show();   
-            	}
-            }
-        });
+        // breadcrumb page selection is only facilitated if validation is off
+        if (!isValidationOn()) {
+	        getStepPagerStrip().setPageSelectedListener(new PageSelectedListener() {
+	            public void onPageStripSelected(int position) {
+	            	if (getAssessmentViewPager().isPagingEnabled()) {
+		                position = Math.min(getAssessmentPagerAdapter().getCount() - 1, position);
+		                if (getAssessmentViewPager().getCurrentItem() != position) {
+		                	getAssessmentViewPager().setCurrentItem(position);
+		                }
+	            	}
+	            	else {
+	        			// validation errors exist
+	        			Crouton.clearCroutonsForActivity(CcmAssessmentActivity.this);
+	        			Crouton.makeText(CcmAssessmentActivity.this, VALIDATION_ERRORS, Style.ALERT).show();   
+	            	}
+	            }
+	        });
+        }
 
         setNextButton((Button) findViewById(R.id.next_button));
         setPrevButton((Button) findViewById(R.id.prev_button));
