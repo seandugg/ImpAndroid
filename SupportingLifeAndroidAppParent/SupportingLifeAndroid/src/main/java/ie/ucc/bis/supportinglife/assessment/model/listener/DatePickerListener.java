@@ -1,7 +1,9 @@
 package ie.ucc.bis.supportinglife.assessment.model.listener;
 
+import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.DatePickerDialogFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
+import ie.ucc.bis.supportinglife.validation.Form;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -21,11 +23,17 @@ public class DatePickerListener implements OnFocusChangeListener {
 	private Fragment invokingFragment;
 	private AbstractAssessmentPage page;
 	private String dataKey;
+	private Form form;
 
 	public DatePickerListener(Fragment fragment, AbstractAssessmentPage page, String dataKey) {
 		setInvokingFragment(fragment);
 		setPage(page);
 		setDataKey(dataKey);
+	}
+	
+	public DatePickerListener(Fragment fragment, AbstractAssessmentPage page, String dataKey, Form form) {
+		this(fragment, page, dataKey);
+		setForm(form);
 	}
 
 	public void onFocusChange(View v, boolean hasFocus) {
@@ -34,51 +42,51 @@ public class DatePickerListener implements OnFocusChangeListener {
 			DialogFragment dialogFragment = DatePickerDialogFragment.create((EditText) v, getPage(), getDataKey());		
 			dialogFragment.show(fragmentTransaction, "date_dialog");
 		}
+		conductValidation();
 	}
-	
+
 	/**
-	 * Getter Method: getInvokingFragment()
+	 * Validate form data following event
 	 */
+	private void conductValidation() {
+		// validation check
+		if (getForm() != null) {
+			boolean valid = getForm().performValidation();
+			if (getInvokingFragment() != null) {
+				((AssessmentActivity) getInvokingFragment().getActivity()).getAssessmentViewPager().setPagingEnabled(valid);
+			}
+		}
+	}
+		
 	public Fragment getInvokingFragment() {
 		return invokingFragment;
 	}
 
-	/**
-	 * Setter Method: setInvokingFragment()
-	 */   
 	public void setInvokingFragment(Fragment invokingFagment) {
 		this.invokingFragment = invokingFagment;
 	}
-	
-	/**
-	 * Getter Method: getPage()
-	 * 
-	 */
+
 	public AbstractAssessmentPage getPage() {
 		return page;
 	}
 
-	/**
-	 * Setter Method: setPage()
-	 * 
-	 */
 	public void setPage(AbstractAssessmentPage page) {
 		this.page = page;
 	}
 
-	/**
-	 * Getter Method: getDataKey()
-	 * 
-	 */
 	public String getDataKey() {
 		return dataKey;
 	}
 
-	/**
-	 * Setter Method: setDataKey()
-	 * 
-	 */
 	public void setDataKey(String dataKey) {
 		this.dataKey = dataKey;
+	}
+
+	public Form getForm() {
+		return form;
+	}
+
+	public void setForm(Form form) {
+		this.form = form;
 	}
 }

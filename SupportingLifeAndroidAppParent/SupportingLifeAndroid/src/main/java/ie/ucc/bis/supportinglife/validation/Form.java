@@ -76,7 +76,7 @@ public class Form {
                 allValid = false;
             }
             else {
-            	getValidationFailedRenderer().clear(field.getRadioGroupLabel());
+            	getValidationFailedRenderer().clear(field.getLabel());
             }
         }
         

@@ -55,6 +55,7 @@
 					android:layout_height="wrap_content"
 					android:orientation="vertical">
 		            <TextView
+		                android:id="@+id/ccm_ask_initial_assessment_radio_cough_label"
 		                style="@style/AssessmentFormLabel"
 		                android:layout_width="match_parent"
 		                android:layout_height="match_parent"

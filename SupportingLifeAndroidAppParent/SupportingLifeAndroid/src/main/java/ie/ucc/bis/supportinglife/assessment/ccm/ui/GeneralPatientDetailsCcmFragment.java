@@ -22,6 +22,8 @@ import ie.ucc.bis.supportinglife.ui.utilities.DateUtilities;
 import ie.ucc.bis.supportinglife.ui.utilities.ViewGroupUtilities;
 import ie.ucc.bis.supportinglife.validation.Form;
 import ie.ucc.bis.supportinglife.validation.NotEmptyValidation;
+import ie.ucc.bis.supportinglife.validation.RadioGroupFieldValidations;
+import ie.ucc.bis.supportinglife.validation.RadioGroupValidation;
 import ie.ucc.bis.supportinglife.validation.TextFieldValidations;
 
 import java.util.ArrayList;
@@ -183,7 +185,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
 		// keyboard when an EditText is not in focus
 		((SupportingLifeBaseActivity) getActivity()).addSoftKeyboardHandling(rootView);
 		
-    	configureValidation();
+    	configureValidation(rootView);
 		
         return rootView;
     }
@@ -247,7 +249,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         		new AssessmentWizardTextWatcher(getGeneralPatientDetailsCcmPage(), 
         				GeneralPatientDetailsCcmPage.HEALTH_SURVEILLANCE_ASSISTANT_DATA_KEY));
         
-        // TODO - To be removed once HSA User Login is supported
+        // HSA User Login
 		CustomSharedPreferences preferences = CustomSharedPreferences.getPrefs((SupportingLifeBaseActivity) getActivity(), SupportingLifeBaseActivity.APP_NAME, Context.MODE_PRIVATE);
 		String hsaUserId = preferences.getString(SupportingLifeBaseActivity.USER_ID, "guest");
         getHsaEditText().setText(hsaUserId);
@@ -274,7 +276,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         
         // date of birth
         getDateBirthEditText().setOnFocusChangeListener(new DatePickerListener(this, getGeneralPatientDetailsCcmPage(), 
-        		GeneralPatientDetailsCcmPage.DATE_OF_BIRTH_DATA_KEY));
+        		GeneralPatientDetailsCcmPage.DATE_OF_BIRTH_DATA_KEY, getForm()));
         
         // turn off soft keyboard input method for 'Date of Birth' EditText
         getDateBirthEditText().setInputType(InputType.TYPE_NULL);
@@ -282,7 +284,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         // gender
         getGenderRadioGroup().setOnCheckedChangeListener(
         		new RadioGroupListener(getGeneralPatientDetailsCcmPage(),
-        				GeneralPatientDetailsCcmPage.GENDER_DATA_KEY));
+        				GeneralPatientDetailsCcmPage.GENDER_DATA_KEY, getForm(), this));
         
         // caregiver
         getCaregiverEditText().addTextChangedListener(
@@ -363,14 +365,17 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
        
 	/**
 	 * Responsible for configuring validation on the CCM page
+	 * @param rootView 
 	 */
-	private void configureValidation() {
+	private void configureValidation(View rootView) {
         setForm(new Form(this.getActivity()));
 
         // validation rules
         getForm().addTextFieldValidations(TextFieldValidations.using(getFirstNameEditText(), getResources().getString(R.string.ccm_general_patient_details_first_name_label)).validate(NotEmptyValidation.build(this.getActivity())));
         getForm().addTextFieldValidations(TextFieldValidations.using(getSurnameEditText(), getResources().getString(R.string.ccm_general_patient_details_surname_label)).validate(NotEmptyValidation.build(this.getActivity())));
-	
+        getForm().addTextFieldValidations(TextFieldValidations.using(getDateBirthEditText(), getResources().getString(R.string.ccm_general_patient_details_date_of_birth_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getGenderRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_general_patient_details_radio_gender_label)).validate(RadioGroupValidation.build(this.getActivity())));
+        
         // run validation check
         ((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
 	}

@@ -157,6 +157,7 @@
             <!-- ============================================================ -->
 
             <TextView
+                android:id="@+id/ccm_general_patient_details_radio_gender_label"
                 style="@style/AssessmentFormLabel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

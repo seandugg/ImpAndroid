@@ -3,24 +3,22 @@ package ie.ucc.bis.supportinglife.validation;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 public class RadioGroupFieldValidations {
 	
     private List<Validation> validations = new LinkedList<Validation>();
-    private View view;
-    private String label;
+    private RadioGroup radioGroup;
+    private TextView label;
     
-    private RadioGroupFieldValidations(View view, String label) {
-    	setView(view);
+    private RadioGroupFieldValidations(RadioGroup radioGroup, TextView label) {
+    	setRadioGroup(radioGroup);
     	setLabel(label);
     }
       
-    public static RadioGroupFieldValidations using(View view, String label) {
-        return new RadioGroupFieldValidations(view, label);
+    public static RadioGroupFieldValidations using(RadioGroup radioGroup, TextView label) {
+        return new RadioGroupFieldValidations(radioGroup, label);
     }
     
     public RadioGroupFieldValidations validate(Validation what) {
@@ -36,12 +34,13 @@ public class RadioGroupFieldValidations {
         return fieldValidationResult;
     }
 
-    public TextView getRadioGroupLabel() {
-    	return (TextView) ((LinearLayout) this.getView()).getChildAt(0);
+
+    public void setRadioGroup(RadioGroup radioGroup) {
+    	this.radioGroup = radioGroup;
     }
     
     public RadioGroup getRadioGroup() {
-    	return (RadioGroup) ((LinearLayout) this.getView()).getChildAt(1);
+    	return this.radioGroup;
     }
     
 	public List<Validation> getValidations() {
@@ -52,19 +51,11 @@ public class RadioGroupFieldValidations {
 		this.validations = validations;
 	}
 
-	public View getView() {
-		return view;
-	}
-
-	public void setView(View view) {
-		this.view = view;
-	}
-
-	public String getLabel() {
+	public TextView getLabel() {
 		return label;
 	}
 
-	public void setLabel(String label) {
+	public void setLabel(TextView label) {
 		this.label = label;
 	}
     

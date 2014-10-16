@@ -212,7 +212,7 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 		((SupportingLifeBaseActivity) getActivity()).addSoftKeyboardHandling(rootView);
 		
 		// validation
-		configureValidation();
+		configureValidation(rootView);
 
 		return rootView;
 	}
@@ -397,9 +397,6 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 		getUnableDrinkFeedRadioGroup().setOnCheckedChangeListener(
 				new RadioGroupListener(getInitialAskCcmPage(),
 						InitialAskCcmPage.UNABLE_TO_DRINK_OR_FEED_DATA_KEY));
-		
-		// validation
-    	configureValidation();
 	}
 	
     @Override
@@ -436,13 +433,14 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
     
 	/**
 	 * Responsible for configuring validation on the CCM page
+	 * @param rootView 
 	 */
-	private void configureValidation() {
+	private void configureValidation(View rootView) {
         setForm(new Form(this.getActivity()));
 
         // validation rules
         getForm().addTextFieldValidations(TextFieldValidations.using(getProblemsEditText(), getResources().getString(R.string.ccm_ask_initial_assessment_problems_label)).validate(NotEmptyValidation.build(this.getActivity())));
-        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getCoughView(), getResources().getString(R.string.ccm_ask_initial_assessment_review_cough)).validate(RadioGroupValidation.build(this.getActivity())));
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getCoughRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_initial_assessment_radio_cough_label)).validate(RadioGroupValidation.build(this.getActivity())));
 
         // run validation check
         ((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());

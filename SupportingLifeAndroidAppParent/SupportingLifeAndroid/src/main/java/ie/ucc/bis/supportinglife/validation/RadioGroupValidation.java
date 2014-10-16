@@ -24,8 +24,8 @@ public class RadioGroupValidation extends BaseValidation {
 		}
 	
 		return isValid ?
-				ValidationResult.buildSuccess(field.getRadioGroupLabel())
-				: ValidationResult.buildFailed(field.getRadioGroupLabel(), field.getLabel() + SELECTION_ALERT);
+				ValidationResult.buildSuccess(field.getLabel())
+				: ValidationResult.buildFailed(field.getLabel(), field.getLabel() + SELECTION_ALERT);
 		
     }
 }
