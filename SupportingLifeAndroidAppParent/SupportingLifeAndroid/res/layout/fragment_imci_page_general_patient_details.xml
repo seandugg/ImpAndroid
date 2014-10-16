@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="@string/imci_general_patient_details_first_name_hint"
-                android:inputType="textCapWords"
+                android:inputType="textCapCharacters"
                 android:saveEnabled="false" />
 
             <!-- ============================================================ -->
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:hint="@string/imci_general_patient_details_surname_hint"
-                android:inputType="textCapWords"
+                android:inputType="textCapCharacters"
                 android:saveEnabled="false" />
 
             <!-- ============================================================ -->
@@ -70,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
+                android:inputType="textCapCharacters"
                 android:saveEnabled="false" />
 
             <!-- ============================================================ -->
@@ -149,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:gravity="top|left"
-                android:inputType="textMultiLine"
+                android:inputType="textMultiLine|textCapCharacters"
                 android:lines="3"
                 android:saveEnabled="false"
                 android:scrollHorizontally="false" />

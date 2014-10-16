@@ -183,10 +183,8 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
 		// keyboard when an EditText is not in focus
 		((SupportingLifeBaseActivity) getActivity()).addSoftKeyboardHandling(rootView);
 		
-		// validation
-		configureValidation();
-	//	((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
-
+    	configureValidation();
+		
         return rootView;
     }
     
@@ -223,7 +221,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         
         setPageFragmentCallbacks((PageFragmentCallbacks) activity);
     }
-
+    
     @Override
     public void onDetach() {
         super.onDetach();
@@ -362,23 +360,19 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
     		AnalyticUtilities.configurePageTimer(assessmentPage, GeneralPatientDetailsCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);    		
     	}
     }
-   
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) { 
-        	((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
-        }
-    }
-    
+       
 	/**
 	 * Responsible for configuring validation on the CCM page
 	 */
 	private void configureValidation() {
         setForm(new Form(this.getActivity()));
 
+        // validation rules
         getForm().addTextFieldValidations(TextFieldValidations.using(getFirstNameEditText(), getResources().getString(R.string.ccm_general_patient_details_first_name_label)).validate(NotEmptyValidation.build(this.getActivity())));
         getForm().addTextFieldValidations(TextFieldValidations.using(getSurnameEditText(), getResources().getString(R.string.ccm_general_patient_details_surname_label)).validate(NotEmptyValidation.build(this.getActivity())));
+	
+        // run validation check
+        ((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
 	}
 	
 	@Override
@@ -390,6 +384,14 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
 			return false;
 		}
 	}
+	
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) { 
+        	((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
+        }
+    }
 	
 	public GeneralPatientDetailsCcmPage getGeneralPatientDetailsCcmPage() {
 		return generalPatientDetailsCcmPage;

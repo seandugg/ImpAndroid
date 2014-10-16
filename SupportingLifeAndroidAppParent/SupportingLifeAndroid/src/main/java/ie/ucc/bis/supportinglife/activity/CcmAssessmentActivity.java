@@ -25,13 +25,13 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class CcmAssessmentActivity extends AssessmentActivity {
 	
-	private static final String VALIDATION_ERRORS = "Validation Errors Exist!";
+	private static final String VALIDATION_ERRORS = "Please correct validation errors";
 	
 	private BroadcastReceiver bluetoothBroadcastReceiver;
 	private BroadcastReceiver bluetoothBondReceiver;
 	
 	/**
-	 * OnCreate method is called when the activity is first created.
+	 * OnCreate method is called when the activity is first created.s
 	 * 
 	 * This is where all of the normal static set up should occur
 	 * e.g. create views, bind data to lists, etc.
@@ -66,10 +66,17 @@ public class CcmAssessmentActivity extends AssessmentActivity {
         // configure listener on StepPagerStrip UI component
         getStepPagerStrip().setPageSelectedListener(new PageSelectedListener() {
             public void onPageStripSelected(int position) {
-                position = Math.min(getAssessmentPagerAdapter().getCount() - 1, position);
-                if (getAssessmentViewPager().getCurrentItem() != position) {
-                	getAssessmentViewPager().setCurrentItem(position);
-                }
+            	if (getAssessmentViewPager().isPagingEnabled()) {
+	                position = Math.min(getAssessmentPagerAdapter().getCount() - 1, position);
+	                if (getAssessmentViewPager().getCurrentItem() != position) {
+	                	getAssessmentViewPager().setCurrentItem(position);
+	                }
+            	}
+            	else {
+        			// validation errors exist
+        			Crouton.clearCroutonsForActivity(CcmAssessmentActivity.this);
+        			Crouton.makeText(CcmAssessmentActivity.this, VALIDATION_ERRORS, Style.ALERT).show();   
+            	}
             }
         });
 
@@ -83,7 +90,14 @@ public class CcmAssessmentActivity extends AssessmentActivity {
 
         getPrevButton().setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-            	getAssessmentViewPager().setCurrentItem(getAssessmentViewPager().getCurrentItem() - 1);
+            	if (getAssessmentViewPager().isPagingEnabled()) {
+            		getAssessmentViewPager().setCurrentItem(getAssessmentViewPager().getCurrentItem() - 1);
+            	}
+            	else {
+        			// validation errors exist
+        			Crouton.clearCroutonsForActivity(CcmAssessmentActivity.this);
+        			Crouton.makeText(CcmAssessmentActivity.this, VALIDATION_ERRORS, Style.ALERT).show();   
+            	}
             }
         });
 
@@ -114,7 +128,8 @@ public class CcmAssessmentActivity extends AssessmentActivity {
     	@Override
     	public void onPageSelected(int newPosition) {
     		
-    		if (getAssessmentViewPager().isPagingEnabled()) {	
+    		if (getAssessmentViewPager().isPagingEnabled()) {
+    			
 	    		// inform respective fragment via the FragmentLifecycle interface of pause or resumption
 	    		// event
 	    		FragmentLifecycle fragmentToShow = (FragmentLifecycle) getAssessmentPagerAdapter().getItem(newPosition);
@@ -177,34 +192,42 @@ public class CcmAssessmentActivity extends AssessmentActivity {
      *
      */
     private final class NextButtonListener implements View.OnClickListener {
-		public void onClick(View view) {
-		    if (getAssessmentViewPager().getCurrentItem() == getAssessmentModel().getAssessmentPageSequence().size()) {
-		    	// we're currently on the review pane so display confirmation dialog
-		        DialogFragment dg = new DialogFragment() {
-		            @Override
-		            public Dialog onCreateDialog(Bundle savedInstanceState) {
-		            	CcmAssessmentResultsActivity ccmAssessmentResultsActivity = new CcmAssessmentResultsActivity();
-		                return new AlertDialog.Builder(getActivity())
-		                        .setMessage(R.string.submit_confirm_message)
-		                        .setPositiveButton(R.string.submit_confirm_button, new AssessmentDialogListener(ccmAssessmentResultsActivity))
-		                        .setNegativeButton(android.R.string.cancel, null)
-		                        .create();
-		            }
-		        };
-		        
-				// before gathering analytic data, call the 'on pause' operation on the review fragment to make
-		        // sure the stop and duration timers for this page are accounted for
-	    		FragmentLifecycle fragmentToHide = (FragmentLifecycle) getAssessmentPagerAdapter().getItem(getAssessmentViewPager().getCurrentItem());
-	    		fragmentToHide.onPauseFragment(getAssessmentModel());
-		        
-		        dg.show(getSupportFragmentManager(), "Submit Assessment");
-		    } else {
-		        if (isEditingAfterReview()) {
-		        	getAssessmentViewPager().setCurrentItem(getAssessmentPagerAdapter().getCount() - 1);
-		        } else {
-		        	getAssessmentViewPager().setCurrentItem(getAssessmentViewPager().getCurrentItem() + 1);
-		        }
-		    }
+		public void onClick(View view) {			
+			// secondly decide to move to next page or perform assessment submit (if validation succeeds)
+    		if (getAssessmentViewPager().isPagingEnabled()) {    			
+			    if (getAssessmentViewPager().getCurrentItem() == getAssessmentModel().getAssessmentPageSequence().size()) {
+			    	// we're currently on the review pane so display confirmation dialog
+			        DialogFragment dg = new DialogFragment() {
+			            @Override
+			            public Dialog onCreateDialog(Bundle savedInstanceState) {
+			            	CcmAssessmentResultsActivity ccmAssessmentResultsActivity = new CcmAssessmentResultsActivity();
+			                return new AlertDialog.Builder(getActivity())
+			                        .setMessage(R.string.submit_confirm_message)
+			                        .setPositiveButton(R.string.submit_confirm_button, new AssessmentDialogListener(ccmAssessmentResultsActivity))
+			                        .setNegativeButton(android.R.string.cancel, null)
+			                        .create();
+			            }
+			        };
+			        
+					// before gathering analytic data, call the 'on pause' operation on the review fragment to make
+			        // sure the stop and duration timers for this page are accounted for
+		    		FragmentLifecycle fragmentToHide = (FragmentLifecycle) getAssessmentPagerAdapter().getItem(getAssessmentViewPager().getCurrentItem());
+		    		fragmentToHide.onPauseFragment(getAssessmentModel());
+			        
+			        dg.show(getSupportFragmentManager(), "Submit Assessment");
+			    } else {
+			        if (isEditingAfterReview()) {
+			        	getAssessmentViewPager().setCurrentItem(getAssessmentPagerAdapter().getCount() - 1);
+			        } else {
+			        	getAssessmentViewPager().setCurrentItem(getAssessmentViewPager().getCurrentItem() + 1);
+			        }
+			    }
+    		}
+    		else {    			
+    			// validation errors exist
+    			Crouton.clearCroutonsForActivity(CcmAssessmentActivity.this);
+    			Crouton.makeText(CcmAssessmentActivity.this, VALIDATION_ERRORS, Style.ALERT).show();       			
+    		}
 		}
 	} // end of inner class
 }

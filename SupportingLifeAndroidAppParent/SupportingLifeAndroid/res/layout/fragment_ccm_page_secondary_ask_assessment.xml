@@ -269,7 +269,7 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="top|left"
                     android:hint="@string/ccm_ask_secondary_assessment_cannot_treat_problems_details_hint"
-                    android:inputType="textMultiLine"
+                    android:inputType="textMultiLine|textCapCharacters"
                     android:lines="3"
                     android:maxLength="800"
                     android:saveEnabled="false"

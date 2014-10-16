@@ -54,7 +54,7 @@ public class RadioGroupListener implements OnCheckedChangeListener {
 			getPage().getPageData().remove(dataKey);
 		}
 		
-		// valiation check
+		// validation check
 		if (getForm() != null) {
 			boolean valid = getForm().performValidation();
 			if (getFragment() != null) {

@@ -397,6 +397,9 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 		getUnableDrinkFeedRadioGroup().setOnCheckedChangeListener(
 				new RadioGroupListener(getInitialAskCcmPage(),
 						InitialAskCcmPage.UNABLE_TO_DRINK_OR_FEED_DATA_KEY));
+		
+		// validation
+    	configureValidation();
 	}
 	
     @Override
@@ -430,14 +433,6 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
     		AnalyticUtilities.configurePageTimer(assessmentPage, InitialAskCcmPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);    		
     	}
     }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) { 
-        	((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
-        }
-    }
     
 	/**
 	 * Responsible for configuring validation on the CCM page
@@ -445,9 +440,12 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 	private void configureValidation() {
         setForm(new Form(this.getActivity()));
 
+        // validation rules
         getForm().addTextFieldValidations(TextFieldValidations.using(getProblemsEditText(), getResources().getString(R.string.ccm_ask_initial_assessment_problems_label)).validate(NotEmptyValidation.build(this.getActivity())));
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getCoughView(), getResources().getString(R.string.ccm_ask_initial_assessment_review_cough)).validate(RadioGroupValidation.build(this.getActivity())));
-   //     getForm().addRadioGroupField(RadioGroupField.using(getCoughView(), getResources().getString(R.string.ccm_ask_initial_assessment_review_cough)).validate(RadioGroupValidation.build(this.getActivity())));
+
+        // run validation check
+        ((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
 	}
 	
 	@Override
@@ -459,6 +457,14 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 			return false;
 		}
 	}
+	
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) { 
+        	((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
+        }
+    }
     
 	public InitialAskCcmPage getInitialAskCcmPage() {
 		return initialAskCcmPage;

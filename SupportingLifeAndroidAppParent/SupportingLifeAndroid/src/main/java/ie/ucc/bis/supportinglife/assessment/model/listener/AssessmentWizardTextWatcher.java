@@ -6,13 +6,15 @@ import ie.ucc.bis.supportinglife.validation.Form;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.view.View.OnFocusChangeListener;
 
 /**
  * 
  * @author timothyosullivan
  */
 
-public class AssessmentWizardTextWatcher implements TextWatcher {
+public class AssessmentWizardTextWatcher implements TextWatcher, OnFocusChangeListener {
 
 	private AbstractAssessmentPage page;
 	private String dataKey;
@@ -34,21 +36,32 @@ public class AssessmentWizardTextWatcher implements TextWatcher {
 	public void afterTextChanged(Editable editable) {
 		if (editable != null) {
 			getPage().getPageData().putString(dataKey, editable.toString());
-			
-			// valiation check
-			if (getForm() != null) {
-				boolean valid = getForm().performValidation();
-				if (getFragment() != null) {
-					((AssessmentActivity) fragment.getActivity()).getAssessmentViewPager().setPagingEnabled(valid);
-				}
-			}
 		}
 		else {
 			getPage().getPageData().remove(dataKey);
 		}
     	getPage().notifyDataChanged();
+    	conductValidation();
 	}
 
+	@Override
+	public void onFocusChange(View v, boolean hasFocus) {
+		conductValidation();
+	}
+
+	/**
+	 * Validate form data following event
+	 */
+	private void conductValidation() {
+		// validation check
+		if (getForm() != null) {
+			boolean valid = getForm().performValidation();
+			if (getFragment() != null) {
+				((AssessmentActivity) fragment.getActivity()).getAssessmentViewPager().setPagingEnabled(valid);
+			}
+		}
+	}
+	
 	
 	public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
