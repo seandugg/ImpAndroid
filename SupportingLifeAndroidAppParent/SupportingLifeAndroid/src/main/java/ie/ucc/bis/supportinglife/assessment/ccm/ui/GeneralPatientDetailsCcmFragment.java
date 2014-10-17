@@ -289,7 +289,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         // caregiver
         getCaregiverEditText().addTextChangedListener(
         		new AssessmentWizardTextWatcher(getGeneralPatientDetailsCcmPage(), 
-        				GeneralPatientDetailsCcmPage.CAREGIVER_DATA_KEY));
+        				GeneralPatientDetailsCcmPage.CAREGIVER_DATA_KEY, getForm(), this));
         
         // add dynamic view listener to relationship radio group
         addRelationshipDynamicViewListener();  
@@ -317,18 +317,21 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
 		animateUpRadioButtonTextTriggers.add(getResources().getString(R.string.ccm_general_patient_details_radio_relationship_mother));
 		animateUpRadioButtonTextTriggers.add(getResources().getString(R.string.ccm_general_patient_details_radio_relationship_father));
         
+		TextFieldValidations specifyRelationshipValidation = TextFieldValidations.using(getRelationshipSpecifiedEditText(), 
+				getResources().getString(R.string.ccm_general_patient_details_relationship_specified_label)).validate(NotEmptyValidation.build(this.getActivity()));
         getRelationshipRadioGroup().setOnCheckedChangeListener(
         		new RadioGroupCoordinatorListener(getGeneralPatientDetailsCcmPage(),
         				GeneralPatientDetailsCcmPage.RELATIONSHIP_DATA_KEY, 
         				Arrays.asList(getRelationshipSpecifiedDynamicView()),
         				getAnimatedRelationshipSpecifiedView(),
         				getRelationshipView(),
-        				animateUpRadioButtonTextTriggers));
+        				animateUpRadioButtonTextTriggers,
+        				getForm(), this, specifyRelationshipValidation));
         
         // add listener to 'specify relationship'
         getRelationshipSpecifiedEditText().addTextChangedListener(
         		new AssessmentWizardTextWatcher(getGeneralPatientDetailsCcmPage(), 
-        				GeneralPatientDetailsCcmPage.RELATIONSHIP_SPECIFIED_DATA_KEY));
+        				GeneralPatientDetailsCcmPage.RELATIONSHIP_SPECIFIED_DATA_KEY, getForm(), this));
 	}
 	
     @Override
@@ -375,7 +378,9 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         getForm().addTextFieldValidations(TextFieldValidations.using(getSurnameEditText(), getResources().getString(R.string.ccm_general_patient_details_surname_label)).validate(NotEmptyValidation.build(this.getActivity())));
         getForm().addTextFieldValidations(TextFieldValidations.using(getDateBirthEditText(), getResources().getString(R.string.ccm_general_patient_details_date_of_birth_label)).validate(NotEmptyValidation.build(this.getActivity())));
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getGenderRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_general_patient_details_radio_gender_label)).validate(RadioGroupValidation.build(this.getActivity())));
-        
+        getForm().addTextFieldValidations(TextFieldValidations.using(getCaregiverEditText(), getResources().getString(R.string.ccm_general_patient_details_caregiver_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getRelationshipRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_general_patient_details_radio_relationship_label)).validate(RadioGroupValidation.build(this.getActivity())));
+                
         // run validation check
         ((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
 	}

@@ -354,7 +354,8 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 						InitialAskCcmPage.PROBLEMS_DATA_KEY, getForm(), this));
 		
 		// add dynamic view listener to cough radio group
-		TextFieldValidations coughDurationValidation = TextFieldValidations.using(getCoughDurationEditText(), getResources().getString(R.string.ccm_ask_initial_assessment_cough_duration_label)).validate(NotEmptyValidation.build(this.getActivity()));
+		TextFieldValidations coughDurationValidation = TextFieldValidations.using(getCoughDurationEditText(), 
+				getResources().getString(R.string.ccm_ask_initial_assessment_cough_duration_label)).validate(NotEmptyValidation.build(this.getActivity()));
 		DynamicViewListenerUtilities.addGenericDynamicViewListeners(getCoughView(), getCoughDurationDynamicView(),
 				getAnimatedTopLevelView(),
 				getCoughRadioGroup(), getCoughDurationEditText(),
