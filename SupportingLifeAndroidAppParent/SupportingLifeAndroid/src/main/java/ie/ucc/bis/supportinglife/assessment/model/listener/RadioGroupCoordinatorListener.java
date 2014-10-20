@@ -4,6 +4,7 @@ import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.validation.Form;
+import ie.ucc.bis.supportinglife.validation.RadioGroupFieldValidations;
 import ie.ucc.bis.supportinglife.validation.TextFieldValidations;
 
 import java.util.ArrayList;
@@ -39,7 +40,8 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 	private View animatedView;
 	private Fragment fragment;
 	private Form form;
-	private TextFieldValidations fieldValidations;
+	private TextFieldValidations textFieldValidations;
+	private RadioGroupFieldValidations radioGroupFieldValidations;
 
 	public RadioGroupCoordinatorListener(AbstractAssessmentPage page, String dataKey, List<DynamicView> dynamicViews, 
 			ViewGroup parentView, View animatedView) {
@@ -64,6 +66,16 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 		setAnimatedView(animatedView);
 		setRadioButtonAnimateUpText(animateUpTextTriggers);
 	}
+	
+	public RadioGroupCoordinatorListener(AbstractAssessmentPage page, String dataKey, List<DynamicView> dynamicViews, 
+			ViewGroup parentView, View animatedView, Form form, Fragment fragment, RadioGroupFieldValidations fieldValidations) {
+		
+		this(page, dataKey, dynamicViews, parentView, animatedView);
+		setForm(form);
+		setFragment(fragment);
+		setRadioGroupFieldValidations(fieldValidations);
+	}
+
 
 	public RadioGroupCoordinatorListener(AbstractAssessmentPage page, String dataKey, List<DynamicView> dynamicViews, 
 			ViewGroup parentView, View animatedView, List<String> animateUpTextTriggers, 
@@ -73,7 +85,7 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 				parentView, animatedView, animateUpTextTriggers);
 		setForm(form);
 		setFragment(fragment);
-		setFieldValidations(fieldValidations);
+		setTextFieldValidations(fieldValidations);
 	}
 
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -95,11 +107,13 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 			for (DynamicView dynamicView : getDynamicViews()) {
 				if (dynamicView.getControlledElement() instanceof RadioGroup) {
 					((RadioGroup) dynamicView.getControlledElement()).clearCheck();
+					// remove validations from the view being removed
+					getForm().removeRadioGroupFieldValidations(getRadioGroupFieldValidations());
 				}
 				else if (dynamicView.getControlledElement() instanceof EditText) {
 					((EditText) dynamicView.getControlledElement()).setText(null);
 					// remove validations from the view being removed
-					getForm().removeTextFieldValidations(getFieldValidations());
+					getForm().removeTextFieldValidations(getTextFieldValidations());
 				}
 
 				int index = getParentView().indexOfChild(dynamicView.getWrappedView());
@@ -112,11 +126,16 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 			for (int counter = 0; counter < getDynamicViews().size(); counter++) {
 				getParentView().addView(getDynamicViews().get(counter).getWrappedView(), indexPosition + counter);
 				// add any associated validations to the view being added
-				getForm().addTextFieldValidations(getFieldValidations());
+				if (getDynamicViews().get(counter).getControlledElement() instanceof RadioGroup) {
+					getForm().addRadioGroupFieldValidations(getRadioGroupFieldValidations());
+				}
+				else if (getDynamicViews().get(counter).getControlledElement() instanceof EditText) {
+					getForm().addTextFieldValidations(getTextFieldValidations());
+				}
 			}
 		}
 		
-		// valiation check
+		// validation check
 		if (getForm() != null) {
 			boolean valid = getForm().performValidation();
 			if (getFragment() != null) {
@@ -209,12 +228,20 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 		this.form = form;
 	}
 
-	public TextFieldValidations getFieldValidations() {
-		return fieldValidations;
+	private TextFieldValidations getTextFieldValidations() {
+		return textFieldValidations;
 	}
 
-	public void setFieldValidations(TextFieldValidations fieldValidations) {
-		this.fieldValidations = fieldValidations;
+	private void setTextFieldValidations(TextFieldValidations textFieldValidations) {
+		this.textFieldValidations = textFieldValidations;
+	}
+
+	private RadioGroupFieldValidations getRadioGroupFieldValidations() {
+		return radioGroupFieldValidations;
+	}
+
+	private void setRadioGroupFieldValidations(RadioGroupFieldValidations radioGroupFieldValidations) {
+		this.radioGroupFieldValidations = radioGroupFieldValidations;
 	}
 	
 }

@@ -19,7 +19,7 @@ public class RadioGroupValidation extends BaseValidation {
 		boolean isValid = true;
 			
 		// check if no radio button in the group has been selected
-		if (field.getRadioGroup().getCheckedRadioButtonId() == 0) {
+		if (field.getRadioGroup().getCheckedRadioButtonId() == 0 || field.getRadioGroup().getCheckedRadioButtonId() == -1) {
 			isValid = false;
 		}
 	

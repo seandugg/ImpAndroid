@@ -363,11 +363,13 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 				getResources(), getInitialAskCcmPage(), getForm(), this, coughDurationValidation);
 
 		// add dynamic view listener to diarrhoea radio group
+		TextFieldValidations diarrhoeaDurationValidation = TextFieldValidations.using(getDiarrhoeaDurationEditText(), 
+				getResources().getString(R.string.ccm_ask_initial_assessment_diarrhoea_duration_label)).validate(NotEmptyValidation.build(this.getActivity()));
 		DynamicViewListenerUtilities.addGenericDynamicViewListeners(getDiarrhoeaView(), getDiarrhoeaDurationDynamicView(),
 				getAnimatedTopLevelView(),
 				getDiarrhoeaRadioGroup(), getDiarrhoeaDurationEditText(),
 				InitialAskCcmPage.DIARRHOEA_DATA_KEY, InitialAskCcmPage.DIARRHOEA_DURATION_DATA_KEY,
-				getResources(), getInitialAskCcmPage());
+				getResources(), getInitialAskCcmPage(), getForm(), this, diarrhoeaDurationValidation);
 
 		// add listener to blood in stool radio group
 		getBloodInStoolRadioGroup().setOnCheckedChangeListener(
@@ -375,29 +377,33 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
 						InitialAskCcmPage.BLOOD_IN_STOOL_DATA_KEY, getForm(), this));		 
 
 		// add dynamic view listener to fever radio group
+		TextFieldValidations feverDurationValidation = TextFieldValidations.using(getFeverDurationEditText(), 
+				getResources().getString(R.string.ccm_ask_initial_assessment_fever_duration_label)).validate(NotEmptyValidation.build(this.getActivity()));
 		DynamicViewListenerUtilities.addGenericDynamicViewListeners(getFeverView(), getFeverDurationDynamicView(),
 				getAnimatedTopLevelView(),
 				getFeverRadioGroup(), getFeverDurationEditText(),
 				InitialAskCcmPage.FEVER_DATA_KEY, InitialAskCcmPage.FEVER_DURATION_DATA_KEY,
-				getResources(), getInitialAskCcmPage());
+				getResources(), getInitialAskCcmPage(), getForm(), this, feverDurationValidation);
 
 		// add listener to convulsions radio group
 		getConvulsionsRadioGroup().setOnCheckedChangeListener(
 				new RadioGroupListener(getInitialAskCcmPage(),
-						InitialAskCcmPage.CONVULSIONS_DATA_KEY));
+						InitialAskCcmPage.CONVULSIONS_DATA_KEY, getForm(), this));
 
 		// add dynamic view listener to 'difficulty drinking or feeding' radio group
+		RadioGroupFieldValidations unableToDrinkFeedValidation = RadioGroupFieldValidations.using(getUnableDrinkFeedRadioGroup(), 
+				(TextView) getView().findViewById(R.id.ccm_ask_initial_assessment_radio_unable_to_drink_or_feed_label)).validate(RadioGroupValidation.build(this.getActivity()));
 		getDrinkFeedDifficultyRadioGroup().setOnCheckedChangeListener(
 				new RadioGroupCoordinatorListener(getInitialAskCcmPage(),
 						InitialAskCcmPage.DRINK_OR_FEED_DIFFICULTY_DATA_KEY, 
 						Arrays.asList(getDrinkFeedDynamicView()),
 						getAnimatedTopLevelView(),
-						getDrinkFeedView()));
+						getDrinkFeedView(), getForm(), this, unableToDrinkFeedValidation));
 
 		// add listener to 'not able to drink or feed anything' radio group
 		getUnableDrinkFeedRadioGroup().setOnCheckedChangeListener(
 				new RadioGroupListener(getInitialAskCcmPage(),
-						InitialAskCcmPage.UNABLE_TO_DRINK_OR_FEED_DATA_KEY));
+						InitialAskCcmPage.UNABLE_TO_DRINK_OR_FEED_DATA_KEY, getForm(), this));
 	}
 	
     @Override
@@ -442,7 +448,12 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
         // validation rules
         getForm().addTextFieldValidations(TextFieldValidations.using(getProblemsEditText(), getResources().getString(R.string.ccm_ask_initial_assessment_problems_label)).validate(NotEmptyValidation.build(this.getActivity())));
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getCoughRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_initial_assessment_radio_cough_label)).validate(RadioGroupValidation.build(this.getActivity())));
-
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getDiarrhoeaRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_initial_assessment_radio_diarrhoea_label)).validate(RadioGroupValidation.build(this.getActivity())));
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getBloodInStoolRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_initial_assessment_radio_blood_in_stool_label)).validate(RadioGroupValidation.build(this.getActivity())));        
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getFeverRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_initial_assessment_radio_fever_label)).validate(RadioGroupValidation.build(this.getActivity())));
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getConvulsionsRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_initial_assessment_radio_convulsions_label)).validate(RadioGroupValidation.build(this.getActivity())));        
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getDrinkFeedDifficultyRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_initial_assessment_radio_drink_or_feed_difficulty_label)).validate(RadioGroupValidation.build(this.getActivity())));
+        
         // run validation check
         ((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
 	}
