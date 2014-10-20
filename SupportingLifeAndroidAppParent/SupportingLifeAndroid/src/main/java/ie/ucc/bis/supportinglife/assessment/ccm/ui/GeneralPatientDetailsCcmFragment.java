@@ -297,12 +297,12 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         // physical address
         getPhysicalAddressEditText().addTextChangedListener(
         		new AssessmentWizardTextWatcher(getGeneralPatientDetailsCcmPage(), 
-        				GeneralPatientDetailsCcmPage.PHYSICAL_ADDRESS_DATA_KEY));
+        				GeneralPatientDetailsCcmPage.PHYSICAL_ADDRESS_DATA_KEY, getForm(), this));
         
         // village/TA
         getVillageEditText().addTextChangedListener(
         		new AssessmentWizardTextWatcher(getGeneralPatientDetailsCcmPage(), 
-        				GeneralPatientDetailsCcmPage.VILLAGE_DATA_KEY));
+        				GeneralPatientDetailsCcmPage.VILLAGE_DATA_KEY, getForm(), this));
     }
 
 	/**
@@ -380,7 +380,9 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getGenderRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_general_patient_details_radio_gender_label)).validate(RadioGroupValidation.build(this.getActivity())));
         getForm().addTextFieldValidations(TextFieldValidations.using(getCaregiverEditText(), getResources().getString(R.string.ccm_general_patient_details_caregiver_label)).validate(NotEmptyValidation.build(this.getActivity())));
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getRelationshipRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_general_patient_details_radio_relationship_label)).validate(RadioGroupValidation.build(this.getActivity())));
-                
+        getForm().addTextFieldValidations(TextFieldValidations.using(getPhysicalAddressEditText(), getResources().getString(R.string.ccm_general_patient_details_physical_address_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        getForm().addTextFieldValidations(TextFieldValidations.using(getVillageEditText(), getResources().getString(R.string.ccm_general_patient_details_village_label)).validate(NotEmptyValidation.build(this.getActivity())));      
+        
         // run validation check
         ((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
 	}
