@@ -23,6 +23,7 @@
 	        <!-- ============================================================ -->
 	
 			<TextView
+			    android:id="@+id/ccm_ask_initial_assessment_problems_label"
 				style="@style/AssessmentFormLabel"
 				android:text="@string/ccm_ask_initial_assessment_problems_label" />
 	

@@ -32,6 +32,7 @@
                 android:orientation="vertical" >
 
                 <TextView
+                    android:id="@+id/ccm_ask_secondary_assessment_radio_vomiting_label"
                     style="@style/AssessmentFormLabel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -68,6 +69,7 @@
                 android:paddingLeft="30dp" >
 
                 <TextView
+                    android:id="@+id/ccm_ask_secondary_assessment_radio_vomits_everything_label"
                     style="@style/AssessmentFormLabel"
                     android:text="@string/ccm_ask_secondary_assessment_radio_vomits_everything_label" />
 
@@ -100,6 +102,7 @@
                 android:orientation="vertical" >
 
                 <TextView
+                    android:id="@+id/ccm_ask_secondary_assessment_radio_red_eyes_label"
                     style="@style/AssessmentFormLabel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -161,6 +164,7 @@
                 android:orientation="vertical" >
 
                 <TextView
+                    android:id="@+id/ccm_ask_secondary_assessment_radio_seeing_difficulty_label"
                     style="@style/AssessmentFormLabel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -222,6 +226,7 @@
                 android:orientation="vertical" >
 
                 <TextView
+                    android:id="@+id/ccm_ask_secondary_assessment_radio_cannot_treat_problems_label"
                     style="@style/AssessmentFormLabel"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

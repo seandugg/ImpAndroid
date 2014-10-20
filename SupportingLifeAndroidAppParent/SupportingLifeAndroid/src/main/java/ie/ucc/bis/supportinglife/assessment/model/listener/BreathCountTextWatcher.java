@@ -1,6 +1,9 @@
 package ie.ucc.bis.supportinglife.assessment.model.listener;
 
+import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
+import ie.ucc.bis.supportinglife.validation.Form;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 
@@ -26,15 +29,20 @@ public class BreathCountTextWatcher implements TextWatcher {
 	private String fullBreathCountTimeAssessmentDataKey;
 	private boolean breathCounterUsed;
 	private boolean fullBreathCountTimeAssessment;
+	private Fragment fragment;
+	private Form form;
 	
 	public BreathCountTextWatcher(AbstractAssessmentPage page, String breathCountNumberDataKey,
-			String breathCounterUsedDataKey, String fullBreathCountTimeAssessmentDataKey) {
+			String breathCounterUsedDataKey, String fullBreathCountTimeAssessmentDataKey,
+			Form form, Fragment fragment) {
 		setPage(page); 
 		setBreathCountNumberDataKey(breathCountNumberDataKey);
 		setBreathCounterUsedDataKey(breathCounterUsedDataKey);
 		setFullBreathCountTimeAssessmentDataKey(fullBreathCountTimeAssessmentDataKey);
 		setBreathCounterUsed(false);
 		setFullBreathCountTimeAssessment(false);
+		setForm(form);
+		setFragment(fragment);
 	}
 	
 	
@@ -54,13 +62,27 @@ public class BreathCountTextWatcher implements TextWatcher {
     	// now reset breath counter usage monitors
 		setBreathCounterUsed(false);
 		setFullBreathCountTimeAssessment(false);
+		
+		conductValidation();
 	}
-
 	
 	public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
 	public void onTextChanged(CharSequence s, int start, int before, int count) {}
-		
+
+	/**
+	 * Validate form data following event
+	 */
+	private void conductValidation() {
+		// validation check
+		if (getForm() != null) {
+			boolean valid = getForm().performValidation();
+			if (getFragment() != null) {
+				((AssessmentActivity) fragment.getActivity()).getAssessmentViewPager().setPagingEnabled(valid);
+			}
+		}
+	}
+	
 	private AbstractAssessmentPage getPage() {
 		return page;
 	}
@@ -89,8 +111,7 @@ public class BreathCountTextWatcher implements TextWatcher {
 		return fullBreathCountTimeAssessmentDataKey;
 	}
 
-	private void setFullBreathCountTimeAssessmentDataKey(
-			String fullBreathCountTimeAssessmentDataKey) {
+	private void setFullBreathCountTimeAssessmentDataKey(String fullBreathCountTimeAssessmentDataKey) {
 		this.fullBreathCountTimeAssessmentDataKey = fullBreathCountTimeAssessmentDataKey;
 	}
 
@@ -106,8 +127,23 @@ public class BreathCountTextWatcher implements TextWatcher {
 		return fullBreathCountTimeAssessment;
 	}
 
-	public void setFullBreathCountTimeAssessment(
-			boolean fullBreathCountTimeAssessment) {
+	public void setFullBreathCountTimeAssessment(boolean fullBreathCountTimeAssessment) {
 		this.fullBreathCountTimeAssessment = fullBreathCountTimeAssessment;
+	}
+	
+	private Fragment getFragment() {
+		return fragment;
+	}
+
+	private void setFragment(Fragment fragment) {
+		this.fragment = fragment;
+	}
+
+	public Form getForm() {
+		return form;
+	}
+
+	public void setForm(Form form) {
+		this.form = form;
 	}
 }

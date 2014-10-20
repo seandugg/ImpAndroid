@@ -65,7 +65,7 @@ public class Form {
                 allValid = false;
             }
             else {
-            	getValidationFailedRenderer().clear(field.getTextView());
+            	getValidationFailedRenderer().clear(field.getTextValidatedView());
             }
         }
         

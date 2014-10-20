@@ -102,6 +102,7 @@
             <!-- ============================================================ -->
 
             <TextView
+                android:id="@+id/ccm_general_patient_details_first_name_label"
                 style="@style/AssessmentFormLabel"
                 android:text="@string/ccm_general_patient_details_first_name_label" />
 
@@ -120,6 +121,7 @@
             <!-- ============================================================ -->
 
             <TextView
+                android:id="@+id/ccm_general_patient_details_surname_label"
                 style="@style/AssessmentFormLabel"
                 android:text="@string/ccm_general_patient_details_surname_label" />
 
@@ -141,6 +143,7 @@
             <!-- ============================================================ -->
 
             <TextView
+                android:id="@+id/ccm_general_patient_details_date_of_birth_label"
                 style="@style/AssessmentFormLabel"
                 android:text="@string/ccm_general_patient_details_date_of_birth_label" />
 
@@ -187,6 +190,7 @@
             <!-- ============================================================ -->
 
             <TextView
+                android:id="@+id/ccm_general_patient_details_caregiver_label"
                 style="@style/AssessmentFormLabel"
                 android:text="@string/ccm_general_patient_details_caregiver_label" />
 
@@ -274,6 +278,7 @@
 	            <!-- ============================================================ -->
 	
 	            <TextView
+	                android:id="@+id/ccm_general_patient_details_physical_address_label"
 	                style="@style/AssessmentFormLabel"
 	                android:text="@string/ccm_general_patient_details_physical_address_label" />
 	
@@ -296,6 +301,7 @@
 	            <!-- ============================================================ -->
 	
 	            <TextView
+	                android:id="@+id/ccm_general_patient_details_village_label"
 	                style="@style/AssessmentFormLabel"
 	                android:text="@string/ccm_general_patient_details_village_label" />
 	

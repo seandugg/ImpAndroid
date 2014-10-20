@@ -8,16 +8,16 @@ import android.widget.TextView;
 public class TextFieldValidations {
 	
     private List<Validation> validations = new LinkedList<Validation>();
-    private TextView textView;
+    private TextView textValidatedView;
     private String label;
 
-    private TextFieldValidations(TextView textView, String label) {
-    	setTextView(textView);
+    private TextFieldValidations(TextView textValidatedView, String label) {
+    	setTextValidatedView(textValidatedView);
     	setLabel(label);
     }
     
-    public static TextFieldValidations using(TextView textView, String label) {
-        return new TextFieldValidations(textView, label);
+    public static TextFieldValidations using(TextView textValidatedView, String label) {
+        return new TextFieldValidations(textValidatedView, label);
     }
     
     public TextFieldValidations validate(Validation what) {
@@ -41,20 +41,19 @@ public class TextFieldValidations {
 		this.validations = validations;
 	}
 
-	public TextView getTextView() {
-		return textView;
-	}
-
-	public void setTextView(TextView textView) {
-		this.textView = textView;
-	}
-
 	public String getLabel() {
 		return label;
 	}
 
-	public void setLabel(String label) {
+	private void setLabel(String label) {
 		this.label = label;
 	}
-    
+
+	public TextView getTextValidatedView() {
+		return textValidatedView;
+	}
+
+	private void setTextValidatedView(TextView textValidatedView) {
+		this.textValidatedView = textValidatedView;
+	}
 }

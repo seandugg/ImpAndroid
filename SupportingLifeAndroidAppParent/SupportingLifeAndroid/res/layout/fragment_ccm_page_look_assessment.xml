@@ -22,6 +22,7 @@
            	<!-- CHEST INDRAWING 											  -->
            	<!-- ============================================================ -->
             <TextView
+                android:id="@+id/ccm_look_assessment_radio_chest_indrawing_label"
                 style="@style/AssessmentFormLabel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -89,6 +90,7 @@
            	<!-- VERY SLEEPY OR UNCONSCIOUS 								  -->
            	<!-- ============================================================ -->
             <TextView
+                android:id="@+id/ccm_look_assessment_radio_very_sleepy_or_unconscious_label"
                 style="@style/AssessmentFormLabel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -116,6 +118,7 @@
            	<!-- PALMAR PALLOR 											  	  -->
            	<!-- ============================================================ -->
             <TextView
+                android:id="@+id/ccm_look_assessment_radio_palmar_pallor_label"
                 style="@style/AssessmentFormLabel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -143,6 +146,7 @@
            	<!-- MUAC TAPE COLOUR 										  	  -->
            	<!-- ============================================================ -->
             <TextView
+                android:id="@+id/ccm_look_assessment_radio_muac_tape_colour_label"
                 style="@style/AssessmentFormLabel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -189,6 +193,7 @@
            	<!-- SWELLING OF BOTH FEET 									  	  -->
            	<!-- ============================================================ -->
             <TextView
+                android:id="@+id/ccm_look_assessment_radio_swelling_of_both_feet_label"
                 style="@style/AssessmentFormLabel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

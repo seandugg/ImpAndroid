@@ -19,10 +19,10 @@ public class NotEmptyValidation extends BaseValidation {
     public ValidationResult validate(TextFieldValidations field) {
 		boolean isValid = true;
 		
-		isValid = !TextUtils.isEmpty(field.getTextView().getText());
+		isValid = !TextUtils.isEmpty(field.getTextValidatedView().getText());
 		
 	    return isValid ?
-	            ValidationResult.buildSuccess(field.getTextView())
-	            : ValidationResult.buildFailed(field.getTextView(), field.getLabel() + EMPTY_ALERT);
+	            ValidationResult.buildSuccess(field.getTextValidatedView())
+	            : ValidationResult.buildFailed(field.getTextValidatedView(), field.getLabel() + EMPTY_ALERT);
     }
 }

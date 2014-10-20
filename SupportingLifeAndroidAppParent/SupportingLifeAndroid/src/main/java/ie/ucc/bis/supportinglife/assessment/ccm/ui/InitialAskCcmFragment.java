@@ -446,7 +446,8 @@ public class InitialAskCcmFragment extends Fragment implements FragmentLifecycle
         setForm(new Form(this.getActivity()));
 
         // validation rules
-        getForm().addTextFieldValidations(TextFieldValidations.using(getProblemsEditText(), getResources().getString(R.string.ccm_ask_initial_assessment_problems_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        getForm().addTextFieldValidations(TextFieldValidations.using(getProblemsEditText(), 
+        		getResources().getString(R.string.ccm_ask_initial_assessment_problems_label)).validate(NotEmptyValidation.build(this.getActivity())));
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getCoughRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_initial_assessment_radio_cough_label)).validate(RadioGroupValidation.build(this.getActivity())));
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getDiarrhoeaRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_initial_assessment_radio_diarrhoea_label)).validate(RadioGroupValidation.build(this.getActivity())));
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getBloodInStoolRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_initial_assessment_radio_blood_in_stool_label)).validate(RadioGroupValidation.build(this.getActivity())));        

@@ -374,14 +374,21 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         setForm(new Form(this.getActivity()));
 
         // validation rules
-        getForm().addTextFieldValidations(TextFieldValidations.using(getFirstNameEditText(), getResources().getString(R.string.ccm_general_patient_details_first_name_label)).validate(NotEmptyValidation.build(this.getActivity())));
-        getForm().addTextFieldValidations(TextFieldValidations.using(getSurnameEditText(), getResources().getString(R.string.ccm_general_patient_details_surname_label)).validate(NotEmptyValidation.build(this.getActivity())));
-        getForm().addTextFieldValidations(TextFieldValidations.using(getDateBirthEditText(), getResources().getString(R.string.ccm_general_patient_details_date_of_birth_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        getForm().addTextFieldValidations(TextFieldValidations.using(getFirstNameEditText(), 
+        		getResources().getString(R.string.ccm_general_patient_details_first_name_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        getForm().addTextFieldValidations(TextFieldValidations.using(getSurnameEditText(), 
+        		getResources().getString(R.string.ccm_general_patient_details_surname_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        getForm().addTextFieldValidations(TextFieldValidations.using(getDateBirthEditText(), 
+        		getResources().getString(R.string.ccm_general_patient_details_date_of_birth_label)).validate(NotEmptyValidation.build(this.getActivity())));
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getGenderRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_general_patient_details_radio_gender_label)).validate(RadioGroupValidation.build(this.getActivity())));
-        getForm().addTextFieldValidations(TextFieldValidations.using(getCaregiverEditText(), getResources().getString(R.string.ccm_general_patient_details_caregiver_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        getForm().addTextFieldValidations(TextFieldValidations.using(getCaregiverEditText(), 
+        		getResources().getString(R.string.ccm_general_patient_details_caregiver_label)).validate(NotEmptyValidation.build(this.getActivity())));
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getRelationshipRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_general_patient_details_radio_relationship_label)).validate(RadioGroupValidation.build(this.getActivity())));
-        getForm().addTextFieldValidations(TextFieldValidations.using(getPhysicalAddressEditText(), getResources().getString(R.string.ccm_general_patient_details_physical_address_label)).validate(NotEmptyValidation.build(this.getActivity())));
-        getForm().addTextFieldValidations(TextFieldValidations.using(getVillageEditText(), getResources().getString(R.string.ccm_general_patient_details_village_label)).validate(NotEmptyValidation.build(this.getActivity())));      
+        getForm().addTextFieldValidations(TextFieldValidations.using(getPhysicalAddressEditText(), 
+        		getResources().getString(R.string.ccm_general_patient_details_physical_address_label)).validate(NotEmptyValidation.build(this.getActivity())));
+                
+        getForm().addTextFieldValidations(TextFieldValidations.using(getVillageEditText(), 
+        		getResources().getString(R.string.ccm_general_patient_details_village_label)).validate(NotEmptyValidation.build(this.getActivity())));      
         
         // run validation check
         ((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
