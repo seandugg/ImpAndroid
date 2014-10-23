@@ -28,4 +28,8 @@ public abstract class BaseValidation implements Validation {
 		return null;
 	}
 	
+	@Override
+	public ValidationResult validate(ButtonGroupTableValidations buttonGroupTableValidations) {
+		return null;
+	}		
 }

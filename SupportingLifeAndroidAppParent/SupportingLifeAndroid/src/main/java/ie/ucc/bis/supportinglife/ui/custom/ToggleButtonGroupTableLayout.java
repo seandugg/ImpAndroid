@@ -3,10 +3,13 @@ package ie.ucc.bis.supportinglife.ui.custom;
 import java.util.Arrays;
 import java.util.List;
 
+import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupCoordinatorListener;
+import ie.ucc.bis.supportinglife.validation.Form;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,9 @@ public class ToggleButtonGroupTableLayout extends TableLayout implements OnClick
 	private List<DynamicView> dynamicViews;
 	private ViewGroup parentView;
 	private int indexPosition;
+	
+	private Fragment fragment;
+	private Form form;
 	
 	/** 
 	 * @param context
@@ -91,6 +97,15 @@ public class ToggleButtonGroupTableLayout extends TableLayout implements OnClick
 				}
 			}
 		}
+		
+		// validation check
+		if (getForm() != null) {
+			boolean valid = getForm().performValidation();
+			if (getFragment() != null) {
+				((AssessmentActivity) fragment.getActivity()).getAssessmentViewPager().setPagingEnabled(valid);
+			}
+		}
+		
     	getPage().notifyDataChanged();
 	}
 	
@@ -168,6 +183,29 @@ public class ToggleButtonGroupTableLayout extends TableLayout implements OnClick
 			} // end of inner for
 		} // end of outer for
 	}
+	
+	/**
+	 * Utility method to determine if any of the radio buttons 
+	 * are checked
+	 */
+	public boolean isChecked() {
+		boolean checked = false;
+		// firstly iterate over rows
+		ExitOuterLoop:
+		for (int rowCounter = 0; rowCounter < getChildCount(); rowCounter++) {
+			TableRow tableRow = (TableRow) getChildAt(rowCounter);
+			// secondly iterate over columns in each row
+			for (int columnCounter = 0; columnCounter < tableRow.getChildCount(); columnCounter++) {
+				RadioButton radButton = (RadioButton) tableRow.getChildAt(columnCounter);
+				if (radButton.isChecked()) {
+					checked = true;
+					break ExitOuterLoop;
+				}
+			} // end of inner for
+		} // end of outer for
+		return checked;
+	}
+
 
 	/**
 	 * Getter Method: getPage()
@@ -244,6 +282,22 @@ public class ToggleButtonGroupTableLayout extends TableLayout implements OnClick
 	 */	
 	public int getIndexPosition() {
 		return indexPosition;
+	}
+
+	public Fragment getFragment() {
+		return fragment;
+	}
+
+	public void setFragment(Fragment fragment) {
+		this.fragment = fragment;
+	}
+
+	public Form getForm() {
+		return form;
+	}
+
+	public void setForm(Form form) {
+		this.form = form;
 	}
 
 }

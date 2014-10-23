@@ -8,4 +8,5 @@ public interface Validation {
 
 	public ValidationResult validate(TextFieldValidations fieldValidation);
 	public ValidationResult validate(RadioGroupFieldValidations radioGroupField);
+	public ValidationResult validate(ButtonGroupTableValidations buttonGroupTableValidations);
 }

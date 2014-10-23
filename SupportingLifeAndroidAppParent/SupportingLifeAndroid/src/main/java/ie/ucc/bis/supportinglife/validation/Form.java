@@ -11,6 +11,7 @@ public class Form {
 
     private List<TextFieldValidations> textFieldValidations = new ArrayList<TextFieldValidations>();
     private List<RadioGroupFieldValidations> radioGroupFieldValidations = new ArrayList<RadioGroupFieldValidations>();
+    private List<ButtonGroupTableValidations> buttonGroupTableValidations = new ArrayList<ButtonGroupTableValidations>();
     private ValidationFailedRenderer validationFailedRenderer;
     private Context context;
     private boolean valid;
@@ -37,6 +38,14 @@ public class Form {
     
 	public void removeRadioGroupFieldValidations(RadioGroupFieldValidations fieldValidations) {
 		getRadioGroupFieldValidations().remove(fieldValidations);
+	}
+	
+    public void addButtonGroupTableValidations(ButtonGroupTableValidations fieldValidations) {
+    	getButtonGroupTableValidations().add(fieldValidations);
+    }
+    
+	public void removeRadioGroupFieldValidations(ButtonGroupTableValidations fieldValidations) {
+		getButtonGroupTableValidations().remove(fieldValidations);
 	}
     
     public boolean performValidation() {
@@ -84,6 +93,21 @@ public class Form {
             }
         }
         
+        // button group table fields next (i.e. custom radioGroups e.g. muac tape colour)
+        for (ButtonGroupTableValidations field : getButtonGroupTableValidations()) {
+            FieldValidationResult result = field.validate();
+                       
+            if (!result.isValid()) {
+                ValidationResult validatedResult = result.getFailedValidationResults().get(0);
+
+               	getValidationFailedRenderer().showErrorMessage(validatedResult);
+                allValid = false;
+            }
+            else {
+            	getValidationFailedRenderer().clear(field.getLabel());
+            }
+        }
+        
         // update valid flag
         setValid(allValid);
         
@@ -112,6 +136,15 @@ public class Form {
 
 	private void setRadioGroupFieldValidations(List<RadioGroupFieldValidations> radioGroupFieldValidations) {
 		this.radioGroupFieldValidations = radioGroupFieldValidations;
+	}
+
+	public List<ButtonGroupTableValidations> getButtonGroupTableValidations() {
+		return buttonGroupTableValidations;
+	}
+
+	public void setButtonGroupTableValidations(
+			List<ButtonGroupTableValidations> buttonGroupTableValidations) {
+		this.buttonGroupTableValidations = buttonGroupTableValidations;
 	}
 
 	public Context getContext() {

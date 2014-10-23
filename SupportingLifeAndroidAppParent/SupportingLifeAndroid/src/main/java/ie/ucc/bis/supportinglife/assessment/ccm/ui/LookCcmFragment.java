@@ -16,6 +16,8 @@ import ie.ucc.bis.supportinglife.assessment.model.listener.BreathCountTextWatche
 import ie.ucc.bis.supportinglife.assessment.model.listener.BreathCounterDialogListener;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.ui.custom.ToggleButtonGroupTableLayout;
+import ie.ucc.bis.supportinglife.validation.ButtonGroupTableValidations;
+import ie.ucc.bis.supportinglife.validation.ButtonGroupValidation;
 import ie.ucc.bis.supportinglife.validation.Form;
 import ie.ucc.bis.supportinglife.validation.NotEmptyValidation;
 import ie.ucc.bis.supportinglife.validation.NumberRangeValidation;
@@ -179,6 +181,8 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle, Frag
         // add listener to custom muac tape radio group
 		getMuacTapeCustomRadioGroup().setPage(getLookCcmPage());
 		getMuacTapeCustomRadioGroup().setDataKey(LookCcmPage.MUAC_TAPE_COLOUR_DATA_KEY);
+        getMuacTapeCustomRadioGroup().setForm(getForm());
+        getMuacTapeCustomRadioGroup().setFragment(this);
 				
 		// add listener to 'swelling of both feet' radio group
 		getSwellingOfBothFeetRadioGroup().setOnCheckedChangeListener(
@@ -274,7 +278,12 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle, Frag
         		.validate(RadioGroupValidation.build(this.getActivity()))); 
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getPalmarPallorRadioGroup(), 
         		(TextView) rootView.findViewById(R.id.ccm_look_assessment_radio_palmar_pallor_label))
-        		.validate(RadioGroupValidation.build(this.getActivity()))); 
+        		.validate(RadioGroupValidation.build(this.getActivity())));
+     
+        getForm().addButtonGroupTableValidations(ButtonGroupTableValidations.using(getMuacTapeCustomRadioGroup(), 
+        		(TextView) rootView.findViewById(R.id.ccm_look_assessment_radio_muac_tape_colour_label))
+        		.validate(ButtonGroupValidation.build(this.getActivity())));
+        
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getSwellingOfBothFeetRadioGroup(), 
         		(TextView) rootView.findViewById(R.id.ccm_look_assessment_radio_swelling_of_both_feet_label))
         		.validate(RadioGroupValidation.build(this.getActivity()))); 
