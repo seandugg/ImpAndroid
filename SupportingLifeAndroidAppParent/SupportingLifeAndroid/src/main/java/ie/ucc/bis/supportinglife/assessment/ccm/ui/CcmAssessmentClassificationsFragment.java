@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
  * Class: CcmAssessmentClassificationsFragment
@@ -35,6 +37,8 @@ import android.widget.TextView;
  */
 public class CcmAssessmentClassificationsFragment extends ListFragment implements FragmentLifecycle {
     
+	private static final String NO_CLASSIFICATIONS = "No classifications apply based on patient assessment";
+	
 	private String pageKey;
     private CcmClassificationAdapter ccmClassificationAdapter;
     private PatientAssessment patient;
@@ -64,6 +68,9 @@ public class CcmAssessmentClassificationsFragment extends ListFragment implement
         setPatient(((AssessmentResultsActivity) getActivity()).getPatientAssessment());          
         setCcmClassificationAdapter(new CcmClassificationAdapter(this, new ArrayList<Diagnostic>(getPatient().getDiagnostics())));
         setListAdapter(getCcmClassificationAdapter());
+        
+        // check if we are dealing with a situation where no classifications apply - if so, inform user
+        performClassificationCheck();
     }
     
     @Override
@@ -115,8 +122,29 @@ public class CcmAssessmentClassificationsFragment extends ListFragment implement
 		if (analyticsPage != null) {
 			// start analytics timer for page
     		AnalyticUtilities.configurePageTimer(analyticsPage, CcmClassificationsPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);    		
-    	}    	
+    	}
     }
+    
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) { 
+            performClassificationCheck();
+        }
+    }
+
+	/**
+	 * Check if any classifications apply in this case and inform
+	 * user if the case applies where there are no classifications 
+	 * applicable to the assessment performed.
+	 */
+	private void performClassificationCheck() {
+		// check if we are dealing with a situation where no classifications apply - if so, inform user
+		if (getPatient() != null && getPatient().getDiagnostics().size() == 0) {
+			Crouton.clearCroutonsForActivity(this.getActivity());
+			Crouton.makeText(this.getActivity(), NO_CLASSIFICATIONS, Style.INFO).show();  
+		}
+	}
     
 	public String getPageKey() {
 		return pageKey;

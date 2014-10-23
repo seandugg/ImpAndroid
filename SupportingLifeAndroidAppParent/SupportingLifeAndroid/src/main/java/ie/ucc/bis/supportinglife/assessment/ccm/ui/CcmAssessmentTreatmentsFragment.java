@@ -14,6 +14,9 @@ import ie.ucc.bis.supportinglife.rule.engine.Diagnostic;
 
 import java.util.ArrayList;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -32,6 +35,8 @@ import android.widget.ListView;
  */
 public class CcmAssessmentTreatmentsFragment extends ListFragment implements FragmentLifecycle {
     
+	private static final String NO_TREATMENTS = "No treatments apply based on patient assessment";
+	
 	private String pageKey;
     private CcmTreatmentAdapter ccmTreatmentAdapter;
     private PatientAssessment patient;
@@ -107,6 +112,27 @@ public class CcmAssessmentTreatmentsFragment extends ListFragment implements Fra
     		AnalyticUtilities.configurePageTimer(analyticsPage, CcmTreatmentsPage.ANALTYICS_START_PAGE_TIMER_DATA_KEY, AnalyticUtilities.START_PAGE_TIMER_ACTION);    		
     	}    	
     }
+    
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) { 
+            performTreatmentCheck();
+        }
+    }
+    
+	/**
+	 * Check if any treatments apply in this case and inform
+	 * user if the case applies where there are no treatments 
+	 * applicable to the assessment performed.
+	 */
+	private void performTreatmentCheck() {
+		// check if we are dealing with a situation where no classifications apply - if so, inform user
+		if (getPatient() != null && getPatient().getDiagnostics().size() == 0) {
+			Crouton.clearCroutonsForActivity(this.getActivity());
+			Crouton.makeText(this.getActivity(), NO_TREATMENTS, Style.INFO).show();  
+		}
+	}
     
 	public String getPageKey() {
 		return pageKey;
