@@ -18,9 +18,11 @@ import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.ui.custom.ToggleButtonGroupTableLayout;
 import ie.ucc.bis.supportinglife.validation.Form;
 import ie.ucc.bis.supportinglife.validation.NotEmptyValidation;
+import ie.ucc.bis.supportinglife.validation.NumberRangeValidation;
 import ie.ucc.bis.supportinglife.validation.RadioGroupFieldValidations;
 import ie.ucc.bis.supportinglife.validation.RadioGroupValidation;
 import ie.ucc.bis.supportinglife.validation.TextFieldValidations;
+import ie.ucc.bis.supportinglife.validation.Validation;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -261,15 +263,21 @@ public class LookCcmFragment extends Fragment implements FragmentLifecycle, Frag
 
         // validation rules
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getChestIndrawingRadioGroup(), 
-        		(TextView) rootView.findViewById(R.id.ccm_look_assessment_radio_chest_indrawing_label)).validate(RadioGroupValidation.build(this.getActivity()))); 
+        		(TextView) rootView.findViewById(R.id.ccm_look_assessment_radio_chest_indrawing_label))
+        		.validate(RadioGroupValidation.build(this.getActivity()))); 
         getForm().addTextFieldValidations(TextFieldValidations.using(getBreathsPerMinuteEditText(), 
-        		getResources().getString(R.string.ccm_look_assessment_radio_breaths_per_minute_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        		getResources().getString(R.string.ccm_look_assessment_radio_breaths_per_minute_label))
+        		.validate(NotEmptyValidation.build(this.getActivity()))
+        		.validate(NumberRangeValidation.build(this.getActivity(), Validation.ONE_DAY, Validation.ONE_HUNDRED_DAYS)));
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getVerySleepyOrUnconsciousRadioGroup(), 
-        		(TextView) rootView.findViewById(R.id.ccm_look_assessment_radio_very_sleepy_or_unconscious_label)).validate(RadioGroupValidation.build(this.getActivity()))); 
+        		(TextView) rootView.findViewById(R.id.ccm_look_assessment_radio_very_sleepy_or_unconscious_label))
+        		.validate(RadioGroupValidation.build(this.getActivity()))); 
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getPalmarPallorRadioGroup(), 
-        		(TextView) rootView.findViewById(R.id.ccm_look_assessment_radio_palmar_pallor_label)).validate(RadioGroupValidation.build(this.getActivity()))); 
+        		(TextView) rootView.findViewById(R.id.ccm_look_assessment_radio_palmar_pallor_label))
+        		.validate(RadioGroupValidation.build(this.getActivity()))); 
         getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getSwellingOfBothFeetRadioGroup(), 
-        		(TextView) rootView.findViewById(R.id.ccm_look_assessment_radio_swelling_of_both_feet_label)).validate(RadioGroupValidation.build(this.getActivity()))); 
+        		(TextView) rootView.findViewById(R.id.ccm_look_assessment_radio_swelling_of_both_feet_label))
+        		.validate(RadioGroupValidation.build(this.getActivity()))); 
                 
         // run validation check
         ((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());

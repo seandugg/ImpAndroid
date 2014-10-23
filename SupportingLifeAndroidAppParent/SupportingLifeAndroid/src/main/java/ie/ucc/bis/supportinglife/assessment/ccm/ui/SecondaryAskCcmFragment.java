@@ -19,9 +19,11 @@ import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupListener;
 import ie.ucc.bis.supportinglife.ui.utilities.ViewGroupUtilities;
 import ie.ucc.bis.supportinglife.validation.Form;
 import ie.ucc.bis.supportinglife.validation.NotEmptyValidation;
+import ie.ucc.bis.supportinglife.validation.NumberRangeValidation;
 import ie.ucc.bis.supportinglife.validation.RadioGroupFieldValidations;
 import ie.ucc.bis.supportinglife.validation.RadioGroupValidation;
 import ie.ucc.bis.supportinglife.validation.TextFieldValidations;
+import ie.ucc.bis.supportinglife.validation.Validation;
 
 import java.util.Arrays;
 
@@ -341,7 +343,8 @@ public class SecondaryAskCcmFragment extends Fragment implements FragmentLifecyc
 
 		// add dynamic view listener to 'vomiting' radio group
 		RadioGroupFieldValidations vomitsEverythingValidation = RadioGroupFieldValidations.using(getVomitsEverythingRadioGroup(), 
-				(TextView) getView().findViewById(R.id.ccm_ask_secondary_assessment_radio_vomits_everything_label)).validate(RadioGroupValidation.build(this.getActivity()));
+				(TextView) getView().findViewById(R.id.ccm_ask_secondary_assessment_radio_vomits_everything_label))
+				.validate(RadioGroupValidation.build(this.getActivity()));
 		getVomitingRadioGroup().setOnCheckedChangeListener(
 				new RadioGroupCoordinatorListener(getSecondaryAskCcmPage(),
 						SecondaryAskCcmPage.VOMITING_DATA_KEY, 
@@ -356,7 +359,9 @@ public class SecondaryAskCcmFragment extends Fragment implements FragmentLifecyc
 
 		// add dynamic view listener to 'red eyes' radio group
 		TextFieldValidations redEyesDurationValidation = TextFieldValidations.using(getRedEyesDurationEditText(), 
-				getResources().getString(R.string.ccm_ask_secondary_assessment_red_eyes_duration_label)).validate(NotEmptyValidation.build(this.getActivity()));
+				getResources().getString(R.string.ccm_ask_secondary_assessment_red_eyes_duration_label))
+				.validate(NotEmptyValidation.build(this.getActivity()))
+				.validate(NumberRangeValidation.build(this.getActivity(), Validation.ONE_DAY, Validation.ONE_YEAR_IN_DAYS));
 		DynamicViewListenerUtilities.addGenericDynamicViewListeners(getRedEyesView(), getRedEyesDurationDynamicView(),
 				getAnimatedTopLevelView(),
 				getRedEyesRadioGroup(), getRedEyesDurationEditText(),
@@ -365,7 +370,8 @@ public class SecondaryAskCcmFragment extends Fragment implements FragmentLifecyc
 
 		// add dynamic view listener to 'seeing difficulty' radio group
 		TextFieldValidations seeingDifficultyDurationValidation = TextFieldValidations.using(getSeeingDifficultyDurationEditText(), 
-				getResources().getString(R.string.ccm_ask_secondary_assessment_seeing_difficulty_duration_label)).validate(NotEmptyValidation.build(this.getActivity()));
+				getResources().getString(R.string.ccm_ask_secondary_assessment_seeing_difficulty_duration_label))
+				.validate(NotEmptyValidation.build(this.getActivity()));
 		DynamicViewListenerUtilities.addGenericDynamicViewListeners(getSeeingDifficultyView(), getSeeingDifficultyDurationDynamicView(),
 				getAnimatedTopLevelView(),
 				getSeeingDifficultyRadioGroup(), getSeeingDifficultyDurationEditText(),
@@ -422,10 +428,18 @@ public class SecondaryAskCcmFragment extends Fragment implements FragmentLifecyc
         setForm(new Form(this.getActivity()));
 
         // validation rules
-        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getVomitingRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_secondary_assessment_radio_vomiting_label)).validate(RadioGroupValidation.build(this.getActivity())));
-        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getRedEyesRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_secondary_assessment_radio_red_eyes_label)).validate(RadioGroupValidation.build(this.getActivity())));
-        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getSeeingDifficultyRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_secondary_assessment_radio_seeing_difficulty_label)).validate(RadioGroupValidation.build(this.getActivity())));
-        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getCannotTreatProblemsRadioGroup(), (TextView) rootView.findViewById(R.id.ccm_ask_secondary_assessment_radio_cannot_treat_problems_label)).validate(RadioGroupValidation.build(this.getActivity())));
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getVomitingRadioGroup(), 
+        		(TextView) rootView.findViewById(R.id.ccm_ask_secondary_assessment_radio_vomiting_label))
+        		.validate(RadioGroupValidation.build(this.getActivity())));
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getRedEyesRadioGroup(), 
+        		(TextView) rootView.findViewById(R.id.ccm_ask_secondary_assessment_radio_red_eyes_label))
+        		.validate(RadioGroupValidation.build(this.getActivity())));
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getSeeingDifficultyRadioGroup(), 
+        		(TextView) rootView.findViewById(R.id.ccm_ask_secondary_assessment_radio_seeing_difficulty_label))
+        		.validate(RadioGroupValidation.build(this.getActivity())));
+        getForm().addRadioGroupFieldValidations(RadioGroupFieldValidations.using(getCannotTreatProblemsRadioGroup(), 
+        		(TextView) rootView.findViewById(R.id.ccm_ask_secondary_assessment_radio_cannot_treat_problems_label))
+        		.validate(RadioGroupValidation.build(this.getActivity())));
 
         // run validation check
         ((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
