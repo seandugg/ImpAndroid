@@ -12,7 +12,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import android.content.Context;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,11 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 
 /**
@@ -123,7 +129,7 @@ public class CcmTreatmentAdapter extends BaseAdapter {
     				headerTreatments.add(treatmentRecommendation.getTreatmentDescription());
     			}
     			
-                addBulletedListToTextView(headerTreatments, ((TextView) view.findViewById(R.id.treatment_list_item_desc)));
+                addBulletedListToTextView(headerTreatments, ((LinearLayout) view.findViewById(R.id.treatment_list_header_items)));
                 
                 // animate the header
             	animateSeverityImage(severityImageView);
@@ -145,7 +151,7 @@ public class CcmTreatmentAdapter extends BaseAdapter {
     				treatments.add(treatmentRecommendation.getTreatmentDescription());
     			}
         		
-                addBulletedListToTextView(treatments, ((TextView) view.findViewById(R.id.treatment_list_item_desc)));            
+                addBulletedListToTextView(treatments, ((LinearLayout) view.findViewById(R.id.treatment_list_items)));            
     			break;
 
         	case FOOTER_ITEM_TYPE :
@@ -160,7 +166,7 @@ public class CcmTreatmentAdapter extends BaseAdapter {
     				footerTreatments.add(treatmentRecommendation.getTreatmentDescription());
     			}
  
-                addBulletedListToTextView(footerTreatments, ((TextView) view.findViewById(R.id.treatment_list_item_desc)));
+                addBulletedListToTextView(footerTreatments, ((LinearLayout) view.findViewById(R.id.treatment_list_footer_items)));
 
     			break;  			
         } // end of switch
@@ -222,19 +228,37 @@ public class CcmTreatmentAdapter extends BaseAdapter {
      * Responsible for adding a bulleted list to a textview
      * 
      * @param treatments
-     * @param textView
+     * @param parentLayout
      */
-    private void addBulletedListToTextView(List<String> treatments, TextView textView) {
-    	textView.setText("");
+    private void addBulletedListToTextView(List<String> treatments, LinearLayout parentLayout) {
+    	Context context = this.getCcmAssessmentTreatmentsFragment().getActivity();
+    	
     	for(String treatment : treatments) {
-    		String[] lineBreakSeparatedTreatment = treatment.split(LINE_BREAK_ESCAPE_CHARACTER);
-    		textView.append(Html.fromHtml(DARK_GREEN_RIGHT_ANGLE_QUOTE_SYMBOL));
+    		String[] lineBreakSeparatedTreatment = treatment.split(LINE_BREAK_ESCAPE_CHARACTER);    		
     		for (String treatmentSegment : lineBreakSeparatedTreatment) {
+    			LinearLayout individualTreatmentLayout = new LinearLayout(context);
+    			individualTreatmentLayout.setOrientation(LinearLayout.HORIZONTAL);
+    			
+        		TextView textView = new TextView(context);
+        		textView.append(Html.fromHtml(DARK_GREEN_RIGHT_ANGLE_QUOTE_SYMBOL));
     			// remove line break escape character
     			treatmentSegment = treatmentSegment.replace(LINE_BREAK_ESCAPE_CHARACTER.toString(), " ");
     			// remove whitespace at start and end of string
     			treatmentSegment = treatmentSegment.trim();
+    			
+    			// add treatment textual description dynamically
     			textView.append(treatmentSegment + System.getProperty("line.separator"));
+    			textView.setLayoutParams(new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2f));
+    			individualTreatmentLayout.addView(textView);
+    			
+    			// add treatment checkbox dynamically
+    			CheckBox treatmentCheckbox = new CheckBox(context);
+    			LayoutParams checkboxParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+    			checkboxParams.setMargins(10, 0, 0, 0); // padding left
+    			treatmentCheckbox.setGravity(Gravity.RIGHT);
+    			individualTreatmentLayout.addView(treatmentCheckbox);
+    			
+    			parentLayout.addView(individualTreatmentLayout);
     		}
     	}
 	}

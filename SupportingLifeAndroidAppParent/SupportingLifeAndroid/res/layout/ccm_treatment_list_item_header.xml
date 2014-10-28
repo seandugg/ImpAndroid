@@ -33,14 +33,11 @@
 	        android:text="@string/ccm_assessment_results_treatments_heading" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/treatment_list_item_desc"
-        style="?android:textAppearanceMedium"
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_marginLeft="5dp"
-        android:layout_weight="3"
-        android:gravity="left"
-        android:textColor="@color/Black" />
+	<LinearLayout
+	    android:id="@+id/treatment_list_header_items"
+	    android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+	</LinearLayout>
 
 </LinearLayout>
