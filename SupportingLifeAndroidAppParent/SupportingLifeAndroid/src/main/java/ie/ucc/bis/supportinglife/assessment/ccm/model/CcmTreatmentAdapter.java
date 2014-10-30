@@ -233,14 +233,20 @@ public class CcmTreatmentAdapter extends BaseAdapter {
     private void addBulletedListToTextView(List<String> treatments, LinearLayout parentLayout) {
     	Context context = this.getCcmAssessmentTreatmentsFragment().getActivity();
     	
+    	parentLayout.removeAllViews();
+    	
     	for(String treatment : treatments) {
-    		String[] lineBreakSeparatedTreatment = treatment.split(LINE_BREAK_ESCAPE_CHARACTER);    		
+    		String[] lineBreakSeparatedTreatment = treatment.split(LINE_BREAK_ESCAPE_CHARACTER);    	
+    		int multiLineTreatmentCount = 0;
     		for (String treatmentSegment : lineBreakSeparatedTreatment) {
+    			multiLineTreatmentCount++;
     			LinearLayout individualTreatmentLayout = new LinearLayout(context);
     			individualTreatmentLayout.setOrientation(LinearLayout.HORIZONTAL);
     			
         		TextView textView = new TextView(context);
-        		textView.append(Html.fromHtml(DARK_GREEN_RIGHT_ANGLE_QUOTE_SYMBOL));
+        		if (multiLineTreatmentCount == 1) {
+        			textView.append(Html.fromHtml(DARK_GREEN_RIGHT_ANGLE_QUOTE_SYMBOL));
+        		}
     			// remove line break escape character
     			treatmentSegment = treatmentSegment.replace(LINE_BREAK_ESCAPE_CHARACTER.toString(), " ");
     			// remove whitespace at start and end of string
@@ -252,12 +258,13 @@ public class CcmTreatmentAdapter extends BaseAdapter {
     			individualTreatmentLayout.addView(textView);
     			
     			// add treatment checkbox dynamically
-    			CheckBox treatmentCheckbox = new CheckBox(context);
-    			LayoutParams checkboxParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
-    			checkboxParams.setMargins(10, 0, 0, 0); // padding left
-    			treatmentCheckbox.setGravity(Gravity.RIGHT);
-    			individualTreatmentLayout.addView(treatmentCheckbox);
-    			
+    			if (multiLineTreatmentCount == 1) {
+	    			CheckBox treatmentCheckbox = new CheckBox(context);
+	    			LayoutParams checkboxParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
+	    			checkboxParams.setMargins(10, 0, 0, 0); // padding left
+	    			treatmentCheckbox.setGravity(Gravity.RIGHT);
+	    			individualTreatmentLayout.addView(treatmentCheckbox);
+    			}
     			parentLayout.addView(individualTreatmentLayout);
     		}
     	}

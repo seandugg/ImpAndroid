@@ -107,13 +107,17 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 			for (DynamicView dynamicView : getDynamicViews()) {
 				if (dynamicView.getControlledElement() instanceof RadioGroup) {
 					((RadioGroup) dynamicView.getControlledElement()).clearCheck();
-					// remove validations from the view being removed
-					getForm().removeRadioGroupFieldValidations(getRadioGroupFieldValidations());
+					if (getForm() != null) {
+						// remove validations from the view being removed
+						getForm().removeRadioGroupFieldValidations(getRadioGroupFieldValidations());
+					}
 				}
 				else if (dynamicView.getControlledElement() instanceof EditText) {
 					((EditText) dynamicView.getControlledElement()).setText(null);
-					// remove validations from the view being removed
-					getForm().removeTextFieldValidations(getTextFieldValidations());
+					if (getForm() != null) {
+						// remove validations from the view being removed
+						getForm().removeTextFieldValidations(getTextFieldValidations());
+					}
 				}
 
 				int index = getParentView().indexOfChild(dynamicView.getWrappedView());
@@ -126,10 +130,11 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 			for (int counter = 0; counter < getDynamicViews().size(); counter++) {
 				getParentView().addView(getDynamicViews().get(counter).getWrappedView(), indexPosition + counter);
 				// add any associated validations to the view being added
-				if (getDynamicViews().get(counter).getControlledElement() instanceof RadioGroup) {
-					getForm().addRadioGroupFieldValidations(getRadioGroupFieldValidations());
+				if (getDynamicViews().get(counter).getControlledElement() instanceof RadioGroup && getForm() != null) {
+						getForm().addRadioGroupFieldValidations(getRadioGroupFieldValidations());
 				}
-				else if (getDynamicViews().get(counter).getControlledElement() instanceof EditText) {
+				else if (getDynamicViews().get(counter).getControlledElement() instanceof EditText && getForm() != null) {
+					
 					getForm().addTextFieldValidations(getTextFieldValidations());
 				}
 			}
