@@ -1,7 +1,7 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAnalyticsPage;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
@@ -53,7 +53,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity implem
 	private ClassificationRuleEngine classificationRuleEngine;
 	private TreatmentRuleEngine treatmentRuleEngine;
 	private SupportingLifeService supportingLifeService;
-	private AbstractModel assessmentResultsModel;
+	private AbstractAssessmentModel assessmentResultsModel;
 	
 	// location handling
 	private LocationClient locationClient;
@@ -344,7 +344,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity implem
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
     	exitAssessmentDialogHandler(AssessmentExitDialogListener.SETTINGS_SCREEN,
-    								(AbstractModel) getAssessmentResultsModel(),
+    								(AbstractAssessmentModel) getAssessmentResultsModel(),
     								(FragmentStatePagerAdapter) getTabsAdapter(),
     								getViewPager().getCurrentItem());
 	}
@@ -361,7 +361,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity implem
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
     	exitAssessmentDialogHandler(AssessmentExitDialogListener.SYNC_SCREEN,
-    								(AbstractModel) getAssessmentResultsModel(),
+    								(AbstractAssessmentModel) getAssessmentResultsModel(),
     								(FragmentStatePagerAdapter) getTabsAdapter(),
     								getViewPager().getCurrentItem());
 	}
@@ -378,7 +378,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity implem
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
     //	exitAssessmentDialogHandler(AssessmentExitDialogListener.HELP_SCREEN,
-	//								(AbstractModel) getAssessmentResultsModel(),
+	//								(AbstractAssessmentModel) getAssessmentResultsModel(),
 	//								(FragmentStatePagerAdapter) getTabsAdapter(),
 	//								getViewPager().getCurrentItem());
 	}
@@ -396,7 +396,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity implem
     	// display a confirmation dialog to confirm that the user wishes 
     	// to exit the patient assessment
     	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN,
-    								(AbstractModel) getAssessmentResultsModel(),
+    								(AbstractAssessmentModel) getAssessmentResultsModel(),
     								(FragmentStatePagerAdapter) getTabsAdapter(),
     								getViewPager().getCurrentItem());
     }
@@ -417,7 +417,7 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity implem
     	// will be displayed to confirm that the user wishes to exit the 
     	// patient assessment
     	exitAssessmentDialogHandler(AssessmentExitDialogListener.DASHBOARD_SCREEN,
-									(AbstractModel) getAssessmentResultsModel(),
+									(AbstractAssessmentModel) getAssessmentResultsModel(),
 									(FragmentStatePagerAdapter) getTabsAdapter(),
 									getViewPager().getCurrentItem());
     }
@@ -532,12 +532,12 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity implem
 	}
 
 
-	public AbstractModel getAssessmentResultsModel() {
+	public AbstractAssessmentModel getAssessmentResultsModel() {
 		return assessmentResultsModel;
 	}
 
 
-	public void setAssessmentResultsModel(AbstractModel assessmentResultsModel) {
+	public void setAssessmentResultsModel(AbstractAssessmentModel assessmentResultsModel) {
 		this.assessmentResultsModel = assessmentResultsModel;
 	}
 

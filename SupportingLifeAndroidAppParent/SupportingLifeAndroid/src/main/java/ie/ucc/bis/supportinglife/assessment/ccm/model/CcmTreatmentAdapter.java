@@ -2,6 +2,7 @@ package ie.ucc.bis.supportinglife.assessment.ccm.model;
 
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.CcmAssessmentTreatmentsFragment;
+import ie.ucc.bis.supportinglife.assessment.model.listener.CheckBoxListener;
 import ie.ucc.bis.supportinglife.rule.engine.CcmTreatmentDiagnosticComparator;
 import ie.ucc.bis.supportinglife.rule.engine.Classification;
 import ie.ucc.bis.supportinglife.rule.engine.Diagnostic;
@@ -124,12 +125,8 @@ public class CcmTreatmentAdapter extends BaseAdapter {
     			TextView treatmentsTitle = (TextView) view.findViewById(R.id.treatment_title);
     			
     			// add recommended header treatments
-    			List<String> headerTreatments = new ArrayList<String>();
-    			for (TreatmentRecommendation treatmentRecommendation : getPatientDiagnostics().get(position).getTreatmentRecommendations()) {
-    				headerTreatments.add(treatmentRecommendation.getTreatmentDescription());
-    			}
-    			
-                addBulletedListToTextView(headerTreatments, ((LinearLayout) view.findViewById(R.id.treatment_list_header_items)));
+                addBulletedListToTextView(getPatientDiagnostics().get(position).getTreatmentRecommendations(), 
+                		((LinearLayout) view.findViewById(R.id.treatment_list_header_items)));
                 
                 // animate the header
             	animateSeverityImage(severityImageView);
@@ -145,13 +142,9 @@ public class CcmTreatmentAdapter extends BaseAdapter {
         		TextView classificationTitleText = (TextView) view.findViewById(R.id.treatment_list_item_title);
         		classificationTitleText.setText(classificationTitle);
         		
-    			// add recommended treatments
-    			List<String> treatments = new ArrayList<String>();
-    			for (TreatmentRecommendation treatmentRecommendation : getPatientDiagnostics().get(position).getTreatmentRecommendations()) {
-    				treatments.add(treatmentRecommendation.getTreatmentDescription());
-    			}
-        		
-                addBulletedListToTextView(treatments, ((LinearLayout) view.findViewById(R.id.treatment_list_items)));            
+    			// add recommended treatments        		
+                addBulletedListToTextView(getPatientDiagnostics().get(position).getTreatmentRecommendations(),
+                		((LinearLayout) view.findViewById(R.id.treatment_list_items)));            
     			break;
 
         	case FOOTER_ITEM_TYPE :
@@ -160,13 +153,9 @@ public class CcmTreatmentAdapter extends BaseAdapter {
         			view = inflater.inflate(R.layout.ccm_treatment_list_item_footer, container, false);
         		}
         		
-    			// add recommended footer treatments
-    			List<String> footerTreatments = new ArrayList<String>();
-    			for (TreatmentRecommendation treatmentRecommendation : getPatientDiagnostics().get(position).getTreatmentRecommendations()) {
-    				footerTreatments.add(treatmentRecommendation.getTreatmentDescription());
-    			}
- 
-                addBulletedListToTextView(footerTreatments, ((LinearLayout) view.findViewById(R.id.treatment_list_footer_items)));
+    			// add recommended footer treatments 
+                addBulletedListToTextView(getPatientDiagnostics().get(position).getTreatmentRecommendations(),
+                		((LinearLayout) view.findViewById(R.id.treatment_list_footer_items)));
 
     			break;  			
         } // end of switch
@@ -227,16 +216,16 @@ public class CcmTreatmentAdapter extends BaseAdapter {
      * 
      * Responsible for adding a bulleted list to a textview
      * 
-     * @param treatments
+     * @param treatmentRecommendations
      * @param parentLayout
      */
-    private void addBulletedListToTextView(List<String> treatments, LinearLayout parentLayout) {
+    private void addBulletedListToTextView(List<TreatmentRecommendation> treatmentRecommendations, LinearLayout parentLayout) {
     	Context context = this.getCcmAssessmentTreatmentsFragment().getActivity();
     	
     	parentLayout.removeAllViews();
     	
-    	for(String treatment : treatments) {
-    		String[] lineBreakSeparatedTreatment = treatment.split(LINE_BREAK_ESCAPE_CHARACTER);    	
+    	for(TreatmentRecommendation treatmentRecommendation : treatmentRecommendations) {
+    		String[] lineBreakSeparatedTreatment = treatmentRecommendation.getTreatmentDescription().split(LINE_BREAK_ESCAPE_CHARACTER);    	
     		int multiLineTreatmentCount = 0;
     		for (String treatmentSegment : lineBreakSeparatedTreatment) {
     			multiLineTreatmentCount++;
@@ -260,6 +249,12 @@ public class CcmTreatmentAdapter extends BaseAdapter {
     			// add treatment checkbox dynamically
     			if (multiLineTreatmentCount == 1) {
 	    			CheckBox treatmentCheckbox = new CheckBox(context);
+	    			treatmentCheckbox.setChecked(getCcmAssessmentTreatmentsFragment().getCcmTreatmentsPage()
+	    					.getPageData().getBoolean(treatmentRecommendation.getTreatmentIdentifier()));
+	    			
+	    			treatmentCheckbox.setOnClickListener(new CheckBoxListener(getCcmAssessmentTreatmentsFragment().getCcmTreatmentsPage(), 
+	    					treatmentRecommendation.getTreatmentIdentifier()));
+	    			
 	    			LayoutParams checkboxParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
 	    			checkboxParams.setMargins(10, 0, 0, 0); // padding left
 	    			treatmentCheckbox.setGravity(Gravity.RIGHT);

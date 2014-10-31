@@ -2,7 +2,8 @@ package ie.ucc.bis.supportinglife.assessment.ccm.model;
 
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.CcmAssessmentTreatmentsFragment;
-import ie.ucc.bis.supportinglife.assessment.model.AbstractAnalyticsPage;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
+import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 
 import java.util.ArrayList;
 
@@ -13,13 +14,14 @@ import android.support.v4.app.Fragment;
  * 
  * Treatments Tab in CCM Assessment Results
  * 
- * Responsible for capturing data analytics in relation to
+ * Responsible for capturing data analytics and treatment administration recording 
+ * in relation to
  * CCM Treatments tab
  * 
  * @author timothyosullivan
  */
 
-public class CcmTreatmentsPage extends AbstractAnalyticsPage {
+public class CcmTreatmentsPage extends AbstractAssessmentPage {
 	
     // ANALYTICS DATA KEYS
     public static final String ANALTYICS_START_PAGE_TIMER_DATA_KEY = "ANALYTICS_CCM_TREATMENTS_PAGE_START_PAGE_TIMER";
@@ -35,9 +37,10 @@ public class CcmTreatmentsPage extends AbstractAnalyticsPage {
     }
 
 	public CcmTreatmentsPage(String title) {
-		super(title);
+		// in this case the model is null as we are post assessment pages
+		super(null, title);
 	}
-
+	
     /**
      * Method: getDataAnalytics
      * 
@@ -51,6 +54,11 @@ public class CcmTreatmentsPage extends AbstractAnalyticsPage {
     	dataAnalytics.add((DataAnalytic) getPageData().getSerializable(ANALTYICS_DURATION_PAGE_TIMER_DATA_KEY));
     }
 
+	@Override
+	public void getReviewItems(ArrayList<ReviewItem> reviewItems) {
+		// do nothing		
+	}
+    
 	public CcmAssessmentTreatmentsFragment getCcmAssessmentTreatmentsFragment() {
 		return ccmAssessmentTreatmentsFragment;
 	}

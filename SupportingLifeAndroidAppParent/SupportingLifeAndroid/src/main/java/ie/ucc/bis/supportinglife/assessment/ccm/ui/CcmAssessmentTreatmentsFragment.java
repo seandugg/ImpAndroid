@@ -2,6 +2,7 @@ package ie.ucc.bis.supportinglife.assessment.ccm.ui;
 
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.activity.AssessmentResultsActivity;
+import ie.ucc.bis.supportinglife.activity.CcmAssessmentResultsActivity;
 import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
 import ie.ucc.bis.supportinglife.analytics.DataAnalytic;
 import ie.ucc.bis.supportinglife.assessment.ccm.model.CcmTreatmentAdapter;
@@ -14,15 +15,14 @@ import ie.ucc.bis.supportinglife.rule.engine.Diagnostic;
 
 import java.util.ArrayList;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
-
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
  * Class: CcmAssessmentTreatmentsFragment
@@ -37,6 +37,7 @@ public class CcmAssessmentTreatmentsFragment extends ListFragment implements Fra
     
 	private static final String NO_TREATMENTS = "No treatments apply based on patient assessment";
 	
+    private CcmTreatmentsPage ccmTreatmentsPage;    
 	private String pageKey;
     private CcmTreatmentAdapter ccmTreatmentAdapter;
     private PatientAssessment patient;
@@ -70,12 +71,14 @@ public class CcmAssessmentTreatmentsFragment extends ListFragment implements Fra
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    	  View myFragmentView = inflater.inflate(R.layout.fragment_assessment_results_treatment_tab, container, false);
-          
-          ListView listView = (ListView) myFragmentView.findViewById(android.R.id.list);         
-          listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-                    
-    	  return myFragmentView;
+    	setCcmTreatmentsPage((CcmTreatmentsPage) ((CcmAssessmentResultsActivity) getActivity()).getAssessmentResultsModel().findAssessmentPageByKey(getPageKey()));
+
+    	View myFragmentView = inflater.inflate(R.layout.fragment_assessment_results_treatment_tab, container, false);
+
+    	ListView listView = (ListView) myFragmentView.findViewById(android.R.id.list);         
+    	listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
+    	return myFragmentView;
     }
 
     @Override
@@ -134,6 +137,14 @@ public class CcmAssessmentTreatmentsFragment extends ListFragment implements Fra
 		}
 	}
     
+	public CcmTreatmentsPage getCcmTreatmentsPage() {
+		return ccmTreatmentsPage;
+	}
+
+	public void setCcmTreatmentsPage(CcmTreatmentsPage ccmTreatmentsPage) {
+		this.ccmTreatmentsPage = ccmTreatmentsPage;
+	}
+
 	public String getPageKey() {
 		return pageKey;
 	}
@@ -142,30 +153,18 @@ public class CcmAssessmentTreatmentsFragment extends ListFragment implements Fra
 		this.pageKey = pageKey;
 	}
 
-	/**
-	 * Getter Method: getPatient()
-	 */
 	public PatientAssessment getPatient() {
 		return patient;
 	}
 
-	/**
-	 * Setter Method: setPatient()
-	 */
 	private void setPatient(PatientAssessment patient) {
 		this.patient = patient;
 	}
 
-	/**
-	 * Getter Method: getCcmTreatmentAdapter()
-	 */
 	public CcmTreatmentAdapter getCcmTreatmentAdapter() {
 		return ccmTreatmentAdapter;
 	}
-	
-	/**
-	 * Setter Method: setCcmTreatmentAdapter()
-	 */
+
 	public void setCcmTreatmentAdapter(CcmTreatmentAdapter ccmTreatmentAdapter) {
 		this.ccmTreatmentAdapter = ccmTreatmentAdapter;
 	}

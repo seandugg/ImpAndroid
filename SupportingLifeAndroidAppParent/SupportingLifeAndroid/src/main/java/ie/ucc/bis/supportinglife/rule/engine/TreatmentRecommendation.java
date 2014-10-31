@@ -18,6 +18,7 @@ public class TreatmentRecommendation implements Serializable {
 
 	private String treatmentIdentifier;
 	private String treatmentDescription;
+	private boolean drugAdministered;
 	
 	/**
 	 * Constructor
@@ -26,10 +27,15 @@ public class TreatmentRecommendation implements Serializable {
 
 	/**
 	 * Constructor
+	 * 
+	 * @param treatmentIdentifier
+	 * @param treatmentDescription
+	 * @param drugAdministered 
 	 */
-	public TreatmentRecommendation(String treatmentIdentifier, String treatmentDescription) {
+	public TreatmentRecommendation(String treatmentIdentifier, String treatmentDescription, boolean drugAdministered) {
 		setTreatmentIdentifier(treatmentIdentifier);
 		setTreatmentDescription(treatmentDescription);
+		setDrugAdministered(drugAdministered);
 	}
 
 	/**
@@ -58,6 +64,14 @@ public class TreatmentRecommendation implements Serializable {
 	 */
 	public void setTreatmentDescription(String treatmentDescription) {
 		this.treatmentDescription = treatmentDescription;
+	}
+
+	public boolean isDrugAdministered() {
+		return drugAdministered;
+	}
+
+	public void setDrugAdministered(boolean drugAdministered) {
+		this.drugAdministered = drugAdministered;
 	}
 
 }

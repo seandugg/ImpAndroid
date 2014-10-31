@@ -1,7 +1,8 @@
 package ie.ucc.bis.supportinglife.assessment.imci.model;
 
-import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AnalyticsPageList;
+import ie.ucc.bis.supportinglife.assessment.model.AssessmentPageList;
 import android.content.Context;
 
 /**
@@ -9,7 +10,7 @@ import android.content.Context;
  * @author timothyosullivan
  */
 
-public class ImciAssessmentResultsModel extends AbstractModel {
+public class ImciAssessmentResultsModel extends AbstractAssessmentModel {
 
 	public static final String IMCI_REVIEW_RESULTS_TITLE = "IMCI_REVIEW_RESULTS";
 	public static final String IMCI_CLASSIFICATIONS_TITLE = "IMCI_CLASSIFICATIONS";
@@ -38,5 +39,11 @@ public class ImciAssessmentResultsModel extends AbstractModel {
 		return new AnalyticsPageList(new ImciReviewResultsPage(IMCI_REVIEW_RESULTS_TITLE),
 									new ImciClassificationsPage(IMCI_CLASSIFICATIONS_TITLE),
 									new ImciTreatmentsPage(IMCI_TREATMENTS_TITLE));
+	}
+
+	@Override
+	protected AssessmentPageList configureAssessmentPageList() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

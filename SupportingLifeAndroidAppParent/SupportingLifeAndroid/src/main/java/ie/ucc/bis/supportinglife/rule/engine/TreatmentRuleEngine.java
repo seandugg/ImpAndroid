@@ -41,6 +41,7 @@ public class TreatmentRuleEngine {
 	private static final String TREATMENT_CRITERIA = "TreatmentCriteria";
 	private static final String SYMPTOM_CRITERIA = "SymptomCriteria";
 	private static final String RECOMMENDATION = "Recommendation";
+	private static final String DRUG_ADMINISTERED = "DrugAdministered";
 	private static final String RULE_ATTRIB = "rule";
 	private static final String VALUE_ATTRIB = "value";
 
@@ -431,6 +432,11 @@ public class TreatmentRuleEngine {
 						// <Recommendation>
 						treatment.setRecommendation(xmlParser.nextText());
 					}
+					else if (DRUG_ADMINISTERED.equalsIgnoreCase(elemName)) {
+						// <DrugAdministered>
+						ruleAttrib = xmlParser.getAttributeValue(null, VALUE_ATTRIB);
+						treatment.setDrugAdministered(Boolean.parseBoolean(ruleAttrib));
+					}
 					break;
 				case XmlPullParser.END_TAG:
 					if (TREATMENT.equalsIgnoreCase(xmlParser.getName())) {
@@ -684,7 +690,7 @@ public class TreatmentRuleEngine {
 
 		if (symptomCriteriaPasses && treatmentCriteriaPasses) {
 			// add the recommended treatment to patient classification
-			diagnostic.getTreatmentRecommendations().add(new TreatmentRecommendation(treatment.getIdentifier(), treatment.getRecommendation()));
+			diagnostic.getTreatmentRecommendations().add(new TreatmentRecommendation(treatment.getIdentifier(), treatment.getRecommendation(), treatment.isDrugAdministered()));
 		}
 	}
 

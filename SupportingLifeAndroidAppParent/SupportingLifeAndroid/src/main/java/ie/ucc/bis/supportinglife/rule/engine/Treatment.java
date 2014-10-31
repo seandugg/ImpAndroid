@@ -37,62 +37,49 @@ public class Treatment implements Serializable {
 	private String identifier;
 	private List<TreatmentCriterion> treatmentCriterion;
 	private String recommendation;
-
+	private boolean drugAdministered;
  
 	/**
 	 * Constructor
-	 * 
 	 */
 	public Treatment() {
 		setTreatmentCriterion(new ArrayList<TreatmentCriterion>());
 	}
 
-	/**
-	 * Getter Method: getIdentifier()
-	 */
 	public String getIdentifier() {
 		return identifier;
 	}
 
-	/**
-	 * Setter Method: setIdentifier()
-	 */
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
 	}
-	
-	/**
-	 * Getter Method: getTreatmentCriterion()
-	 */
+
 	public List<TreatmentCriterion> getTreatmentCriterion() {
 		return treatmentCriterion;
 	}
 
-	/**
-	 * Setter Method: setTreatmentCriterion()
-	 */
 	public void setTreatmentCriterion(List<TreatmentCriterion> treatmentCriterion) {
 		this.treatmentCriterion = treatmentCriterion;
 	}
 
-	/**
-	 * Getter Method: getRecommendation()
-	 */
 	public String getRecommendation() {
 		return recommendation;
 	}
 
-	/**
-	 * Setter Method: setRecommendation()
-	 */
 	public void setRecommendation(String recommendation) {
 		this.recommendation = recommendation;
 	}
 
+	public boolean isDrugAdministered() {
+		return drugAdministered;
+	}
+
+	public void setDrugAdministered(boolean drugAdministered) {
+		this.drugAdministered = drugAdministered;
+	}
+
 	/**
-	 * 
 	 * Provides debug output of a treatment
-	 * 
 	 */
 	public String debugOutput() {
 		StringBuilder debugOutput = new StringBuilder();
@@ -104,6 +91,7 @@ public class Treatment implements Serializable {
 		}
 
 		debugOutput.append("Recommendation: " + getRecommendation() + "\n");
+		debugOutput.append("Drug Administered: " + isDrugAdministered() + "\n");
 		
 		return debugOutput.toString();
 	}

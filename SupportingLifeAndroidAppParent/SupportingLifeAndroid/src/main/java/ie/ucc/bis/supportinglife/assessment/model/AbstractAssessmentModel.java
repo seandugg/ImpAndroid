@@ -235,9 +235,11 @@ public abstract class AbstractAssessmentModel extends AbstractModel implements M
 		ArrayList<DataAnalytic> dataAnalyticItems =  super.gatherPageDataAnalytics();
         
 		// pull back analytics from any assessment related pages (e.g. CCM Ask page)
-        for (AbstractAnalyticsPage analyticsPage : getAssessmentPages()) {
-        	analyticsPage.getDataAnalytics(dataAnalyticItems);
-        }        
+		if (getAssessmentPages() != null) {
+	        for (AbstractAnalyticsPage analyticsPage : getAssessmentPages()) {
+	        	analyticsPage.getDataAnalytics(dataAnalyticItems);
+	        }
+		}
 		return dataAnalyticItems;
 	}
 	
