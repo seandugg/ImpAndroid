@@ -79,11 +79,16 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 			long timestamp = System.currentTimeMillis();
 			String uniquePatientAssessmentIdentifier = android_device_id + "_" + timestamp;
 			
+			// update 'PatientAssessment' record with identifier as we will use this at a
+			// later point to record the 'treatments administered' by the HSA
+			patientToAdd.setDeviceGeneratedAssessmentId(uniquePatientAssessmentIdentifier);
+			
+			
 			// DATA ANONYMISATION - Key change for the feasibility study and the clinical trial (ref. JIRA SL-166)
 			anonymisePatientAssessment(patientToAdd);
 			
 			// add the patient assessment
-			getPatientAssessmentDao().createPatientAssessmentComms(patientToAdd, uniquePatientAssessmentIdentifier, hsaUserId, this);
+			getPatientAssessmentDao().createPatientAssessmentComms(patientToAdd, hsaUserId, this);
 			
 			// now add the associated 'patient assessment' classifications
 			getClassificationDao().createPatientClassifications(patientToAdd, uniquePatientAssessmentIdentifier, this);

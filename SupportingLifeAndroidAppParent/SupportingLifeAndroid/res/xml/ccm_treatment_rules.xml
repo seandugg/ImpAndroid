@@ -71,7 +71,7 @@
 				<SymptomCriteria value="yes">ccm_ask_initial_assessment_unable_to_drink_or_feed_symptom_id</SymptomCriteria>
 			</CriteriaList>
 			<Recommendation>Begin giving ORS solution immediately</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 	</TreatmentRule>
 	
@@ -122,7 +122,7 @@
 				<SymptomCriteria value="BETWEEN_5_MONTHS_AND_3_YEARS">ccm_ask_initial_assessment_fever_la_dosage_age_symptom_id</SymptomCriteria>
 			</CriteriaList>
 			<Recommendation>Give first dose of LA: 1 tablet</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 		<Treatment>
 			<Identifier>CCM_FEVER_FOR_LAST_7_DAYS_DOSE_FOR_LA_TWO_TABLETS_TREATMENT</Identifier>
@@ -136,7 +136,7 @@
 				<SymptomCriteria value="BETWEEN_3_YEARS_AND_5_YEARS">ccm_ask_initial_assessment_fever_la_dosage_age_symptom_id</SymptomCriteria>
 			</CriteriaList>
 			<Recommendation>Give first dose of LA: 2 tablets</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 	</TreatmentRule>
 	
@@ -176,7 +176,7 @@
 			<Recommendation>Give first dose of oral antibiotic
 				\n (Cotrimoxazole adult tablet - 80/400)
 				\n Age 2 months up to 12 months: 1/2 tablet</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 		<Treatment>
 			<Identifier>CCM_CHEST_INDRAWING_ORAL_ANTIBIOTIC_ONE_TABLET_TREATMENT</Identifier>
@@ -192,7 +192,7 @@
 			<Recommendation>Give first dose of oral antibiotic
 				\n (Cotrimoxazole adult tablet - 80/400)
 				\n Age 12 months up to 5 years: 1 tablet</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 	</TreatmentRule>
 	
@@ -235,7 +235,7 @@
 	  		</CriteriaList>
 			<Recommendation>Give first dose of oral antibiotic (cotrimoxazole adult tablet - 80/400).
 				\n Age 2 months up to 12 months: 1/2 tablet</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 		<Treatment>
 			<Identifier>CCM_FAST_BREATHING_AND_DANGER_SIGN_ORAL_ANTIBIOTIC_ONE_TABLET_TREATMENT</Identifier>
@@ -254,7 +254,7 @@
 	  		</CriteriaList>
 			<Recommendation>Give first dose of oral antibiotic (cotrimoxazole adult tablet - 80/400).
 				\n Age 12 months up to 5 years: 1 tablet</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 	</TreatmentRule>
 	
@@ -284,7 +284,7 @@
 				<SymptomCriteria value="yes">ccm_ask_initial_assessment_unable_to_drink_or_feed_symptom_id</SymptomCriteria>
 			</CriteriaList>
 			<Recommendation>Apply antibiotic eye ointment</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 	</TreatmentRule>
 
@@ -361,7 +361,7 @@
 				<SymptomCriteria value="no">ccm_ask_initial_assessment_blood_in_stool_symptom_id</SymptomCriteria> 						<!-- Blood in Stool : NO -->
 			</CriteriaList>
 			<Recommendation>Give ORS</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 		<Treatment>
 			<Identifier>CCM_REFER_SIGN_ANTIBIOTIC_OR_ANTIMALARIAL_NEGATIVE_TREATMENT</Identifier>
@@ -433,7 +433,7 @@
 			</CriteriaList>
 			<Recommendation>Give ORS.
 				\n Help caregiver give child ORS solution in front of you until child is no longer thirsty.</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 		<Treatment>
 			<Identifier>CCM_DIARRHOEA_LESS_THAN_14_DAYS_AND_NO_BLOOD_IN_STOOL_2_ORS_PACKETS_TREATMENT</Identifier>
@@ -442,7 +442,7 @@
 			</CriteriaList>
 			<Recommendation>Give caregiver 2 ORS packets to take home.
 				\n Advise to give as much as child wants, but at least 1/2 cup ORS solution after each loose stool.</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 		<Treatment>
 			<Identifier>CCM_DIARRHOEA_LESS_THAN_14_DAYS_AND_NO_BLOOD_IN_STOOL_ZINC_SUPPLEMENT_HALF_TABLET_TREATMENT</Identifier>
@@ -456,7 +456,7 @@
 				\n Give one dose daily for 10 days.
 				\n Help caregiver to give first dose now
 				\n Age 2 months up to 6 months: 1/2 tablet (total 5 tabs)</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 		<Treatment>
 			<Identifier>CCM_DIARRHOEA_LESS_THAN_14_DAYS_AND_NO_BLOOD_IN_STOOL_ZINC_SUPPLEMENT_1_TABLET_TREATMENT</Identifier>
@@ -470,7 +470,7 @@
 				\n Give one dose daily for 10 days.
 				\n Help caregiver to give first dose now
 				\n Age 6 months up to 5 years: 1 tablet (total 10 tabs)</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 	</TreatmentRule>
 	
@@ -529,7 +529,7 @@
 			<Recommendation>Give LA.
 				\n Help caregiver give first dose now and 2nd dose after 8 hours.Then give dose twice daily for 2 more days.
 				\n Age 5 months up to 3 years: 1 tablet (total 6 tabs)</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 		<Treatment>
 			<Identifier>CCM_FEVER_FOR_LESS_THAN_7_DAYS_DOSE_FOR_LA_TWO_TABLETS_TREATMENT</Identifier>
@@ -542,7 +542,7 @@
 			<Recommendation>Give LA.
 				\n Help caregiver give first dose now and 2nd dose after 8 hours.Then give dose twice daily for 2 more days.
 				\n Age 3 years up to 5 years: 2 tablet (total 12 tabs)</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 		<Treatment>
 			<Identifier>CCM_FEVER_FOR_LAST_7_DAYS_ITN_TREATMENT</Identifier>
@@ -561,7 +561,7 @@
 			</CriteriaList>
 			<Recommendation>Give Paracetamol. Give 4 times a day for 3 days,
 				\n Age 2 months up to 3 years: 1/4 tablet (total 3 tabs)</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 		<Treatment>
 			<Identifier>CCM_FEVER_FOR_LAST_7_DAYS_PARACETAMOL_HALF_TABLET_TREATMENT</Identifier>
@@ -573,7 +573,7 @@
 			</CriteriaList>
 			<Recommendation>Give Paracetamol. Give 4 times a day for 3 days.
 				\n Age 3 years up to 5 years: 1/2 tablet (total 6 tabs)</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 	</TreatmentRule>
 
@@ -613,7 +613,7 @@
 				\n Give twice daily for 5 days.
 				\n Help caregiver to give first dose now.
 				\n Age 2 months up to 12 months: 1/2 tablet (total 5 tabs)</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 		<Treatment>
 			<Identifier>CCM_FAST_BREATHING_ORAL_ANTIBIOTIC_1_TABLET_TREATMENT</Identifier>
@@ -627,7 +627,7 @@
 				\n Give twice daily for 5 days.
 				\n Help caregiver to give first dose now.
 				\n Age 12 months up to 5 years: 1 tablet (total 10 tabs)</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 	</TreatmentRule>
 	
@@ -655,7 +655,7 @@
 			</CriteriaList>
 			<Recommendation>Apply antibiotic eye ointment.
 				\n Squeeze the size of a grain of rice on each of the inner lower eyelids, three times a day for 3 days.</Recommendation>
-			<DrugAdministered value="yes"/>
+			<DrugAdministered value="true"/>
 		</Treatment>
 	</TreatmentRule>
 

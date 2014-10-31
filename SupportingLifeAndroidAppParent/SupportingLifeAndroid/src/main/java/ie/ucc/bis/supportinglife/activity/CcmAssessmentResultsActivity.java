@@ -5,7 +5,9 @@ import ie.ucc.bis.supportinglife.assessment.ccm.model.CcmAssessmentResultsModel;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.CcmAssessmentTreatmentsFragment;
 import ie.ucc.bis.supportinglife.assessment.model.review.ReviewItem;
 import ie.ucc.bis.supportinglife.rule.engine.ClassificationRuleEngine;
+import ie.ucc.bis.supportinglife.rule.engine.TreatmentRecommendation;
 import ie.ucc.bis.supportinglife.rule.engine.TreatmentRuleEngine;
+import ie.ucc.bis.supportinglife.rule.engine.Diagnostic;
 
 import java.util.ArrayList;
 
@@ -116,6 +118,28 @@ public class CcmAssessmentResultsActivity extends AssessmentResultsActivity {
 			// refresh adapter data set - gets view redrawn
 			((BaseAdapter) treatmentsFragment.getCcmTreatmentAdapter()).notifyDataSetChanged();
 		}
+	}
+	
+	/**
+	 * Responsible for determining if all drug related treatments
+	 * have been administered
+	 * 
+	 * @return boolean - true if all drug treatments administered
+	 */
+	public boolean checkAllDrugTreatmentsAdministered() {
+		boolean allDrugTreatmentsAdministered = true;
+		
+		for (Diagnostic diagnostic : getPatientAssessment().getDiagnostics()) {
+			for (TreatmentRecommendation treatmentRec : diagnostic.getTreatmentRecommendations()){
+				if (treatmentRec.isDrugAdministered()) {
+					if (!treatmentRec.isTreatmentAdministered()) {
+						allDrugTreatmentsAdministered = false;
+						return allDrugTreatmentsAdministered;
+					}
+				}
+			}
+		}
+		return allDrugTreatmentsAdministered;
 	}	
 }
 

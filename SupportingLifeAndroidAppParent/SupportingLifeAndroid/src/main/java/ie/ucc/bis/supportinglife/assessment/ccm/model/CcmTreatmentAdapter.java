@@ -2,7 +2,7 @@ package ie.ucc.bis.supportinglife.assessment.ccm.model;
 
 import ie.ucc.bis.supportinglife.R;
 import ie.ucc.bis.supportinglife.assessment.ccm.ui.CcmAssessmentTreatmentsFragment;
-import ie.ucc.bis.supportinglife.assessment.model.listener.CheckBoxListener;
+import ie.ucc.bis.supportinglife.assessment.model.listener.TreatmentCheckBoxListener;
 import ie.ucc.bis.supportinglife.rule.engine.CcmTreatmentDiagnosticComparator;
 import ie.ucc.bis.supportinglife.rule.engine.Classification;
 import ie.ucc.bis.supportinglife.rule.engine.Diagnostic;
@@ -252,8 +252,8 @@ public class CcmTreatmentAdapter extends BaseAdapter {
 	    			treatmentCheckbox.setChecked(getCcmAssessmentTreatmentsFragment().getCcmTreatmentsPage()
 	    					.getPageData().getBoolean(treatmentRecommendation.getTreatmentIdentifier()));
 	    			
-	    			treatmentCheckbox.setOnClickListener(new CheckBoxListener(getCcmAssessmentTreatmentsFragment().getCcmTreatmentsPage(), 
-	    					treatmentRecommendation.getTreatmentIdentifier()));
+	    			treatmentCheckbox.setOnClickListener(new TreatmentCheckBoxListener(getCcmAssessmentTreatmentsFragment().getCcmTreatmentsPage(), 
+	    					treatmentRecommendation.getTreatmentIdentifier(), treatmentRecommendation));
 	    			
 	    			LayoutParams checkboxParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
 	    			checkboxParams.setMargins(10, 0, 0, 0); // padding left

@@ -14,9 +14,7 @@ import ie.ucc.bis.supportinglife.assessment.model.ModelCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.View;
 import android.widget.Button;
@@ -30,8 +28,6 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 		PageFragmentCallbacks, ReviewFragmentCallbacks, ModelCallbacks {
 
 	protected static final String ASSESSMENT_REVIEW_ITEMS = "ASSESSMENT_REVIEW_ITEMS";
-	private static final String VALIDATOR_ON = "Yes";
-	private static final String VALIDATOR_PREFERENCE_SELECTION = "validator_preference_selection";
 	
 	private AssessmentViewPager assessmentViewPager;
     private AssessmentPagerAdapter assessmentPagerAdapter;
@@ -302,20 +298,7 @@ public class AssessmentActivity extends SupportingLifeBaseActivity implements
 			overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 		}
     } // end of inner class
-    
-    public boolean isValidationOn() {
-		// need to determine if zephyr sensor interaction will be included in assessment
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        String validatorOn = settings.getString(VALIDATOR_PREFERENCE_SELECTION, VALIDATOR_ON);
-
-        if (validatorOn.equalsIgnoreCase(VALIDATOR_ON)) {
-        	return true;
-        }
-        else {
-        	return false;
-        }
-    }
-    		
+        		
 	public AssessmentPagerAdapter getAssessmentPagerAdapter() {
 		return assessmentPagerAdapter;
 	}

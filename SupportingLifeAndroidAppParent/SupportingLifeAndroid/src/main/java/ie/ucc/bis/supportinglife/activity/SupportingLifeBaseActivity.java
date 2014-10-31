@@ -14,8 +14,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -53,6 +55,9 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	
 	protected static final String DEV_BASE_URL = "http://143.239.97.70:8080/SupportingLife/";
 	protected static final String AWS_BASE_URL = "http://supportinglife.elasticbeanstalk.com/";
+	
+	private static final String VALIDATOR_ON = "Yes";
+	private static final String VALIDATOR_PREFERENCE_SELECTION = "validator_preference_selection";
 	
 	protected static final String USER_TYPE_KEY = "user_type";
 	protected static final String GUEST_USER = "guest_user";
@@ -466,7 +471,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	 * 
 	 * Handle the home button or back button click event such that if user 
 	 * is performing an IMCI or CCM assessment (or are in related Assessment 
-	 * Results activity) then a confirmation dialog  will be displayed to 
+	 * Results activity) then a confirmation or drug stock-out dialog  will be displayed to 
 	 * confirm that the user wishes to exit the patient assessment
 	 * 
 	 * @param navigationRequest 
@@ -476,9 +481,74 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 
 	 * @return void
 	 */
-	protected void exitAssessmentDialogHandler(final int navigationRequest, 
-											   final AbstractModel model, FragmentStatePagerAdapter fragmentStatePagerAdapter,
-											   int currentFragmentPosition) {
+	protected void exitAssessmentDialogHandler(final int navigationRequest, final AbstractModel model, 
+			FragmentStatePagerAdapter fragmentStatePagerAdapter, int currentFragmentPosition) {
+		
+		// need to determine if we are dealing with a CCM type assessment
+		// where we need to record the treatments administered and check
+		// for a drug stock-out
+		if (this instanceof CcmAssessmentResultsActivity) {
+			boolean allDrugsAdministered = ((CcmAssessmentResultsActivity)this).checkAllDrugTreatmentsAdministered();
+			
+			if (allDrugsAdministered) {
+				displayExitDialog(navigationRequest, model, fragmentStatePagerAdapter, currentFragmentPosition);
+			}
+			else {
+				displayDrugStockoutDialog(navigationRequest, model, fragmentStatePagerAdapter, currentFragmentPosition);
+			}
+			
+			// TODO record treatments administered in DB
+			if (!isGuestUser()) {
+				
+			}
+		}
+		else {
+			displayExitDialog(navigationRequest, model, fragmentStatePagerAdapter, currentFragmentPosition);			
+		}
+	}
+
+	/**
+	 * Responsible for displaying drug stockout dialog
+	 * 
+	 * @param navigationRequest
+	 * @param model
+	 * @param fragmentStatePagerAdapter
+	 * @param currentFragmentPosition
+	 */
+	private void displayDrugStockoutDialog(final int navigationRequest, final AbstractModel model,
+			FragmentStatePagerAdapter fragmentStatePagerAdapter, int currentFragmentPosition) {
+		
+		DialogFragment dg = new DialogFragment() {
+    		@Override
+    		public Dialog onCreateDialog(Bundle savedInstanceState) {    			
+    			return new AlertDialog.Builder(getActivity())
+    			.setMessage(R.string.drug_referral_alert_message)
+    			.setPositiveButton(R.string.drug_referral_confirm_button, new AssessmentExitDialogListener(SupportingLifeBaseActivity.this, navigationRequest, model))
+    			.setNegativeButton(R.string.drug_referral_cancel_button, null)
+    			.create();
+    		}
+    	};
+    	
+		// before gathering analytic data, call the 'on pause' operation on the current fragment to make
+        // sure the stop and duration timers for this page are accounted for
+		FragmentLifecycle fragmentToHide = (FragmentLifecycle) fragmentStatePagerAdapter.getItem(currentFragmentPosition);
+		fragmentToHide.onPauseFragment(model);
+    	
+    	dg.show(getSupportFragmentManager(), EXIT_ASSESSMENT_DIALOG_TAG);
+		
+	}
+
+	/**
+	 * Responsible for displaying exit dialog
+	 * 
+	 * @param navigationRequest
+	 * @param model
+	 * @param fragmentStatePagerAdapter
+	 * @param currentFragmentPosition
+	 */
+	private void displayExitDialog(final int navigationRequest,	final AbstractModel model, 
+			FragmentStatePagerAdapter fragmentStatePagerAdapter, int currentFragmentPosition) {
+		
 		DialogFragment dg = new DialogFragment() {
     		@Override
     		public Dialog onCreateDialog(Bundle savedInstanceState) {    			
@@ -497,4 +567,17 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
     	
     	dg.show(getSupportFragmentManager(), EXIT_ASSESSMENT_DIALOG_TAG);
 	}
+	
+    public boolean isValidationOn() {
+		// need to determine if zephyr sensor interaction will be included in assessment
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        String validatorOn = settings.getString(VALIDATOR_PREFERENCE_SELECTION, VALIDATOR_ON);
+
+        if (validatorOn.equalsIgnoreCase(VALIDATOR_ON)) {
+        	return true;
+        }
+        else {
+        	return false;
+        }
+    }
 }

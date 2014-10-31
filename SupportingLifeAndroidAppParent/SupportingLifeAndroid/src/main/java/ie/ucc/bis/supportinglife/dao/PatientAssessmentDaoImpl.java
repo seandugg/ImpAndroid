@@ -77,19 +77,19 @@ public class PatientAssessmentDaoImpl implements PatientAssessmentDao {
 	 * android device
 	 * 
 	 * @param patientToAdd
-	 * @param uniquePatientAssessmentIdentifier
+	 * @param hsaUserId
+	 * @param service
 	 * 
 	 * @return
 	 */
 	@Override
-	public PatientAssessmentComms createPatientAssessmentComms(PatientAssessment patientToAdd, String uniquePatientAssessmentIdentifier, 
-			String hsaUserId, SupportingLifeService service) {		
+	public PatientAssessmentComms createPatientAssessmentComms(PatientAssessment patientToAdd, String hsaUserId, SupportingLifeService service) {		
 
 		// show the number of patient assessments in debug logger
 		debugOutputShowPatientAssessmentCount(service);
 
 		ContentValues values = new ContentValues();
-		values.put(PatientAssessmentTable.COLUMN_ASSESSMENT_ID, uniquePatientAssessmentIdentifier);
+		values.put(PatientAssessmentTable.COLUMN_ASSESSMENT_ID, patientToAdd.getDeviceGeneratedAssessmentId());
 		values.put(PatientAssessmentTable.COLUMN_NATIONAL_ID, patientToAdd.getNationalId());
 		values.put(PatientAssessmentTable.COLUMN_NATIONAL_HEALTH_ID, patientToAdd.getNationalHealthId());	
 		values.put(PatientAssessmentTable.COLUMN_HSA_USER_ID, hsaUserId);		

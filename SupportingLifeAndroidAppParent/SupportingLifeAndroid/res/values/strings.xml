@@ -567,6 +567,10 @@
 	<string name="exit_assessment_confirm_message">Exit Patient Assessment</string>
 	<string name="exit_assessment_confirm_button">Exit</string>
   
+	<string name="drug_referral_alert_message">Drug Referral Alert</string>
+	<string name="drug_referral_confirm_button">Report \'Drug Stockout\' Referral</string>
+	<string name="drug_referral_cancel_button">Return to CCM Results Screen</string>
+	
      
     <!-- ============================================================ -->
     <!-- TRAINING SCREEN -->
