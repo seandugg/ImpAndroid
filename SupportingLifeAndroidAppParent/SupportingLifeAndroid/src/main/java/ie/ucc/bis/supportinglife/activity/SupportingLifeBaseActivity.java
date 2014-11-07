@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -23,6 +24,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -74,8 +76,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	public static final String BREATHING_DURATION_SELECTION_KEY = "breathing_duration_selection";
 	public static final String SENSOR_AVAILABILITY_SELECTION_KEY = "sensor_availability_selection";
 	public static final String SENSOR_READING_DURATION_SELECTION_KEY = "sensor_reading_duration_selection";
-
-	
+		
 	/**
 	 * OnCreate method is called when the activity is first created.
 	 * 
@@ -517,11 +518,19 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	 */
 	private void displayDrugStockoutDialog(final int navigationRequest, final AbstractModel model,
 			FragmentStatePagerAdapter fragmentStatePagerAdapter, int currentFragmentPosition) {
+		final int textSize = 22;
+		final TextView title = new TextView(this);
+	    title.setTypeface(Typeface.SANS_SERIF);
+	    title.setText(R.string.drug_referral_alert_title);
+	    title.setTextSize(textSize);
+	    title.setTextColor(getResources().getColor(R.color.SupportingLifeGreen));
+	    title.setGravity(Gravity.CENTER);
 		
 		DialogFragment dg = new DialogFragment() {
     		@Override
     		public Dialog onCreateDialog(Bundle savedInstanceState) {    			
     			return new AlertDialog.Builder(getActivity())
+    			.setCustomTitle(title)
     			.setMessage(R.string.drug_referral_alert_message)
     			.setPositiveButton(R.string.drug_referral_confirm_button, new AssessmentExitDialogListener(SupportingLifeBaseActivity.this, navigationRequest, model))
     			.setNegativeButton(R.string.drug_referral_cancel_button, null)
@@ -580,4 +589,5 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
         	return false;
         }
     }
+
 }

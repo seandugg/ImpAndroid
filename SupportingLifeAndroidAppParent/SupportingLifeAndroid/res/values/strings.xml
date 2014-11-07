@@ -567,7 +567,9 @@
 	<string name="exit_assessment_confirm_message">Exit Patient Assessment</string>
 	<string name="exit_assessment_confirm_button">Exit</string>
   
-	<string name="drug_referral_alert_message">Drug Referral Alert</string>
+	<string name="drug_referral_alert_title">Drug Referral Alert</string>
+	<string name="drug_referral_alert_message">All recommended drug treatments have not been administered to the patient. 
+	   \n\nDo you wish to report a \'drug stockout\' referral? \n\nIf not, please return to CCM results screen and tick all drug treatments administered to the patient.</string>
 	<string name="drug_referral_confirm_button">Report \'Drug Stockout\' Referral</string>
 	<string name="drug_referral_cancel_button">Return to CCM Results Screen</string>
 	
