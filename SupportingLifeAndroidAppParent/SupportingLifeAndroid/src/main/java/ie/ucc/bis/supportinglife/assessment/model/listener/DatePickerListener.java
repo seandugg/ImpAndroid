@@ -3,6 +3,7 @@ package ie.ucc.bis.supportinglife.assessment.model.listener;
 import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.assessment.imci.ui.DatePickerDialogFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
+import ie.ucc.bis.supportinglife.assessment.model.AssessmentViewPager;
 import ie.ucc.bis.supportinglife.validation.Form;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -53,7 +54,9 @@ public class DatePickerListener implements OnFocusChangeListener {
 		if (getForm() != null) {
 			boolean valid = getForm().performValidation();
 			if (getInvokingFragment() != null) {
-				((AssessmentActivity) getInvokingFragment().getActivity()).getAssessmentViewPager().setPagingEnabled(valid);
+				AssessmentViewPager pager = ((AssessmentActivity) getInvokingFragment().getActivity()).getAssessmentViewPager();
+				int pagePosition = ((AssessmentActivity) getInvokingFragment().getActivity()).getAssessmentModel().getAssessmentPages().indexOf(page);
+				pager.configurePagingEnabledElement(pagePosition, valid);
 			}
 		}
 	}

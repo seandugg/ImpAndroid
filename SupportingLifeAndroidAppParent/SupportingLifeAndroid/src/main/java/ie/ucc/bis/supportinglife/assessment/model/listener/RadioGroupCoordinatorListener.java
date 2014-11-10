@@ -3,6 +3,7 @@ package ie.ucc.bis.supportinglife.assessment.model.listener;
 import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
+import ie.ucc.bis.supportinglife.assessment.model.AssessmentViewPager;
 import ie.ucc.bis.supportinglife.validation.Form;
 import ie.ucc.bis.supportinglife.validation.RadioGroupFieldValidations;
 import ie.ucc.bis.supportinglife.validation.TextFieldValidations;
@@ -144,7 +145,9 @@ public class RadioGroupCoordinatorListener implements OnCheckedChangeListener {
 		if (getForm() != null) {
 			boolean valid = getForm().performValidation();
 			if (getFragment() != null) {
-				((AssessmentActivity) fragment.getActivity()).getAssessmentViewPager().setPagingEnabled(valid);
+				AssessmentViewPager pager = ((AssessmentActivity) getFragment().getActivity()).getAssessmentViewPager();
+				int pagePosition = ((AssessmentActivity) getFragment().getActivity()).getAssessmentModel().getAssessmentPages().indexOf(getPage());
+				pager.configurePagingEnabledElement(pagePosition, valid);
 			}
 		}
 		

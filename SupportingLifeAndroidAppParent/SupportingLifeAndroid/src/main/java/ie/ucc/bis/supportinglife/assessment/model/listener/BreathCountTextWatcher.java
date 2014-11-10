@@ -2,6 +2,7 @@ package ie.ucc.bis.supportinglife.assessment.model.listener;
 
 import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
+import ie.ucc.bis.supportinglife.assessment.model.AssessmentViewPager;
 import ie.ucc.bis.supportinglife.validation.Form;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -78,7 +79,9 @@ public class BreathCountTextWatcher implements TextWatcher {
 		if (getForm() != null) {
 			boolean valid = getForm().performValidation();
 			if (getFragment() != null) {
-				((AssessmentActivity) fragment.getActivity()).getAssessmentViewPager().setPagingEnabled(valid);
+				AssessmentViewPager pager = ((AssessmentActivity) fragment.getActivity()).getAssessmentViewPager();
+				int pagePosition = ((AssessmentActivity) fragment.getActivity()).getAssessmentModel().getAssessmentPages().indexOf(page);
+				pager.configurePagingEnabledElement(pagePosition, valid);
 			}
 		}
 	}

@@ -11,6 +11,7 @@ import ie.ucc.bis.supportinglife.assessment.imci.ui.PageFragmentCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AssessmentViewPager;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentValidator;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextWatcher;
@@ -400,7 +401,14 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         		getResources().getString(R.string.ccm_general_patient_details_village_label)).validate(NotEmptyValidation.build(this.getActivity())));      
         
         // run validation check
-        ((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
+		runPageValidationCheck();
+	}
+
+	private void runPageValidationCheck() {
+		AssessmentViewPager pager = ((AssessmentActivity) getActivity()).getAssessmentViewPager();
+		AbstractAssessmentPage page = ((AssessmentActivity) getActivity()).getAssessmentModel().findAssessmentPageByKey(getPageKey());
+		int pagePosition = ((AssessmentActivity) getActivity()).getAssessmentModel().getAssessmentPages().indexOf(page);
+		pager.configurePagingEnabledElement(pagePosition, performValidation());
 	}
 	
 	@Override
@@ -409,7 +417,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
 			return getForm().performValidation();
 		}
 		else {
-			return false;
+			return true;
 		}
 	}
 	
@@ -417,7 +425,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) { 
-        	((AssessmentActivity) getActivity()).getAssessmentViewPager().setPagingEnabled(performValidation());
+    		runPageValidationCheck();
         }
     }
 	

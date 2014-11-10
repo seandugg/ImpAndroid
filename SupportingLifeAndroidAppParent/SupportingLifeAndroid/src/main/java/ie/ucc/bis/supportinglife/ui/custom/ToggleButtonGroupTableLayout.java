@@ -6,6 +6,7 @@ import java.util.List;
 import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.assessment.imci.model.DynamicView;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
+import ie.ucc.bis.supportinglife.assessment.model.AssessmentViewPager;
 import ie.ucc.bis.supportinglife.assessment.model.listener.RadioGroupCoordinatorListener;
 import ie.ucc.bis.supportinglife.validation.Form;
 import android.content.Context;
@@ -102,7 +103,9 @@ public class ToggleButtonGroupTableLayout extends TableLayout implements OnClick
 		if (getForm() != null) {
 			boolean valid = getForm().performValidation();
 			if (getFragment() != null) {
-				((AssessmentActivity) fragment.getActivity()).getAssessmentViewPager().setPagingEnabled(valid);
+				AssessmentViewPager pager = ((AssessmentActivity) getFragment().getActivity()).getAssessmentViewPager();
+				int pagePosition = ((AssessmentActivity) getFragment().getActivity()).getAssessmentModel().getAssessmentPages().indexOf(getPage());
+				pager.configurePagingEnabledElement(pagePosition, valid);
 			}
 		}
 		

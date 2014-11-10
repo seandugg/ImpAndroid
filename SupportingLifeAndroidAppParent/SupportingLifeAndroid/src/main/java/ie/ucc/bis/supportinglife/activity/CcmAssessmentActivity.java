@@ -68,7 +68,7 @@ public class CcmAssessmentActivity extends AssessmentActivity {
         if (!isValidationOn()) {
 	        getStepPagerStrip().setPageSelectedListener(new PageSelectedListener() {
 	            public void onPageStripSelected(int position) {
-	            	if (getAssessmentViewPager().isPagingEnabled()) {
+	            	if (getAssessmentViewPager().checkPagingEnabled(getAssessmentViewPager().getCurrentItem())) {
 		                position = Math.min(getAssessmentPagerAdapter().getCount() - 1, position);
 		                if (getAssessmentViewPager().getCurrentItem() != position) {
 		                	getAssessmentViewPager().setCurrentItem(position);
@@ -93,7 +93,7 @@ public class CcmAssessmentActivity extends AssessmentActivity {
 
         getPrevButton().setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-            	if (getAssessmentViewPager().isPagingEnabled()) {
+            	if ((getAssessmentViewPager().getCurrentItem() == getAssessmentModel().getAssessmentPageSequence().size()) || getAssessmentViewPager().checkPagingEnabled(getAssessmentViewPager().getCurrentItem())) {
             		getAssessmentViewPager().setCurrentItem(getAssessmentViewPager().getCurrentItem() - 1);
             	}
             	else {
@@ -131,8 +131,8 @@ public class CcmAssessmentActivity extends AssessmentActivity {
     	@Override
     	public void onPageSelected(int newPosition) {
     		
-    		if (getAssessmentViewPager().isPagingEnabled()) {
-    			
+    		// first, check if we're on the review page or for any other page ensure paging is allowed
+    		if ((currentPosition == getAssessmentModel().getAssessmentPageSequence().size()) || (getAssessmentViewPager().checkPagingEnabled(currentPosition))) {    			
 	    		// inform respective fragment via the FragmentLifecycle interface of pause or resumption
 	    		// event
 	    		FragmentLifecycle fragmentToShow = (FragmentLifecycle) getAssessmentPagerAdapter().getItem(newPosition);
@@ -197,7 +197,7 @@ public class CcmAssessmentActivity extends AssessmentActivity {
     private final class NextButtonListener implements View.OnClickListener {
 		public void onClick(View view) {			
 			// secondly decide to move to next page or perform assessment submit (if validation succeeds)
-    		if (getAssessmentViewPager().isPagingEnabled()) {    			
+    		if (getAssessmentViewPager().checkPagingEnabled(getAssessmentViewPager().getCurrentItem())) {    			
 			    if (getAssessmentViewPager().getCurrentItem() == getAssessmentModel().getAssessmentPageSequence().size()) {
 			    	// we're currently on the review pane so display confirmation dialog
 			        DialogFragment dg = new DialogFragment() {
