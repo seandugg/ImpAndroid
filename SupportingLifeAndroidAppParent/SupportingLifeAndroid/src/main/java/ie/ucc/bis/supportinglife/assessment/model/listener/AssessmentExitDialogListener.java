@@ -1,5 +1,6 @@
 package ie.ucc.bis.supportinglife.assessment.model.listener;
 
+import ie.ucc.bis.supportinglife.activity.AssessmentResultsActivity;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
@@ -38,27 +39,49 @@ public final class AssessmentExitDialogListener implements DialogInterface.OnCli
 	 * @param model 
 	 */
 	public AssessmentExitDialogListener(SupportingLifeBaseActivity supportingLifeBaseActivity, int navigationRequest, AbstractModel model) {
-		this.supportingLifeBaseActivity = supportingLifeBaseActivity;
-		this.navigationRequest = navigationRequest;
-		this.model = model;
+		setSupportingLifeBaseActivity(supportingLifeBaseActivity);
+		setNavigationRequest(navigationRequest);
+		setModel(model);
 	}
 
 	public void onClick(DialogInterface dialog, int which) {
+		
+		// record treatments administered in DB
+		if (getSupportingLifeBaseActivity() instanceof AssessmentResultsActivity && !getSupportingLifeBaseActivity().isGuestUser()) {
+			((AssessmentResultsActivity) getSupportingLifeBaseActivity()).storePatientTreatmentsAdministered();
+		}
 		
 		// record any data analytic events logged with any individual page views
         AnalyticUtilities.recordDataAnalytics(supportingLifeBaseActivity.getApplicationContext(), model);
         boolean clearActivityStack = true;
 		
 		switch (navigationRequest) {
-			case DASHBOARD_SCREEN : 	supportingLifeBaseActivity.goHome(supportingLifeBaseActivity, clearActivityStack);
+			case DASHBOARD_SCREEN : 	getSupportingLifeBaseActivity().goHome(getSupportingLifeBaseActivity(), clearActivityStack);
 										break;
-			case SETTINGS_SCREEN : 		supportingLifeBaseActivity.goToSettingsScreen(clearActivityStack);
+			case SETTINGS_SCREEN : 		getSupportingLifeBaseActivity().goToSettingsScreen(clearActivityStack);
 								   		break;
-			case SYNC_SCREEN : 			supportingLifeBaseActivity.goToSyncScreen(clearActivityStack);
+			case SYNC_SCREEN : 			getSupportingLifeBaseActivity().goToSyncScreen(clearActivityStack);
 										break;
-			case HELP_SCREEN : 			supportingLifeBaseActivity.goToHelpScreen(clearActivityStack);
+			case HELP_SCREEN : 			getSupportingLifeBaseActivity().goToHelpScreen(clearActivityStack);
 										break;
 		}
+	}
+
+	private SupportingLifeBaseActivity getSupportingLifeBaseActivity() {
+		return supportingLifeBaseActivity;
+	}
+
+	private void setSupportingLifeBaseActivity(
+			SupportingLifeBaseActivity supportingLifeBaseActivity) {
+		this.supportingLifeBaseActivity = supportingLifeBaseActivity;
+	}
+
+	private void setModel(AbstractModel model) {
+		this.model = model;
+	}
+
+	private void setNavigationRequest(int navigationRequest) {
+		this.navigationRequest = navigationRequest;
 	}
 	
 } // end of class

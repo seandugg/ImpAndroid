@@ -22,7 +22,9 @@ public class TreatmentDaoImpl implements TreatmentDao {
 	private String[] allColumns = { TreatmentTable.COLUMN_ID,
 									TreatmentTable.COLUMN_ASSESSMENT_ID,
 									TreatmentTable.COLUMN_TREATMENT_IDENTIFIER,
-									TreatmentTable.COLUMN_TREATMENT_DESCRIPTION};
+									TreatmentTable.COLUMN_TREATMENT_DESCRIPTION,
+									TreatmentTable.COLUMN_DRUG_ADMINISTERED,
+									TreatmentTable.COLUMN_TREATMENT_ADMINISTERED};
 
 	public TreatmentDaoImpl() {}
 
@@ -46,7 +48,9 @@ public class TreatmentDaoImpl implements TreatmentDao {
 			for (TreatmentRecommendation treatmentRecommendation : diagnostic.getTreatmentRecommendations()) {
 				values.put(TreatmentTable.COLUMN_ASSESSMENT_ID, uniquePatientAssessmentIdentifier);
 				values.put(TreatmentTable.COLUMN_TREATMENT_IDENTIFIER, treatmentRecommendation.getTreatmentIdentifier());
-				values.put(TreatmentTable.COLUMN_TREATMENT_DESCRIPTION, treatmentRecommendation.getTreatmentDescription());	
+				values.put(TreatmentTable.COLUMN_TREATMENT_DESCRIPTION, treatmentRecommendation.getTreatmentDescription());
+				values.put(TreatmentTable.COLUMN_DRUG_ADMINISTERED, String.valueOf(treatmentRecommendation.isDrugAdministered()));
+				values.put(TreatmentTable.COLUMN_TREATMENT_ADMINISTERED, String.valueOf(treatmentRecommendation.isTreatmentAdministered()));
 				
 				// add the patient 'recommended treatment' row
 				long insertId = service.getDatabase().insert(TreatmentTable.TABLE_TREATMENT, null, values);
@@ -75,7 +79,7 @@ public class TreatmentDaoImpl implements TreatmentDao {
 		// for which we have to retrieve treatments
 		for (PatientAssessmentComms patientAssessmentComm : patientAssessmentComms) {
 			cursor = service.getDatabase().query(TreatmentTable.TABLE_TREATMENT,
-					allColumns, TreatmentTable.COLUMN_ASSESSMENT_ID + " = '" + patientAssessmentComm.getDeviceGeneratedAssessmentId() + "'", 
+					allColumns, TreatmentTable.COLUMN_ASSESSMENT_ID + " = '" + patientAssessmentComm.getDeviceGeneratedAssessmentId().trim() + "'", 
 					null, null, null, null);
 	
 			cursor.moveToFirst();
@@ -83,8 +87,9 @@ public class TreatmentDaoImpl implements TreatmentDao {
 				TreatmentAssessment treatmentAssessment = cursorToTreatmentAssessment(cursor);
 				
 				// capture this treatment
-				patientAssessmentComm.getTreatments().put(treatmentAssessment.getTreatmentIdentifier(), 
-														  PatientHandlerUtils.removeEscapeCharacters(treatmentAssessment.getTreatmentDescription()));
+				patientAssessmentComm.getTreatments().add(new TreatmentRecommendation(treatmentAssessment.getTreatmentIdentifier(), 
+														  PatientHandlerUtils.removeEscapeCharacters(treatmentAssessment.getTreatmentDescription()),
+														  treatmentAssessment.getDrugAdministered(), treatmentAssessment.getTreatmentAdministered()));
 				cursor.moveToNext();
 			}
 		}
@@ -97,15 +102,39 @@ public class TreatmentDaoImpl implements TreatmentDao {
 	
 	private TreatmentAssessment cursorToTreatmentAssessment(Cursor cursor) {
 
-		//Param Line 1: Integer id (0), String deviceGeneratedAssessmentId (1), String treatmentIdentifier (2), String treatmentDescription (3)
+		//Param Line 1: Integer id (0), String deviceGeneratedAssessmentId (1), String treatmentIdentifier (2), String treatmentDescription (3),
+		//				String drugAdministered, String treatmentAdministered
 	
 		TreatmentAssessment treatmentAssessment = new TreatmentAssessment(DaoUtilities.readInt(cursor, 0), 
-				cursor.getString(1), cursor.getString(2), cursor.getString(3));
+				cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
 		
 		return treatmentAssessment;
 	}
 
-	
+
+	/**
+	 * Responsible for recording the treatments administered following a patient assessment
+	 * 
+	 * @param patientAssessment
+	 * @param supportingLifeService
+	 * 
+	 * @return
+	 */
+	@Override
+	public void recordPatientTreatmentsAdministered(PatientAssessment patientAssessment, SupportingLifeService supportingLifeService) {
+		
+		for (Diagnostic diagnostic : patientAssessment.getDiagnostics()){
+			for (TreatmentRecommendation treatmentRecommendation : diagnostic.getTreatmentRecommendations()) {
+				ContentValues contentValues = new ContentValues();
+				contentValues.put(TreatmentTable.COLUMN_DRUG_ADMINISTERED, String.valueOf(treatmentRecommendation.isDrugAdministered()));
+				contentValues.put(TreatmentTable.COLUMN_TREATMENT_ADMINISTERED, String.valueOf(treatmentRecommendation.isTreatmentAdministered()));
+				int rowCount = supportingLifeService.getDatabase().update(TreatmentTable.TABLE_TREATMENT, contentValues, 
+						TreatmentTable.COLUMN_ASSESSMENT_ID + " = '" + patientAssessment.getDeviceGeneratedAssessmentId().trim() + "'"
+								+ " AND " + TreatmentTable.COLUMN_TREATMENT_IDENTIFIER + " = '" + treatmentRecommendation.getTreatmentIdentifier().trim() + "'", null);
+				LoggerUtils.i(LOG_TAG, "Treatment Recommendation Update Row Count: " + rowCount);
+			}
+		}
+	}
 	
 	/**
 	 * Show the number of treatments in debug logger
@@ -120,5 +149,4 @@ public class TreatmentDaoImpl implements TreatmentDao {
 			assessmentRowCountQuery.close();
 		}
 	}
-
-} 
+}

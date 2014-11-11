@@ -20,4 +20,6 @@ public interface TreatmentDao {
 	public void createPatientTreatments(PatientAssessment patientToAdd, String uniquePatientAssessmentIdentifier, SupportingLifeService service);
 
 	public void populatePatientTreatments(List<PatientAssessmentComms> patientAssessmentComms, SupportingLifeService service);
+	
+	public void recordPatientTreatmentsAdministered(PatientAssessment patientAssessment, SupportingLifeService supportingLifeService);
 }

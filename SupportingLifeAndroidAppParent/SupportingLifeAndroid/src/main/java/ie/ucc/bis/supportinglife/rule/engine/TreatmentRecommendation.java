@@ -40,6 +40,20 @@ public class TreatmentRecommendation implements Serializable {
 	}
 
 	/**
+	 * Constructor
+	 * 
+	 * @param treatmentIdentifier
+	 * @param treatmentDescription
+	 * @param drugAdministered 
+	 */
+	public TreatmentRecommendation(String treatmentIdentifier, String treatmentDescription, String drugAdministered, String treatmentAdministered) {
+		setTreatmentIdentifier(treatmentIdentifier);
+		setTreatmentDescription(treatmentDescription);
+		setDrugAdministered(Boolean.parseBoolean(drugAdministered));
+		setTreatmentAdministered(Boolean.parseBoolean(treatmentAdministered));
+	}
+
+	/**
 	 * Getter Method: getTreatmentIdentifier()
 	 */
 	public String getTreatmentIdentifier() {

@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.activity;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.assessment.ccm.ui.BreathCounterDialogFragment;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
@@ -57,10 +58,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	
 	protected static final String DEV_BASE_URL = "http://143.239.97.70:8080/SupportingLife/";
 	protected static final String AWS_BASE_URL = "http://supportinglife.elasticbeanstalk.com/";
-	
-	private static final String VALIDATOR_ON = "Yes";
-	private static final String VALIDATOR_PREFERENCE_SELECTION = "validator_preference_selection";
-	
+		
 	protected static final String USER_TYPE_KEY = "user_type";
 	protected static final String GUEST_USER = "guest_user";
 	protected static final String HSA_USER = "hsa_user";
@@ -76,6 +74,10 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	public static final String BREATHING_DURATION_SELECTION_KEY = "breathing_duration_selection";
 	public static final String SENSOR_AVAILABILITY_SELECTION_KEY = "sensor_availability_selection";
 	public static final String SENSOR_READING_DURATION_SELECTION_KEY = "sensor_reading_duration_selection";
+	private static final String VALIDATOR_PREFERENCE_SELECTION_KEY = "validator_preference_selection";
+	
+	private static final String VALIDATOR_ON = "Yes";
+	private static final String VALIDATOR_OFF = "No";
 		
 	/**
 	 * OnCreate method is called when the activity is first created.
@@ -434,7 +436,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
-	protected boolean isGuestUser() {
+	public boolean isGuestUser() {
 		boolean guestUser = true;
 		
 		// need to check the type of user using the SL app
@@ -496,11 +498,6 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 			}
 			else {
 				displayDrugStockoutDialog(navigationRequest, model, fragmentStatePagerAdapter, currentFragmentPosition);
-			}
-			
-			// TODO record treatments administered in DB
-			if (!isGuestUser()) {
-				
 			}
 		}
 		else {
@@ -578,11 +575,11 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	}
 	
     public boolean isValidationOn() {
-		// need to determine if zephyr sensor interaction will be included in assessment
-		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
-        String validatorOn = settings.getString(VALIDATOR_PREFERENCE_SELECTION, VALIDATOR_ON);
+		// need to determine if zephyr sensor interaction will be included in assessment	
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String validatorTest = settings.getString(VALIDATOR_PREFERENCE_SELECTION_KEY, VALIDATOR_OFF);
 
-        if (validatorOn.equalsIgnoreCase(VALIDATOR_ON)) {
+        if (validatorTest.equalsIgnoreCase(VALIDATOR_ON)) {
         	return true;
         }
         else {

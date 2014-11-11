@@ -113,6 +113,28 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 			getDatabase().endTransaction();
 		}		
 	}
+	
+	@Override
+	public void recordPatientTreatmentsAdministered(PatientAssessment patientAssessment) {
+		// wrap in a transaction
+		getDatabase().beginTransaction();
+		
+		try {
+			// update the 'patient assessment' treatments to reflect the treatments administered
+			getTreatmentDao().recordPatientTreatmentsAdministered(patientAssessment, this);
+			
+			// commit the transaction
+			getDatabase().setTransactionSuccessful();
+		
+		} catch (Exception ex) {
+			LoggerUtils.i(LOG_TAG, "SupportingLifeService: recordPatientTreatmentsAdministered -- Exception");
+			LoggerUtils.i(LOG_TAG, "SupportingLifeService: recordPatientTreatmentsAdministered -- " + ex.getMessage());
+		}
+		finally {
+			// end the database transaction
+			getDatabase().endTransaction();	
+		}
+	}
 
 	/**
 	 * Responsible for the anonymisation of key properties of a patient assessment that could

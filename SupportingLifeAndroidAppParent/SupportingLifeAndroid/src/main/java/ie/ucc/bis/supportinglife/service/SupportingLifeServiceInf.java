@@ -29,6 +29,7 @@ public interface SupportingLifeServiceInf {
 	public List<PatientAssessmentComms> getAllNonSyncedPatientAssessmentComms();
 	public List<PatientAssessmentComms> getAllPatientAssessmentComms();
 	public int setPatientAssessmentToSynced(String deviceGeneratedAssessmentId);
+	public void recordPatientTreatmentsAdministered(PatientAssessment patientAssessment);
 	
 	/*******************************************************************************/
 	/***********************GENERAL DATABASE MANAGEMENT*****************************/

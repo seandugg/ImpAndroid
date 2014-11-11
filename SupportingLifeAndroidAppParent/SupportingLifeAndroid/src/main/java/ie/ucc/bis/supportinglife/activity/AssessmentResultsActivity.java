@@ -333,6 +333,16 @@ public class AssessmentResultsActivity extends SupportingLifeBaseActivity implem
 	}
 	
 	/**
+	 * Responsible for recording the treatments administered in the SQLite DB
+	 * 
+	 * @param locat 
+	 */
+	public void storePatientTreatmentsAdministered() {		
+		// add the patient record to the DB
+		getSupportingLifeService().recordPatientTreatmentsAdministered(getPatientAssessment());
+	}
+	
+	/**
 	 * Click Handler: Handle the click on the 'Settings' Action Bar item
 	 * 
 	 * @param view View

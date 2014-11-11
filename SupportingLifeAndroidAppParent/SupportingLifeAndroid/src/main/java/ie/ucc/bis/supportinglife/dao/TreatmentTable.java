@@ -21,13 +21,17 @@ public class TreatmentTable {
 	protected static final String COLUMN_ASSESSMENT_ID = "assessment_id";
 	protected static final String COLUMN_TREATMENT_IDENTIFIER = "identifier";
 	protected static final String COLUMN_TREATMENT_DESCRIPTION = "description";
+	protected static final String COLUMN_DRUG_ADMINISTERED = "drug_administered";
+	protected static final String COLUMN_TREATMENT_ADMINISTERED = "treatment_administered";
 	
 	// Treatment Table creation SQL statement
 	private static final String DATABASE_TREATMENT_TABLE_CREATE = "CREATE TABLE "
 								+ TABLE_TREATMENT + "(" +COLUMN_ID				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " 
 								+ COLUMN_ASSESSMENT_ID							+ " TEXT, "
 								+ COLUMN_TREATMENT_IDENTIFIER 					+ " TEXT, "
-								+ COLUMN_TREATMENT_DESCRIPTION 					+ " TEXT);";
+								+ COLUMN_TREATMENT_DESCRIPTION 					+ " TEXT, "
+								+ COLUMN_DRUG_ADMINISTERED	 					+ " TEXT, "
+								+ COLUMN_TREATMENT_ADMINISTERED 				+ " TEXT);";
 	
 	public static void onCreate(SQLiteDatabase database) {
 		database.execSQL(DATABASE_TREATMENT_TABLE_CREATE);

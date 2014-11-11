@@ -19,13 +19,18 @@ public class TreatmentAssessment implements Serializable {
 	private String deviceGeneratedAssessmentId;
 	private String treatmentIdentifier;
 	private String treatmentDescription;
+	private String drugAdministered;
+	private String treatmentAdministered;
 
 	
-	public TreatmentAssessment(Integer id, String deviceGeneratedAssessmentId, String treatmentIdentifier, String treatmentDescription) {
+	public TreatmentAssessment(Integer id, String deviceGeneratedAssessmentId, String treatmentIdentifier, String treatmentDescription,
+				String drugAdministered, String treatmentAdministered) {
 		setId(id);
 		setDeviceGeneratedAssessmentId(deviceGeneratedAssessmentId);
 		setTreatmentIdentifier(treatmentIdentifier);
 		setTreatmentDescription(treatmentDescription);
+		setDrugAdministered(drugAdministered);
+		setTreatmentAdministered(treatmentAdministered);
 	}
 	
 	public Integer getId() {
@@ -58,5 +63,21 @@ public class TreatmentAssessment implements Serializable {
 
 	public void setTreatmentDescription(String treatmentDescription) {
 		this.treatmentDescription = treatmentDescription;
+	}
+
+	public String getDrugAdministered() {
+		return drugAdministered;
+	}
+
+	public void setDrugAdministered(String drugAdministered) {
+		this.drugAdministered = drugAdministered;
+	}
+
+	public String getTreatmentAdministered() {
+		return treatmentAdministered;
+	}
+
+	public void setTreatmentAdministered(String treatmentAdministered) {
+		this.treatmentAdministered = treatmentAdministered;
 	}
 }

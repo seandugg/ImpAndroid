@@ -68,7 +68,8 @@ public class CcmAssessmentActivity extends AssessmentActivity {
         if (!isValidationOn()) {
 	        getStepPagerStrip().setPageSelectedListener(new PageSelectedListener() {
 	            public void onPageStripSelected(int position) {
-	            	if (getAssessmentViewPager().checkPagingEnabled(getAssessmentViewPager().getCurrentItem())) {
+	            	int currentPosition = getAssessmentViewPager().getCurrentItem();
+	            	if ((currentPosition == getAssessmentModel().getAssessmentPageSequence().size()) || (getAssessmentViewPager().checkPagingEnabled(currentPosition))) {
 		                position = Math.min(getAssessmentPagerAdapter().getCount() - 1, position);
 		                if (getAssessmentViewPager().getCurrentItem() != position) {
 		                	getAssessmentViewPager().setCurrentItem(position);
@@ -196,8 +197,9 @@ public class CcmAssessmentActivity extends AssessmentActivity {
      */
     private final class NextButtonListener implements View.OnClickListener {
 		public void onClick(View view) {			
-			// secondly decide to move to next page or perform assessment submit (if validation succeeds)
-    		if (getAssessmentViewPager().checkPagingEnabled(getAssessmentViewPager().getCurrentItem())) {    			
+    		// first, check if we're on the review page or for any other page ensure paging is allowed
+			int currentPosition = getAssessmentViewPager().getCurrentItem();
+    		if ((currentPosition == getAssessmentModel().getAssessmentPageSequence().size()) || (getAssessmentViewPager().checkPagingEnabled(currentPosition))) {    		
 			    if (getAssessmentViewPager().getCurrentItem() == getAssessmentModel().getAssessmentPageSequence().size()) {
 			    	// we're currently on the review pane so display confirmation dialog
 			        DialogFragment dg = new DialogFragment() {
