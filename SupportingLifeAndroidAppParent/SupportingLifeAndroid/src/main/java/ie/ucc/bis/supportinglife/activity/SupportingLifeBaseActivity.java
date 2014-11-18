@@ -575,7 +575,7 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
 	}
 	
     public boolean isValidationOn() {
-		// need to determine if zephyr sensor interaction will be included in assessment	
+		// check if assessment validation is on or off
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String validatorTest = settings.getString(VALIDATOR_PREFERENCE_SELECTION_KEY, VALIDATOR_OFF);
 
