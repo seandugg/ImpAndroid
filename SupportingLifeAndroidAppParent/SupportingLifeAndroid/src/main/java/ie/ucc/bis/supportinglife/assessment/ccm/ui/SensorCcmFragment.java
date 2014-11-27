@@ -1,6 +1,7 @@
 package ie.ucc.bis.supportinglife.assessment.ccm.ui;
 
 import ie.ucc.bis.supportinglife.R;
+import ie.ucc.bis.supportinglife.activity.AssessmentActivity;
 import ie.ucc.bis.supportinglife.activity.CcmAssessmentActivity;
 import ie.ucc.bis.supportinglife.activity.SupportingLifeBaseActivity;
 import ie.ucc.bis.supportinglife.analytics.AnalyticUtilities;
@@ -11,10 +12,13 @@ import ie.ucc.bis.supportinglife.assessment.imci.ui.PageFragmentCallbacks;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentModel;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractAssessmentPage;
 import ie.ucc.bis.supportinglife.assessment.model.AbstractModel;
+import ie.ucc.bis.supportinglife.assessment.model.AssessmentViewPager;
 import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
+import ie.ucc.bis.supportinglife.assessment.model.FragmentValidator;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentWizardTextWatcher;
 import ie.ucc.bis.supportinglife.sensor.BioHarnessConnectedListener;
 import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
+import ie.ucc.bis.supportinglife.validation.Form;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
@@ -59,7 +63,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
  * @author timothyosullivan
  * 
  */
-public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
+public class SensorCcmFragment extends Fragment implements FragmentLifecycle, FragmentValidator {
 	
 	private static final int SECOND = 1;
 	private static final int ONE_SECOND_IN_MILLISECONDS = 1000;
@@ -109,6 +113,9 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
     
 	private MediaPlayer soundPlayer;
 	private Map<String, Integer> sounds;
+	
+	// Form used for validation
+    private Form form;
     
 	/* Sounds */
 	private static final String TICK_SOUND = "Tick";
@@ -169,6 +176,9 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 		// add soft keyboard handler - essentially hiding soft
 		// keyboard when an EditText is not in focus
 		((SupportingLifeBaseActivity) getActivity()).addSoftKeyboardHandling(rootView);
+		
+		// validation
+		configureValidation(rootView);
 
         return rootView;
     }
@@ -660,6 +670,38 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 		}
 	}
     
+	/**
+	 * Responsible for configuring validation on the CCM page
+	 * @param rootView 
+	 */
+	private void configureValidation(View rootView) {
+        setForm(new Form(this.getActivity()));
+
+        // validation rules
+        // TODO Currently we don't apply any validation checks to the sensor paghe
+        
+        // run validation check
+		runPageValidationCheck();
+	}
+	
+	private void runPageValidationCheck() {
+		AssessmentViewPager pager = ((AssessmentActivity) getActivity()).getAssessmentViewPager();
+		AbstractAssessmentPage page = ((AssessmentActivity) getActivity()).getAssessmentModel().findAssessmentPageByKey(getPageKey());
+		int pagePosition = ((AssessmentActivity) getActivity()).getAssessmentModel().getAssessmentPages().indexOf(page);
+		pager.configurePagingEnabledElement(pagePosition, performValidation());
+	}
+	
+	@Override
+	public boolean performValidation() {
+		if (getForm() != null) {
+			return getForm().performValidation();
+		}
+		else {
+			return true;
+		}
+	}
+	
+	
 	private BluetoothAdapter getBluetoothAdapter() {
 		return bluetoothAdapter;
 	}
@@ -850,5 +892,13 @@ public class SensorCcmFragment extends Fragment implements FragmentLifecycle {
 
 	private void setSounds(Map<String, Integer> sounds) {
 		this.sounds = sounds;
+	}
+	
+	public Form getForm() {
+		return form;
+	}
+
+	public void setForm(Form form) {
+		this.form = form;
 	}
 }
