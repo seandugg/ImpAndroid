@@ -40,7 +40,8 @@ public class PatientAssessmentDaoImpl implements PatientAssessmentDao {
 									PatientAssessmentTable.COLUMN_CAREGIVER_NAME,
 									PatientAssessmentTable.COLUMN_RELATIONSHIP,
 									PatientAssessmentTable.COLUMN_PHYSICAL_ADDRESS,
-									PatientAssessmentTable.COLUMN_VILLAGE_TA,
+									PatientAssessmentTable.COLUMN_VILLAGE,
+									PatientAssessmentTable.COLUMN_TA,
 									PatientAssessmentTable.COLUMN_VISIT_DATE,
 									PatientAssessmentTable.COLUMN_CHEST_INDRAWING,
 									PatientAssessmentTable.COLUMN_BREATHS_PER_MINUTE,
@@ -100,7 +101,8 @@ public class PatientAssessmentDaoImpl implements PatientAssessmentDao {
 		values.put(PatientAssessmentTable.COLUMN_CAREGIVER_NAME, patientToAdd.getCaregiverName());
 		values.put(PatientAssessmentTable.COLUMN_RELATIONSHIP, patientToAdd.getRelationship());
 		values.put(PatientAssessmentTable.COLUMN_PHYSICAL_ADDRESS, patientToAdd.getPhysicalAddress());	
-		values.put(PatientAssessmentTable.COLUMN_VILLAGE_TA, patientToAdd.getVillageTa());							
+		values.put(PatientAssessmentTable.COLUMN_VILLAGE, patientToAdd.getVillage());
+		values.put(PatientAssessmentTable.COLUMN_TA, patientToAdd.getTa());	
 		values.put(PatientAssessmentTable.COLUMN_CHEST_INDRAWING, String.valueOf(patientToAdd.isChestIndrawing()));
 		values.put(PatientAssessmentTable.COLUMN_BREATHS_PER_MINUTE, patientToAdd.getBreathsPerMinute());
 		values.put(PatientAssessmentTable.COLUMN_SLEEPY_UNCONSCIOUS, String.valueOf(patientToAdd.isSleepyUnconscious()));
@@ -223,28 +225,28 @@ public class PatientAssessmentDaoImpl implements PatientAssessmentDao {
 //		Param Line 1: 	Integer id (0), String deviceGeneratedAssessmentId (1), String nationalId (2), String nationalHealthId (3), String nationalHealthId (4),
 //		Param Line 2: 	String childFirstName (5), String childSurname (6), String birthDate (7), Integer monthsAge (8),
 //		Param Line 3: 	String gender (9), String caregiverName (10), String relationship (11), String physicalAddress (12),
-//		Param Line 4: 	String villageTa (13), String visitDate (14), String chestIndrawing (15), Integer breathsPerMinute (16),
-//		Param Line 5: 	String sleepyUnconscious (17), String palmarPallor (18), String muacTapeColour (19), 
-//		Param Line 6: 	String swellingBothFeet (20), String problem (21), String cough (22), Integer coughDuration (23),
-//		Param Line 7: 	String diarrhoea (24), Integer diarrhoeaDuration (25), String bloodInStool (26), String fever (27),
-//		Param Line 8: 	Integer feverDuration (28), String convulsions (29), String difficultyDrinkingOrFeeding (30),
-//		Param Line 9: 	String unableToDrinkOrFeed (31), String vomiting (32), String vomitsEverything (33),
-//		Param Line 10: 	String redEye (34), Integer redEyeDuration (35), String difficultySeeing (36),
-//		Param Line 11:	Integer difficultySeeingDuration (37), String cannotTreatProblem (38), 
-//		Param Line 12: 	String cannotTreatProblemDetails (39)
+//		Param Line 4: 	String village (13), String ta(14), String visitDate (15), String chestIndrawing (16), Integer breathsPerMinute (17),
+//		Param Line 5: 	String sleepyUnconscious (18), String palmarPallor (19), String muacTapeColour (20), 
+//		Param Line 6: 	String swellingBothFeet (21), String problem (22), String cough (23), Integer coughDuration (24),
+//		Param Line 7: 	String diarrhoea (25), Integer diarrhoeaDuration (26), String bloodInStool (27), String fever (28),
+//		Param Line 8: 	Integer feverDuration (29), String convulsions (30), String difficultyDrinkingOrFeeding (31),
+//		Param Line 9: 	String unableToDrinkOrFeed (32), String vomiting (33), String vomitsEverything (34),
+//		Param Line 10: 	String redEye (35), Integer redEyeDuration (36), String difficultySeeing (37),
+//		Param Line 11:	Integer difficultySeeingDuration (38), String cannotTreatProblem (39), 
+//		Param Line 12: 	String cannotTreatProblemDetails (40)
 		
 		PatientAssessmentComms patientAssessmentComms = new PatientAssessmentComms(DaoUtilities.readInt(cursor, 0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), 
 													cursor.getString(5), cursor.getString(6), cursor.getString(7), DaoUtilities.readInt(cursor, 8),
 													cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),
-													cursor.getString(13), cursor.getString(14), cursor.getString(15), DaoUtilities.readInt(cursor, 16),
-													cursor.getString(17), cursor.getString(18), cursor.getString(19),
-													cursor.getString(20), cursor.getString(21), cursor.getString(22), DaoUtilities.readInt(cursor, 23),
-													cursor.getString(24), DaoUtilities.readInt(cursor, 25), cursor.getString(26), cursor.getString(27),
-													DaoUtilities.readInt(cursor, 28), cursor.getString(29), cursor.getString(30),
-													cursor.getString(31), cursor.getString(32), cursor.getString(33),
-													cursor.getString(34), DaoUtilities.readInt(cursor, 35), cursor.getString(36),
-													DaoUtilities.readInt(cursor, 37), cursor.getString(38),
-													cursor.getString(39));
+													cursor.getString(13), cursor.getString(14), cursor.getString(15), cursor.getString(16), DaoUtilities.readInt(cursor, 17),
+													cursor.getString(18), cursor.getString(19), cursor.getString(20),
+													cursor.getString(21), cursor.getString(22), cursor.getString(23), DaoUtilities.readInt(cursor, 24),
+													cursor.getString(25), DaoUtilities.readInt(cursor, 26), cursor.getString(27), cursor.getString(28),
+													DaoUtilities.readInt(cursor, 29), cursor.getString(30), cursor.getString(31),
+													cursor.getString(32), cursor.getString(33), cursor.getString(34),
+													cursor.getString(35), DaoUtilities.readInt(cursor, 36), cursor.getString(37),
+													DaoUtilities.readInt(cursor, 38), cursor.getString(39),
+													cursor.getString(40));
 		
 		return patientAssessmentComms;
 	}

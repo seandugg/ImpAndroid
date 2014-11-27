@@ -376,7 +376,10 @@
 	
 	<!-- Physical Address & Village -->
 	<string name="ccm_general_patient_details_physical_address_label">Physical Address:</string>
-	<string name="ccm_general_patient_details_village_label">Village/TA:</string>
+	<string name="ccm_general_patient_details_village_label">Village:</string>
+	
+	<!-- TA -->
+	<string name="ccm_general_patient_details_ta_label">TA:</string>
 	
     <!-- Patient Details Review -->
 	<string name="ccm_general_patient_details_review_today_date">Today\'s Date</string>
@@ -392,7 +395,8 @@
 
 	<string name="ccm_general_patient_details_review_caregiver">Caregiver</string>
 	<string name="ccm_general_patient_details_review_physical_address">Physical Address</string>
-	<string name="ccm_general_patient_details_review_village">Village/TA</string>
+	<string name="ccm_general_patient_details_review_village">Village</string>
+	<string name="ccm_general_patient_details_review_ta">Ta</string>
 
     <!-- HINTS -->
 	<string name="ccm_general_patient_details_hsa_identifier_hint">Please enter HSA identifier</string>
@@ -404,6 +408,8 @@
 	<string name="ccm_general_patient_details_relationship_specified_hint">Please enter relationship type</string>
 	<string name="ccm_general_patient_details_physical_address_hint">Please enter child\'s physical address</string>
 	<string name="ccm_general_patient_details_village_hint">Please enter child\'s village</string>
+	<string name="ccm_general_patient_details_ta_hint">Please enter village TA</string>
+	
 		
     <!-- ============================================================ -->
     <!-- CCM ASSESSMENT WIZARD BREAD-CRUMB UI 						  -->

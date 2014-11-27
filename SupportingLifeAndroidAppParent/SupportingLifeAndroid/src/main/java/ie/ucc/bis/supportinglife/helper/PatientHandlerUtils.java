@@ -104,8 +104,11 @@ public class PatientHandlerUtils {
 		// physical address
 		patient.setPhysicalAddress(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_physical_address_id))));
 
-		// village TA
-		patient.setVillageTa(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_village_ta_id))));
+		// village
+		patient.setVillage(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_village_id))));
+		
+		// TA
+		patient.setTa(upperCaseConversion(reviewItemMap.get(resources.getString(R.string.ccm_general_patient_details_ta_id))));
 
 		// visit date
 		patient.setVisitDate(DateUtilities.getTodaysDateTimestamp());

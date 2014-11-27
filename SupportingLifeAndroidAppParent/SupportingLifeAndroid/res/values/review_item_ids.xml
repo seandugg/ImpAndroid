@@ -151,7 +151,8 @@
 	<string name="ccm_general_patient_details_caregiver_name_id">ccm_general_patient_details_caregiver_name_id</string>
 	<string name="ccm_general_patient_details_relationship_id">ccm_general_patient_details_relationship_id</string>
 	<string name="ccm_general_patient_details_physical_address_id">ccm_general_patient_details_physical_address_id</string>
-	<string name="ccm_general_patient_details_village_ta_id">ccm_general_patient_details_village_ta_id</string>
+	<string name="ccm_general_patient_details_village_id">ccm_general_patient_details_village_id</string>
+	<string name="ccm_general_patient_details_ta_id">ccm_general_patient_details_ta_id</string>
 	<string name="ccm_general_patient_details_visit_date_id">ccm_general_patient_details_visit_date_id</string>
 	
     <!-- ============================================================ -->

@@ -30,7 +30,8 @@ public class PatientAssessmentTable {
 	protected static final String COLUMN_CAREGIVER_NAME = "caregiver";
 	protected static final String COLUMN_RELATIONSHIP = "relationship";
 	protected static final String COLUMN_PHYSICAL_ADDRESS = "physical_address";
-	protected static final String COLUMN_VILLAGE_TA = "village_ta";
+	protected static final String COLUMN_VILLAGE = "village";
+	protected static final String COLUMN_TA = "ta";
 	protected static final String COLUMN_VISIT_DATE = "visit_date";
 	protected static final String COLUMN_CHEST_INDRAWING = "chest_indrawing";
 	protected static final String COLUMN_BREATHS_PER_MINUTE = "breaths_per_minute";
@@ -74,7 +75,8 @@ public class PatientAssessmentTable {
 									+ COLUMN_CAREGIVER_NAME 			+ " TEXT, "
 									+ COLUMN_RELATIONSHIP 				+ " TEXT, "
 									+ COLUMN_PHYSICAL_ADDRESS 			+ " TEXT, "
-									+ COLUMN_VILLAGE_TA 				+ " TEXT, "
+									+ COLUMN_VILLAGE 					+ " TEXT, "
+									+ COLUMN_TA			 				+ " TEXT, "
 									+ COLUMN_VISIT_DATE 				+ " TEXT, "
 									+ COLUMN_CHEST_INDRAWING 			+ " TEXT, "
 									+ COLUMN_BREATHS_PER_MINUTE 		+ " INTEGER, "

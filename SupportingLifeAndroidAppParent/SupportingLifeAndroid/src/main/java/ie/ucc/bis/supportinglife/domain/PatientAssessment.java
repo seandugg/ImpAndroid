@@ -32,7 +32,8 @@ public class PatientAssessment implements Serializable {
 	private String caregiverName;
 	private String relationship;
 	private String physicalAddress;
-	private String villageTa;
+	private String village;
+	private String ta;
 	private Date visitDate;	
 	
 	// Look Symptoms
@@ -184,12 +185,20 @@ public class PatientAssessment implements Serializable {
 		this.physicalAddress = physicalAddress;
 	}
 
-	public String getVillageTa() {
-		return villageTa;
+	public String getVillage() {
+		return village;
 	}
 
-	public void setVillageTa(String villageTa) {
-		this.villageTa = villageTa;
+	public void setVillage(String village) {
+		this.village = village;
+	}
+
+	public String getTa() {
+		return ta;
+	}
+
+	public void setTa(String ta) {
+		this.ta = ta;
 	}
 
 	public Date getVisitDate() {

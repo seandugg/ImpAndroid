@@ -68,6 +68,7 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
     private EditText relationshipSpecifiedEditText;
     private EditText physicalAddressEditText;
     private EditText villageEditText;
+    private EditText taEditText;
     private ViewGroup animatedRelationshipSpecifiedView;
     private View relationshipView;
     private DynamicView relationshipSpecifiedDynamicView;
@@ -178,9 +179,13 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         setPhysicalAddressEditText(((EditText) rootView.findViewById(R.id.ccm_general_patient_details_physical_address)));
         getPhysicalAddressEditText().setText(getGeneralPatientDetailsCcmPage().getPageData().getString(GeneralPatientDetailsCcmPage.PHYSICAL_ADDRESS_DATA_KEY));
         
-        // village/TA
+        // village
         setVillageEditText(((EditText) rootView.findViewById(R.id.ccm_general_patient_details_village)));
         getVillageEditText().setText(getGeneralPatientDetailsCcmPage().getPageData().getString(GeneralPatientDetailsCcmPage.VILLAGE_DATA_KEY));
+        
+        // TA
+        setTaEditText(((EditText) rootView.findViewById(R.id.ccm_general_patient_details_ta)));
+        getTaEditText().setText(getGeneralPatientDetailsCcmPage().getPageData().getString(GeneralPatientDetailsCcmPage.TA_DATA_KEY));
         
 		// add soft keyboard handler - essentially hiding soft
 		// keyboard when an EditText is not in focus
@@ -300,10 +305,15 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         		new AssessmentWizardTextWatcher(getGeneralPatientDetailsCcmPage(), 
         				GeneralPatientDetailsCcmPage.PHYSICAL_ADDRESS_DATA_KEY, getForm(), this));
         
-        // village/TA
+        // village
         getVillageEditText().addTextChangedListener(
         		new AssessmentWizardTextWatcher(getGeneralPatientDetailsCcmPage(), 
         				GeneralPatientDetailsCcmPage.VILLAGE_DATA_KEY, getForm(), this));
+        
+        // TA
+        getTaEditText().addTextChangedListener(
+        		new AssessmentWizardTextWatcher(getGeneralPatientDetailsCcmPage(), 
+        				GeneralPatientDetailsCcmPage.TA_DATA_KEY, getForm(), this));
     }
 
 	/**
@@ -398,7 +408,9 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
         		getResources().getString(R.string.ccm_general_patient_details_physical_address_label))
         		.validate(NotEmptyValidation.build(this.getActivity())));              
         getForm().addTextFieldValidations(TextFieldValidations.using(getVillageEditText(), 
-        		getResources().getString(R.string.ccm_general_patient_details_village_label)).validate(NotEmptyValidation.build(this.getActivity())));      
+        		getResources().getString(R.string.ccm_general_patient_details_village_label)).validate(NotEmptyValidation.build(this.getActivity())));
+        getForm().addTextFieldValidations(TextFieldValidations.using(getTaEditText(), 
+        		getResources().getString(R.string.ccm_general_patient_details_ta_label)).validate(NotEmptyValidation.build(this.getActivity())));    
         
         // run validation check
 		runPageValidationCheck();
@@ -555,6 +567,14 @@ public class GeneralPatientDetailsCcmFragment extends Fragment implements Fragme
 
 	public void setVillageEditText(EditText villageEditText) {
 		this.villageEditText = villageEditText;
+	}
+
+	public EditText getTaEditText() {
+		return taEditText;
+	}
+
+	public void setTaEditText(EditText taEditText) {
+		this.taEditText = taEditText;
 	}
 
 	public ViewGroup getAnimatedRelationshipSpecifiedView() {

@@ -46,7 +46,8 @@ public class PatientAssessmentComms implements Serializable {
 	private String caregiverName;
 	private String relationship;
 	private String physicalAddress;
-	private String villageTa;
+	private String village;
+	private String ta;
 	private Date visitDate;	
 
 	// Look Symptoms
@@ -100,7 +101,7 @@ public class PatientAssessmentComms implements Serializable {
 	public PatientAssessmentComms(Integer id, String deviceGeneratedAssessmentId, String nationalId, String nationalHealthId, String hsaUserId, 
 			String childFirstName, String childSurname, String birthDate, Integer monthsAge,
 			String gender, String caregiverName, String relationship, String physicalAddress,
-			String villageTa, String visitDate, String chestIndrawing, Integer breathsPerMinute,
+			String village, String ta, String visitDate, String chestIndrawing, Integer breathsPerMinute,
 			String sleepyUnconscious, String palmarPallor, String muacTapeColour, 
 			String swellingBothFeet, String problem, String cough, Integer coughDuration,
 			String diarrhoea, Integer diarrhoeaDuration, String bloodInStool, String fever,
@@ -122,7 +123,8 @@ public class PatientAssessmentComms implements Serializable {
 		setCaregiverName(caregiverName);
 		setRelationship(relationship);
 		setPhysicalAddress(physicalAddress);
-		setVillageTa(villageTa);
+		setVillage(village);
+		setTa(ta);
 		setChestIndrawing(Boolean.valueOf(chestIndrawing));
 		setBreathsPerMinute(breathsPerMinute);
 		setSleepyUnconscious(Boolean.valueOf(sleepyUnconscious));
@@ -276,12 +278,20 @@ public class PatientAssessmentComms implements Serializable {
 		this.physicalAddress = physicalAddress;
 	}
 
-	public String getVillageTa() {
-		return villageTa;
+	public String getVillage() {
+		return village;
 	}
 
-	public void setVillageTa(String villageTa) {
-		this.villageTa = villageTa;
+	public void setVillage(String village) {
+		this.village = village;
+	}
+
+	public String getTa() {
+		return ta;
+	}
+
+	public void setTa(String ta) {
+		this.ta = ta;
 	}
 
 	public Date getVisitDate() {

@@ -19,6 +19,7 @@ import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import net.sqlcipher.database.SQLiteDatabase;
 import android.content.Context;
@@ -82,7 +83,6 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 			// update 'PatientAssessment' record with identifier as we will use this at a
 			// later point to record the 'treatments administered' by the HSA
 			patientToAdd.setDeviceGeneratedAssessmentId(uniquePatientAssessmentIdentifier);
-			
 			
 			// DATA ANONYMISATION - Key change for the feasibility study and the clinical trial (ref. JIRA SL-166)
 			anonymisePatientAssessment(patientToAdd);
@@ -152,7 +152,8 @@ public class SupportingLifeService implements SupportingLifeServiceInf {
 		patientAssessment.setChildSurname(null);
 		patientAssessment.setCaregiverName(null);
 		patientAssessment.setPhysicalAddress(null);
-		patientAssessment.setVillageTa(null);
+		patientAssessment.setVillage(null);
+		patientAssessment.setTa(null);
 		patientAssessment.setBirthDate(null);
 	}
 

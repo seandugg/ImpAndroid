@@ -35,6 +35,7 @@ public class GeneralPatientDetailsCcmPage extends AbstractAssessmentPage {
 	public static final String CAREGIVER_DATA_KEY = "CAREGIVER_DATA_KEY";
 	public static final String PHYSICAL_ADDRESS_DATA_KEY = "PHYSICAL_ADDRESS";
 	public static final String VILLAGE_DATA_KEY = "VILLAGE";
+	public static final String TA_DATA_KEY = "TA";
 	public static final String RELATIONSHIP_DATA_KEY = "RELATIONSHIP_DATA_KEY";
 	public static final String RELATIONSHIP_SPECIFIED_DATA_KEY = "RELATIONSHIP_SPECIFIED_DATA_KEY";
 
@@ -139,10 +140,15 @@ public class GeneralPatientDetailsCcmPage extends AbstractAssessmentPage {
     	reviewItemLabel = resources.getString(R.string.ccm_general_patient_details_review_physical_address);
     	reviewItems.add(new ReviewItem(reviewItemLabel, getPageData().getString(PHYSICAL_ADDRESS_DATA_KEY), getKey(), -1, reviewItemIdentifier));
         
-        // village/TA
-    	reviewItemIdentifier = resources.getString(R.string.ccm_general_patient_details_village_ta_id);
+        // village
+    	reviewItemIdentifier = resources.getString(R.string.ccm_general_patient_details_village_id);
     	reviewItemLabel = resources.getString(R.string.ccm_general_patient_details_review_village);
     	reviewItems.add(new ReviewItem(reviewItemLabel, getPageData().getString(VILLAGE_DATA_KEY), getKey(), -1, reviewItemIdentifier));
+    	
+        // TA
+    	reviewItemIdentifier = resources.getString(R.string.ccm_general_patient_details_ta_id);
+    	reviewItemLabel = resources.getString(R.string.ccm_general_patient_details_review_ta);
+    	reviewItems.add(new ReviewItem(reviewItemLabel, getPageData().getString(TA_DATA_KEY), getKey(), -1, reviewItemIdentifier));    	
     }
 
     /**
