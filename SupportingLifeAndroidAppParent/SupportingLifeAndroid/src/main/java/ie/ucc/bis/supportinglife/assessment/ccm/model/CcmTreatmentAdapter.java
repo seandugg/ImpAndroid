@@ -253,7 +253,7 @@ public class CcmTreatmentAdapter extends BaseAdapter {
 	    					.getPageData().getBoolean(treatmentRecommendation.getTreatmentIdentifier()));
 	    			
 	    			treatmentCheckbox.setOnClickListener(new TreatmentCheckBoxListener(getCcmAssessmentTreatmentsFragment().getCcmTreatmentsPage(), 
-	    					treatmentRecommendation.getTreatmentIdentifier(), treatmentRecommendation));
+	    					treatmentRecommendation.getTreatmentIdentifier(), treatmentRecommendation, getCcmAssessmentTreatmentsFragment()));
 	    			
 	    			LayoutParams checkboxParams = new TableRow.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1f);
 	    			checkboxParams.setMargins(10, 0, 0, 0); // padding left

@@ -141,5 +141,25 @@ public class CcmAssessmentResultsActivity extends AssessmentResultsActivity {
 		}
 		return allDrugTreatmentsAdministered;
 	}	
+	
+	/**
+	 * Responsible for determining if all treatments (both drug and non-drug related)
+	 * have been administered
+	 * 
+	 * @return boolean - true if all treatments administered
+	 */
+	public boolean checkAllTreatmentsAdministered() {
+		boolean allTreatmentsAdministered = true;
+		
+		for (Diagnostic diagnostic : getPatientAssessment().getDiagnostics()) {
+			for (TreatmentRecommendation treatmentRec : diagnostic.getTreatmentRecommendations()){
+				if (!treatmentRec.isTreatmentAdministered()) {
+					allTreatmentsAdministered = false;
+					return allTreatmentsAdministered;
+				}
+			}
+		}
+		return allTreatmentsAdministered;
+	}	
 }
 
