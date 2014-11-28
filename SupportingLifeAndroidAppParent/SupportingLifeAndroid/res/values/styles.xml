@@ -9,6 +9,7 @@
 		<item name="android:backgroundDimEnabled">false</item>
 		<item name="android:actionBarStyle">@style/ActionBar</item>
 		<item name="android:radioButtonStyle">@style/RadioButton</item>
+		<item name="android:checkboxStyle">@style/CheckBox</item>
 		<item name="android:actionOverflowButtonStyle">@style/ActionButtonOverflow</item>
 	</style>
     
@@ -174,6 +175,32 @@
 		<item name="android:checked">false</item>
 		<item name="android:drawableLeft">@drawable/radio_button</item>
 		<item name="android:drawablePadding">5dp</item>
+	</style>
+	
+	
+    <!-- ============================================================================== -->
+    <!-- BREADCRUMB WIZARD CHECKBOX BUTTON STYLE 					  					-->
+    <!-- NOTE: FOR SAMSUNG (JOD) HTC (JF) DEVICE - PROBLEM WITH DEVICES MEANS   		-->
+    <!-- 	   THAT IN ORDER TO GET THE CHECKBOX TEXT SHOWING	  						-->
+    <!-- 	   ON THE RIGHT-HAND SIDE OF THE CHECKBOX BUTTON CLEANLY, THE				-->
+    <!-- 	   FOLLOWING NEEDS TO BE DONE:								  				-->
+    <!--															  					-->
+    <!-- 	   1.  <item name="android:button">@null</item>			  					-->
+    <!-- 	   2.  <item name="android:background">@android:color/transparent</item> 	-->
+    <!-- 	   3.  <item name="android:drawableLeft">@drawable/radio_button</item>		-->
+    <!-- 	   4.  <item name="android:drawablePadding">5dp</item>						-->
+    <!-- ============================================================================== -->
+	<style name="CheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+		<item name="android:button">@null</item>
+		<item name="android:background">@android:color/transparent</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:layout_gravity">center_horizontal</item>
+		<item name="android:layout_weight">1</item>
+		<item name="android:scaleX">.4</item>
+		<item name="android:scaleY">.4</item>
+		<item name="android:checked">false</item>
+		<item name="android:drawableLeft">@drawable/checkbox</item>
 	</style>
 	
     <!-- ============================================================ -->
