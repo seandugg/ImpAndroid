@@ -6,6 +6,7 @@ import ie.ucc.bis.supportinglife.assessment.model.FragmentLifecycle;
 import ie.ucc.bis.supportinglife.assessment.model.listener.AssessmentExitDialogListener;
 import ie.ucc.bis.supportinglife.dao.CustomSharedPreferences;
 
+import java.util.List;
 import java.util.Locale;
 
 import android.app.ActionBar;
@@ -15,6 +16,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -573,6 +576,14 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
     	dg.show(getSupportFragmentManager(), EXIT_ASSESSMENT_DIALOG_TAG);
 	}
 	
+	/**
+	 * Responsible for displaying exit dialog
+	 * 
+	 * @param navigationRequest
+	 * @param model
+	 * @param fragmentStatePagerAdapter
+	 * @param currentFragmentPosition
+	 */
     public boolean isValidationOn() {
 		// check if assessment validation is on or off
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -584,6 +595,14 @@ public abstract class SupportingLifeBaseActivity extends FragmentActivity {
         else {
         	return false;
         }
+    }
+
+	/**
+	 * Determines if activity is present
+	 */
+    protected boolean isCallable(Intent intent) {
+    	List<ResolveInfo> list = getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+    	return list.size() > 0;
     }
 
 }

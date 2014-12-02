@@ -61,7 +61,7 @@
 			<artifactId>jackson-core-asl</artifactId>
 			<version>${json.version}</version>
 		</dependency>
-		<!-- SQLCipher - Database Encyption -->
+		<!-- SQLCipher - Database Encryption -->
         <dependency>
             <groupId>sqlcipher</groupId>
             <artifactId>sqlcipher</artifactId>

@@ -11,7 +11,7 @@
     <!-- ============================================================ -->
 	<string name="activity_title_home">Home</string>
 	<string name="activity_title_user_selection">User Type</string>
-	<string name="activity_title_search">Search</string>
+	<string name="activity_title_opinions">Opinions</string>
 	<string name="activity_title_about">About</string>
 	<string name="activity_title_training">Training</string>
 	<string name="activity_title_settings">Settings</string>
@@ -33,12 +33,12 @@
     <!-- ============================================================ -->
     <!-- DASHBOARD -->
     <!-- ============================================================ -->
-	<string name="dashboard_user_profile_button">Profile</string>
+	<string name="dashboard_opinions_button">Opinions</string>
 	<string name="dashboard_about_button">About</string>
 	<string name="dashboard_imci_assessment_button">IMCI</string>
 	<string name="dashboard_ccm_assessment_button">CCM</string>
 	<string name="dashboard_training_button">Training</string>
-	<string name="dashboard_search_button">Search</string>
+	<string name="dashboard_settings_button">Settings</string>
 	<string name="dashboard_action_settings">Settings</string>
 	<string name="dashboard_action_sync">Sync</string>
 	<string name="dashboard_action_help">Help</string>
@@ -46,12 +46,12 @@
     <!-- ============================================================ -->	
 	<!--  DASHBOARD ICON FONTS -->
 	<!-- ============================================================ -->
-	<string name="dashboard_user_profile_icon_font">&#xe001;</string>
+	<string name="dashboard_opinions_icon_font">&#xe000;</string>
 	<string name="dashboard_about_icon_font">&#xe003;</string>
 	<string name="dashboard_imci_assessment_icon_font">&#xe002;</string>
-	<string name="dashboard_ccm_assessment_icon_font">&#xe005;</string>
-	<string name="dashboard_training_icon_font">&#xe000;</string>
-	<string name="dashboard_search_icon_font">&#xe004;</string>	
+	<string name="dashboard_ccm_assessment_icon_font">&#xe004;</string>
+	<string name="dashboard_training_icon_font">&#xe001;</string>
+	<string name="dashboard_settings_icon_font">&#xe005;</string>	
  
     <!-- ============================================================ -->
     <!-- ============================================================ -->
@@ -591,14 +591,28 @@
 	<string name="training_tutorial_description">Description:</string>
 	<string name="training_tutorial_created_date">Created Date:</string>
 	<string name="training_tutorial_created_by">Created By:</string>
+	
+    <!-- ============================================================ -->
+    <!-- OPINIONS SCREEN 											  -->
+    <!-- ============================================================ -->
+	<string name="opinions_prompt_label">Share your opinion of the Supporting LIFE application with the world!</string>
+	<string name="opinions_twitter_button">Twitter</string>
+	<string name="opinions_facebook_button">Facebook</string>
+	<string name="opinions_googleplus_button">Google+</string>
+	
+	<!-- ICON FONTS -->
+	<string name="opinions_twitter_icon_font">&#xe002;</string>
+	<string name="opinions_facebook_icon_font">&#xe000;</string>
+	<string name="opinions_googleplus_icon_font">&#xe001;</string>
+	
  
     <!-- ============================================================ -->
     <!-- ABOUT SCREEN -->
     <!-- ============================================================ -->
 	<string name="about_version_label">Version</string>
-	<string name="about_version_value">4.0.0 (beta release)</string>
+	<string name="about_version_value">5.0.0 (beta release)</string>
 	<string name="about_release_date_label">Release Date</string>
-	<string name="about_release_date_value">September 2014</string>
+	<string name="about_release_date_value">December 2014</string>
 	<string name="about_developer_label">Lead Developer</string>
 	<string name="about_first_developer_value">Dr Timothy O\'Sullivan</string>
 	<string name="about_business_analyst_label">Business Analyst</string>

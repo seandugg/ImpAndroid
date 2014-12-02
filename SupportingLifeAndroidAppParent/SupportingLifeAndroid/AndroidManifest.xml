@@ -74,6 +74,11 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name="ie.ucc.bis.supportinglife.activity.OpinionsActivity"
+            android:label="@string/activity_title_opinions"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="ie.ucc.bis.supportinglife.activity.UserSelectionActivity"
             android:label="@string/activity_title_user_selection"
             android:theme="@style/Theme.Registration"

@@ -19,7 +19,6 @@ import ie.ucc.bis.supportinglife.ui.utilities.LoggerUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 import net.sqlcipher.database.SQLiteDatabase;
 import android.content.Context;

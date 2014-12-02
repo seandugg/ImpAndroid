@@ -146,7 +146,7 @@ public class SyncActivity extends SupportingLifeBaseActivity {
 		// direct ec2 name appears quicker for mobile device to resolve the domain name (i.e. sl-technology.eu) when
 		// performing sync operation.
 		// DEV URL
-	//	private static final String DEV_REST_REQUEST = DEV_BASE_URL + "patientvisits/add";
+//		private static final String DEV_REST_REQUEST = DEV_BASE_URL + "patientvisits/add";
 		
 		// PRODUCTION AWS URL
 		private static final String REST_REQUEST = AWS_BASE_URL + "patientvisits/add";

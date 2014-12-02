@@ -71,8 +71,8 @@ public class HomeActivity extends SupportingLifeBaseActivity {
 		((Button) findViewById(R.id.dashboard_imci_assessment_button)).setTypeface(font);
 		((Button) findViewById(R.id.dashboard_ccm_assessment_button)).setTypeface(font);
 		((Button) findViewById(R.id.dashboard_training_button)).setTypeface(font);
-		((Button) findViewById(R.id.dashboard_search_button)).setTypeface(font);
-		((Button) findViewById(R.id.dashboard_user_profile_button)).setTypeface(font);
+		((Button) findViewById(R.id.dashboard_settings_button)).setTypeface(font);
+		((Button) findViewById(R.id.dashboard_opinions_button)).setTypeface(font);
 		((Button) findViewById(R.id.dashboard_about_button)).setTypeface(font);
 	}
 	
@@ -108,11 +108,11 @@ public class HomeActivity extends SupportingLifeBaseActivity {
 			case R.id.dashboard_training_button :
 				startActivity(new Intent(getApplicationContext(), TrainingActivity.class));
 				break;
-			case R.id.dashboard_search_button :
-				toast(FEATURE_UNIMPLEMENTED);
+			case R.id.dashboard_settings_button :
+				startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
 				break;
-			case R.id.dashboard_user_profile_button :
-				toast(FEATURE_UNIMPLEMENTED);
+			case R.id.dashboard_opinions_button :
+				startActivity(new Intent(getApplicationContext(), OpinionsActivity.class));
 				break;				
 			default : 
 				break;

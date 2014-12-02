@@ -8,12 +8,12 @@
     <!-- ============================================================ -->
     <!-- DASHBOARD -->
     <!-- ============================================================ -->
-	<string name="dashboard_user_profile_button">Vya Wakujula</string>
+	<string name="dashboard_opinions_button">Opinions</string>
 	<string name="dashboard_about_button">Vya SL</string>
 	<string name="dashboard_imci_assessment_button">IMCI</string>
 	<string name="dashboard_ccm_assessment_button">CCM</string>
 	<string name="dashboard_training_button">Visambizgo</string>
-	<string name="dashboard_search_button">Kupenja</string>
+	<string name="dashboard_settings_button">Settings</string>
 	
 	<!-- ============================================================ -->
     <!-- TRAINING SCREEN -->
