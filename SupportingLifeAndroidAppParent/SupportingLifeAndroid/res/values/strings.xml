@@ -33,7 +33,7 @@
     <!-- ============================================================ -->
     <!-- DASHBOARD -->
     <!-- ============================================================ -->
-	<string name="dashboard_opinions_button">Opinions</string>
+	<string name="dashboard_opinions_button">Share</string>
 	<string name="dashboard_about_button">About</string>
 	<string name="dashboard_imci_assessment_button">IMCI</string>
 	<string name="dashboard_ccm_assessment_button">CCM</string>
