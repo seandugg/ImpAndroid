@@ -1,0 +1,245 @@
+[
+  {
+    "event_type": "Possession Gained",
+    "action_details": [
+      {
+        "action_detail": "Catch (Aerial)",
+        "outcomes": ["Controlled Possession", "Fumbled / Spilled", "Immediate Pass", "Immediate Shot", "Foul Won"]
+      },
+      {
+        "action_detail": "Ground Control",
+        "outcomes": ["Controlled Possession", "Fumbled / Spilled", "Immediate Pass", "Immediate Shot", "Foul Won"]
+      },
+      {
+        "action_detail": "Breakdown Win",
+        "outcomes": ["Controlled Possession", "Fumbled / Spilled", "Immediate Pass", "Immediate Shot", "Foul Won"]
+      },
+      {
+        "action_detail": "Interception",
+        "outcomes": ["Controlled Possession", "Fumbled / Spilled", "Immediate Pass", "Immediate Shot", "Foul Won"]
+      },
+      {
+        "action_detail": "Goalkeeper Control",
+        "outcomes": ["Controlled Possession", "Fumbled / Spilled", "Immediate Pass", "Immediate Shot", "Foul Won"]
+      }
+    ]
+  },
+  {
+    "event_type": "Pass",
+    "action_details": [
+      {
+        "action_detail": "Stick Pass",
+        "outcomes": ["Complete", "Incomplete", "Intercepted", "Blocked"]
+      },
+      {
+        "action_detail": "Hand Pass",
+        "outcomes": ["Complete", "Incomplete", "Intercepted", "Blocked"]
+      },
+      {
+        "action_detail": "Short (e.g., < 30m)",
+        "outcomes": ["Complete", "Incomplete", "Intercepted", "Blocked"]
+      },
+      {
+        "action_detail": "Long (e.g., > 50m)",
+        "outcomes": ["Complete", "Incomplete", "Intercepted", "Blocked"]
+      },
+      {
+        "action_detail": "Cross-field",
+        "outcomes": ["Complete", "Incomplete", "Intercepted", "Blocked"]
+      },
+      {
+        "action_detail": "Down the line",
+        "outcomes": ["Complete", "Incomplete", "Intercepted", "Blocked"]
+      },
+      {
+        "action_detail": "Lay-off",
+        "outcomes": ["Complete", "Incomplete", "Intercepted", "Blocked"]
+      }
+    ]
+  },
+  {
+    "event_type": "Carry / Solo",
+    "action_details": [
+      {
+        "action_detail": "Carry",
+        "outcomes": ["Leads to Pass", "Leads to Shot", "Tackled", "Foul Conceded (Overcarrying)", "Positive Territory Gain"]
+      },
+      {
+        "action_detail": "Solo Run",
+        "outcomes": ["Leads to Pass", "Leads to Shot", "Tackled", "Foul Conceded (Overcarrying)", "Positive Territory Gain"]
+      },
+      {
+        "action_detail": "Metres Gained (e.g., 10m, 20m)",
+        "outcomes": ["Leads to Pass", "Leads to Shot", "Tackled", "Foul Conceded (Overcarrying)", "Positive Territory Gain"]
+      }
+    ]
+  },
+  {
+    "event_type": "Shot",
+    "action_details": [
+      {
+        "action_detail": "From Play",
+        "outcomes": ["Point", "Goal", "Wide", "Saved (Goalkeeper)", "Saved (Outfield Player)", "Blocked", "Hit Post", "Dropped Short"]
+      },
+      {
+        "action_detail": "From Free",
+        "outcomes": ["Point", "Goal", "Wide", "Saved (Goalkeeper)", "Saved (Outfield Player)", "Blocked", "Hit Post", "Dropped Short"]
+      },
+      {
+        "action_detail": "From '65",
+        "outcomes": ["Point", "Goal", "Wide", "Saved (Goalkeeper)", "Saved (Outfield Player)", "Blocked", "Hit Post", "Dropped Short"]
+      },
+      {
+        "action_detail": "From Sideline Cut",
+        "outcomes": ["Point", "Goal", "Wide", "Saved (Goalkeeper)", "Saved (Outfield Player)", "Blocked", "Hit Post", "Dropped Short"]
+      },
+      {
+        "action_detail": "From Penalty",
+        "outcomes": ["Point", "Goal", "Wide", "Saved (Goalkeeper)", "Saved (Outfield Player)", "Blocked", "Hit Post", "Dropped Short"]
+      },
+      {
+        "action_detail": "Ground Strike",
+        "outcomes": ["Point", "Goal", "Wide", "Saved (Goalkeeper)", "Saved (Outfield Player)", "Blocked", "Hit Post", "Dropped Short"]
+      },
+      {
+        "action_detail": "Doubling On It",
+        "outcomes": ["Point", "Goal", "Wide", "Saved (Goalkeeper)", "Saved (Outfield Player)", "Blocked", "Hit Post", "Dropped Short"]
+      }
+    ]
+  },
+  {
+    "event_type": "Tackle",
+    "action_details": [
+      {
+        "action_detail": "Shoulder Charge",
+        "outcomes": ["Turnover Won", "Foul Conceded", "Ball to Ground (Breakdown)", "Play On"]
+      },
+      {
+        "action_detail": "Hook",
+        "outcomes": ["Turnover Won", "Foul Conceded", "Ball to Ground (Breakdown)", "Play On"]
+      },
+      {
+        "action_detail": "Flick / Dispossession",
+        "outcomes": ["Turnover Won", "Foul Conceded", "Ball to Ground (Breakdown)", "Play On"]
+      },
+      {
+        "action_detail": "Ruck / Maul Entry",
+        "outcomes": ["Turnover Won", "Foul Conceded", "Ball to Ground (Breakdown)", "Play On"]
+      }
+    ]
+  },
+  {
+    "event_type": "Block",
+    "action_details": [
+      {
+        "action_detail": "Shot Block",
+        "outcomes": ["Possession Gained", "Ball Deflected (to Teammate)", "Ball Deflected (to Opponent)", "Ball Out of Play"]
+      },
+      {
+        "action_detail": "Pass Block",
+        "outcomes": ["Possession Gained", "Ball Deflected (to Teammate)", "Ball Deflected (to Opponent)", "Ball Out of Play"]
+      },
+      {
+        "action_detail": "Puck Out Block",
+        "outcomes": ["Possession Gained", "Ball Deflected (to Teammate)", "Ball Deflected (to Opponent)", "Ball Out of Play"]
+      }
+    ]
+  },
+  {
+    "event_type": "Puck Out",
+    "action_details": [
+      {
+        "action_detail": "Short",
+        "outcomes": ["Possession Retained (Clean)", "Possession Retained (Breakdown)", "Possession Lost (Clean)", "Possession Lost (Breakdown)"]
+      },
+      {
+        "action_detail": "Long",
+        "outcomes": ["Possession Retained (Clean)", "Possession Retained (Breakdown)", "Possession Lost (Clean)", "Possession Lost (Breakdown)"]
+      },
+      {
+        "action_detail": "Targeted Area (e.g., Left Wing, Right Wing, Centre)",
+        "outcomes": ["Possession Retained (Clean)", "Possession Retained (Breakdown)", "Possession Lost (Clean)", "Possession Lost (Breakdown)"]
+      }
+    ]
+  },
+  {
+    "event_type": "Free Puck",
+    "action_details": [
+      {
+        "action_detail": "Quick Free",
+        "outcomes": ["Shot Attempt", "Pass to Teammate (Complete)", "Pass to Teammate (Incomplete)"]
+      },
+      {
+        "action_detail": "Set Piece Play",
+        "outcomes": ["Shot Attempt", "Pass to Teammate (Complete)", "Pass to Teammate (Incomplete)"]
+      },
+      {
+        "action_detail": "Distance from Goal (e.g., 70m)",
+        "outcomes": ["Shot Attempt", "Pass to Teammate (Complete)", "Pass to Teammate (Incomplete)"]
+      }
+    ]
+  },
+  {
+    "event_type": "Sideline Cut",
+    "action_details": [
+      {
+        "action_detail": "Shot Attempt",
+        "outcomes": ["Point", "In Play (Successful)", "In Play (Contested)", "Given Away"]
+      },
+      {
+        "action_detail": "Pass to Teammate",
+        "outcomes": ["Point", "In Play (Successful)", "In Play (Contested)", "Given Away"]
+      }
+    ]
+  },
+  {
+    "event_type": "Throw In",
+    "action_details": [
+      {
+        "action_detail": "Tap Down",
+        "outcomes": ["Possession Won", "Possession Lost", "Breakdown"]
+      },
+      {
+        "action_detail": "Strike in Air",
+        "outcomes": ["Possession Won", "Possession Lost", "Breakdown"]
+      }
+    ]
+  },
+  {
+    "event_type": "Foul Conceded",
+    "action_details": [
+      {
+        "action_detail": "Chopping",
+        "outcomes": ["Free Awarded", "Penalty Awarded", "Advantage Played", "Yellow Card Issued", "Red Card Issued"]
+      },
+      {
+        "action_detail": "Charging / Pushing",
+        "outcomes": ["Free Awarded", "Penalty Awarded", "Advantage Played", "Yellow Card Issued", "Red Card Issued"]
+      },
+      {
+        "action_detail": "Holding / Pulling Jersey",
+        "outcomes": ["Free Awarded", "Penalty Awarded", "Advantage Played", "Yellow Card Issued", "Red Card Issued"]
+      },
+      {
+        "action_detail": "Overcarrying",
+        "outcomes": ["Free Awarded", "Penalty Awarded", "Advantage Played", "Yellow Card Issued", "Red Card Issued"]
+      },
+      {
+        "action_detail": "Illegal Hand Pass",
+        "outcomes": ["Free Awarded", "Penalty Awarded", "Advantage Played", "Yellow Card Issued", "Red Card Issued"]
+      },
+      {
+        "action_detail": "Third Man Tackle",
+        "outcomes": ["Free Awarded", "Penalty Awarded", "Advantage Played", "Yellow Card Issued", "Red Card Issued"]
+      },
+      {
+        "action_detail": "Square Ball",
+        "outcomes": ["Free Awarded", "Penalty Awarded", "Advantage Played", "Yellow Card Issued", "Red Card Issued"]
+      },
+      {
+        "action_detail": "Dissent",
+        "outcomes": ["Free Awarded", "Penalty Awarded", "Advantage Played", "Yellow Card Issued", "Red Card Issued"]
+      }
+    ]
+  }
+]
